@@ -1,0 +1,51 @@
+{
+  "private": true,
+  "name": "softeng-starter-code",
+  "version": "1.0.0",
+  "description": "",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "apps/*",
+    "configs/*",
+    "packages/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "dev": "docker-compose -f docker-compose.dev.yaml up --build --renew-anon-volumes -d",
+    "dev:stop": "docker-compose -f docker-compose.dev.yaml down --volumes --rmi local",
+    "deploy": "docker-compose -f docker-compose.prod.yaml up --build -d",
+    "deploy:stop": "docker-compose -f docker-compose.prod.yaml down",
+    "test": "docker-compose -f docker-compose.test.yaml up --build --renew-anon-volumes -d",
+    "test:stop": "docker-compose -f docker-compose.dev.yaml down --volumes --rmi local",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "postinstall": "husky install || exit 0",
+    "build": "turbo run build",
+    "docker:upload": "turbo run docker:upload --concurrency=1"
+  },
+  "packageManager": "yarn@4.0.2",
+  "devDependencies": {
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "@vitest/ui": "^0.33.0",
+    "eslint": "^8.56.0",
+    "eslint-config-custom": "workspace:*",
+    "happy-dom": "^10.6.3",
+    "husky": "^8.0.0",
+    "prettier": "2.8.8",
+    "prettier-config-custom": "workspace:*",
+    "tsconfig-custom": "workspace:*",
+    "turbo": "latest",
+    "typescript": "^5.0.4",
+    "vitest": "^0.33.0"
+  },
+  "dependencies": {
+    "@yarnpkg/pnpify": "^4.0.0-rc.45",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.10.0",
+    "react-dom": "^18.2.0"
+  }
+}

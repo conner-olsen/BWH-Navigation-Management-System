@@ -1,0 +1,112 @@
+# Exposed ports
+x-port-bindings:
+  # The port that will be openly accessible : the front-port above.
+  # This is required because string concatenation can't work in YAML
+  FRONTEND_EXPOSED: &front-exposed 3000:3000
+
+  # The backend needs an explicit debug port. The frontend is debugged via your browser (Chrome).
+  # This forwarding is used to leave 9229 open in case anything weird happens
+  BACKEND_DEBUGGER: &back-debug 9001:9229
+
+  # The exposed port for the database. This is done in development to allow manual SQL queries/investigation
+  # on what exactly is happening. In prod, this will be DISABLED
+  DATABASE_EXPOSED: &db-exposed 5432:5432
+
+# Arguments used by both front and back
+x-arguments: &dev-args
+  BACKEND_PORT: &back-port 3001 # Port for the backend
+  FRONTEND_PORT: &front-port 3000 # Port for the frontend (exposed)
+  BACKEND_SOURCE: http://backend # Backend URL (points to the backend container)
+
+# This may seem insecure, but the DB container isn't exposed outside of docker, so it doesn't
+# matter since NOBODY except for other containers has access ot it
+x-db-info: &db-args
+  POSTGRES_USER: dev
+  POSTGRES_PASSWORD: dev
+  POSTGRES_DB: dev
+
+# Port and container name (URL) for the DB
+x-db-loc: &db-loc
+  POSTGRES_CONTAINER: &pg-container database
+  POSTGRES_PORT: &pg-port "5432"
+
+# Running containers
+services:
+  # Frontend (UI)
+  frontend:
+    # This is exposed
+    ports:
+      # Expose the standard port
+      - *front-exposed
+    # Use the standard Dockerfile
+    build:
+      # Taken from root
+      context: .
+      # Use the dev-args (defined above)
+      args: *dev-args
+      # Use the dev-frontend stage
+      target: dev-frontend
+    # For the proxy to work, the backend must start first
+    depends_on:
+      - backend
+    # Mount the frontend dev environment, ignore backend and node_modules (turbo cache)
+    volumes:
+      - ./:/app
+      - /app/apps/backend/node_modules/
+      - /app/apps/backend/.turbo/
+      - /app/apps/frontend/node_modules/
+      - /app/apps/frontend/.turbo/
+      - /app/node_modules/
+      - /app/packages/common/.turbo/
+      - /app/packages/common/node_modules/
+      - /app/packages/database/.turbo
+      - /app/packages/database/node_modules
+      - /app/packages/database/.prisma
+  # Backend (API)
+  backend:
+    # The frontend container must be able to access this, so expose it internally.
+    # Any calls YOU want to make to the DB must be made via the frontend port,
+    # and they will automatically be proxied to the backend
+    expose:
+      - *back-port
+    # Expose ONLY THE DEBUGGER to the host
+    ports:
+      - *back-debug
+    # Use the standard Dockerfile
+    build:
+      # Taken from root
+      context: .
+      # Use the dev-args (defined above), along with the DB info, port, and URL
+      args:
+        <<: [*dev-args, *db-loc, *db-args]
+      # This time, build the backend
+      target: dev-backend
+    # Mount the backend on the host, ignore frontend and node_modules (the turbo cache)
+    volumes:
+      - ./:/app
+      - /app/apps/backend/node_modules/
+      - /app/apps/backend/.turbo/
+      - /app/apps/frontend/node_modules/
+      - /app/apps/frontend/.turbo/
+      - /app/node_modules/
+      - /app/packages/common/.turbo/
+      - /app/packages/common/node_modules/
+      - /app/packages/database/.turbo
+      - /app/packages/database/node_modules
+      - /app/packages/database/.prisma
+    # The backend depends on the database being functional
+    depends_on:
+      - database
+
+  # Backend PSQL database
+  database:
+    image: postgres
+    # Expose the database for development purposes
+    ports:
+      - *db-exposed
+    # Expose the PG port
+    expose:
+      - *pg-port
+    # Use the DB args defined above
+    environment:
+      *db-args
