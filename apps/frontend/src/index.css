@@ -11,6 +11,13 @@
   -webkit-text-size-adjust: 100%;
 
   font-family: "Open Sans", sans-serif;
+
+  --red: #bd0000;
+  --light-blue: #3382fe;
+  --medium-blue: #0047b7;
+  --dark-blue: #012d5a;
+  --white: #f5f5f5;
+  --gray: #d9d9d9;
 }
 
 /* ============== GLOBAL HEADER =========== */
@@ -68,4 +75,49 @@
   font-size: 60px;
   font-family: sans-serif;
   align-items: center;
+}
+
+.testClass {
+  display: flex;
+  align-items: center;
+}
+.testClass img {
+  position: absolute;
+  border-radius: 7px;
+  width: 41px;
+  background-color: var(--gray);
+}
+.testClass input {
+  padding-left: 50px;
+  background-color: var(--white);
+}
+
+.testClass2 {
+  display: flex;
+  justify-content: space-between;
+}
+.testClass2 a {
+  color: var(--red);
+}
+.btn {
+  background-color: var(--medium-blue) !important;
+}
+
+.pictureOfL1 {
+  border-radius: 1.25rem;
+  width: 50rem;
+  height: 30rem;
+  flex-shrink: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.BackButton {
+  position: absolute;
+  top: 130px; /* Adjust this value to move the button down */
+  right: 50px; /* Adjust this value as needed */
+  border-radius: 10px; /* Remove background color */
+  border: 3px solid #003a96;
+  padding: 10px;
 }
