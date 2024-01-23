@@ -1,5 +1,23 @@
-body {
-  font-family: Sans-Serif;
+:root {
+  /*font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/
+  background-color: #ffffff;
+  font-size: 18px;
+  line-height: 1.4;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --red: #bd0000;
+  --light-blue: #3382fe;
+  --medium-blue: #0047b7;
+  --dark-blue: #012d5a;
+  --white: #f5f5f5;
+  --gray: #d9d9d9;
+
+  font-family: "Open Sans", sans-serif;
 }
 
 /* ============== GLOBAL HEADER =========== */
@@ -21,8 +39,6 @@ body {
 }
 
 /* =========== LOGIN PAGE ========== */
-.LoginFormBox {
-}
 
 .loginForm input {
   padding: 20px;
