@@ -1,3 +1,5 @@
+import { Outlet } from "react-router-dom";
+
 const UserSelection = () => {
   return (
     <div>
@@ -6,6 +8,8 @@ const UserSelection = () => {
         src="public/hospital.jpeg"
         alt="Hospital Image"
       />
+      <Outlet />
+      <div className="button_layer">test</div>
     </div>
   );
 };
