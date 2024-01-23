@@ -4,6 +4,7 @@ import Global_Header from "./components/Global_Header.tsx";
 import { MapRoute } from "./routes/MapRoute.tsx";
 import UserSelection from "./routes/UserSelection.tsx";
 import PatientLogin from "./routes/PatientLogin.tsx";
+import HomePage from "./routes/HomePage.tsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +24,10 @@ function App() {
         {
           path: "/map",
           element: <MapRoute />,
+        },
+        {
+          path: "/HomePage",
+          element: <HomePage />,
         },
       ],
     },
