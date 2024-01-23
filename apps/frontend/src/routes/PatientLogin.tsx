@@ -22,13 +22,18 @@ const PatientLogin = () => {
   //     // You can perform further actions like authentication here
   // };
 
+  const cardStyle = {
+    backgroundColor: "#012d5a", // Set the custom background color
+    color: "#fff", // Set text color to white for better visibility
+  };
+
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <div className="card">
+          <div className="card" style={cardStyle}>
             <div className="card-body">
-              <h3 className="card-title text-center">Patient Login</h3>
+              <h3 className="card-title text-center">Login Form</h3>
               <form>
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">
@@ -37,11 +42,11 @@ const PatientLogin = () => {
                   </label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control thick-border"
                     id="username"
+                    autoFocus
                     //value={username}
                     //onChange={handleUsernameChange}
-                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -51,11 +56,10 @@ const PatientLogin = () => {
                   </label>
                   <input
                     type="password"
-                    className="form-control"
+                    className="form-control thick-border"
                     id="password"
                     //value={password}
                     //onChange={handlePasswordChange}
-                    required
                   />
                 </div>
                 <div className="text-center">
