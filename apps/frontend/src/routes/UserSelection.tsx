@@ -20,7 +20,6 @@ const UserSelection = () => {
           <Stack className="stack" gap={5}>
             <div className="SignInBox">
               <br />
-              <br />
               <p>
                 <b>Sign in</b>
               </p>
