@@ -1007,7 +1007,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/bootstrap@npm:^5.2.6":
+"@types/bootstrap@npm:^5, @types/bootstrap@npm:^5.2.6":
   version: 5.2.10
   resolution: "@types/bootstrap@npm:5.2.10"
   dependencies:
@@ -2086,7 +2086,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap@npm:^5.2.3":
+"bootstrap@npm:^5.2.3, bootstrap@npm:^5.3.2":
   version: 5.3.2
   resolution: "bootstrap@npm:5.3.2"
   peerDependencies:
@@ -6027,10 +6027,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "softeng-starter-code@workspace:."
   dependencies:
+    "@types/bootstrap": "npm:^5"
     "@types/react": "npm:^18.0.37"
     "@types/react-dom": "npm:^18.0.11"
     "@vitest/ui": "npm:^0.33.0"
     "@yarnpkg/pnpify": "npm:^4.0.0-rc.45"
+    bootstrap: "npm:^5.3.2"
     eslint: "npm:^8.56.0"
     eslint-config-custom: "workspace:*"
     happy-dom: "npm:^10.6.3"
