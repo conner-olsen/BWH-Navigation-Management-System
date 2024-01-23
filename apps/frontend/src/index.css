@@ -31,6 +31,18 @@
   padding: 10px;
 }
 
+/* ============== GLOBAL FOOTER =========== */
+.GlobalFooter {
+  width: 100%;
+  background-color: #012d5a;
+}
+
+.FooterLogo {
+  width: 100%;
+  height: auto;
+  padding-left: 15px;
+}
+
 /* =========== LOGIN PAGE ========== */
 
 .loginForm input {
