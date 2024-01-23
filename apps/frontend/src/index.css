@@ -42,6 +42,10 @@
   font-size: 80px;
 }
 
+.thick-border {
+  border-width: 2px;
+}
+
 /* ============= USER SELECTION PAGE ========= */
 .LargeButton {
   width: 100%;
