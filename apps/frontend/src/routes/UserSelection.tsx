@@ -16,6 +16,10 @@ const UserSelection: React.FC = () => {
     navigate("/AdminLogin");
   };
 
+  const handleGuestLoginClick = () => {
+    navigate("/HomePage");
+  };
+
   return (
     <Container fluid>
       <Outlet />
@@ -37,7 +41,7 @@ const UserSelection: React.FC = () => {
               </p>
             </div>
             <LargeButton
-              onClick={handlePatientLoginClick}
+              onClick={handleGuestLoginClick}
               title={"Login as Guest"}
             ></LargeButton>
 
