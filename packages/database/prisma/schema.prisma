@@ -45,8 +45,12 @@ model Edge {
 model User{
   Username String @id
   Password String
+  Employee Employee[]
+
 }
 
 model Employee{
   adminID String @id
+  User User @relation(fields: [Username], references: [Username])
+  Username String
 }
