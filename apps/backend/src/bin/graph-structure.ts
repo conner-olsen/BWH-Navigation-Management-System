@@ -10,7 +10,7 @@ export class Node {
   nodeType: string; // Type of the node
   longName: string; // Long name of the node
   shortName: string; // Short name of the node
-  edges: Set<string>; // Set of node IDs that this node is connected to
+  edges: Array<string>; // Set of edges IDs that this node is connected to
 
   /**
    * Create a new Node.
@@ -41,29 +41,46 @@ export class Node {
     this.nodeType = nodeType;
     this.longName = longName;
     this.shortName = shortName;
-    this.edges = new Set();
+    this.edges = new Array<string>;
   }
 
   /**
-   * Connect this node to another node.
+   * Connect this node to another edge.
    * @param {string} nodeId - The ID of the node to connect to.
    */
-  connectTo(nodeId: string) {
-    this.edges.add(nodeId);
+  connectTo(edgeId: string) {
+    this.edges.push(edgeId);
   }
 }
 
+/**
+ * Class representing an Edge.
+ */
+class Edge {
+  id: string;
+  startNode: string;
+  endNode: string;
+  weigth: number;
+  constructor(id: string, startNode: string, endNode: string, weight : number) {
+    this.id = id;
+    this.startNode = startNode;
+    this.endNode = endNode;
+    this.weigth = weight;
+  }
+
+}
 /**
  * Class representing a Graph.
  */
 class Graph {
   nodes: Map<string, Node>; // Map of node IDs to Node objects
-
+  edges: Map<string, Edge>; // Map of edge IDs to Edge objects
   /**
    * Create a new Graph.
    */
   constructor() {
     this.nodes = new Map();
+    this.edges = new Map();
   }
 
   /**
@@ -76,17 +93,12 @@ class Graph {
 
   /**
    * Add an edge between two nodes in the graph.
-   * @param {string} nodeId1 - The ID of the first node.
-   * @param {string} nodeId2 - The ID of the second node.
+   * @param {edge} Edge - the Edge that need to be added
    */
-  addEdge(nodeId1: string, nodeId2: string) {
-    const node1 = this.nodes.get(nodeId1);
-    const node2 = this.nodes.get(nodeId2);
-
-    if (node1 && node2) {
-      node1.connectTo(nodeId2);
-      node2.connectTo(nodeId1);
-    }
+  addEdge(edge: Edge) {
+    this.edges.set(edge.id, edge);
+    this.getNode(edge.startNode)?.connectTo(edge.id);
+    this.getNode(edge.endNode)?.connectTo(edge.id);
   }
 
   /**
@@ -99,47 +111,28 @@ class Graph {
   }
 }
 
-// Example usage
-// create graph
+//Example code
+// Create some sample nodes
+const nodeA = new Node("NodeA", 0, 0, "L1", "Building1", "TypeA", "LongNameA", "ShortNameA");
+const nodeB = new Node("NodeB", 3, 4, "L1", "Building1", "TypeB", "LongNameB", "ShortNameB");
+const nodeC = new Node("NodeC", 1, 7, "L1", "Building2", "TypeC", "LongNameC", "ShortNameC");
+
+// Function to calculate Euclidean distance between two nodes
+function calculateDistance(node1: Node, node2: Node): number {
+  return Math.sqrt(Math.pow(node1.xCoord - node2.xCoord, 2) + Math.pow(node1.yCoord - node2.yCoord, 2));
+}
+
+// Create edges with calculated weights (distances)
+const edgeAB = new Edge("EdgeAB", "NodeA", "NodeB", calculateDistance(nodeA, nodeB));
+const edgeBC = new Edge("EdgeBC", "NodeB", "NodeC", calculateDistance(nodeB, nodeC));
+const edgeCA = new Edge("EdgeCA", "NodeC", "NodeA", calculateDistance(nodeC, nodeA));
+
+// Create a graph and add nodes and edges to it
 const graph = new Graph();
+graph.addNode(nodeA);
+graph.addNode(nodeB);
+graph.addNode(nodeC);
 
-// create nodes
-const node1 = new Node("1", 1, 1, "1", "1", "1", "1", "1");
-const node2 = new Node("2", 2, 2, "2", "2", "2", "2", "2");
-const node3 = new Node("3", 3, 3, "3", "3", "3", "3", "3");
-
-// add nodes to graph
-graph.addNode(node1);
-graph.addNode(node2);
-graph.addNode(node3);
-
-// add edges to graph
-graph.addEdge("1", "2");
-graph.addEdge("2", "3");
-graph.addEdge("3", "1");
-
-// get node from graph
-console.log(graph.getNode("1"));
-console.log(graph.getNode("2"));
-
-// Output
-// Node {
-//   id: '1',
-//   xCoord: 1,
-//   yCoord: 1,
-//   floor: '1',
-//   building: '1',
-//   nodeType: '1',
-//   longName: '1',
-//   shortName: '1',
-//   edges: Set { '2', '3' } }
-// Node {
-//   id: '2',
-//   xCoord: 2,
-//   yCoord: 2,
-//   floor: '2',
-//   building: '2',
-//   nodeType: '2',
-//   longName: '2',
-//   shortName: '2',
-//   edges: Set { '1', '3' } }
+graph.addEdge(edgeAB);
+graph.addEdge(edgeBC);
+graph.addEdge(edgeCA);
