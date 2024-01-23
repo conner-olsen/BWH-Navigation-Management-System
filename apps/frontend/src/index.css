@@ -9,6 +9,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --red: #bd0000;
+  --light-blue: #3382fe;
+  --medium-blue: #0047b7;
+  --dark-blue: #012d5a;
+  --white: #f5f5f5;
+  --gray: #d9d9d9;
+
+  font-family: 'Open Sans', sans-serif;
 }
 body {
   width: 100%;
@@ -54,7 +63,14 @@ body {
     flex-direction: column;
     align-items: center;
 }
-
+.loginForm img {
+    background-color: var(--gray);
+    border-radius: 15px;
+}
 .loginForm input {
-    padding: 20px;
+    width: 50%;
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+    background-color: var(--white);
 }
