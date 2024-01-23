@@ -25,7 +25,7 @@ app.use(cookieParser()); // Cookie parser
 app.use("/api/high-score", exampleRouter);
 
 // Setup the CSV router
-app.use("/api/csv", csvRouter);
+app.use("/api/csv-to-json", csvRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
