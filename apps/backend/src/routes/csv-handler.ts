@@ -3,7 +3,7 @@ import { parseCSV, convertToJSON } from "../bin/parser.ts";
 
 const router: Router = express.Router();
 
-router.post("/csv-to-json", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   try {
     // Read the CSV string from the request body
     const csvString = req.body;
