@@ -46,3 +46,7 @@ model User{
   Username String @id
   Password String
 }
+
+model Employee{
+  adminID String @id
+}
