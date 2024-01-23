@@ -65,3 +65,22 @@
   font-family: sans-serif;
   align-items: center;
 }
+
+.pictureOfL1 {
+  border-radius: 1.25rem;
+  width: 50rem;
+  height: 30rem;
+  flex-shrink: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.BackButton {
+  position: absolute;
+  top: 130px; /* Adjust this value to move the button down */
+  right: 50px; /* Adjust this value as needed */
+  border-radius: 10px; /* Remove background color */
+  border: 3px solid #003a96;
+  padding: 10px;
+}
