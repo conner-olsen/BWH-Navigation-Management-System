@@ -4,6 +4,7 @@ import Global_Header from "./components/Global_Header.tsx";
 import { MapRoute } from "./routes/MapRoute.tsx";
 import UserSelection from "./routes/UserSelection.tsx";
 import Container from "react-bootstrap/Container";
+import BasicLogin from "./routes/BasicLogin.tsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,6 +16,11 @@ function App() {
         {
           path: "",
           element: <UserSelection />,
+            children: [{
+                path: "/BasicLogin",
+                element:<BasicLogin/>
+            }
+            ]
         },
         {
           path: "/map",

@@ -1,4 +1,5 @@
 import { Image } from "react-bootstrap";
+import {Outlet} from "react-router-dom";
 
 const UserSelection = () => {
   return (
@@ -10,7 +11,7 @@ const UserSelection = () => {
         alt="Hospital Image"
         fluid
       />
-
+    <Outlet/>
       <div className="button_layer">test</div>
     </div>
   );
