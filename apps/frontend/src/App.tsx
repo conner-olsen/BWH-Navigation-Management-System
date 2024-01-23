@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Global_Header from "./components/Global_Header.tsx";
 import { MapRoute } from "./routes/MapRoute.tsx";
 import UserSelection from "./routes/UserSelection.tsx";
-import Container from "react-bootstrap/Container";
 
 function App() {
   const router = createBrowserRouter([
@@ -13,8 +12,12 @@ function App() {
       element: <Root />,
       children: [
         {
-          path: "",
+          path: "/UserSelection",
           element: <UserSelection />,
+        },
+        {
+          path: "/LoginPage",
+          //element: <
         },
         {
           path: "/map",
@@ -28,10 +31,8 @@ function App() {
   function Root() {
     return (
       <main>
-        <Container className={"w-100 h-100"}>
-          <Global_Header></Global_Header>
-          <Outlet />
-        </Container>
+        <Global_Header></Global_Header>
+        <Outlet />
       </main>
     );
   }
