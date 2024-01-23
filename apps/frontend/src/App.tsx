@@ -22,7 +22,6 @@ function App() {
             },
           ],
         },
-
         {
           path: "/map",
           element: <MapRoute />,
