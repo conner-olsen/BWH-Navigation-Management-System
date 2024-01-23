@@ -8,7 +8,7 @@ const csvData = `name,age,city
 
 // Make a POST request to the CSV to JSON API
 axios
-  .post("/csv-to-json", csvData)
+  .post("/api/csv-to-json", csvData)
   .then((response) => {
     // This just prints the JSON string to the console, but you can do anything with it here
     const jsonString = JSON.stringify(response.data, null, 2);
