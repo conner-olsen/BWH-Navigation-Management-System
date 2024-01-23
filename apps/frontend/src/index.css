@@ -34,3 +34,16 @@ body {
 .example-component {
   background-color: cyan;
 }
+
+.GlobalHeader {
+  width: 100%;
+  background-color: #3498db;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.CompanyLogo {
+  width: 50%;
+  height: auto;
+}
