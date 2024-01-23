@@ -22,10 +22,7 @@ function App() {
             },
           ],
         },
-        {
-          path: "/LoginPage",
-          //element: <
-        },
+
         {
           path: "/map",
           element: <MapRoute />,
