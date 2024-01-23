@@ -2,8 +2,20 @@ import { Outlet } from "react-router-dom";
 import { Container, Row, Col, Image, Stack } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LargeButton from "../components/LargeButton.tsx";
+import { useNavigate } from "react-router-dom";
 
-const UserSelection = () => {
+const UserSelection: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handlePatientLoginClick = () => {
+    // Use the navigate function to redirect to the PatientLogin page
+    navigate("/PatientLogin");
+  };
+
+  const handleAdminLoginClick = () => {
+    navigate("/AdminLogin");
+  };
+
   return (
     <Container fluid>
       <Outlet />
@@ -24,11 +36,20 @@ const UserSelection = () => {
                 <b>Sign in</b>
               </p>
             </div>
-            <LargeButton title={"Login as Guest"}></LargeButton>
+            <LargeButton
+              onClick={handlePatientLoginClick}
+              title={"Login as Guest"}
+            ></LargeButton>
 
-            <LargeButton title={"Login as Patient"}></LargeButton>
+            <LargeButton
+              onClick={handlePatientLoginClick}
+              title={"Login as Patient"}
+            ></LargeButton>
 
-            <LargeButton title={"Login as Administrator"}></LargeButton>
+            <LargeButton
+              onClick={handleAdminLoginClick}
+              title={"Login as Administrator"}
+            ></LargeButton>
           </Stack>
         </Col>
       </Row>
