@@ -34,8 +34,7 @@ model Node {
 
 //Edge Table
 model Edge {
-  id        Int     @id @default(autoincrement())
-  edgeID    String  @db.VarChar(8)
+  edgeID    String  @id
   node      Node    @relation(fields: [startNode], references: [nodeId])
   startNode String
   endNode   String  @db.VarChar(10)
