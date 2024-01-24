@@ -53,7 +53,12 @@ test("find path nothing", () => {
   expect(graph.bfs(" ", " ")).toStrictEqual([]);
 });
 
-//test non-existent node
+//test non-existent nodes
 test("find path 5 6", () => {
   expect(graph.bfs("5", "6")).toStrictEqual([]);
+});
+
+//test one non-existent node
+test("find path 3 6", () => {
+  expect(graph.bfs("3", "6")).toStrictEqual([]);
 });

@@ -99,6 +99,8 @@ export class Graph {
   }
 
   bfs(startNode: string, endNode: string): string[] {
+    //add a error catcher -->
+
     //define needed objects
     //store lists of nodeIDs
     const visited: string[] = [];
@@ -144,8 +146,8 @@ export class Graph {
       }
     }
 
-    //return visited list if endNode not reached (probably should return something else)
-    return visited;
+    //return empty if endNode not reached (probably should return something else)
+    return [];
   }
 }
 
