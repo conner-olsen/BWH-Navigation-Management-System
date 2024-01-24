@@ -47,3 +47,13 @@ test("find path 1 1", () => {
 test("find path 3 2", () => {
   expect(graph.bfs("3", "2")).toStrictEqual(["3", "2"]);
 });
+
+//test empty
+test("find path nothing", () => {
+  expect(graph.bfs(" ", " ")).toStrictEqual([]);
+});
+
+//test non-existent node
+test("find path 5 6", () => {
+  expect(graph.bfs("5", "6")).toStrictEqual([]);
+});
