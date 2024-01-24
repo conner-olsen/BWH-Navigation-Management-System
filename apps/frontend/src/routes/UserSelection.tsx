@@ -26,7 +26,7 @@ const UserSelection: React.FC = () => {
       <Row>
         <Col md={6}>
           <Image
-            className="img-fluid"
+            className="hospitalImage img-fluid"
             src="public/hospital.jpeg"
             alt="Hospital Image"
             fluid

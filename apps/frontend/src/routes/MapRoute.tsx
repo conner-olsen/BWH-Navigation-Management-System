@@ -2,10 +2,17 @@ import {Outlet} from "react-router-dom";
 import BackButton from "../components/BackButton.tsx";
 import DragNDrop from "../components/DragNDrop.tsx";
 import axios from "axios";
+import { useState } from 'react';
+import {Container} from "react-bootstrap";
+
 
 export function MapRoute() {
-    let CSVString: string = "";
+    // let CSVString: string = "";
+    const [CSVString, setCSVString] = useState("");
     let returnedJSON: string = "";
+
+
+
     const handleFileDrop = (file: File) => {
         const reader = new FileReader();
 
@@ -16,30 +23,25 @@ export function MapRoute() {
             () => {
                 // this will then display a text file
                 if (typeof (reader.result) === "string") {
-                    CSVString = reader.result;
+                    setCSVString(reader.result);
+                    // CSVString = reader.result;
                     console.log('File contends', CSVString);
                 } else {
-                    CSVString = "Failed";
+                    // CSVString = "Failed";
+                    setCSVString("Failed");
                     console.log('No Content');
                 }
+
 
             },
             false,
         );
-        //
 
         if (file) {
             reader.readAsText(file);
         }
 
-        // const displayDiv = document.getElementById('CsvDataText');
-        //
-        // if (displayDiv) {
-        //     displayDiv.textContent = CSVString;
-        // }
-        // else {
-        //     console.log("fail");
-        // }
+
 
     };
 
@@ -58,7 +60,7 @@ export function MapRoute() {
     return (
         <div>
             <Outlet></Outlet>
-            <BackButton></BackButton>
+            <BackButton link={"/HomePage"}></BackButton>
             <img
                 className={"pictureOfL1"}
                 src="public/icon/00_thelowerlevel1 (2).png"
@@ -67,13 +69,13 @@ export function MapRoute() {
             />
             <br/>
             <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
+            <br/>
 
-            <div className="CsvDataText">
-                <p> Test </p>
-                <div id="CSVText">
-
-                </div>
-            </div>
+            <Container className="CsvDataText">
+                <p>CSV File: </p>
+                <br/>
+                <div> {CSVString}</div>
+            </Container>
         </div>
     );
 }
