@@ -35,6 +35,25 @@ test("find path csv", () => {
   expect(graphCSV.bfs(startNodeCSV, endNodeCSV)).toStrictEqual(answerCSV);
 });
 
+test("invalid input", () => {
+  const graphCSV = new Graph();
+  const startNodeCSV = "CCON02L1";
+  const endNodeCSV = "CHALL004L1";
+  //const answerCSV: string[] = ["CCONF002L1", "WELEV00HL1", "CHALL004L1"];
+
+  graphCSV.fromCSV(
+    nodePath,
+    edgePath,
+  );
+
+  if (graphCSV.getNode(startNodeCSV) == undefined) {
+    console.log("undefined");
+  } else {
+    console.log((graphCSV.getNode(startNodeCSV) as Node).id);
+  }
+  expect(graphCSV.bfs(startNodeCSV, endNodeCSV)).toStrictEqual([]);
+});
+
 test("format bfs", () => {
   const graphCSV = new Graph();
   const startNodeCSV = "CCONF002L1";
@@ -48,9 +67,9 @@ test("format bfs", () => {
   if (graphCSV.getNode(startNodeCSV) == undefined) {
     console.log("undefined");
   } else {
-    console.log((graphCSV.getNode(startNodeCSV) as Node).id);
+    console.log(graphCSV.formatBFS(graphCSV.bfs(startNodeCSV, endNodeCSV)));
   }
   expect(graphCSV.formatBFS(graphCSV.bfs(startNodeCSV, endNodeCSV))).toStrictEqual
-  (" CCONF002L1 -->  WELEV00HL1 -->  CHALL004L1 --> ");
+  (" CCONF002L1 -->  WELEV00HL1 -->  CHALL004L1");
 });
 

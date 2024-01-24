@@ -228,6 +228,7 @@ export class Graph {
     for (const item of array) {
       result = result + " " + item + " --> ";
     }
+    result = result.substring(0, result.length - 5);
     return result;
   }
 }
