@@ -21,7 +21,7 @@ export class Node {
    * @param {number} xCoord - The X coordinate of the node.
    * @param {number} yCoord - The Y coordinate of the node.
    * @param {string} floor - The floor where the node is located.
-   * @param {string} building - The building where the node is located.
+    * @param {string} building - The building where the node is located.
    * @param {string} nodeType - The type of the node.
    * @param {string} longName - The long name of the node.
    * @param {string} shortName - The short name of the node.
@@ -53,6 +53,10 @@ export class Node {
    */
   connectTo(nodeId: string) {
     this.edges.add(nodeId);
+  }
+
+  hasEdge(nodeId: string): boolean {
+    return this.edges.has(nodeId);
   }
 }
 
@@ -108,23 +112,11 @@ export class Graph {
    */
   fromCSV(nodePath: string, edgePath: string) {
     // Specify the path to your CSV file
-    let rows: CSVRow[] = [];
-    console.log("stops here");
+    let rows: CSVRow[];
 
     // Read the CSV file as plain text
-    fs.readFile(nodePath, "utf-8", (err, nodeData) => {
-      console.log("hellooo");
-      if (err) {
-        console.log("error reading the file");
-        console.error("Error reading the file:", err);
-      } else {
-        // Print the content of the CSV file
-        console.log("CSV Content:", nodeData);
-        rows = parseCSV(nodeData);
-      }
-    });
-
-    console.log("stops here again");
+    const nodeData = fs.readFileSync(nodePath, "utf-8");
+    rows = parseCSV(nodeData);
     // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
     for (const row of rows) {
       const nodeID = row["nodeID"];
@@ -150,15 +142,8 @@ export class Graph {
     }
 
     // Populate edges
-    fs.readFile(edgePath, "utf-8", (err, edgeData) => {
-      if (err) {
-        console.error("Error reading the file:", err);
-      } else {
-        // Print the content of the CSV file
-        console.log("CSV Content:", edgeData);
-        rows = parseCSV(edgeData);
-      }
-    });
+    const edgeData = fs.readFileSync(edgePath, "utf-8");
+    rows = parseCSV(edgeData);
 
     for (const row of rows) {
       const startNode = row["startNode"];
@@ -172,76 +157,61 @@ export class Graph {
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.
    * @param {string} endNode - The ID of the ending node.
-   * @param {Graph} graph - The graph object to traverse
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   bfs(startNode: string, endNode: string): string[] {
-    //add an error catcher for invalid inputs
+    //add a error catcher for invalid inputs
     if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
       console.log("Invalid location");
       return [];
     }
 
     //define needed objects
-    //store lists of nodeID paths
-    const queue: string[][] = [];
-
+    //store lists of nodeIDs
+    const visited: string[] = [];
+    const queue: string[] = [];
     //used for iterating through the loop
     let currentNode: Node | undefined;
-    let currentNodeIDPath: string[];
-    let newPath: string[];
+    let currentNodeID: string;
     let neighbors: Set<string>;
 
-    //put startNode path in the queue
-    queue.push([startNode]);
+    //put startNode in the queue
+    queue.push(startNode);
 
     //start loop
     while (queue.length > 0) {
-      //get first path from queue
-      currentNodeIDPath = queue[0];
+      //get the first item from queue
+      currentNodeID = queue[0];
+      currentNode = this.getNode(currentNodeID);
 
-      //get last node
-      if(currentNodeIDPath.length > 1) {
-        currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
-      }
-      else {
-        currentNode = this.getNode(currentNodeIDPath[0]);
-      }
-
-      //if currentNode is undefined, pop path from queue
-      if (currentNode == undefined) {
+      //if currentNode is undefined or been visited, pop from queue
+      if (currentNode == undefined || visited.includes(currentNodeID)) {
         queue.shift();
       }
 
-      //elif it is the end node, return current path
-      else if (currentNode.id == endNode) {
-        console.log(currentNodeIDPath);
-        return currentNodeIDPath;
+      //elif it is the end node, return visited
+      else if (currentNodeID == endNode) {
+        visited.push(currentNodeID);
+        console.log(visited);
+        return visited;
       }
 
-      //else, cast as currentNode as Node (determined above) and add neighbor to path for each
+      //else, cast as currentNode as Node (determined above) and add neighbors to queue
       else {
         neighbors = (currentNode as Node).edges;
         neighbors.forEach(function (item) {
-          newPath = [...currentNodeIDPath];
-          newPath.push(item);
-          queue.push(newPath);
+          queue.push(item);
         });
 
-        //pop current node ID path from queue
-        queue.shift();
+        //add current node ID to visited
+        visited.push(currentNodeID);
 
+        //pop current node ID from queue
+        queue.shift();
       }
     }
 
     //return empty if endNode not reached (probably should return something else)
-    console.log("not reached");
     return [];
   }
 }
-
-// Example usage
-// create graph
-const graph = new Graph();
-graph.fromCSV("apps/backend/src/csvData/L1Nodes.csv", "apps/backend/src/csvData/L1Edges.csv");
-
