@@ -1,12 +1,9 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Global_Header from "./components/Global_Header.tsx";
-import Global_Footer from "./components/Global_Footer.tsx";
 import { MapRoute } from "./routes/MapRoute.tsx";
 import UserSelection from "./routes/UserSelection.tsx";
 import PatientLogin from "./routes/PatientLogin.tsx";
-import HomePage from "./routes/HomePage.tsx";
-import AdminLogin from "./routes/AdminLogin.tsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -27,14 +24,6 @@ function App() {
           path: "/map",
           element: <MapRoute />,
         },
-        {
-          path: "/HomePage",
-          element: <HomePage />,
-        },
-        {
-          path: "/AdminLogin",
-          element: <AdminLogin />,
-        },
       ],
     },
   ]);
@@ -47,7 +36,6 @@ function Root() {
     <main>
       <Global_Header></Global_Header>
       <Outlet />
-      <Global_Footer></Global_Footer>
     </main>
   );
 }

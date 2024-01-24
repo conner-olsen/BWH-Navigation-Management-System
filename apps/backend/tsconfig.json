@@ -7,13 +7,6 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "lib": [
-      "decorators",
-      "dom",
-      "es5",
-      "scripthost",
-      "es2015.collection"
-    ]
   },
   "ts-node": {
     "swc": true,
