@@ -38,6 +38,23 @@
   padding: 10px;
 }
 
+/* ============== GLOBAL FOOTER =========== */
+.GlobalFooter {
+  position: relative;
+  background-color: #012d5a;
+}
+
+.FooterLogo {
+  scale: 75%;
+  padding-left: 15px;
+}
+
+.FooterText {
+    scale: 67%;
+    color: white;
+    text-align: center;
+}
+
 /* =========== LOGIN PAGE ========== */
 
 .loginForm input {
