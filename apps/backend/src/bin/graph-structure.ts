@@ -13,7 +13,7 @@ export class Node {
   nodeType: string; // Type of the node
   longName: string; // Long name of the node
   shortName: string; // Short name of the node
-  edges: Set<string>; // Set of node IDs that this node is connected to
+  edges: Array<string>; // Set of edges IDs that this node is connected to
 
   /**
    * Create a new Node.
@@ -44,15 +44,15 @@ export class Node {
     this.nodeType = nodeType;
     this.longName = longName;
     this.shortName = shortName;
-    this.edges = new Set();
+    this.edges = new Array<string>;
   }
 
   /**
-   * Connect this node to another node.
+   * Connect this node to another edge.
    * @param {string} nodeId - The ID of the node to connect to.
    */
-  connectTo(nodeId: string) {
-    this.edges.add(nodeId);
+  connectTo(edgeId: string) {
+    this.edges.push(edgeId);
   }
 
   hasEdge(nodeId: string): boolean {
@@ -61,16 +61,33 @@ export class Node {
 }
 
 /**
+ * Class representing an Edge.
+ */
+class Edge {
+  id: string;
+  startNode: string;
+  endNode: string;
+  weigth: number;
+  constructor(id: string, startNode: string, endNode: string, weight : number) {
+    this.id = id;
+    this.startNode = startNode;
+    this.endNode = endNode;
+    this.weigth = weight;
+  }
+
+}
+/**
  * Class representing a Graph.
  */
 export class Graph {
   nodes: Map<string, Node>; // Map of node IDs to Node objects
-
+  edges: Map<string, Edge>; // Map of edge IDs to Edge objects
   /**
    * Create a new Graph.
    */
   constructor() {
     this.nodes = new Map();
+    this.edges = new Map();
   }
 
   /**
@@ -83,17 +100,12 @@ export class Graph {
 
   /**
    * Add an edge between two nodes in the graph.
-   * @param {string} nodeId1 - The ID of the first node.
-   * @param {string} nodeId2 - The ID of the second node.
+   * @param {edge} Edge - the Edge that need to be added
    */
-  addEdge(nodeId1: string, nodeId2: string) {
-    const node1 = this.nodes.get(nodeId1);
-    const node2 = this.nodes.get(nodeId2);
-
-    if (node1 && node2) {
-      node1.connectTo(nodeId2);
-      node2.connectTo(nodeId1);
-    }
+  addEdge(edge: Edge) {
+    this.edges.set(edge.id, edge);
+    this.getNode(edge.startNode)?.connectTo(edge.id);
+    this.getNode(edge.endNode)?.connectTo(edge.id);
   }
 
   /**
