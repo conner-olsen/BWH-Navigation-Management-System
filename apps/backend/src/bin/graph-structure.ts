@@ -176,58 +176,66 @@ export class Graph {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   bfs(startNode: string, endNode: string): string[] {
-    //add a error catcher for invalid inputs
+    //add an error catcher for invalid inputs
     if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
       console.log("Invalid location");
       return [];
     }
 
     //define needed objects
-    //store lists of nodeIDs
-    const visited: string[] = [];
-    const queue: string[] = [];
+    //store lists of nodeID paths
+    const queue: string[][] = [];
+
     //used for iterating through the loop
     let currentNode: Node | undefined;
-    let currentNodeID: string;
+    let currentNodeIDPath: string[];
+    let newPath: string[];
     let neighbors: Set<string>;
 
-    //put startNode in the queue
-    queue.push(startNode);
+    //put startNode path in the queue
+    queue.push([startNode]);
 
     //start loop
     while (queue.length > 0) {
-      //get first item from queue
-      currentNodeID = queue[0];
-      currentNode = this.getNode(currentNodeID);
+      //get first path from queue
+      currentNodeIDPath = queue[0];
 
-      //if currentNode is undefined or been visited, pop from queue
-      if (currentNode == undefined || visited.includes(currentNodeID)) {
+      //get last node
+      if(currentNodeIDPath.length > 1) {
+        currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
+      }
+      else {
+        currentNode = this.getNode(currentNodeIDPath[0]);
+      }
+
+      //if currentNode is undefined, pop path from queue
+      if (currentNode == undefined) {
         queue.shift();
       }
 
-      //elif it is the end node, return visited
-      else if (currentNodeID == endNode) {
-        visited.push(currentNodeID);
-        console.log(visited);
-        return visited;
+      //elif it is the end node, return current path
+      else if (currentNode.id == endNode) {
+        console.log(currentNodeIDPath);
+        return currentNodeIDPath;
       }
 
-      //else, cast as currentNode as Node (determined above) and add neighbors to queue
+      //else, cast as currentNode as Node (determined above) and add neighbor to path for each
       else {
         neighbors = (currentNode as Node).edges;
         neighbors.forEach(function (item) {
-          queue.push(item);
+          newPath = [...currentNodeIDPath];
+          newPath.push(item);
+          queue.push(newPath);
         });
 
-        //add current node ID to visited
-        visited.push(currentNodeID);
-
-        //pop current node ID from queue
+        //pop current node ID path from queue
         queue.shift();
+
       }
     }
 
     //return empty if endNode not reached (probably should return something else)
+    console.log("not reached");
     return [];
   }
 }

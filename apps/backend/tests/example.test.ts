@@ -54,7 +54,7 @@ graph.addEdge("3", "1");
 const startNode = '1';
 const endNode = '3';
 const path = graph.bfs(startNode, endNode);
-const answer: string[] = ["1", "2", "3"];
+const answer: string[] = ["1", "3"];
 console.log(path);
 
 //test full graph
