@@ -1,12 +1,11 @@
-import { Container } from "react-bootstrap";
-import { Outlet } from "react-router-dom";
+import NavBar from "../components/NavBar.tsx";
 
 const HomePage: React.FC = () => {
   return (
-    <Container fluid>
-      <Outlet />
-      <h1>Home</h1>
-    </Container>
+    <div>
+      <NavBar> </NavBar>
+      <div className="Spacer"></div>
+    </div>
   );
 };
 
