@@ -2,10 +2,46 @@ import {Outlet} from "react-router-dom";
 import BackButton from "../components/BackButton.tsx";
 import DragNDrop from "../components/DragNDrop.tsx";
 import axios from "axios";
+import { useState } from 'react';
+
+//
+// interface TextEntryProps {
+//     CsvString: string;
+// }
+// const TextEntryComponent: React.FC<TextEntryProps> = () => {
+//     const [inputText, setInputText] = useState<string>('');
+//
+//     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//         // Update the state with the entered text
+//         setInputText(event.target.value);
+//     };
+//
+//     const handleDisplayClick = () => {
+//         // Display the entered text in the console (you can update this as needed)
+//         console.log('Entered Text:', inputText);
+//     };
+//
+//     return (
+//         <div>
+//             {/* Input field to enter text */}
+//             <input type="text" value={inputText} onChange={handleInputChange} />
+//
+//             {/* Button to display the entered text */}
+//             <button onClick={handleDisplayClick}>Display Text</button>
+//
+//             {/* Display div */}
+//             <div>{inputText}</div>
+//         </div>
+//     );
+// };
 
 export function MapRoute() {
-    let CSVString: string = "";
+    // let CSVString: string = "";
+    const [CSVString, setCSVString] = useState("");
     let returnedJSON: string = "";
+
+
+
     const handleFileDrop = (file: File) => {
         const reader = new FileReader();
 
@@ -16,30 +52,25 @@ export function MapRoute() {
             () => {
                 // this will then display a text file
                 if (typeof (reader.result) === "string") {
-                    CSVString = reader.result;
+                    setCSVString(reader.result);
+                    // CSVString = reader.result;
                     console.log('File contends', CSVString);
                 } else {
-                    CSVString = "Failed";
+                    // CSVString = "Failed";
+                    setCSVString("Failed");
                     console.log('No Content');
                 }
+
 
             },
             false,
         );
-        //
 
         if (file) {
             reader.readAsText(file);
         }
 
-        // const displayDiv = document.getElementById('CsvDataText');
-        //
-        // if (displayDiv) {
-        //     displayDiv.textContent = CSVString;
-        // }
-        // else {
-        //     console.log("fail");
-        // }
+
 
     };
 
@@ -70,9 +101,8 @@ export function MapRoute() {
 
             <div className="CsvDataText">
                 <p> Test </p>
-                <div id="CSVText">
-
-                </div>
+                <div> {CSVString}</div>
+                {/*<TextEntryComponent></TextEntryComponent>*/}
             </div>
         </div>
     );
