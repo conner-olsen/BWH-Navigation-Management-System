@@ -18,9 +18,9 @@ test("check if path exists", () => {
 //test full graph
 test("find path csv", () => {
   const graphCSV = new Graph();
-  const startNodeCSV = "CCONF001L1";
-  const endNodeCSV = "CCONF002L1";
-  const answerCSV: string[] = ["CCONF001L1", "CCONF002L1"];
+  const startNodeCSV = "CCONF002L1";
+  const endNodeCSV = "WELEV00HL1";
+  const answerCSV: string[] = ["CCONF001L1", "WELEV00HL1"];
 
   graphCSV.fromCSV(
     nodePath,
