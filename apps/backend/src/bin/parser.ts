@@ -7,7 +7,6 @@
  * @param {object} data - The data object representing the row in CSV format.
  */
 type CSVRow = { [key: string]: string };
-
 /**
  * Parses a CSV string and returns an array of CSVRow objects.
  *
@@ -22,6 +21,7 @@ export function parseCSV(csvString: string): CSVRow[] {
   const headers = lines[0].split(",");
 
   // Process each line
+
   return lines.slice(1).map((line) => {
     // Split the line by comma and create an object
     const data = line.split(",");
