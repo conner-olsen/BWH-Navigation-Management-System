@@ -56,7 +56,7 @@ export class Node {
 /**
  * Class representing a Graph.
  */
-class Graph {
+export class Graph {
   nodes: Map<string, Node>; // Map of node IDs to Node objects
 
   /**
@@ -97,7 +97,58 @@ class Graph {
   getNode(nodeId: string): Node | undefined {
     return this.nodes.get(nodeId);
   }
+
+  bfs(startNode: string, endNode: string): string[] {
+    //define needed objects
+    //store lists of nodeIDs
+    const visited: string[] = [];
+    const queue: string[] = [];
+    //used for iterating through the loop
+    let currentNode: Node | undefined;
+    let currentNodeID: string;
+    let neighbors: Set<string>;
+
+    //put startNode in the queue
+    queue.push(startNode);
+
+    //start loop
+    while(queue.length > 0) {
+      //get first item from queue
+      currentNodeID = queue[0];
+      currentNode = this.getNode(currentNodeID);
+
+      //if currentNode is undefined or been visited, pop from queue
+      if (currentNode == undefined || visited.includes(currentNodeID)) {
+        queue.shift();
+      }
+
+      //elif it is the end node, return visited
+      else if (currentNodeID == endNode) {
+        visited.push(currentNodeID);
+        console.log(visited);
+        return visited;
+      }
+
+      //else, cast as currentNode as Node (determined above) and add neighbors to queue
+      else {
+        neighbors = (currentNode as Node).edges;
+        neighbors.forEach(function (item) {
+          queue.push(item);
+        });
+
+        //add current node ID to visited
+        visited.push(currentNodeID);
+
+        //pop current node ID from queue
+        queue.shift();
+      }
+    }
+
+    //return visited list if endNode not reached (probably should return something else)
+    return visited;
+  }
 }
+
 
 // Example usage
 // create graph
