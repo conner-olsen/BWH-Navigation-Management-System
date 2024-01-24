@@ -1,3 +1,5 @@
+import fs from "fs";
+
 /**
  * Class representing a Node.
  */
@@ -98,6 +100,64 @@ export class Graph {
     return this.nodes.get(nodeId);
   }
 
+  fromCSV(nodePath: string, edgePath: string) {
+    // Specify the path to your CSV file
+    let rows: any;
+    // Read the CSV file as plain text
+    fs.readFile(nodePath, "utf-8", (err, nodeData) => {
+      if (err) {
+        console.error("Error reading the file:", err);
+      } else {
+        // Print the content of the CSV file
+        console.log("CSV Content:", nodeData);
+        rows = parseCSV(nodeData);
+      }
+    });
+
+    // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
+    for (const row of rows) {
+      const nodeID = row["nodeID"];
+      const xcoord = row["xcoord"];
+      const ycoord = row["ycoord"];
+      const floor = row["floor"];
+      const building = row["building"];
+      const nodeType = row["nodeType"];
+      const longName = row["longName"];
+      const shortName = row["shortName"];
+
+      const node = new Node(
+        nodeID,
+        xcoord,
+        ycoord,
+        floor,
+        building,
+        nodeType,
+        longName,
+        shortName,
+      );
+
+      this.addNode(node);
+    }
+
+    // Populate edges
+    fs.readFile(edgePath, "utf-8", (err, edgeData) => {
+      if (err) {
+        console.error("Error reading the file:", err);
+      } else {
+        // Print the content of the CSV file
+        console.log("CSV Content:", edgeData);
+        rows = parseCSV(edgeData);
+      }
+    });
+
+    for (const row of rows) {
+      const startNode = row["startNode"];
+      const endNode = row["endNode"];
+
+      this.addEdge(startNode, endNode);
+    }
+  }
+
   bfs(startNode: string, endNode: string): string[] {
     //add a error catcher -->
 
@@ -114,7 +174,7 @@ export class Graph {
     queue.push(startNode);
 
     //start loop
-    while(queue.length > 0) {
+    while (queue.length > 0) {
       //get first item from queue
       currentNodeID = queue[0];
       currentNode = this.getNode(currentNodeID);
@@ -150,7 +210,6 @@ export class Graph {
     return [];
   }
 }
-
 
 // Example usage
 // create graph
