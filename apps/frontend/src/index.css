@@ -40,7 +40,7 @@
 
 /* ============== GLOBAL FOOTER =========== */
 .GlobalFooter {
-  width: 100%;
+  position: relative;
   background-color: #012d5a;
 }
 
@@ -50,11 +50,10 @@
 }
 
 .FooterText {
-    scale:67%;
+    scale: 67%;
     color: white;
     text-align: center;
 }
-
 
 /* =========== LOGIN PAGE ========== */
 
