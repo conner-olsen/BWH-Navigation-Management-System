@@ -9,6 +9,23 @@ test("adds 1 + 2 to equal 3", () => {
   expect(sum(1, 2)).toBe(3);
 });
 
+
+///csv bfs testing:
+const graphCSV = new Graph();
+graphCSV.fromCSV("apps/backend/src/csvData/L1Nodes.csv", "apps/backend/src/csvData/L1Edges.csv");
+
+const startNodeCSV = 'CCONF001L1';
+const endNodeCSV = 'CCONF002L1';
+const pathCSV = graphCSV.bfs(startNodeCSV, endNodeCSV);
+const answerCSV: string[] = ["1", "2", "3"];
+console.log(pathCSV);
+
+//test full graph
+test("find path 1 2 3", () => {
+  expect(graph.bfs(startNode, endNode)).toStrictEqual(answer);
+});
+
+///manual bfs testing:
 const graph = new Graph();
 
 // Add nodes and edges to the graph (similar to the example in graph-structure.ts)

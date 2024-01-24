@@ -6,7 +6,7 @@
  * @constructor
  * @param {object} data - The data object representing the row in CSV format.
  */
-type CSVRow = { [key: string]: string };
+export type CSVRow = { [key: string]: string };
 
 /**
  * Parses a CSV string and returns an array of CSVRow objects.
@@ -14,7 +14,7 @@ type CSVRow = { [key: string]: string };
  * @param {string} csvString - The CSV string to parse.
  * @return {CSVRow[]} - An array of CSVRow objects representing the parsed data.
  */
-function parseCSV(csvString: string): CSVRow[] {
+export function parseCSV(csvString: string): CSVRow[] {
   // Split the CSV string into lines
   const lines = csvString.split("\n");
 
@@ -38,7 +38,7 @@ function parseCSV(csvString: string): CSVRow[] {
  * @param {CSVRow[]} rows - The array of CSVRow objects to convert.
  * @return {string} - The JSON string representation of the CSVRow objects.
  */
-function convertToJSON(rows: CSVRow[]): string {
+export function convertToJSON(rows: CSVRow[]): string {
   return JSON.stringify(rows, null, 2);
 }
 

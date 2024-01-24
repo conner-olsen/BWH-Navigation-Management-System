@@ -1,4 +1,5 @@
 import fs from "fs";
+import {CSVRow, parseCSV} from "./parser.ts";
 
 /**
  * Class representing a Node.
@@ -100,9 +101,15 @@ export class Graph {
     return this.nodes.get(nodeId);
   }
 
+  /**
+   * populates the graph from csv files
+   * @param nodePath - path to nodeID csv file
+   * @param edgePath - path to edgeID csv file
+   */
   fromCSV(nodePath: string, edgePath: string) {
     // Specify the path to your CSV file
-    let rows: any;
+    let rows: CSVRow[] = [];
+
     // Read the CSV file as plain text
     fs.readFile(nodePath, "utf-8", (err, nodeData) => {
       if (err) {
@@ -127,8 +134,8 @@ export class Graph {
 
       const node = new Node(
         nodeID,
-        xcoord,
-        ycoord,
+        +xcoord,
+        +ycoord,
         floor,
         building,
         nodeType,
@@ -158,8 +165,19 @@ export class Graph {
     }
   }
 
+  /**
+   * Finds the path from inputted startNode to endNode in given graph
+   * @param {string} startNode - The ID of the starting node.
+   * @param {string} endNode - The ID of the ending node.
+   * @param {Graph} graph - The graph object to traverse
+   * @return {string[]} - array of NodeIDs of nodes in path
+   */
   bfs(startNode: string, endNode: string): string[] {
-    //add a error catcher -->
+    //add a error catcher for invalid inputs
+    if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
+      console.log("Invalid location");
+      return [];
+    }
 
     //define needed objects
     //store lists of nodeIDs
@@ -214,25 +232,7 @@ export class Graph {
 // Example usage
 // create graph
 const graph = new Graph();
-
-// create nodes
-const node1 = new Node("1", 1, 1, "1", "1", "1", "1", "1");
-const node2 = new Node("2", 2, 2, "2", "2", "2", "2", "2");
-const node3 = new Node("3", 3, 3, "3", "3", "3", "3", "3");
-
-// add nodes to graph
-graph.addNode(node1);
-graph.addNode(node2);
-graph.addNode(node3);
-
-// add edges to graph
-graph.addEdge("1", "2");
-graph.addEdge("2", "3");
-graph.addEdge("3", "1");
-
-// get node from graph
-console.log(graph.getNode("1"));
-console.log(graph.getNode("2"));
+graph.fromCSV("apps/backend/src/csvData/L1Nodes.csv", "apps/backend/src/csvData/L1Edges.csv");
 
 // Output
 // Node {
