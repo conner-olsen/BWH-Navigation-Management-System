@@ -1,8 +1,17 @@
-const BackButton = () => {
+import { Link } from "react-router-dom";
+
+interface BackButton {
+    link: string;
+}
+
+
+const BackButton: React.FC<BackButton> = ({ link }) => {
   return (
-    <button className="BackButton">
-      <img className="BackButtonImg" src="public/icon/Vector.png" alt="" />
-    </button>
+      <Link to={link}>
+        <button className= {"BackButton"}>
+          <img className="BackButtonImg" src="public/icon/Vector.png" alt="" />
+        </button>
+      </Link>
   );
 };
 

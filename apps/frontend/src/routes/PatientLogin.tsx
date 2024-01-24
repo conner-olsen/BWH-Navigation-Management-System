@@ -1,5 +1,6 @@
 //import React, { useState } from 'react';
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+import BackButton from "../components/BackButton.tsx"; // Import Bootstrap CSS
 
 const PatientLogin = () => {
   /* IMPLEMENT SOON */
@@ -23,10 +24,13 @@ const PatientLogin = () => {
   // };
 
   return (
-    <div className="container-sm mt-5">
+      <div>
+          <BackButton link={"/UserSelection"}></BackButton>
+
+          <div className="container-sm mt-5">
       <div className="row justify-content-center">
         <div className="col-md-9">
-          <h3>Admin Login</h3>
+          <h3>Patient Login</h3>
           <form>
             <div className="mb-3 testClass">
               <img src="public/icon/user-icon.png" />
@@ -68,6 +72,7 @@ const PatientLogin = () => {
         </div>
       </div>
     </div>
+      </div>
   );
 };
 

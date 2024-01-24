@@ -3,37 +3,8 @@ import BackButton from "../components/BackButton.tsx";
 import DragNDrop from "../components/DragNDrop.tsx";
 import axios from "axios";
 import { useState } from 'react';
+import {Container} from "react-bootstrap";
 
-//
-// interface TextEntryProps {
-//     CsvString: string;
-// }
-// const TextEntryComponent: React.FC<TextEntryProps> = () => {
-//     const [inputText, setInputText] = useState<string>('');
-//
-//     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//         // Update the state with the entered text
-//         setInputText(event.target.value);
-//     };
-//
-//     const handleDisplayClick = () => {
-//         // Display the entered text in the console (you can update this as needed)
-//         console.log('Entered Text:', inputText);
-//     };
-//
-//     return (
-//         <div>
-//             {/* Input field to enter text */}
-//             <input type="text" value={inputText} onChange={handleInputChange} />
-//
-//             {/* Button to display the entered text */}
-//             <button onClick={handleDisplayClick}>Display Text</button>
-//
-//             {/* Display div */}
-//             <div>{inputText}</div>
-//         </div>
-//     );
-// };
 
 export function MapRoute() {
     // let CSVString: string = "";
@@ -89,7 +60,7 @@ export function MapRoute() {
     return (
         <div>
             <Outlet></Outlet>
-            <BackButton></BackButton>
+            <BackButton link={"/HomePage"}></BackButton>
             <img
                 className={"pictureOfL1"}
                 src="public/icon/00_thelowerlevel1 (2).png"
@@ -98,12 +69,13 @@ export function MapRoute() {
             />
             <br/>
             <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
+            <br/>
 
-            <div className="CsvDataText">
-                <p> Test </p>
+            <Container className="CsvDataText">
+                <p>CSV File: </p>
+                <br/>
                 <div> {CSVString}</div>
-                {/*<TextEntryComponent></TextEntryComponent>*/}
-            </div>
+            </Container>
         </div>
     );
 }
