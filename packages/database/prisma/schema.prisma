@@ -18,38 +18,3 @@ model HighScore {
   time  DateTime
   score Int
 }
-
-//Node Table
-model Node {
-  nodeId    String @id @db.VarChar(8)
-  xcoord    Int
-  ycoord    Int
-  floor     String @db.VarChar(2)
-  building  String
-  nodeType  String @db.VarChar(4)
-  longName  String
-  shortName String
-  Edge      Edge[]
-}
-
-//Edge Table
-model Edge {
-  edgeID    String  @id
-  node      Node    @relation(fields: [startNode], references: [nodeId])
-  startNode String
-  endNode   String  @db.VarChar(10)
-}
-
-//User Table
-model User{
-  Username String @id
-  Password String
-  Employee Employee[]
-
-}
-
-model Employee{
-  adminID String @id
-  User User @relation(fields: [Username], references: [Username])
-  Username String
-}
