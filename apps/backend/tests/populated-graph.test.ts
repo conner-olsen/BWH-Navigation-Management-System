@@ -19,8 +19,8 @@ test("check if path exists", () => {
 test("find path csv", () => {
   const graphCSV = new Graph();
   const startNodeCSV = "CCONF002L1";
-  const endNodeCSV = "WELEV00HL1";
-  const answerCSV: string[] = ["CCONF001L1", "WELEV00HL1"];
+  const endNodeCSV = "CHALL004L1";
+  const answerCSV: string[] = ["CCONF002L1", "WELEV00HL1", "CHALL004L1"];
 
   graphCSV.fromCSV(
     nodePath,
@@ -33,5 +33,24 @@ test("find path csv", () => {
     console.log((graphCSV.getNode(startNodeCSV) as Node).id);
   }
   expect(graphCSV.bfs(startNodeCSV, endNodeCSV)).toStrictEqual(answerCSV);
+});
+
+test("format bfs", () => {
+  const graphCSV = new Graph();
+  const startNodeCSV = "CCONF002L1";
+  const endNodeCSV = "CHALL004L1";
+
+  graphCSV.fromCSV(
+    nodePath,
+    edgePath,
+  );
+
+  if (graphCSV.getNode(startNodeCSV) == undefined) {
+    console.log("undefined");
+  } else {
+    console.log((graphCSV.getNode(startNodeCSV) as Node).id);
+  }
+  expect(graphCSV.formatBFS(graphCSV.bfs(startNodeCSV, endNodeCSV))).toStrictEqual
+  (" CCONF002L1 -->  WELEV00HL1 -->  CHALL004L1 --> ");
 });
 

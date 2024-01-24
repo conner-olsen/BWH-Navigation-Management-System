@@ -199,7 +199,6 @@ export class Graph {
 
       //elif it is the end node, return current path
       else if (currentNode.id == endNode) {
-        console.log(currentNodeIDPath);
         return currentNodeIDPath;
       }
 
