@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // The CSV data you want to convert to JSON (this should be the actual CSV string)
-const csvData = `name,age,city
+const csvData : string = `name,age,city
   John,30,New York
   Jane,25,Los Angeles
   Jim,35,Chicago`;
