@@ -26,6 +26,7 @@ export function MapRoute() {
             },
             false,
         );
+        //
 
         if (file) {
             reader.readAsText(file);
