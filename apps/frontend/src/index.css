@@ -33,7 +33,7 @@
 }
 
 .Spacer {
-  background-color: #012d5a;
+  background-color: var(--dark-blue);
   width: 100%;
   padding: 10px;
 }
@@ -95,6 +95,9 @@
   align-items: center;
 }
 
+/* ============= MAP PAGE ========= */
+
+
 .testClass {
   display: flex;
   align-items: center;
@@ -138,4 +141,27 @@
   border-radius: 10px; /* Remove background color */
   border: 3px solid #003a96;
   padding: 10px;
+}
+
+/* ============= DRAG AND DROP ========= */
+
+.DragDropBox {
+    width: 50%;
+    border: 2px dashed var(--dark-blue);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: border 0.3s ease-in-out;
+}
+
+.file-drop-box.dragging {
+    border: 2px dashed #2ecc71;
+}
+
+.content {
+    color: #3498db;
+}
+
+.content div {
+    margin-top: 10px;
 }
