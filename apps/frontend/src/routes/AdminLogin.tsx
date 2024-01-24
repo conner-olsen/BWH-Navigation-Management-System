@@ -1,7 +1,7 @@
 //import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
-const PatientLogin = () => {
+const AdminLogin = () => {
   /* IMPLEMENT SOON */
 
   // const [username, setUsername] = useState('');
@@ -52,6 +52,18 @@ const PatientLogin = () => {
                 required
               />
             </div>
+            <div className="mb-3 testClass">
+              <img src="public/icon/admin-id-icon.png" />
+              <input
+                type="password"
+                className="form-control"
+                id="adminID"
+                placeholder="Admin ID"
+                //value={password}
+                //onChange={handlePasswordChange}
+                required
+              />
+            </div>
             <div className="mb-3 testClass2">
               <div>
                 <input type="checkbox"></input>
@@ -71,4 +83,4 @@ const PatientLogin = () => {
   );
 };
 
-export default PatientLogin;
+export default AdminLogin;

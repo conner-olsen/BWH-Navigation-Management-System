@@ -5,6 +5,8 @@ import Global_Footer from "./components/Global_Footer.tsx";
 import { MapRoute } from "./routes/MapRoute.tsx";
 import UserSelection from "./routes/UserSelection.tsx";
 import PatientLogin from "./routes/PatientLogin.tsx";
+import HomePage from "./routes/HomePage.tsx";
+import AdminLogin from "./routes/AdminLogin.tsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -24,6 +26,14 @@ function App() {
         {
           path: "/map",
           element: <MapRoute />,
+        },
+        {
+          path: "/HomePage",
+          element: <HomePage />,
+        },
+        {
+          path: "/AdminLogin",
+          element: <AdminLogin />,
         },
       ],
     },
