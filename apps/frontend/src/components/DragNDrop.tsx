@@ -31,10 +31,6 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
   };
 
 
-
-
-
-
   useEffect(() => {
     // Prevent default behavior for drag and drop events
     const preventDefault = (e: Event) => {
