@@ -5,7 +5,8 @@ const GlobalFooter: React.FC = () => {
   return (
     <div>
       <footer className="GlobalFooter">
-        <img className="FooterLogo" src="public/bwh-logo-footer.svg" />
+        <img className="FooterLogo" src="public/bwh-logo-footer.png" />
+        <h3 className="FooterText"> © 2024 Brigham and Women's Hospital</h3>
       </footer>
     </div>
   );

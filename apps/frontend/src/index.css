@@ -38,10 +38,16 @@
 }
 
 .FooterLogo {
-  width: 100%;
-  height: auto;
+  scale: 75%;
   padding-left: 15px;
 }
+
+.FooterText {
+    scale:67%;
+    color: white;
+    text-align: center;
+}
+
 
 /* =========== LOGIN PAGE ========== */
 
