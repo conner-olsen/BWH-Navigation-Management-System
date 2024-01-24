@@ -1,14 +1,13 @@
 import { expect, test } from "vitest";
 import { Graph } from '../src/bin/graph-structure.ts';
 import { Node } from '../src/bin/graph-structure.ts';
-//import { bfs } from '../src/bin/graph-structure.ts';
+
 function sum(a: number, b: number) {
   return a + b;
 }
 test("adds 1 + 2 to equal 3", () => {
   expect(sum(1, 2)).toBe(3);
 });
-
 
 ///csv bfs testing:
 const graphCSV = new Graph();
@@ -17,15 +16,23 @@ graphCSV.fromCSV("apps/backend/src/csvData/L1Nodes.csv", "apps/backend/src/csvDa
 const startNodeCSV = 'CCONF001L1';
 const endNodeCSV = 'CCONF002L1';
 const pathCSV = graphCSV.bfs(startNodeCSV, endNodeCSV);
-const answerCSV: string[] = ["1", "2", "3"];
+const answerCSV: string[] = ["CCONF001L1", "CCONF002L1"];
 console.log(pathCSV);
 
 //test full graph
-test("find path 1 2 3", () => {
-  expect(graph.bfs(startNode, endNode)).toStrictEqual(answer);
+test("find path csv", () => {
+  graphCSV.fromCSV("apps/backend/src/csvData/L1Nodes.csv", "apps/backend/src/csvData/L1Edges.csv");
+
+  if(graphCSV.getNode(startNodeCSV) == undefined) {
+    console.log("undefined");
+  }
+  else {
+    console.log((graphCSV.getNode(startNodeCSV) as Node).id);
+  }
+  expect(graph.bfs(startNodeCSV, endNodeCSV)).toStrictEqual(answerCSV);
 });
 
-///manual bfs testing:
+/////////////////manual bfs testing:
 const graph = new Graph();
 
 // Add nodes and edges to the graph (similar to the example in graph-structure.ts)

@@ -109,10 +109,13 @@ export class Graph {
   fromCSV(nodePath: string, edgePath: string) {
     // Specify the path to your CSV file
     let rows: CSVRow[] = [];
+    console.log("stops here");
 
     // Read the CSV file as plain text
     fs.readFile(nodePath, "utf-8", (err, nodeData) => {
+      console.log("hellooo");
       if (err) {
+        console.log("error reading the file");
         console.error("Error reading the file:", err);
       } else {
         // Print the content of the CSV file
@@ -121,6 +124,7 @@ export class Graph {
       }
     });
 
+    console.log("stops here again");
     // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
     for (const row of rows) {
       const nodeID = row["nodeID"];
@@ -142,7 +146,6 @@ export class Graph {
         longName,
         shortName,
       );
-
       this.addNode(node);
     }
 
@@ -234,24 +237,3 @@ export class Graph {
 const graph = new Graph();
 graph.fromCSV("apps/backend/src/csvData/L1Nodes.csv", "apps/backend/src/csvData/L1Edges.csv");
 
-// Output
-// Node {
-//   id: '1',
-//   xCoord: 1,
-//   yCoord: 1,
-//   floor: '1',
-//   building: '1',
-//   nodeType: '1',
-//   longName: '1',
-//   shortName: '1',
-//   edges: Set { '2', '3' } }
-// Node {
-//   id: '2',
-//   xCoord: 2,
-//   yCoord: 2,
-//   floor: '2',
-//   building: '2',
-//   nodeType: '2',
-//   longName: '2',
-//   shortName: '2',
-//   edges: Set { '1', '3' } }
