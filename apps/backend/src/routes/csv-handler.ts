@@ -1,22 +1,27 @@
-import express, { Router, Request, Response } from "express";
-import { parseCSV, convertToJSON } from "../bin/parser.ts";
+import express, {Router, Request, Response} from "express";
+import {convertToJSON, parseCSV} from "../bin/parser.ts";
+import * as fs from "fs";
+import * as path from "path";
+
 
 
 const router: Router = express.Router();
 
 
+
 router.post("/", async (req: Request, res: Response) => {
   try {
     // Read the CSV string from the request body
-    const csvString = req.body;
+    const absolutePath = path.join(__dirname, "../../CSV-Data/L1Edges.csv");
+    const csvFile = fs.readFileSync(absolutePath, "utf-8");
 
     // Parse the CSV string to an array of CSVRow objects
-    const rows = parseCSV(csvString);
+    const rows = parseCSV(csvFile);
+    const jsonData = convertToJSON(rows);
+    console.log(jsonData);
 
-    // Convert the array of CSVRow objects to a JSON string
-    const json = convertToJSON(rows);
+    res.json(rows);
 
-    res.json(json);
 
 
 

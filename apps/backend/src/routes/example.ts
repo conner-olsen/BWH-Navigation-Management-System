@@ -6,6 +6,7 @@ const router: Router = express.Router();
 
 router.post("/", async function (req: Request, res: Response) {
   const highScoreAttempt: Prisma.HighScoreCreateInput = req.body;
+  console.log(req.body);
   // Attempt to save the high score
   try {
     // Attempt to create in the database
