@@ -7,6 +7,22 @@ import fs from "fs";
 const nodePath = path.resolve("data", "csv", "L1Nodes.csv");
 const edgePath = path.resolve("data", "csv", "L1Edges.csv");
 
+//test stringsToNodes
+test("string to nodes", () => {
+  const graphCSV = new Graph();
+  const startNodeCSV = "CCONF002L1";
+  const endNodeCSV = "CHALL004L1";
+
+  graphCSV.fromCSV(
+    nodePath,
+    edgePath,
+  );
+
+  console.log(graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV)));
+
+  expect(graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV))).toStrictEqual
+  ([graphCSV.getNode("CCONF002L1"), graphCSV.getNode("WELEV00HL1"), graphCSV.getNode("CHALL004L1") ]);
+});
 
 //If this fails, then the csv files are not being found
 test("check if path exists", () => {

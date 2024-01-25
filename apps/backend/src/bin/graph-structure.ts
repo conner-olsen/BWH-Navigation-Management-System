@@ -1,3 +1,6 @@
+import fs from "fs";
+import {CSVRow, parseCSV} from "./parser.ts";
+
 /**
  * Class representing a Node.
  */
@@ -10,7 +13,7 @@ export class Node {
   nodeType: string; // Type of the node
   longName: string; // Long name of the node
   shortName: string; // Short name of the node
-  edges: Array<string>; // Set of edges IDs that this node is connected to
+  edges: Set<string>; // Set of node IDs that this node is connected to
 
   /**
    * Create a new Node.
@@ -18,7 +21,7 @@ export class Node {
    * @param {number} xCoord - The X coordinate of the node.
    * @param {number} yCoord - The Y coordinate of the node.
    * @param {string} floor - The floor where the node is located.
-   * @param {string} building - The building where the node is located.
+    * @param {string} building - The building where the node is located.
    * @param {string} nodeType - The type of the node.
    * @param {string} longName - The long name of the node.
    * @param {string} shortName - The short name of the node.
@@ -41,46 +44,33 @@ export class Node {
     this.nodeType = nodeType;
     this.longName = longName;
     this.shortName = shortName;
-    this.edges = new Array<string>;
+    this.edges = new Set();
   }
 
   /**
-   * Connect this node to another edge.
+   * Connect this node to another node.
    * @param {string} nodeId - The ID of the node to connect to.
    */
-  connectTo(edgeId: string) {
-    this.edges.push(edgeId);
+  connectTo(nodeId: string) {
+    this.edges.add(nodeId);
+  }
+
+  hasEdge(nodeId: string): boolean {
+    return this.edges.has(nodeId);
   }
 }
 
-/**
- * Class representing an Edge.
- */
-class Edge {
-  id: string;
-  startNode: string;
-  endNode: string;
-  weigth: number;
-  constructor(id: string, startNode: string, endNode: string, weight : number) {
-    this.id = id;
-    this.startNode = startNode;
-    this.endNode = endNode;
-    this.weigth = weight;
-  }
-
-}
 /**
  * Class representing a Graph.
  */
-class Graph {
+export class Graph {
   nodes: Map<string, Node>; // Map of node IDs to Node objects
-  edges: Map<string, Edge>; // Map of edge IDs to Edge objects
+
   /**
    * Create a new Graph.
    */
   constructor() {
     this.nodes = new Map();
-    this.edges = new Map();
   }
 
   /**
@@ -93,12 +83,17 @@ class Graph {
 
   /**
    * Add an edge between two nodes in the graph.
-   * @param {edge} Edge - the Edge that need to be added
+   * @param {string} nodeId1 - The ID of the first node.
+   * @param {string} nodeId2 - The ID of the second node.
    */
-  addEdge(edge: Edge) {
-    this.edges.set(edge.id, edge);
-    this.getNode(edge.startNode)?.connectTo(edge.id);
-    this.getNode(edge.endNode)?.connectTo(edge.id);
+  addEdge(nodeId1: string, nodeId2: string) {
+    const node1 = this.nodes.get(nodeId1);
+    const node2 = this.nodes.get(nodeId2);
+
+    if (node1 && node2) {
+      node1.connectTo(nodeId2);
+      node2.connectTo(nodeId1);
+    }
   }
 
   /**
@@ -109,33 +104,50 @@ class Graph {
   getNode(nodeId: string): Node | undefined {
     return this.nodes.get(nodeId);
   }
-}
 
-//Example code
-// Create some sample nodes
-const nodeA = new Node("NodeA", 0, 0, "L1", "Building1", "TypeA", "LongNameA", "ShortNameA");
-const nodeB = new Node("NodeB", 3, 4, "L1", "Building1", "TypeB", "LongNameB", "ShortNameB");
-const nodeC = new Node("NodeC", 1, 7, "L1", "Building2", "TypeC", "LongNameC", "ShortNameC");
+  /**
+   * populates the graph from csv files
+   * @param nodePath - path to nodeID csv file
+   * @param edgePath - path to edgeID csv file
+   */
+  fromCSV(nodePath: string, edgePath: string) {
+    // Specify the path to your CSV file
+    let rows: CSVRow[];
 
-// Function to calculate Euclidean distance between two nodes
-function calculateDistance(node1: Node, node2: Node): number {
-  return Math.sqrt(Math.pow(node1.xCoord - node2.xCoord, 2) + Math.pow(node1.yCoord - node2.yCoord, 2));
-}
+    // Read the CSV file as plain text
+    const nodeData = fs.readFileSync(nodePath, "utf-8");
+    rows = parseCSV(nodeData);
+    // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
+    for (const row of rows) {
+      const nodeID = row["nodeID"];
+      const xcoord = row["xcoord"];
+      const ycoord = row["ycoord"];
+      const floor = row["floor"];
+      const building = row["building"];
+      const nodeType = row["nodeType"];
+      const longName = row["longName"];
+      const shortName = row["shortName"];
 
-// Create edges with calculated weights (distances)
-const edgeAB = new Edge("EdgeAB", "NodeA", "NodeB", calculateDistance(nodeA, nodeB));
-const edgeBC = new Edge("EdgeBC", "NodeB", "NodeC", calculateDistance(nodeB, nodeC));
-const edgeCA = new Edge("EdgeCA", "NodeC", "NodeA", calculateDistance(nodeC, nodeA));
+      const node = new Node(
+        nodeID,
+        +xcoord,
+        +ycoord,
+        floor,
+        building,
+        nodeType,
+        longName,
+        shortName,
+      );
+      this.addNode(node);
+    }
 
-// Create a graph and add nodes and edges to it
-const graph = new Graph();
-graph.addNode(nodeA);
-graph.addNode(nodeB);
-graph.addNode(nodeC);
+    // Populate edges
+    const edgeData = fs.readFileSync(edgePath, "utf-8");
+    rows = parseCSV(edgeData);
 
-graph.addEdge(edgeAB);
-graph.addEdge(edgeBC);
-graph.addEdge(edgeCA);
+    for (const row of rows) {
+      const startNode = row["startNode"];
+      const endNode = row["endNode"];
 
       this.addEdge(startNode, endNode);
     }
@@ -218,5 +230,14 @@ graph.addEdge(edgeCA);
     }
     result = result.substring(0, result.length - 5);
     return result;
+  }
+
+  stringsToNodes(arrayOfStrings: string[]): Node[] {
+    const nodeArray: Node[] = [];
+    for(const item of arrayOfStrings) {
+      nodeArray.push((this.getNode(item) as Node));
+    }
+    
+    return nodeArray;
   }
 }
