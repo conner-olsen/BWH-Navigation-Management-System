@@ -1,4 +1,4 @@
-9import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Container, Row, Col, Image, Stack } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LargeButton from "../components/LargeButton.tsx";
