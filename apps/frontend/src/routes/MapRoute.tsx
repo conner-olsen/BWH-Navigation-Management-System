@@ -46,7 +46,7 @@ export function MapRoute() {
     };
 
     axios
-        .post("/api/csv-to-json", CSVString)
+        .post("/api/csv-to-json")
         .then((response) => {
             // This just prints the JSON string to the console, but you can do anything with it here
             returnedJSON = JSON.stringify(response.data, null, 2);

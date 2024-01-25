@@ -40,20 +40,17 @@ const UserSelection: React.FC = () => {
                 <b>Sign in</b>
               </p>
             </div>
-            <LargeButton
-              onClick={handleGuestLoginClick}
-              title={"Login as Guest"}
-            ></LargeButton>
+            <LargeButton onClick={handleGuestLoginClick}>
+                <h1> Login as Guest</h1>
+            </LargeButton>
 
-            <LargeButton
-              onClick={handlePatientLoginClick}
-              title={"Login as Patient"}
-            ></LargeButton>
+              <LargeButton onClick={handlePatientLoginClick}>
+                  <h1> Login as Patient</h1>
+              </LargeButton>
 
-            <LargeButton
-              onClick={handleAdminLoginClick}
-              title={"Login as Administrator"}
-            ></LargeButton>
+              <LargeButton onClick={handleAdminLoginClick}>
+                  <h1> Login as Admin</h1>
+              </LargeButton>
           </Stack>
         </Col>
       </Row>
