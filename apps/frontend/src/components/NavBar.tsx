@@ -12,16 +12,16 @@ const NavBar: React.FC = () => {
           style={{ width: "100%" }}
         >
           <Nav.Link className={"navUserSelect"} as={Link} to="/UserSelection">
-            UserSelection
+            Login
           </Nav.Link>
           <Nav.Link className={"navMap"} as={Link} to="/map">
             Map
           </Nav.Link>
-          <Nav.Link className={"navRandom"} as={Link} to="/random">
-            Random
+          <Nav.Link className={"navMap"} as={Link} to="/nonfunctional">
+            About Us
           </Nav.Link>
-          <Nav.Link className={"navRandom2"} as={Link} to="/random2">
-            Random2
+          <Nav.Link className={"navMap"} as={Link} to="/nonfunctional">
+            Appointments
           </Nav.Link>
         </Nav>
       </Navbar>

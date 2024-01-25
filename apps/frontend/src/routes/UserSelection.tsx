@@ -17,7 +17,7 @@ const UserSelection: React.FC = () => {
   };
 
   const handleGuestLoginClick = () => {
-    navigate("/HomePage");
+    navigate("/");
   };
 
   return (
