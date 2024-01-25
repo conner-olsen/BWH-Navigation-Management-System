@@ -29,7 +29,7 @@ function App() {
           element: <MapRoute />,
         },
         {
-          path: "/HomePage",
+          path: "/",
           element: <HomePage />,
         },
         {
