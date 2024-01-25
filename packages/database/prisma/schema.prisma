@@ -21,12 +21,12 @@ model HighScore {
 
 //Node Table
 model Node {
-  nodeId    String @id @db.VarChar(8)
+  nodeId    String @id
   xcoord    Int
   ycoord    Int
-  floor     String @db.VarChar(2)
+  floor     String
   building  String
-  nodeType  String @db.VarChar(4)
+  nodeType  String
   longName  String
   shortName String
   Edge      Edge[]
@@ -37,7 +37,7 @@ model Edge {
   edgeID    String  @id
   node      Node    @relation(fields: [startNode], references: [nodeId])
   startNode String
-  endNode   String  @db.VarChar(10)
+  endNode   String
 }
 
 //User Table
