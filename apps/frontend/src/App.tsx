@@ -7,6 +7,7 @@ import UserSelection from "./routes/UserSelection.tsx";
 import PatientLogin from "./routes/PatientLogin.tsx";
 import HomePage from "./routes/HomePage.tsx";
 import AdminLogin from "./routes/AdminLogin.tsx";
+import BFSRoute from "./routes/BFSRoute.tsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -35,6 +36,10 @@ function App() {
           path: "/AdminLogin",
           element: <AdminLogin />,
         },
+          {
+              path: "/bfs",
+              element: <BFSRoute/>
+          }
       ],
     },
   ]);
