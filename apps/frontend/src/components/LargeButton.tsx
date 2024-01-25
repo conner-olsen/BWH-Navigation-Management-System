@@ -1,13 +1,11 @@
-interface LargeButtonProps {
-  title: string;
-  onClick?: () => unknown;
-}
-const LargeButton: React.FC<LargeButtonProps> = ({ title, onClick }) => {
+import {ReactNode} from "react";
+
+function LargeButton({children,onClick}:{children:ReactNode,onClick?:() => void}) {
   return (
     <button className="LargeButton" onClick={onClick}>
-      {title}
+      {children}
     </button>
   );
-};
+}
 
 export default LargeButton;

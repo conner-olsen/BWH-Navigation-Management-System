@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // This is a basic header that should be shown on every page of the site
-const GlobalFooter: React.FC = () => {
+function GlobalFooter() {
   return (
     <div>
       <footer className="GlobalFooter">

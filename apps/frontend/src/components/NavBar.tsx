@@ -1,13 +1,12 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+//import { Outlet } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 const NavBar: React.FC = () => {
   return (
     <Container fluid>
-      <Outlet />
       <Navbar variant="light" expand="lg">
         <Nav
           className="d-flex justify-content-between"
