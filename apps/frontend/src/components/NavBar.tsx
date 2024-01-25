@@ -1,7 +1,6 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-//import { Outlet } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 const NavBar: React.FC = () => {
@@ -9,7 +8,7 @@ const NavBar: React.FC = () => {
     <Container fluid>
       <Navbar variant="light" expand="lg">
         <Nav
-          className="d-flex justify-content-between"
+          className="d-flex justify-content-center"
           style={{ width: "100%" }}
         >
           <Nav.Link className={"navUserSelect"} as={Link} to="/UserSelection">
