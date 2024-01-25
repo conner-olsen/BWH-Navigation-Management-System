@@ -9,5 +9,4 @@ const LargeButton: React.FC<LargeButtonProps> = ({ title, onClick }) => {
     </button>
   );
 };
-
 export default LargeButton;
