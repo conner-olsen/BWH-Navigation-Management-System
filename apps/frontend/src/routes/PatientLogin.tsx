@@ -1,5 +1,6 @@
 //import React, { useState } from 'react';
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+import BackButton from "../components/BackButton.tsx"; // Import Bootstrap CSS
 
 const PatientLogin = () => {
   /* IMPLEMENT SOON */
@@ -23,52 +24,55 @@ const PatientLogin = () => {
   // };
 
   return (
-    <div className="container mt-5">
+      <div>
+          <BackButton link={"/UserSelection"}></BackButton>
+
+          <div className="container-sm mt-5">
       <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
-            <div className="card-body">
-              <h3 className="card-title text-center">Patient Login</h3>
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="username" className="form-label">
-                    <img src="public/icon/user-icon.png" />
-                    Username:
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="username"
-                    //value={username}
-                    //onChange={handleUsernameChange}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="password" className="form-label">
-                    <img src="public/icon/password-icon.png" />
-                    Password:
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    //value={password}
-                    //onChange={handlePasswordChange}
-                    required
-                  />
-                </div>
-                <div className="text-center">
-                  <button type="submit" className="btn btn-primary">
-                    Login
-                  </button>
-                </div>
-              </form>
+        <div className="col-md-9">
+          <h3>Patient Login</h3>
+          <form>
+            <div className="mb-3 testClass">
+              <img src="public/icon/user-icon.png" />
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                placeholder="Username"
+                //value={username}
+                //onChange={handleUsernameChange}
+                required
+              />
             </div>
-          </div>
+            <div className="mb-3 testClass">
+              <img src="public/icon/password-icon.png" />
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="Password"
+                //value={password}
+                //onChange={handlePasswordChange}
+                required
+              />
+            </div>
+            <div className="mb-3 testClass2">
+              <div>
+                <input type="checkbox"></input>
+                <label>Remember me</label>
+              </div>
+              <a href="">Forgot password?</a>
+            </div>
+            <div className="text-center">
+              <button type="submit" className="btn btn-primary">
+                Login
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+      </div>
   );
 };
 
