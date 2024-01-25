@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
 import csvRouter from "./routes/csv-handler.ts";
-//import bfsRouter from "./routes/bfs-route.ts";
+import bfsRouter from "./routes/bfs-route.ts";
 
 const app: Express = express(); // Setup the backend
 
