@@ -41,12 +41,13 @@
 /* ============== GLOBAL FOOTER =========== */
 .GlobalFooter {
     background-color: var(--dark-blue);
-    color: white;
     text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    margin-top: auto;
+}
+.FooterFormat {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .FooterLogo {
@@ -61,7 +62,6 @@
 }
 
 /* =========== LOGIN PAGE ========== */
-
 .loginForm input {
   padding: 20px;
 }
@@ -106,8 +106,6 @@
 }
 
 /* ============= MAP PAGE ========= */
-
-
 .testClass {
   display: flex;
   align-items: center;
@@ -154,7 +152,6 @@
 }
 
 /* ============= DRAG AND DROP ========= */
-
 .DragDropBox {
     width: 50%;
     border: 2px dashed var(--dark-blue);
