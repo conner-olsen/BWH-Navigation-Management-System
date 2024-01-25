@@ -48,8 +48,9 @@ model User{
 
 }
 
-model Employee{
+model Admin{
   adminID String @id
   User User @relation(fields: [Username], references: [Username])
   Username String
 }
+

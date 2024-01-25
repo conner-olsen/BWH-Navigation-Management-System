@@ -5,7 +5,6 @@ import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
 import csvRouter from "./routes/csv-handler.ts";
 
-
 const app: Express = express(); // Setup the backend
 
 // Setup generic middlewear
@@ -27,7 +26,6 @@ app.use("/api/high-score", exampleRouter);
 
 // Setup the CSV router
 app.use("/api/csv-to-json", csvRouter);
-
 
 /**
  * Catch all 404 errors, and forward them to the error handler
