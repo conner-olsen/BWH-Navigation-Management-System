@@ -22,9 +22,6 @@ router.post("/", async (req: Request, res: Response) => {
 
     res.json(rows);
 
-
-
-
   } catch (error) {
     console.error(`Error while converting CSV to JSON: ${error}`);
     res.sendStatus(500);
