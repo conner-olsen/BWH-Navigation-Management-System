@@ -136,3 +136,87 @@ graph.addNode(nodeC);
 graph.addEdge(edgeAB);
 graph.addEdge(edgeBC);
 graph.addEdge(edgeCA);
+
+      this.addEdge(startNode, endNode);
+    }
+  }
+
+  /**
+   * Finds the path from inputted startNode to endNode in given graph
+   * @param {string} startNode - The ID of the starting node.
+   * @param {string} endNode - The ID of the ending node.
+   * @return {string[]} - array of NodeIDs of nodes in path
+   */
+  bfs(startNode: string, endNode: string): string[] {
+    //add an error catcher for invalid inputs
+    if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
+      console.log("Invalid location");
+      return [];
+    }
+
+    //define needed objects
+    //store lists of nodeID paths
+    const queue: string[][] = [];
+
+    //used for iterating through the loop
+    let currentNode: Node | undefined;
+    let currentNodeIDPath: string[];
+    let newPath: string[];
+    let neighbors: Set<string>;
+
+    //put startNode path in the queue
+    queue.push([startNode]);
+
+    //start loop
+    while (queue.length > 0) {
+      //get first path from queue
+      currentNodeIDPath = queue[0];
+
+      //get last node
+      if(currentNodeIDPath.length > 1) {
+        currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
+      }
+      else {
+        currentNode = this.getNode(currentNodeIDPath[0]);
+      }
+
+      //if currentNode is undefined, pop path from queue
+      if (currentNode == undefined) {
+        queue.shift();
+      }
+
+      //elif it is the end node, return current path
+      else if (currentNode.id == endNode) {
+        return currentNodeIDPath;
+      }
+
+      //else, cast as currentNode as Node (determined above) and add neighbor to path for each
+      else {
+        neighbors = (currentNode as Node).edges;
+        neighbors.forEach(function (item) {
+          newPath = [...currentNodeIDPath];
+          newPath.push(item);
+          queue.push(newPath);
+        });
+
+        //pop current node ID path from queue
+        queue.shift();
+
+      }
+    }
+
+    //return empty if endNode not reached (probably should return something else)
+    console.log("not reached");
+    return [];
+  }
+
+  formatBFS(array: string[]): string {
+    let result: string = "";
+
+    for (const item of array) {
+      result = result + " " + item + " --> ";
+    }
+    result = result.substring(0, result.length - 5);
+    return result;
+  }
+}
