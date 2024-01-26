@@ -60,7 +60,7 @@ export function MapRoute() {
     return (
         <div>
             <Outlet></Outlet>
-            <BackButton link={"/HomePage"}></BackButton>
+            <BackButton link={"/"}></BackButton>
             <img
                 className={"pictureOfL1"}
                 src="public/icon/00_thelowerlevel1 (2).png"
