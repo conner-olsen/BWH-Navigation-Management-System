@@ -4,6 +4,7 @@ import { Node } from "../src/bin/graph-structure.ts";
 import fs from "fs";
 import {parseCSV} from "../src/bin/parser.ts";
 import path from "path";
+import {ROOT_DIR} from "../../../config.ts";
 
 describe("Graph Class", () => {
   const node1 = new Node(
@@ -57,8 +58,8 @@ describe("Graph Class", () => {
 
   test("should populate graph from CSV files", () => {
     const graph = new Graph();
-    const nodePath = path.resolve("data", "csv", "L1Nodes.csv");
-    const edgePath = path.resolve("data", "csv", "L1Edges.csv");
+    const nodePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Nodes.csv");
+    const edgePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Edges.csv");
 
     graph.fromCSV(nodePath, edgePath);
 
