@@ -10,6 +10,16 @@ export function MapRoute() {
     const [CSVString, setCSVString] = useState("");
     let returnedJSON: string = "";
 
+    async function populate() {
+        const res = await fetch("/api/csv-to-json",{
+            method:"POST",
+            headers: {
+                "Content-type":"Application/json"
+            }
+        });
+        console.log(res);
+    }
+
     const handleFileDrop = (file: File) => {
         const reader = new FileReader();
 
@@ -59,6 +69,11 @@ export function MapRoute() {
                 style={{marginTop: "60px"}}
             />
             <br/>
+            <Container>
+                <button className={"navMap"} onClick={populate}>Populate Database</button>
+            </Container>
+            <br/>
+
             <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
             <br/>
 

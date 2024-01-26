@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 const NavBar: React.FC = () => {
+
   return (
     <Container fluid>
       <Navbar variant="light" expand="lg">

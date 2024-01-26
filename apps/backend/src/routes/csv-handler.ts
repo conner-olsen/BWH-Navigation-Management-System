@@ -80,8 +80,6 @@ router.post("/", async (req: Request, res: Response) => {
     });
 
 
-
-    transformed.pop();
     await PrismaClient.edge.createMany({data:transformed.map((self) => {
       return {
         startNode:self.startnode,
