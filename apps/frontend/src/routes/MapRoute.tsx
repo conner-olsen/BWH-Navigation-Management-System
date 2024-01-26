@@ -5,17 +5,13 @@ import axios from "axios";
 import { useState } from 'react';
 import {Container} from "react-bootstrap";
 
-
 export function MapRoute() {
     // let CSVString: string = "";
     const [CSVString, setCSVString] = useState("");
     let returnedJSON: string = "";
 
-
-
     const handleFileDrop = (file: File) => {
         const reader = new FileReader();
-
 
         console.log('Dropped file:', file);
         reader.addEventListener(
@@ -31,8 +27,6 @@ export function MapRoute() {
                     setCSVString("Failed");
                     console.log('No Content');
                 }
-
-
             },
             false,
         );
@@ -40,9 +34,6 @@ export function MapRoute() {
         if (file) {
             reader.readAsText(file);
         }
-
-
-
     };
 
     axios
@@ -60,7 +51,7 @@ export function MapRoute() {
     return (
         <div>
             <Outlet></Outlet>
-            <BackButton link={"/HomePage"}></BackButton>
+            <BackButton link={"/"}></BackButton>
             <img
                 className={"pictureOfL1"}
                 src="public/icon/00_thelowerlevel1 (2).png"
