@@ -4,6 +4,15 @@ import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 const NavBar: React.FC = () => {
+    async function populate() {
+        const res = await fetch("/api/csv-to-json",{
+            method:"POST",
+            headers: {
+                "Content-type":"Application/json"
+            }
+        });
+        console.log(res);
+    }
   return (
     <Container fluid>
       <Navbar variant="light" expand="lg">
@@ -23,6 +32,7 @@ const NavBar: React.FC = () => {
           <Nav.Link className={"navMap"} as={Link} to="/nonfunctional">
             Appointments
           </Nav.Link>
+            <button onClick={populate}></button>
         </Nav>
       </Navbar>
     </Container>
