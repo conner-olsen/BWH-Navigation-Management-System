@@ -162,7 +162,6 @@ export class Graph {
   bfs(startNode: string, endNode: string): string[] {
     //add an error catcher for invalid inputs
     if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
-      console.log("Invalid location");
       return [];
     }
 
