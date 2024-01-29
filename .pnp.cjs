@@ -1577,6 +1577,14 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "HARD"\
       }],\
+      ["npm:20.11.10", {\
+        "packageLocation": "./.yarn/cache/@types-node-npm-20.11.10-169269fe65-41ca9c7e7c.zip/node_modules/@types/node/",\
+        "packageDependencies": [\
+          ["@types/node", "npm:20.11.10"],\
+          ["undici-types", "npm:5.26.5"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:20.11.5", {\
         "packageLocation": "./.yarn/cache/@types-node-npm-20.11.5-b807d46a1a-9f31c47104.zip/node_modules/@types/node/",\
         "packageDependencies": [\
@@ -3074,6 +3082,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./packages/common/",\
         "packageDependencies": [\
           ["common", "workspace:packages/common"],\
+          ["@types/node", "npm:20.11.10"],\
           ["eslint", "npm:8.56.0"],\
           ["eslint-config-custom", "workspace:configs/eslint-config-custom"],\
           ["prettier", "npm:3.2.4"],\

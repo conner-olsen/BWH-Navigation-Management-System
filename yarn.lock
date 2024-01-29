@@ -1202,6 +1202,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^20.11.10":
+  version: 20.11.10
+  resolution: "@types/node@npm:20.11.10"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 41ca9c7e7c95bf070ad747ab266f267f41950e01f5ddda739d0665c2ed39acc45cce46f78e33ffa2bf2dacd74a8493044b967c86358017dacce12958e49db664
+  languageName: node
+  linkType: hard
+
 "@types/pg@npm:^8.10.1":
   version: 8.10.9
   resolution: "@types/pg@npm:8.10.9"
@@ -2422,6 +2431,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "common@workspace:packages/common"
   dependencies:
+    "@types/node": "npm:^20.11.10"
     eslint: "npm:latest"
     eslint-config-custom: "workspace:*"
     prettier: "npm:latest"
