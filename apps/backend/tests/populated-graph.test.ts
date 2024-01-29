@@ -1,12 +1,13 @@
 import { expect, test } from "vitest";
-import { Graph } from "../src/bin/graph-structure.ts";
-import { Node } from "../src/bin/graph-structure.ts";
+import { Graph } from "common/src/graph-structure.ts";
+import { Node } from "common/src/graph-structure.ts";
 import path from "path";
 import fs from "fs";
-import {ROOT_DIR} from "../../../config.ts";
 
-const nodePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Nodes.csv");
-const edgePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Edges.csv");
+// language=file-reference - Node csv file path
+const nodePath = path.join(__dirname, "../data/csv/L1Nodes.csv");
+// language=file-reference - Edge csv file path
+const edgePath = path.join(__dirname, "../data/csv/L1Edges.csv");
 
 //test stringsToNodes
 test("string to nodes", () => {

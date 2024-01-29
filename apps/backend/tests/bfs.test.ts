@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { Graph } from '../src/bin/graph-structure.ts';
-import { Node } from '../src/bin/graph-structure.ts';
+import { Graph } from 'common/src/graph-structure.ts';
+import { Node } from 'common/src/graph-structure.ts';
 
 /////////////////manual bfs testing:
 const graph = new Graph();
