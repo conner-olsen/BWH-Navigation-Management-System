@@ -42,7 +42,7 @@ main {
 .Spacer {
   background-color: var(--dark-blue);
   width: 100%;
-  padding: 10px;
+  padding: 2px;
 }
 
 /* ============== GLOBAL FOOTER =========== */
@@ -51,6 +51,7 @@ main {
     text-align: center;
     width: 100%;
 }
+
 .FooterFormat {
     display: flex;
     flex-direction: column;
@@ -152,7 +153,7 @@ main {
 }
 .BackButton {
   position: absolute;
-  top: 130px; /* Adjust this value to move the button down */
+  top: 200px; /* Adjust this value to move the button down */
   right: 50px; /* Adjust this value as needed */
   border-radius: 10px; /* Remove background color */
   border: 3px solid #003a96;
@@ -192,4 +193,29 @@ main {
     background: white;
 }
 /* ============= NAV BAR ========= */
+.generalNavBar {
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--dark-blue);
+    color: #ecf0f1;
+    padding: 5px;
+    width: 100%;
+    font-size: 1.2rem;
 
+}
+
+.generalNavBar .nav-link {
+    color: #ffffff;
+}
+
+.generalNavBar .nav-link:hover {
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* ====== BFS ======= */
+
+.BFSBox {
+    align-items: center;
+    text-align: center;
+}

@@ -4,8 +4,6 @@ const HomePage: React.FC = () => {
   return (
       <div>
           <NavBar/>
-          <div className="Spacer"></div>
-
           <img
               className={"pictureOfL1"}
               src="public/icon/00_thelowerlevel1 (2).png"

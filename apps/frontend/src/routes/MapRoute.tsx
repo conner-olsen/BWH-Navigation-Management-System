@@ -4,6 +4,7 @@ import DragNDrop from "../components/DragNDrop.tsx";
 import axios from "axios";
 import { useState } from 'react';
 import {Container} from "react-bootstrap";
+import NavBar from "../components/NavBar.tsx";
 
 export function MapRoute() {
     // let CSVString: string = "";
@@ -61,6 +62,7 @@ export function MapRoute() {
     return (
         <div>
             <Outlet></Outlet>
+            <NavBar></NavBar>
             <BackButton link={"/"}></BackButton>
             <img
                 className={"pictureOfL1"}

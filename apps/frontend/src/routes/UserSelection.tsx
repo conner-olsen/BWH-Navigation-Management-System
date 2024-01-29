@@ -3,8 +3,9 @@ import { Container, Row, Col, Image, Stack } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LargeButton from "../components/LargeButton.tsx";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton.tsx";
 
-const UserSelection: React.FC = () => {
+export default function UserSelection (){
   const navigate = useNavigate();
 
   const handlePatientLoginClick = () => {
@@ -23,6 +24,7 @@ const UserSelection: React.FC = () => {
   return (
     <Container fluid>
       <Outlet />
+        <BackButton link={"/"}></BackButton>
       <Row>
         <Col md={6}>
           <Image
@@ -58,4 +60,3 @@ const UserSelection: React.FC = () => {
   );
 };
 
-export default UserSelection;

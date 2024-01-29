@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // This is a basic header that should be shown on every page of the site
-const GlobalHeader: React.FC = () => {
+export default function GlobalHeader() {
   return (
     <div>
       <header className="GlobalHeader">
@@ -12,4 +12,3 @@ const GlobalHeader: React.FC = () => {
   );
 };
 
-export default GlobalHeader;
