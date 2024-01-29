@@ -31,7 +31,7 @@ const PatientLogin = () => {
             navigate("/");
         }
         else {
-            navigate("/AdminLogin");
+            navigate("/PatientLogin");
         }
 
     };
