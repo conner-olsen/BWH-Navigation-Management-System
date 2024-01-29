@@ -1,12 +1,12 @@
 import { expect, test } from "vitest";
-import { Graph } from "../src/bin/graph-structure.ts";
-import { Node } from "../src/bin/graph-structure.ts";
+import { Graph } from "common/src/graph-structure.ts";
 import path from "path";
 import fs from "fs";
-import {ROOT_DIR} from "../../../config.ts";
 
-const nodePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Nodes.csv");
-const edgePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Edges.csv");
+// language=file-reference - Node csv file path
+const nodePath = path.join(__dirname, "../data/csv/L1Nodes.csv");
+// language=file-reference - Edge csv file path
+const edgePath = path.join(__dirname, "../data/csv/L1Edges.csv");
 
 //test stringsToNodes
 test("string to nodes", () => {
@@ -18,8 +18,6 @@ test("string to nodes", () => {
     nodePath,
     edgePath,
   );
-
-  console.log(graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV)));
 
   expect(graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV))).toStrictEqual
   ([graphCSV.getNode("CCONF002L1"), graphCSV.getNode("WELEV00HL1"), graphCSV.getNode("CHALL004L1") ]);
@@ -37,37 +35,26 @@ test("find path csv", () => {
   const graphCSV = new Graph();
   const startNodeCSV = "CCONF002L1";
   const endNodeCSV = "CHALL004L1";
-  const answerCSV: string[] = ["CCONF002L1", "WELEV00HL1", "CHALL004L1"];
+  const correctPath: string[] = ["CCONF002L1", "WELEV00HL1", "CHALL004L1"];
 
   graphCSV.fromCSV(
     nodePath,
     edgePath,
   );
 
-  if (graphCSV.getNode(startNodeCSV) == undefined) {
-    console.log("undefined");
-  } else {
-    console.log((graphCSV.getNode(startNodeCSV) as Node).id);
-  }
-  expect(graphCSV.bfs(startNodeCSV, endNodeCSV)).toStrictEqual(answerCSV);
+  expect(graphCSV.bfs(startNodeCSV, endNodeCSV)).toStrictEqual(correctPath);
 });
 
 test("invalid input", () => {
   const graphCSV = new Graph();
   const startNodeCSV = "CCON02L1";
   const endNodeCSV = "CHALL004L1";
-  //const answerCSV: string[] = ["CCONF002L1", "WELEV00HL1", "CHALL004L1"];
 
   graphCSV.fromCSV(
     nodePath,
     edgePath,
   );
 
-  if (graphCSV.getNode(startNodeCSV) == undefined) {
-    console.log("undefined");
-  } else {
-    console.log((graphCSV.getNode(startNodeCSV) as Node).id);
-  }
   expect(graphCSV.bfs(startNodeCSV, endNodeCSV)).toStrictEqual([]);
 });
 
@@ -81,11 +68,6 @@ test("format bfs", () => {
     edgePath,
   );
 
-  if (graphCSV.getNode(startNodeCSV) == undefined) {
-    console.log("undefined");
-  } else {
-    console.log(graphCSV.formatBFS(graphCSV.bfs(startNodeCSV, endNodeCSV)));
-  }
   expect(graphCSV.formatBFS(graphCSV.bfs(startNodeCSV, endNodeCSV))).toStrictEqual
   (" CCONF002L1 -->  WELEV00HL1 -->  CHALL004L1");
 });

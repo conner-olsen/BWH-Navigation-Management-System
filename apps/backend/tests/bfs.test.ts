@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { Graph } from '../src/bin/graph-structure.ts';
-import { Node } from '../src/bin/graph-structure.ts';
+import { Graph } from 'common/src/graph-structure.ts';
+import { Node } from 'common/src/graph-structure.ts';
 
 /////////////////manual bfs testing:
 const graph = new Graph();
@@ -23,16 +23,14 @@ graph.addEdge("3", "1");
 
 const startNode = '1';
 const endNode = '3';
-const path = graph.bfs(startNode, endNode);
 const answer: string[] = ["1", "3"];
-console.log(path);
 
 //test full graph
 test("find path 1 2 3", () => {
   expect(graph.bfs(startNode, endNode)).toStrictEqual(answer);
 });
 
-//test same node
+//test the same node
 test("find path 1 1", () => {
   expect(graph.bfs("1", "1")).toStrictEqual(["1"]);
 });

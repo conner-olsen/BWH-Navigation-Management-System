@@ -1,5 +1,5 @@
 import fs from "fs";
-import {CSVRow, parseCSV} from "./parser.ts";
+import {CSVRow, parseCSV} from "../../../apps/backend/src/bin/parser.ts";
 
 /**
  * Class representing a Node.
@@ -162,7 +162,6 @@ export class Graph {
   bfs(startNode: string, endNode: string): string[] {
     //add an error catcher for invalid inputs
     if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
-      console.log("Invalid location");
       return [];
     }
 
