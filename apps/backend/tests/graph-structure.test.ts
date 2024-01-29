@@ -1,10 +1,9 @@
 import { test, expect, describe } from "vitest";
-import { Graph } from "../src/bin/graph-structure.ts";
-import { Node } from "../src/bin/graph-structure.ts";
+import { Graph } from "common/src/graph-structure.ts";
+import { Node } from "common/src/graph-structure.ts";
 import fs from "fs";
 import {parseCSV} from "../src/bin/parser.ts";
 import path from "path";
-import {ROOT_DIR} from "../../../config.ts";
 
 describe("Graph Class", () => {
   const node1 = new Node(
@@ -58,8 +57,10 @@ describe("Graph Class", () => {
 
   test("should populate graph from CSV files", () => {
     const graph = new Graph();
-    const nodePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Nodes.csv");
-    const edgePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Edges.csv");
+    // language=file-reference - Node csv file path
+    const nodePath = path.join(__dirname, "../data/csv/L1Nodes.csv");
+    // language=file-reference - Edge csv file path
+    const edgePath = path.join(__dirname, "../data/csv/L1Edges.csv");
 
     graph.fromCSV(nodePath, edgePath);
 

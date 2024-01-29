@@ -1,5 +1,5 @@
-import { Graph } from './graph-structure.ts';
-import { Node } from './graph-structure.ts';
+import { Graph } from 'common/src/graph-structure.ts';
+import { Node } from 'common/src/graph-structure.ts';
 
 /**
  * Finds the path from inputted startNode to endNode in given graph

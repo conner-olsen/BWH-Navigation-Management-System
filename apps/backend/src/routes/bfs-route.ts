@@ -1,8 +1,7 @@
 import express, {Router, Request, Response} from "express";
-import { Graph } from "../bin/graph-structure.ts";
+import { Graph } from "common/src/graph-structure.ts";
 import * as path from "path";
 import PathFindingRequest from "common/src/PathfindingRequest.ts";
-import { ROOT_DIR }  from "../../../../config.ts";
 
 const router: Router = express.Router();
 
@@ -11,8 +10,10 @@ router.post("/", async (req: Request, res: Response) => {
     const requestData: PathFindingRequest = req.body;
     console.log(requestData);
     // set up objects needed to call bfs
-    const nodePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Nodes.csv");
-    const edgePath = path.join(ROOT_DIR, "apps","backend","data", "csv", "L1Edges.csv");
+    // language=file-reference - Node csv file path
+    const nodePath = path.join(__dirname, "../../data/csv/L1Nodes.csv");
+    // language=file-reference - Edge csv file path
+    const edgePath = path.join(__dirname, "../../data/csv/L1Edges.csv");
     const graphCSV = new Graph();
     const startNodeCSV =  requestData.startid;
     const endNodeCSV = requestData.endid;
@@ -23,7 +24,7 @@ router.post("/", async (req: Request, res: Response) => {
       edgePath,
     );
 
-    //run bfs, convert to array of nodes
+    //run bfs, convert to an array of nodes
     res.json(graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV)));
     res.sendStatus(200);
   }

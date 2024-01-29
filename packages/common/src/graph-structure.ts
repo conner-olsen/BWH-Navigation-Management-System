@@ -1,5 +1,5 @@
 import fs from "fs";
-import {CSVRow, parseCSV} from "./parser.ts";
+import {CSVRow, parseCSV} from "../../../apps/backend/src/bin/parser.ts";
 
 /**
  * Class representing a Node.
