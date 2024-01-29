@@ -15,6 +15,16 @@ export type CSVRow = { [key: string]: string };
  *
  * @param {string} csvString - The CSV string to parse.
  * @return {CSVRow[]} - An array of CSVRow objects representing the parsed data.
+ * @example To call
+ * const data = parseCSV("name,age\nJohn,25\nJane,30")
+ * @example To access
+ * Method 1: data[0]["name"] // returns "John"
+ * Method 2: data[0].name // returns "John"
+ * Method 3: data[0][0] // returns "John"
+ * Method 4: data[0].age // returns "25"
+ * Method 5:
+ * row = data[1] // returns {name: "Jane", age: "30"}
+ * row["name"] // returns "Jane"
  */
 export function parseCSV(csvString: string): CSVRow[] {
   // Split the CSV string into lines

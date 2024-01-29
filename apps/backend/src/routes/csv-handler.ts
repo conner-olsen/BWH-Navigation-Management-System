@@ -1,5 +1,5 @@
 import express, {Router, Request, Response} from "express";
-import { parseCSV} from "../bin/parser.ts";
+import { parseCSV} from "common/src/parser.ts";
 import * as fs from "fs";
 import * as path from "path";
 import PrismaClient from "../bin/database-connection.ts";
