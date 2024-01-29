@@ -30,7 +30,7 @@ export default function NavBar() {
           <Nav.Link className={"navMap"} as={Link} to="/bfs">
               <button className="btn btn-secondary" type="button" id="dropdownMenuButton2"
                       data-bs-toggle="dropdown" aria-expanded="false">
-                  Breath-First Search
+                  Breadth-First Search
               </button>
           </Nav.Link>
           <NavDropdown title="More" id="basic-nav-dropdown">
