@@ -1,27 +1,40 @@
-//import React, { useState } from 'react';
+import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import BackButton from "../components/BackButton.tsx"; // Import Bootstrap CSS
+import BackButton from "../components/BackButton.tsx";
+import {useNavigate} from "react-router-dom";
 
 const PatientLogin = () => {
-  /* IMPLEMENT SOON */
 
-  // const [username, setUsername] = useState('');
-  // const [password, setPassword] = useState('');
-  //
-  // const handleUsernameChange = (event: string) => {
-  //     setUsername(event);
-  // };
-  //
-  // const handlePasswordChange = (event:string) => {
-  //     setPassword(event);
-  // };
-  //
-  // const handleSubmit = () => {
-  //     // Handle form submission with the username and password
-  //     console.log('Username:', username);
-  //     console.log('Password:', password);
-  //     // You can perform further actions like authentication here
-  // };
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+
+    const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUsername(event.target.value);
+    };
+
+    const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value);
+    };
+
+    const handleSubmit = () => {
+        // Handle form submission with the username and password
+        console.log('Username:', username);
+        console.log('Password:', password);
+        // Hard-coded authentication (will connect to database in the future)
+
+        let patientID: string = "patient";
+        let patientPassword: string = "patient";
+
+        if (patientID === username && patientPassword === password) {
+            navigate("/");
+        }
+        else {
+            navigate("/AdminLogin");
+        }
+
+    };
 
   return (
       <div>
@@ -39,8 +52,8 @@ const PatientLogin = () => {
                 className="form-control"
                 id="username"
                 placeholder="Username"
-                //value={username}
-                //onChange={handleUsernameChange}
+                value={username}
+                onChange={handleUsernameChange}
                 required
               />
             </div>
@@ -51,8 +64,8 @@ const PatientLogin = () => {
                 className="form-control"
                 id="password"
                 placeholder="Password"
-                //value={password}
-                //onChange={handlePasswordChange}
+                value={password}
+                onChange={handlePasswordChange}
                 required
               />
             </div>
@@ -64,7 +77,7 @@ const PatientLogin = () => {
               <a href="">Forgot password?</a>
             </div>
             <div className="text-center">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                 Login
               </button>
             </div>

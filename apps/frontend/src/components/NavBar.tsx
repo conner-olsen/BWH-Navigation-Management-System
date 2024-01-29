@@ -1,33 +1,53 @@
 import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import {Nav, NavDropdown} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
 
-const NavBar: React.FC = () => {
+export default function NavBar() {
 
   return (
-    <Container fluid>
-      <Navbar variant="light" expand="lg">
-        <Nav
-          className="d-flex justify-content-center"
-          style={{ width: "100%" }}
-        >
-          <Nav.Link className={"navUserSelect"} as={Link} to="/UserSelection">
-            Login
+      <div>
+      <Nav
+          className="generalNavBar"
+      >
+          <Nav.Link className={"navMap"} as={Link} to="/">
+              <button className="btn btn-secondary" type="button" id="dropdownMenuButton2"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                  Home
+              </button>
+          </Nav.Link>
+          <Nav.Link className={"navMap"} as={Link} to="/UserSelection">
+              <button className="btn btn-secondary" type="button" id="dropdownMenuButton2"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                  Login
+              </button>
           </Nav.Link>
           <Nav.Link className={"navMap"} as={Link} to="/map">
-            Map
+              <button className="btn btn-secondary" type="button" id="dropdownMenuButton2"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                  Map
+              </button>
           </Nav.Link>
-          <Nav.Link className={"navMap"} as={Link} to="/nonfunctional">
-            About Us
+          <Nav.Link className={"navMap"} as={Link} to="/bfs">
+              <button className="btn btn-secondary" type="button" id="dropdownMenuButton2"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                  Breath-First Search
+              </button>
           </Nav.Link>
-          <Nav.Link className={"navMap"} as={Link} to="/nonfunctional">
-            Appointments
-          </Nav.Link>
-        </Nav>
-      </Navbar>
-    </Container>
+          <NavDropdown title="More" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/">
+                  Home
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/UserSelection">
+                  Login
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/map">
+                  Map
+              </NavDropdown.Item>
+          </NavDropdown>
+      </Nav>
+      <div className="Spacer"></div>
+      </div>
+
   );
 };
 
-export default NavBar;

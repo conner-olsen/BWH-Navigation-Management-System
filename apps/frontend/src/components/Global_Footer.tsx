@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // This is a basic header that should be shown on every page of the site
-function GlobalFooter() {
+export default function GlobalFooter() {
   return (
     <div className="FooterFormat">
         <footer className="GlobalFooter">
@@ -12,4 +12,3 @@ function GlobalFooter() {
   );
 };
 
-export default GlobalFooter;
