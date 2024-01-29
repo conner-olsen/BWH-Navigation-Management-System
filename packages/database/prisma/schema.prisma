@@ -30,6 +30,7 @@ model Node {
   longName  String
   shortName String
   Edge      Edge[]
+  ServiceRequest ServiceRequest[]
 }
 
 //Edge Table
@@ -44,13 +45,24 @@ model Edge {
 model User{
   Username String @id
   Password String
-  Employee Employee[]
-
 }
 
-model Employee{
-  adminID String @id
-  User User @relation(fields: [Username], references: [Username])
-  Username String
+//Initial Service request Schema to be expanded upon later
+
+//model ServiceRequest{
+//  id Int @id @default(autoincrement())
+//  comment String
+//}
+
+//Service Request Table
+model ServiceRequest{
+  id Int @id @default(autoincrement())
+  senderName String
+  senderEmail String
+  node Node  @relation(fields: [room], references: [nodeId])
+  room String
+  item String
+  comment String
+  Status Boolean
 }
 
