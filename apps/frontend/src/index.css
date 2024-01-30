@@ -161,13 +161,37 @@ main {
 }
 
 /* ============= DRAG AND DROP ========= */
-.DragDropBox {
+.DragDropBox, .DragDropBoxOn {
+    position: relative;
     width: 50%;
     border: 2px dashed var(--dark-blue);
     border-radius: 8px;
     padding: 20px;
     text-align: center;
-    transition: border 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+}
+.DragDropBoxOn, .DragDropBox:hover {
+    border-color: var(--light-blue);
+    color: var(--light-blue);
+}
+.DragDropBox img {
+    filter: grayscale(100%);
+    transition: 0.3s ease-in-out;
+}
+.DragDropBoxOn img, .DragDropBox:hover img {
+    filter: grayscale(0%);
+    transition: 0.3s ease-in-out;
+}
+input[type="file"] {
+    display: none;
+}
+.csvButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 .file-drop-box.dragging {
@@ -219,3 +243,71 @@ main {
     align-items: center;
     text-align: center;
 }
+
+/* ====== Flower Service Page ======= */
+.flowerService{
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.4;
+    font-family: "Open Sans", sans-serif;
+}
+.flowerService {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+.flowerService select {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.flowerService select:focus {
+    outline: none;
+    border-color: #4ba1ff;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+}
+
+select,
+input,
+textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="submit"] {
+    background-color: #001c3d;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    width: 50%;
+    border-radius: 40px;
+    align-self: center;
+}
+
+input[type="submit"]:hover {
+    background-color: #4ba1ff;
+}
+
+
