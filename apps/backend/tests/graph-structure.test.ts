@@ -2,7 +2,7 @@ import { test, expect, describe } from "vitest";
 import { Graph } from "common/src/graph-structure.ts";
 import { Node } from "common/src/graph-structure.ts";
 import fs from "fs";
-import {parseCSV} from "../src/bin/parser.ts";
+import {parseCSV} from "common/src/parser.ts";
 import path from "path";
 
 describe("Graph Class", () => {

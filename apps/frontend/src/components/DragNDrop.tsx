@@ -60,7 +60,7 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
   onDragLeave={handleDragLeave}
   onDrop={handleDrop}
     >
-    {dragging ? <div>Drop your file here</div> : <div>Drag and drop a file here</div>}
+    {dragging ? <div>Drop Node File Here</div> : <div>Drag and drop a file here</div>}
   </Container>
 );
 };

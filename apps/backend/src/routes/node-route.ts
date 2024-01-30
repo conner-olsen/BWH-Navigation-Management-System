@@ -1,20 +1,9 @@
 import express, {Router, Request, Response} from "express";
 import { parseCSV} from "common/src/parser.ts";
-import * as fs from "fs";
-import * as path from "path";
 import PrismaClient from "../bin/database-connection.ts";
-
-
-
 
 const router: Router = express.Router();
 
-
-interface edge {
-  edgeid:string,
-  startnode:string,
-  endnode:string
-}
 interface node {
   nodeId:string,
   xcoord:number,
@@ -29,13 +18,8 @@ interface node {
 
 router.post("/", async (req: Request, res: Response) => {
   try {
-    // language=file-reference - Read the CSV string from the request body
-    const relativeNodePath = "../../data/csv/L1Nodes.csv";
-    const absoluteNodePath = path.join(__dirname, relativeNodePath);
-    const csvFileNode = fs.readFileSync(absoluteNodePath, "utf-8");
-
     // Parse the CSV string to an array of CSVRow objects
-    const rowsNode = parseCSV(csvFileNode);
+    const rowsNode = parseCSV(req.body["csvString"]);
     const transformedNode:node[] = rowsNode.map((row) => {
       const rowval = Object.values(row);
       return {
@@ -50,10 +34,9 @@ router.post("/", async (req: Request, res: Response) => {
       };
     });
 
-    transformedNode.pop();
     await PrismaClient.node.createMany({data:transformedNode.map((self) => {
         return {
-         nodeId:self.nodeId,
+          nodeId:self.nodeId,
           xcoord:self.xcoord,
           ycoord:self.ycoord,
           floor:self.floor,
@@ -65,39 +48,24 @@ router.post("/", async (req: Request, res: Response) => {
       )
     });
 
-    // Read the CSV string from the request body
-    const absolutePath = path.join(__dirname, "../../data/csv/L1Edges.csv");
-    const csvFile = fs.readFileSync(absolutePath, "utf-8");
-
-    // Parse the CSV string to an array of CSVRow objects
-    const rows = parseCSV(csvFile);
-    const transformed:edge[] = rows.map((row) => {
-      const rowval = Object.values(row);
-      return {
-        edgeid:rowval[0],
-        startnode:rowval[1],
-        endnode:rowval[2]
-      };
-    });
-
-
-    await PrismaClient.edge.createMany({data:transformed.map((self) => {
-      return {
-        startNode:self.startnode,
-        edgeID:self.edgeid,
-        endNode:self.endnode
-      };}
-      )
-    });
-
-
+    res.sendStatus(200);
 
   } catch (error) {
-    console.error(`Error while converting CSV to JSON: ${error}`);
+    console.error(`Error populating node data: ${error}`);
+    res.sendStatus(500);
+  }
+
+});
+
+router.get("/", async function (req: Request, res: Response) {
+  try{
+    const nodeCSV = await PrismaClient.node.findMany();
+    res.send(nodeCSV);
+  } catch (error){
+    console.error(`Error exporting node data: ${error}`);
     res.sendStatus(500);
   }
   res.sendStatus(200);
 });
-
 
 export default router;
