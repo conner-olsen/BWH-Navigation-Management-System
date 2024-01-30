@@ -11,8 +11,7 @@ window.onload = function() {
     ctx.drawImage(image, 0, 0);
 
     // Draw the nodes
-    const graph = new Graph();
-    // Populate your graph here
+    const graph = new Graph();//graph import
     drawNodes(graph, ctx);
   };
   image.onerror = (error) => {
