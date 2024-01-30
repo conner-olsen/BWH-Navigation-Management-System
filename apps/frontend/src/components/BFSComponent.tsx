@@ -115,6 +115,7 @@ export function BFSComponent() {
                 <option value="WELEV00LL1">Elevator L Floor L1</option>
                 <option value="WELEV00ML1">Elevator M Floor L1</option>
             </select>
+            <p></p>
 
             <h5>End Location: </h5>
             <select value={endNode} onChange={e => setEndNode(e.target.value)}>
