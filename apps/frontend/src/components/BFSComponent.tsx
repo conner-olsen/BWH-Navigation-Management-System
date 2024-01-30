@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import Select from "react-dropdown-select";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
 interface Node {
@@ -58,6 +59,12 @@ export function BFSComponent() {
     const collectLongNames = () => {
         return bfsResult.map(node => node.longName);
     };
+
+    const options = [
+        {value: 'CCONF001L1', label: 'Anesthesia Conf Floor L1'},
+        {value: 'CCONF002L1', label: 'Medical Records Conference Room Floor L1'},
+        {value: 'CCONF003L1', label: 'Abrams Conference Room'},
+    ];
 
     return (
         <div>
