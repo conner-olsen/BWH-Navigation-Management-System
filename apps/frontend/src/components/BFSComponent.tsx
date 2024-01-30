@@ -80,7 +80,8 @@ export function BFSComponent() {
                     <input type="text" value={endNode} onChange={(e) => setEndNode(e.target.value)}/>
                 </label>
             </form>
-            <h2> Below is the path to take to get to your destination starting from your current location: </h2>
+            <p></p>
+            <h6> Below is the path to take to get to your destination starting from your current location: </h6>
             <p></p>
 
             {bfsResult.length > 0 ? (
