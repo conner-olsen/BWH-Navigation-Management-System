@@ -30,6 +30,15 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
     }
   };
 
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
+      e.preventDefault();
+
+      const files = e.target.files;
+      if (files) {
+          const file = files[0];
+          onFileDrop(file);
+      }
+  };
 
   useEffect(() => {
     // Prevent default behavior for drag and drop events
@@ -54,15 +63,19 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
   }, []);
 
   return (
-    <Container
-      className={`DragDropBox ${dragging ? 'dragging' : ''}`}
-  onDragEnter={handleDragEnter}
-  onDragLeave={handleDragLeave}
-  onDrop={handleDrop}
-    >
-    {dragging ? <div>Drop Node File Here</div> : <div>Drag and drop a file here</div>}
-  </Container>
-);
+      <Container
+          className={`${dragging ? 'DragDropBoxOn' : 'DragDropBox'} ${dragging ? 'dragging' : ''}`}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+      >
+          <img src="../public/icon/csv_drop.svg"/>
+          <h3>Select a CSV file to upload</h3>
+          <label htmlFor="csv-upload" className="csvButton"></label>
+          <input id="csv-upload" type="file" onChange={handleUpload}/>
+          {dragging ? <div>Drop your file here</div> : <div>Drag and drop a file here</div>}
+      </Container>
+  );
 };
 
 export default FileDropBox;
