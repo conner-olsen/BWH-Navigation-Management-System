@@ -1,8 +1,5 @@
 import express, {Router, Request, Response} from "express";
-import { Prisma } from "database";
 import { parseCSV} from "common/src/parser.ts";
-import * as fs from "fs";
-import * as path from "path";
 import PrismaClient from "../bin/database-connection.ts";
 
 const router: Router = express.Router();
@@ -22,11 +19,11 @@ interface node {
 router.post("/", async (req: Request, res: Response) => {
 
   //Check if request matches Node data type
-  const csvFileNode = Prisma.NodeCreateManyInput = req.body;
+  //const csvFileNode = Prisma.NodeCreateManyInput = req.body;
 
   try {
     // Parse the CSV string to an array of CSVRow objects
-    const rowsNode = parseCSV(csvFileNode);
+    const rowsNode = parseCSV(req.body);
     const transformedNode:node[] = rowsNode.map((row) => {
       const rowval = Object.values(row);
       return {
