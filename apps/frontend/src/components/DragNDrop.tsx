@@ -55,11 +55,13 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
 
   return (
     <Container
-      className={`DragDropBox ${dragging ? 'dragging' : ''}`}
-  onDragEnter={handleDragEnter}
-  onDragLeave={handleDragLeave}
-  onDrop={handleDrop}
+      className={`${dragging? 'DragDropBoxOn' : 'DragDropBox'} ${dragging ? 'dragging' : ''}`}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
     >
+    <img src="../public/icon/csv_drop.svg"/>
+    <h3>Select a CSV file to upload</h3>
     {dragging ? <div>Drop your file here</div> : <div>Drag and drop a file here</div>}
   </Container>
 );

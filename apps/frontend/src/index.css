@@ -161,13 +161,25 @@ main {
 }
 
 /* ============= DRAG AND DROP ========= */
-.DragDropBox {
+.DragDropBox, .DragDropBoxOn {
     width: 50%;
     border: 2px dashed var(--dark-blue);
     border-radius: 8px;
     padding: 20px;
     text-align: center;
-    transition: border 0.3s ease-in-out;
+    transition: 0.3s linear;
+}
+.DragDropBoxOn, .DragDropBox:hover {
+    border-color: var(--light-blue);
+    color: var(--light-blue);
+}
+.DragDropBox img {
+    filter: grayscale(100%);
+    transition: 0.3s linear;
+}
+.DragDropBoxOn img, .DragDropBox:hover img {
+    filter: grayscale(0%);
+    transition: 0.3s linear;
 }
 
 .file-drop-box.dragging {
