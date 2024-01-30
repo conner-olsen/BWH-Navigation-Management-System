@@ -25,7 +25,6 @@ export function BFSComponent() {
                 console.error("Error fetching BFS result:", (error as AxiosError).message);
             }
         };
-
         fetchData().then();
     }, []); // Empty dependency array ensures the effect runs once on mount
 
