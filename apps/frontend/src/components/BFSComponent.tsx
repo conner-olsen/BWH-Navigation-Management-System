@@ -68,6 +68,7 @@ export function BFSComponent() {
 
     return (
         <div>
+            <p></p>
             <h2>Lower Floor 1 Navigation</h2>
             <form>
                 <label>
