@@ -8,7 +8,10 @@ import PatientLogin from "./routes/PatientLogin.tsx";
 import HomePage from "./routes/HomePage.tsx";
 import AdminLogin from "./routes/AdminLogin.tsx";
 import BFSRoute from "./routes/BFSRoute.tsx";
-
+import FlowerServiceRequest from "./routes/ServiceRequests/FlowerServiceRequest.tsx";
+import CleaningServiceRequest from "./routes/ServiceRequests/CleaningServiceRequest.tsx";
+import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRequest.tsx";
+import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -39,7 +42,24 @@ function App() {
           {
               path: "/bfs",
               element: <BFSRoute/>
-          }
+          },
+          {
+              path: "/FlowerService",
+              element: <FlowerServiceRequest/>
+          },
+          {
+              path: "/CleaningService",
+              element: <CleaningServiceRequest/>
+          },
+          {
+              path: "/ReligiousService",
+              element: <ReligiousServiceRequest/>
+          },
+          {
+              path: "/ServiceList",
+              element: <ServiceList/>
+          },
+
       ],
     },
   ]);
