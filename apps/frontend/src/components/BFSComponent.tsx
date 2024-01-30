@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import Select from "react-dropdown-select";
+//import Select from "react-select";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
 interface Node {
@@ -60,11 +60,11 @@ export function BFSComponent() {
         return bfsResult.map(node => node.longName);
     };
 
-    const options = [
-        {value: 'CCONF001L1', label: 'Anesthesia Conf Floor L1'},
-        {value: 'CCONF002L1', label: 'Medical Records Conference Room Floor L1'},
-        {value: 'CCONF003L1', label: 'Abrams Conference Room'},
-    ];
+    // const options = [
+    //     {value: 'CCONF001L1', label: 'Anesthesia Conf Floor L1'},
+    //     {value: 'CCONF002L1', label: 'Medical Records Conference Room Floor L1'},
+    //     {value: 'CCONF003L1', label: 'Abrams Conference Room'},
+    // ];
 
     return (
         <div>
@@ -80,6 +80,7 @@ export function BFSComponent() {
                     <input type="text" value={endNode} onChange={(e) => setEndNode(e.target.value)}/>
                 </label>
             </form>
+            <h2> Below is the path to take to get to your destination starting from your current location: </h2>
             <p></p>
 
             {bfsResult.length > 0 ? (
