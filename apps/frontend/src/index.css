@@ -74,9 +74,12 @@ main {
 .loginForm input {
   padding: 20px;
 }
+.selectionPage{
+    align-items: center;
+}
 
 .PatientLoginHeader {
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 80px;
 }
 
@@ -86,16 +89,17 @@ main {
 
 /* ============= USER SELECTION PAGE ========= */
 .LargeButton {
-  width: 100%;
+  width: 50%;
   height: 80px;
   border-radius: 40px;
-  background-color: #3498db;
+  background-color: #00336e;
+    box-shadow: #000000;
 
   color: #fff;
   font-family: sans-serif;
   border: none;
   cursor: pointer;
-  font-size: 40px;
+  font-size: 20px;
 }
 
 .LargeButton:hover {
