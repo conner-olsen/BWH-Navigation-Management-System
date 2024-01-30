@@ -231,3 +231,71 @@ main {
     align-items: center;
     text-align: center;
 }
+
+/* ====== Flower Service Page ======= */
+.flowerService{
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.4;
+    font-family: "Open Sans", sans-serif;
+}
+.flowerService {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+.flowerService select {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.flowerService select:focus {
+    outline: none;
+    border-color: #4ba1ff;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+}
+
+select,
+input,
+textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="submit"] {
+    background-color: #001c3d;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    width: 50%;
+    border-radius: 40px;
+    align-self: center;
+}
+
+input[type="submit"]:hover {
+    background-color: #4ba1ff;
+}
+
+
