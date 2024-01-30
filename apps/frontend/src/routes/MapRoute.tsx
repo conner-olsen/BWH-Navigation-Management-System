@@ -66,7 +66,7 @@ export function MapRoute() {
             <BackButton link={"/"}></BackButton>
             <img
                 className={"pictureOfL1"}
-                src="public/icon/00_thelowerlevel1 (2).png"
+                src="public/maps/L1map.png"
                 alt="Lower Level of Hospital (L1)"
                 style={{marginTop: "60px"}}
             />
