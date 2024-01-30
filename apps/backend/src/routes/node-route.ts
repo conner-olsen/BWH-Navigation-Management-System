@@ -23,7 +23,7 @@ router.post("/", async (req: Request, res: Response) => {
 
   try {
     // Parse the CSV string to an array of CSVRow objects
-    const rowsNode = parseCSV(req.body);
+    const rowsNode = parseCSV(req.body["csvString"]);
     const transformedNode:node[] = rowsNode.map((row) => {
       const rowval = Object.values(row);
       return {
@@ -51,11 +51,13 @@ router.post("/", async (req: Request, res: Response) => {
       )
     });
 
+    res.sendStatus(200);
+
   } catch (error) {
     console.error(`Error populating node data: ${error}`);
     res.sendStatus(500);
   }
-  res.sendStatus(200);
+
 });
 
 

@@ -9,29 +9,44 @@ export function MapRoute() {
 
 
     const handleFileDrop = async(file: File) => {
+        // Create a FileReader
+        const reader = new FileReader();
+
+        // Set up a callback for when the file is loaded
+        reader.onload = async (event) => {
+            if (event.target) {
+                // Extract the CSV content as a string
+                const csvString = event.target.result as string;
+
+                console.log(csvString);
+
+                try {
+                    const res = await fetch("/api/node-populate", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json", // Set the appropriate content type
+                        },
+                        body: JSON.stringify({csvString}), // Send the CSV string as JSON
+                    });
 
 
-        // Create a FormData object and append the file to it
-        // const formData = new FormData();
-        // formData.append('file', file);
+                    console.log(res);
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            }
 
-        try {
-            const res = await fetch("/api/node-populate", {
-                method: "POST",
-                body: file
-            });
-
-            console.log(res);
-        } catch (error) {
-            console.error("Error:", error);
-        }
-
+        };
+        reader.readAsText(file);
     };
 
         return (
             <div>
                 <Outlet></Outlet>
                 <NavBar></NavBar>
+
+
+
                 <BackButton link={"/"}></BackButton>
                 <img
                     className={"pictureOfL1"}
