@@ -17,10 +17,6 @@ interface node {
 }
 
 router.post("/", async (req: Request, res: Response) => {
-
-  //Check if request matches Node data type
-  //const csvFileNode = Prisma.NodeCreateManyInput = req.body;
-
   try {
     // Parse the CSV string to an array of CSVRow objects
     const rowsNode = parseCSV(req.body["csvString"]);
@@ -37,6 +33,7 @@ router.post("/", async (req: Request, res: Response) => {
         shortName:rowval[7]
       };
     });
+
     await PrismaClient.node.createMany({data:transformedNode.map((self) => {
         return {
           nodeId:self.nodeId,
@@ -60,5 +57,15 @@ router.post("/", async (req: Request, res: Response) => {
 
 });
 
+router.get("/", async function (req: Request, res: Response) {
+  try{
+    const nodeCSV = await PrismaClient.node.findMany();
+    res.send(nodeCSV);
+  } catch (error){
+    console.error(`Error exporting node data: ${error}`);
+    res.sendStatus(500);
+  }
+  res.sendStatus(200);
+});
 
 export default router;
