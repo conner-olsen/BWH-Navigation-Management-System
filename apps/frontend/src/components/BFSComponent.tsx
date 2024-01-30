@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
+import React, { useState, useEffect, useCallback } from "react";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
 interface Node {
@@ -11,61 +11,80 @@ interface Node {
     nodeType: string;
     longName: string;
     shortName: string;
-    edges: Record<string, unknown>; // Adjust the type of edges as needed
+    edges: Record<string, unknown>;
 }
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
+    const [startNode, setStartNode] = useState<string>("");
+    const [endNode, setEndNode] = useState<string>("");
+
+    const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
+        try {
+            const request: PathfindingRequest = {
+                startid: startNode,
+                endid: endNode
+            };
+            const response: AxiosResponse<Node[]> = await axios.post("/api/bfs-searching", request, {
+                headers: {
+                    'Content-Type': "application/json"
+                }
+            });
+
+            if (response.status === 200) {
+                setBFSResult(response.data);
+            }
+
+            return response;
+        } catch (error) {
+            console.error("Error fetching BFS result:", (error as AxiosError).message);
+            throw error;
+        }
+    }, [startNode, endNode]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const request: PathfindingRequest = {
-                    startid: "CCONF003L1",
-                    endid: "CSERV001L1"
-                };
-                const response = await axios.post("/api/bfs-searching", request, {
-                    headers: {
-                        'Content-Type': "application/json"
-                    }
-                });
+        fetchData()
+            .then(response => {
+                // Handle success
+                console.log(response.data);
+            })
+            .catch(error => {
+                // Handle error
+                console.error("Error:", error.message);
+                // Optionally set state or show error message to the user
+            });
+    }, [fetchData]);
 
-                if (response.status === 200) {
-                    setBFSResult(response.data);
-                }
-            } catch (error) {
-                console.error("Error fetching BFS result:", (error as AxiosError).message);
-            }
-        };
-
-        fetchData().then();
-    }, []); // Empty dependency array ensures the effect runs once on mount
-
-    // Function to collect long names from bfsResult
     const collectLongNames = () => {
         return bfsResult.map(node => node.longName);
     };
 
     return (
         <div>
-            <h2>Lower Floor 1 Navigation:</h2>
-            {bfsResult.length !== 0 ? (
-                <div>
+            <h2>Lower Floor 1 Navigation</h2>
+            <form>
+                <label>
+                    Start Location:
+                    <input type="text" value={startNode} onChange={(e) => setStartNode(e.target.value)}/>
+                </label>
+                <p></p>
+                <label>
+                    End Location:
+                    <input type="text" value={endNode} onChange={(e) => setEndNode(e.target.value)}/>
+                </label>
+            </form>
+            <p></p>
 
+            {bfsResult.length > 0 ? (
+                <div>
                     <ul>
                         {collectLongNames().map((longName, index) => (
-                            <li key={index}>{longName}</li>
+                            <li key={index}>{longName} </li>
                         ))}
                     </ul>
-                    <h2>BFS Result:</h2>
-                    {bfsResult.length != 0 ? (
-                        <pre>{JSON.stringify(bfsResult, null, 2)}</pre>
-                    ) : (
-                        <p>Loading BFS result...</p>
-                    )}
                 </div>
             ) : (
-                <p>Loading BFS result...</p>
+                <p>Loading Route...</p>
             )}
         </div>
     );
