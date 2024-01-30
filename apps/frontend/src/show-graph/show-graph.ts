@@ -1,9 +1,14 @@
 
-import { Graph, Node } from 'graph-structure.ts';
+import { Graph, Node } from 'common/src/graph-structure.ts';
 
 window.onload = function() {
   const canvas = document.getElementById('mapCanvas') as HTMLCanvasElement;
   const ctx = canvas.getContext('2d');
+
+  if (ctx === null) {
+    console.error('Unable to get 2d context');
+    return;
+  }
 
   // Load the map image
   const image = new Image();
@@ -18,10 +23,10 @@ window.onload = function() {
     console.error("Error loading the image:", error);
   };
   image.src = 'L1map.png';
-}
+};
 
-function drawNodes(graph: Graph, ctx: CanvasRenderingContext2D) {
-  graph.nodes.forEach(node => {
+export function drawNodes(graph: Graph, ctx: CanvasRenderingContext2D) {
+  graph.nodes.forEach((node: Node) => {
     drawNode(ctx, node);
   });
 }
