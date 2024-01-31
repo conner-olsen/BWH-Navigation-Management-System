@@ -53,7 +53,7 @@ export function BFSComponent() {
             <p></p>
             <h2>Lower Floor 1 Navigation</h2>
             <p></p>
-            <h5>Start Location: </h5>
+            <h4>Start Location: </h4>
             <select value={startNode} onChange={e => setStartNode(e.target.value)}>
                 <option></option>
                 <option value="CCONF001L1"> Anesthesia Conf Floor L1</option>
@@ -105,7 +105,7 @@ export function BFSComponent() {
             </select>
             <p></p>
 
-            <h5>End Location: </h5>
+            <h4>End Location: </h4>
             <select value={endNode} onChange={e => setEndNode(e.target.value)}>
                 <option></option>
                 <option value="CCONF001L1"> Anesthesia Conf Floor L1</option>
@@ -157,14 +157,14 @@ export function BFSComponent() {
             </select>
 
             <p></p>
-            <h6> Below is the path to take to get to your destination starting from your current location: </h6>
+            <h5> Below is the path to take to get to your destination starting from your current location: </h5>
             <p></p>
 
             {bfsResult.length > 0 ? (
                 <div>
                     <ul>
                         {collectLongNames().map((longName, index) => (
-                            <li key={index}>{longName} </li>
+                            <h6  key={index}>{longName} </h6>
                         ))}
                     </ul>
                 </div>
