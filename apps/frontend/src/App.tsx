@@ -2,7 +2,8 @@ import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Global_Header from "./components/Global_Header.tsx";
 import Global_Footer from "./components/Global_Footer.tsx";
-import { MapRoute } from "./routes/MapRoute.tsx";
+import { NodeData } from "./routes/NodeData.tsx";
+import {EdgeData} from "./routes/EdgeData.tsx";
 import UserSelection from "./routes/UserSelection.tsx";
 import PatientLogin from "./routes/PatientLogin.tsx";
 import HomePage from "./routes/HomePage.tsx";
@@ -12,6 +13,7 @@ import FlowerServiceRequest from "./routes/ServiceRequests/FlowerServiceRequest.
 import CleaningServiceRequest from "./routes/ServiceRequests/CleaningServiceRequest.tsx";
 import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRequest.tsx";
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -28,11 +30,15 @@ function App() {
           element: <PatientLogin />,
         },
         {
-          path: "/map",
-          element: <MapRoute />,
+          path: "/NodeData",
+          element: <NodeData />,
         },
+          {
+              path: "/EdgeData",
+              element: <EdgeData />,
+          },
         {
-          path: "/",
+          path: "/Home",
           element: <HomePage />,
         },
         {
@@ -40,7 +46,7 @@ function App() {
           element: <AdminLogin />,
         },
           {
-              path: "/bfs",
+              path: "/",
               element: <BFSRoute/>
           },
           {

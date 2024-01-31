@@ -15,11 +15,11 @@ export default function NavBar() {
                 <Nav.Link className={"navMap"} as={Link} to="/UserSelection">
                         Login
                 </Nav.Link>
-                <Nav.Link className={"navMap"} as={Link} to="/map">
-                        Map
+                <Nav.Link className={"navMap"} as={Link} to="/NodeData">
+                        Node Data
                 </Nav.Link>
-                <Nav.Link className={"navMap"} as={Link} to="/bfs">
-                        Breadth-First Search
+                <Nav.Link className={"navMap"} as={Link} to="/EdgeData">
+                    Edge Data
                 </Nav.Link>
                 <NavDropdown title="Service Requests" id="basic-nav-dropdown">
                     <NavDropdown.Item as={Link} to="/ServiceList">
@@ -42,11 +42,11 @@ export default function NavBar() {
                     <NavDropdown.Item as={Link} to="/UserSelection">
                         Login
                     </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/map">
-                        Map
+                    <NavDropdown.Item as={Link} to="/NodeData">
+                        Node Data
                     </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/bfs">
-                        BFS
+                    <NavDropdown.Item as={Link} to="/EdgeData">
+                        Edge Data
                     </NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/ServiceList">
                         Services

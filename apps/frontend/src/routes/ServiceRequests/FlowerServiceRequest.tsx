@@ -46,7 +46,7 @@ const FlowerServiceRequest: React.FC = () => {
     console.log(currentDateTime);
     return (
         <form onSubmit={handleSubmit}>
-            <BackButton link={"/UserSelection"}></BackButton>
+            <BackButton link={"/"}></BackButton>
             <NavBar></NavBar>
             <h1 style={{ fontSize: 30 }}>Flower Delivery Form</h1>
             <div className={"flowerService"}>
