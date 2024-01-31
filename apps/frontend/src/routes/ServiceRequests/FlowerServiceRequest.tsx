@@ -11,11 +11,12 @@ const FlowerServiceRequest = () => {
             <h1 style={{fontSize: 30}}>Flower Delivery Form</h1>
             <div className={"flowerService"}>
             <form action="/submit" method="post">
-                <label htmlFor="flowerType">Select the type of flowers:</label>
+                <label htmlFor="flowerType">Select the type of flowers</label>
                 <select id="flowerType" name="flowerType" required className={"flowerTypeForm"}>
+                    <option value="/">Select</option>
                     <option value="daffodils">Daffodil</option>
                     <option value="daisies">Daisies</option>
-                    <option value="hydrangeas">Daisies</option>
+                    <option value="hydrangeas">Hydrangeas</option>
                     <option value="lilies">Lilies</option>
                     <option value="marigolds">Marigolds</option>
                     <option value="orchids">Orchid</option>
@@ -26,25 +27,25 @@ const FlowerServiceRequest = () => {
 
                 <br/>
 
-                <label htmlFor="roomDetails">Room Details:</label>
+                <label htmlFor="roomDetails">Room Details</label>
                 <input type="text" id="roomDetails" name="roomDetails" placeholder="Ex. 305" required/>
 
 
                 <br/>
 
-                <label htmlFor="patientName">Patient's Name:</label>
+                <label htmlFor="patientName">Patient's Name</label>
                 <input type="text" id="patientName" name="patientName" placeholder="Armando Pérez" required/>
 
                 <br/>
 
-                <label htmlFor="deliveryDateTime">Date and Time of Delivery:</label>
+                <label htmlFor="deliveryDateTime">Date and Time of Delivery</label>
                 <input type="datetime-local" id="deliveryDateTime" name="deliveryDateTime" required/>
 
                 <br/>
 
-                <p>
-                    Add a note:
-                </p>
+                <label>
+                    Add a note
+                </label>
                 <textarea placeholder={"Get well soon! We miss you so much"}></textarea>
 
 
