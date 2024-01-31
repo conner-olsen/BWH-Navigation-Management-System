@@ -5,8 +5,8 @@ import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
 import csvRouter from "./routes/csv-handler.ts";
 import bfsRouter from "./routes/bfs-route.ts";
-import nodeRouter from "./routes/node-route.ts";
 import sevicerequestRouter from "./routes/populating-service-request.ts";
+import nodeRouter from "./routes/node-route.ts";
 
 const app: Express = express(); // Setup the backend
 
