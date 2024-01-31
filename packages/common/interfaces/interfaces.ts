@@ -17,9 +17,9 @@ export interface edge {
 
 
 export interface flowerServiceRequest {
+  roomLongName:string
   senderName:string
   senderEmail:string
-  room:string
   item:string
   comment:string
   date: string
