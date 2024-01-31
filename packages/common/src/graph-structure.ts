@@ -4,7 +4,7 @@ import {CSVRow, parseCSV} from "./parser.ts";
 /**
  * Class representing a PathfindingNode.
  */
-export class PathfindingNode {
+export class Node {
   id: string; // Unique identifier for the node
   xCoord: number; // X coordinate of the node
   yCoord: number; // Y coordinate of the node
@@ -64,7 +64,7 @@ export class PathfindingNode {
  * Class representing a Graph.
  */
 export class Graph {
-  nodes: Map<string, PathfindingNode>; // Map of node IDs to Node objects
+  nodes: Map<string, Node>; // Map of node IDs to Node objects
 
   /**
    * Create a new Graph.
@@ -75,9 +75,9 @@ export class Graph {
 
   /**
    * Add a node to the graph.
-   * @param {PathfindingNode} node - The node to add.
+   * @param {Node} node - The node to add.
    */
-  addNode(node: PathfindingNode) {
+  addNode(node: Node) {
     this.nodes.set(node.id, node);
   }
 
@@ -99,9 +99,9 @@ export class Graph {
   /**
    * Get a node from the graph.
    * @param {string} nodeId - The ID of the node to get.
-   * @return {PathfindingNode | undefined} The node with the given ID, or undefined if no such node exists.
+   * @return {Node | undefined} The node with the given ID, or undefined if no such node exists.
    */
-  getNode(nodeId: string): PathfindingNode | undefined {
+  getNode(nodeId: string): Node | undefined {
     return this.nodes.get(nodeId);
   }
 
@@ -128,7 +128,7 @@ export class Graph {
       const longName = row["longName"];
       const shortName = row["shortName"];
 
-      const node = new PathfindingNode(
+      const node = new Node(
         nodeID,
         +xcoord,
         +ycoord,
@@ -170,7 +170,7 @@ export class Graph {
     const queue: string[][] = [];
 
     //used for iterating through the loop
-    let currentNode: PathfindingNode | undefined;
+    let currentNode: Node | undefined;
     let currentNodeIDPath: string[];
     let newPath: string[];
     let neighbors: Set<string>;
@@ -203,7 +203,7 @@ export class Graph {
 
       //else, cast as currentNode as Node (determined above) and add neighbor to path for each
       else {
-        neighbors = (currentNode as PathfindingNode).edges;
+        neighbors = (currentNode as Node).edges;
         neighbors.forEach(function (item) {
           newPath = [...currentNodeIDPath];
           newPath.push(item);
@@ -231,10 +231,10 @@ export class Graph {
     return result;
   }
 
-  stringsToNodes(arrayOfStrings: string[]): PathfindingNode[] {
-    const nodeArray: PathfindingNode[] = [];
+  stringsToNodes(arrayOfStrings: string[]): Node[] {
+    const nodeArray: Node[] = [];
     for(const item of arrayOfStrings) {
-      nodeArray.push((this.getNode(item) as PathfindingNode));
+      nodeArray.push((this.getNode(item) as Node));
     }
     
     return nodeArray;

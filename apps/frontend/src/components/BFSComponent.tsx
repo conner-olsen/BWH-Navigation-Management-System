@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import {PathfindingNode} from "common/src/graph-structure.ts";
+import {Node} from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
 export function BFSComponent() {
-    const [bfsResult, setBFSResult] = useState<PathfindingNode[]>([]);
+    const [bfsResult, setBFSResult] = useState<Node[]>([]);
     const [startNode, setStartNode] = useState<string>("");
     const [endNode, setEndNode] = useState<string>("");
 
-    const fetchData = useCallback(async (): Promise<AxiosResponse<PathfindingNode[]>> => {
+    const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
             const request: PathfindingRequest = {
                 startid: startNode,
                 endid: endNode
             };
-            const response: AxiosResponse<PathfindingNode[]> = await axios.post("/api/bfs-searching", request, {
+            const response: AxiosResponse<Node[]> = await axios.post("/api/bfs-searching", request, {
                 headers: {
                     'Content-Type': "application/json"
                 }
