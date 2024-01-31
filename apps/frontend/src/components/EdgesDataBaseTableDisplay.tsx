@@ -1,47 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import {node} from "common/interfaces/interfaces.ts";
+import {edge} from "common/interfaces/interfaces.ts";
 
-
-function GenerateTableRows(tableData: node[]): JSX.Element[] {
+function GenerateTableRowsEdges(tableData: edge[]): JSX.Element[] {
     return tableData.map((item, index) => (
         <tr key={index}>
-            <td>{tableData[index].nodeId}</td>
-            <td>{tableData[index].xcoord}</td>
-            <td>{tableData[index].ycoord}</td>
-            <td>{tableData[index].floor}</td>
-            <td>{tableData[index].building}</td>
-            <td>{tableData[index].nodeType}</td>
-            <td>{tableData[index].longName}</td>
-            <td>{tableData[index].shortName}</td>
+            <td>{tableData[index].edgeID}</td>
+            <td>{tableData[index].startNodeID}</td>
+            <td>{tableData[index].endNodeID}</td>
         </tr>
     ));
 }
 
-const Table: React.FC<{ tableData: node[] }> = ({tableData}) => {
+const TableEdges: React.FC<{ tableData: edge[] }> = ({tableData}) => {
     return (
         <table>
             <thead>
             <tr>
-                <th>Node ID</th>
-                <th>X-Coordinate</th>
-                <th>Y-Coordinate</th>
-                <th>Floor</th>
-                <th>Building</th>
-                <th>Node Type</th>
-                <th>Long Name</th>
-                <th>Short Name</th>
+                <th>Edge ID</th>
+                <th>Start Node ID</th>
+                <th>End Node ID</th>
             </tr>
             </thead>
             <tbody>
-            {GenerateTableRows(tableData)}
+            {GenerateTableRowsEdges(tableData)}
             </tbody>
         </table>
     );
 };
 
 
-export const GetData = () => {
-    const [data, setData] = useState<node[]>([]);
+export const GetDataEdges = () => {
+    const [data, setData] = useState<edge[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -83,7 +72,7 @@ export const GetData = () => {
 
     return (
         <div>
-            <Table tableData={data}></Table>
+            <TableEdges tableData={data}></TableEdges>
         </div>
     );
 };

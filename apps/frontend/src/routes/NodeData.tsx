@@ -3,9 +3,10 @@ import BackButton from "../components/BackButton.tsx";
 import DragNDrop from "../components/DragNDrop.tsx";
 import {Container} from "react-bootstrap";
 import NavBar from "../components/NavBar.tsx";
-import {GetData} from "../components/DataBaseTableDisplay.tsx";
+import {GetDataNodes} from "../components/NodesDataBaseTableDisplay.tsx";
+import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
 
-export function MapRoute() {
+export function NodeData() {
 
 
     const handleFileDrop = async(file: File) => {
@@ -46,6 +47,7 @@ export function MapRoute() {
                 <Outlet></Outlet>
                 <NavBar></NavBar>
 
+                <h1>Node Data</h1>
 
                 <BackButton link={"/"}></BackButton>
                 <img
@@ -61,7 +63,11 @@ export function MapRoute() {
                 <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
                 <br/>
                 <Container>
-                    <GetData></GetData>
+                    <GetDataNodes></GetDataNodes>
+                </Container>
+
+                <Container>
+                    <GetDataEdges></GetDataEdges>
                 </Container>
             </div>
         );

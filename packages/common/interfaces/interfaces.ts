@@ -9,6 +9,13 @@ export interface node {
   shortName:string
 }
 
+export interface edge {
+  edgeID: string;
+  startNodeID: string;
+  endNodeID: string;
+}
+
+
 export interface flowerServiceRequest {
   senderName:string
   senderEmail:string
