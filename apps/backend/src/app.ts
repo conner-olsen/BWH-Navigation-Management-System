@@ -5,7 +5,8 @@ import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
 import csvRouter from "./routes/csv-handler.ts";
 import bfsRouter from "./routes/bfs-route.ts";
-import nodeRouter from "./routes/node-route.ts"
+import nodeRouter from "./routes/node-route.ts";
+import sevicerequestRouter from "./routes/populating-service-request.ts";
 
 const app: Express = express(); // Setup the backend
 
@@ -26,8 +27,9 @@ app.use(cookieParser()); // Cookie parser
 // won't be reached by the default proxy and prod setup
 app.use("/api/high-score", exampleRouter);
 app.use("/api/csv-to-json", csvRouter);
-app.use("/api/node-populate", nodeRouter)
+app.use("/api/node-populate", nodeRouter);
 app.use("/api/bfs-searching", bfsRouter);
+app.use("/api/populate-servicerequest", sevicerequestRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
