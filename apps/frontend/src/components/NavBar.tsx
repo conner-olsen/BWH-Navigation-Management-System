@@ -48,12 +48,15 @@ export default function NavBar() {
                     <NavDropdown.Item as={Link} to="/map">
                         Map
                     </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/bfs">
+                        BFS
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/ServiceList">
+                        Services
+                    </NavDropdown.Item>
                 </NavDropdown>
-
-
             </Nav>
             <div className="Spacer"></div>
         </div>
-
     );
 };
