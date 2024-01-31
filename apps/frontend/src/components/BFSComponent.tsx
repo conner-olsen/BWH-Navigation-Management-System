@@ -169,7 +169,7 @@ export function BFSComponent() {
                     </ul>
                 </div>
             ) : (
-                <p>Loading Route...</p>
+                <p>No route found...</p>
             )}
         </div>
     );
