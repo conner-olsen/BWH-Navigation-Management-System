@@ -42,9 +42,6 @@ export default function NavBar() {
                     <NavDropdown.Item as={Link} to="/UserSelection">
                         Login
                     </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/UserSelection">
-                        All Services
-                    </NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/map">
                         Map
                     </NavDropdown.Item>
