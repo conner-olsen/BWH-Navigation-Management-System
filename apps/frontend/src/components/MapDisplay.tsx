@@ -1,22 +1,22 @@
-import {ReactNode} from "react";
+import React, { useEffect, useState } from 'react';
+import { Graph, Node } from 'common/src/graph-structure.ts';
+import populatedGraph from 'common/dev/populatedGraph.ts';
 
 function MapDisplay() {
+    const [graph, setGraph] = useState<Graph | null>(null);
+
+    useEffect(() => {
+        setGraph(populatedGraph);
+    }, []);
+
     return (
-        <svg width="800" height="600">
-            <image href="../../public/maps/L1map.png" height="600" width="800"/>
-            <circle cx="400" cy="300" r="50" fill="red" />
+        <svg x="0" y="0" viewBox="0 0 5000 3400">
+            <image href="../../public/maps/L1map.png" width="5000" height="3400" x="0" y="0"/>
+            {graph && Array.from(graph.nodes.values()).map((node: Node) => (
+                <circle key={node.id} cx={node.xCoord} cy={node.yCoord} r="5" fill="red" />
+            ))}
         </svg>
     );
 }
 
 export default MapDisplay;
-
-
-// export default MapDisplay() {
-//   return (
-//     <div>
-//         <svg width="100" viewBox={"0 0 "} height="100">
-//             <img src={""}/>
-//     </div>
-//   );
-// }

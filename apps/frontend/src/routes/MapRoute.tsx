@@ -4,6 +4,7 @@ import DragNDrop from "../components/DragNDrop.tsx";
 //import { useState } from 'react';
 import {Container} from "react-bootstrap";
 import NavBar from "../components/NavBar.tsx";
+import MapDisplay from "../components/MapDisplay.tsx";
 
 export function MapRoute() {
 
@@ -85,13 +86,13 @@ export function MapRoute() {
 
 
                 <BackButton link={"/"}></BackButton>
-                <img
-                    className={"pictureOfL1"}
-                    src="public/maps/L1map.png"
-                    alt="Lower Level of Hospital (L1)"
-                    style={{marginTop: "60px"}}
-                />
-
+                {/*<img*/}
+                {/*    className={"pictureOfL1"}*/}
+                {/*    src="public/maps/L1map.png"*/}
+                {/*    alt="Lower Level of Hospital (L1)"*/}
+                {/*    style={{marginTop: "60px"}}*/}
+                {/*/>*/}
+                <MapDisplay /> {/* Use MapDisplay component */}
                 <br/>
                 <br/>
 

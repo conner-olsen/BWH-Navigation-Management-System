@@ -310,4 +310,9 @@ input[type="submit"]:hover {
     background-color: #4ba1ff;
 }
 
-
+.mapSVG {
+    display: flex;
+    align-items: center;
+    width: 5000px;
+    height: 3400px;
+}
