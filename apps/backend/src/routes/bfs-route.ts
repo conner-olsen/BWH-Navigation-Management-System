@@ -25,12 +25,8 @@ router.post("/", async (req: Request, res: Response) => {
     );
 
     //run bfs, convert to an array of nodes
-    const result = graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV));
-
-    if(result.length > 0) {
-      res.json(graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV)));
-      res.sendStatus(200);
-    }
+    res.json(graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV)));
+    res.sendStatus(200);
 
   }
   catch (error) {
