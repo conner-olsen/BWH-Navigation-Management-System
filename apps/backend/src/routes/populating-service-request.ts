@@ -13,11 +13,11 @@ router.post("/", async (req: Request, res: Response) => {
     const transformedServiceRequest:flowerServiceRequest[] = rowsServiceRequest.map((row) => {
       const rowval = Object.values(row);
       return {
-        senderName:rowval[0],
-        senderEmail:rowval[1],
-        room:rowval[2],
-        item:rowval[3],
-        comment:rowval[4],
+        roomLongName:rowval[0],
+        senderName:rowval[1],
+        senderEmail:rowval[2],
+        comment:rowval[3],
+        item:rowval[4],
         date:rowval[5],
         status:rowval[6]
       };
@@ -27,11 +27,11 @@ router.post("/", async (req: Request, res: Response) => {
         return {
           senderName:self.senderName,
           senderEmail:self.senderEmail,
-          room:self.room,
-          item:self.item,
+          roomLongName:self.roomLongName,
           comment:self.comment,
+          item:self.item,
           date:self.date,
-          Status:self.status
+          status:self.status
         };}
       )
     });

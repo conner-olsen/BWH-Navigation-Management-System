@@ -27,7 +27,7 @@ model Node {
   floor     String
   building  String
   nodeType  String
-  longName  String
+  longName  String @unique
   shortName String
   Edge      Edge[]
   ServiceRequest ServiceRequest[]
@@ -36,9 +36,9 @@ model Node {
 //Edge Table
 model Edge {
   edgeID    String  @id
-  node      Node    @relation(fields: [startNode], references: [nodeId])
-  startNode String
-  endNode   String
+  node      Node    @relation(fields: [startNodeID], references: [nodeId])
+  startNodeID String
+  endNodeID   String
 }
 
 //User Table
@@ -57,12 +57,13 @@ model User{
 //Service Request Table
 model ServiceRequest{
   id Int @id @default(autoincrement())
+  roomLongName String
   senderName String
   senderEmail String
-  node Node  @relation(fields: [room], references: [nodeId])
-  room String
-  item String
+  node Node  @relation(fields: [roomLongName], references: [longName])
   comment String
+  date String
+  item String
   status String
 }
 
