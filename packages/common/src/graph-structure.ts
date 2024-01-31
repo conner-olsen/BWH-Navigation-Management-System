@@ -2,7 +2,7 @@ import fs from "fs";
 import {CSVRow, parseCSV} from "./parser.ts";
 
 /**
- * Class representing a PathfindingNode.
+ * Class representing a Node.
  */
 export class Node {
   id: string; // Unique identifier for the node
