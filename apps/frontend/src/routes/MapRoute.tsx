@@ -1,9 +1,9 @@
 import {Outlet} from "react-router-dom";
 import BackButton from "../components/BackButton.tsx";
 import DragNDrop from "../components/DragNDrop.tsx";
-//import { useState } from 'react';
 import {Container} from "react-bootstrap";
 import NavBar from "../components/NavBar.tsx";
+import {GetData} from "../components/DataBaseTableDisplay.tsx";
 
 export function MapRoute() {
 
@@ -40,43 +40,6 @@ export function MapRoute() {
         reader.readAsText(file);
     };
 
-    // function generateTableRows(data: DataItem[]): JSX.Element[] {
-    //     return data.map((item, index) => (
-    //         <tr key={index}>
-    //             <td>{item.property1}</td>
-    //             <td>{item.property2}</td>
-    //             <td>{item.property3}</td>
-    //             <td>{item.property4}</td>
-    //             <td>{item.property5}</td>
-    //             <td>{item.property6}</td>
-    //             <td>{item.property7}</td>
-    //             <td>{item.property8}</td>
-    //         </tr>
-    //     ));
-    // }
-    //
-    // const Table: React.FC<{ data: DataItem[] }> = ({data}) => {
-    //     return (
-    //         <table>
-    //             <thead>
-    //             <tr>
-    //                 <th>Column 1</th>
-    //                 <th>Column 2</th>
-    //                 <th>Column 3</th>
-    //                 <th>Column 4</th>
-    //                 <th>Column 5</th>
-    //                 <th>Column 6</th>
-    //                 <th>Column 7</th>
-    //                 <th>Column 8</th>
-    //
-    //             </tr>
-    //             </thead>
-    //             <tbody>
-    //             {generateTableRows(data)}
-    //             </tbody>
-    //         </table>
-    //     );
-    // };
 
         return (
             <div>
@@ -97,10 +60,8 @@ export function MapRoute() {
 
                 <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
                 <br/>
-
-                <Container className="CsvDataText">
-                    <p>CSV File: </p>
-                    <br/>
+                <Container>
+                    <GetData></GetData>
                 </Container>
             </div>
         );
