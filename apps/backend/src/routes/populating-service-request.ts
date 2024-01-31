@@ -1,23 +1,16 @@
 import express, {Router, Request, Response} from "express";
 import { parseCSV} from "common/src/parser.ts";
 import PrismaClient from "../bin/database-connection.ts";
+import {flowerServiceRequest} from "common/interfaces/interfaces.ts";
 
 const router: Router = express.Router();
 
-interface servicerequest {
-  senderName:string
-  senderEmail:string
-  room:string
-  item:string
-  comment:string
-  status:string
-}
 
 router.post("/", async (req: Request, res: Response) => {
   try {
     // Parse the CSV string to an array of CSVRow objects
     const rowsServiceRequest = parseCSV(req.body["csvString"]);
-    const transformedServiceRequest:servicerequest[] = rowsServiceRequest.map((row) => {
+    const transformedServiceRequest:flowerServiceRequest[] = rowsServiceRequest.map((row) => {
       const rowval = Object.values(row);
       return {
         senderName:rowval[0],
@@ -25,7 +18,8 @@ router.post("/", async (req: Request, res: Response) => {
         room:rowval[2],
         item:rowval[3],
         comment:rowval[4],
-        status:rowval[5]
+        date:rowval[5],
+        status:rowval[6]
       };
     });
 
@@ -36,7 +30,8 @@ router.post("/", async (req: Request, res: Response) => {
           room:self.room,
           item:self.item,
           comment:self.comment,
-          status:self.status
+          date:self.date,
+          Status:self.status
         };}
       )
     });

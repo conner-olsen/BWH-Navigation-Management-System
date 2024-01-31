@@ -8,3 +8,13 @@ export interface node {
   longName:string,
   shortName:string
 }
+
+export interface flowerServiceRequest {
+  senderName:string
+  senderEmail:string
+  room:string
+  item:string
+  comment:string
+  date: string
+  status:string
+}

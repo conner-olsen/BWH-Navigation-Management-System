@@ -318,4 +318,37 @@ input[type="submit"]:hover {
     background-color: #4ba1ff;
 }
 
+/* ========== CSV Table ========== */
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for table headers */
+th {
+    background-color: #f2f2f2;
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 12px;
+    font-weight: bold;
+}
+
+/* Style for alternating row colors */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Style for table cells */
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+}
+
+/* Hover effect for table rows */
+tr:hover {
+    background-color: #e5e5e5;
+}

@@ -22,15 +22,14 @@ const Table: React.FC<{ tableData: node[] }> = ({tableData}) => {
         <table>
             <thead>
             <tr>
-                <th>nodeID</th>
-                <th>xCoord</th>
-                <th>yCoord</th>
-                <th>floor</th>
-                <th>building</th>
-                <th>nodeType</th>
-                <th>longName</th>
-                <th>shortName</th>
-
+                <th>Node ID</th>
+                <th>X-Coordinate</th>
+                <th>Y-Coordinate</th>
+                <th>Floor</th>
+                <th>Building</th>
+                <th>Node Type</th>
+                <th>Long Name</th>
+                <th>Short Name</th>
             </tr>
             </thead>
             <tbody>
