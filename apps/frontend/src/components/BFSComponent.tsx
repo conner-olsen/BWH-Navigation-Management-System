@@ -3,18 +3,6 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import {PathfindingNode} from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
-// interface PathfindingNode {
-//     id: string; // Unique identifier for the node
-//     xCoord: number; // X coordinate of the node
-//     yCoord: number; // Y coordinate of the node
-//     floor: string; // Floor where the node is located
-//     building: string; // Building where the node is located
-//     nodeType: string; // Type of the node
-//     longName: string; // Long name of the node
-//     shortName: string; // Short name of the node
-//     edges: Set<string>; // Set of node IDs that this node is connected to
-// }
-
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<PathfindingNode[]>([]);
     const [startNode, setStartNode] = useState<string>("");
