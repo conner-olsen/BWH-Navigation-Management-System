@@ -27,30 +27,43 @@ model Node {
   floor     String
   building  String
   nodeType  String
-  longName  String
+  longName  String @unique
   shortName String
   Edge      Edge[]
+  ServiceRequest ServiceRequest[]
 }
 
 //Edge Table
 model Edge {
   edgeID    String  @id
-  node      Node    @relation(fields: [startNode], references: [nodeId])
-  startNode String
-  endNode   String
+  node      Node    @relation(fields: [startNodeID], references: [nodeId])
+  startNodeID String
+  endNodeID   String
 }
 
 //User Table
 model User{
   Username String @id
   Password String
-  Employee Employee[]
-
 }
 
-model Employee{
-  adminID String @id
-  User User @relation(fields: [Username], references: [Username])
-  Username String
+//Initial Service request Schema to be expanded upon later
+
+//model ServiceRequest{
+//  id Int @id @default(autoincrement())
+//  comment String
+//}
+
+//Service Request Table
+model ServiceRequest{
+  id Int @id @default(autoincrement())
+  roomLongName String
+  senderName String
+  senderEmail String
+  node Node  @relation(fields: [roomLongName], references: [longName])
+  comment String
+  date String
+  item String
+  status String
 }
 
