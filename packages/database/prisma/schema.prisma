@@ -63,6 +63,6 @@ model ServiceRequest{
   room String
   item String
   comment String
-  status String
+  Status String
 }
 
