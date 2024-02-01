@@ -21,7 +21,7 @@ export function EdgeData() {
                 console.log(csvString);
 
                 try {
-                    const res = await fetch("/api/node-populate", {
+                    const res = await fetch("/api/edge-populate", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json", // Set the appropriate content type

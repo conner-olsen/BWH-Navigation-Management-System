@@ -8,6 +8,7 @@ import bfsRouter from "./routes/bfs-route.ts";
 import userRouter from "./routes/user-route.ts";
 import sevicerequestRouter from "./routes/populating-service-request.ts";
 import nodeRouter from "./routes/node-route.ts";
+import edgeRouter from "./routes/populate-edges.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -32,6 +33,7 @@ app.use("/api/csv-to-json", csvRouter);
 app.use("/api/node-populate", nodeRouter);
 app.use("/api/bfs-searching", bfsRouter);
 app.use("/api/populate-servicerequest", sevicerequestRouter);
+app.use("/api/edge-populate", edgeRouter);
 
 app.use("/api/user", userRouter);
 /**
