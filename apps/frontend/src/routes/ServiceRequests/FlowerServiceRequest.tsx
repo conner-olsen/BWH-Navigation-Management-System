@@ -14,16 +14,21 @@ const FlowerServiceRequest: React.FC = () => {
         note: '', // Add note to formData
     });
 
+
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
+        const formDataToSend = new FormData();
+
+        // Append each form field to the FormData object
+        Object.entries(formData).forEach(([key, value]) => {
+            formDataToSend.append(key, value);
+        });
 
         try {
             const response = await fetch('/api/populate-flower-service-request', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                body: formDataToSend, // Use FormData instead of JSON.stringify
             });
 
             if (response.ok) {
