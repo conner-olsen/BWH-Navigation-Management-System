@@ -9,6 +9,7 @@ import userRouter from "./routes/user-route.ts";
 import flowersevicerequestRouter from "./routes/flower-service-request-route.ts";
 import nodeRouter from "./routes/node-route.ts";
 import edgeRouter from "./routes/populate-edges.ts";
+import downloadNodeDataRouter from "./routes/data-to-csv-node.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -34,8 +35,8 @@ app.use("/api/node-populate", nodeRouter);
 app.use("/api/bfs-searching", bfsRouter);
 app.use("/api/populate-flower-service-request", flowersevicerequestRouter);
 app.use("/api/edge-populate", edgeRouter);
-
 app.use("/api/user", userRouter);
+app.use("/api/download-node-csv", downloadNodeDataRouter);
 /**
  * Catch all 404 errors, and forward them to the error handler
  */
@@ -55,5 +56,8 @@ app.use((err: HttpError, req: Request, res: Response): void => {
   // Reply with the error
   res.status(err.status || 500);
 });
+
+
+
 
 export default app; // Export the backend, so that www.ts can start it
