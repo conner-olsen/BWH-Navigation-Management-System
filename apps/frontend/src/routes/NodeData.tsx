@@ -5,6 +5,7 @@ import {Container} from "react-bootstrap";
 import NavBar from "../components/NavBar.tsx";
 import {GetDataNodes} from "../components/NodesDataBaseTableDisplay.tsx";
 import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
+import MapDisplay from "../components/MapDisplay.tsx";
 
 export function NodeData() {
 
@@ -50,12 +51,13 @@ export function NodeData() {
                 <h1>Node Data</h1>
 
                 <BackButton link={"/"}></BackButton>
-                <img
-                    className={"pictureOfL1"}
-                    src="public/maps/L1map.png"
-                    alt="Lower Level of Hospital (L1)"
-                    style={{marginTop: "60px"}}
-                />
+                <MapDisplay className={"svgOfL1"} style={{marginTop: "60px"}}/>
+                {/*<img*/}
+                {/*    className={"pictureOfL1"}*/}
+                {/*    src="public/maps/L1map.png"*/}
+                {/*    alt="Lower Level of Hospital (L1)"*/}
+                {/*    style={{marginTop: "60px"}}*/}
+                {/*/>*/}
 
                 <br/>
                 <br/>

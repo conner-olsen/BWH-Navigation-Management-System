@@ -2,6 +2,8 @@
 import BackButton from "../../components/BackButton.tsx";
 import NavBar from "../../components/NavBar.tsx";
 import React, { useState } from 'react';
+import axios from "axios";
+
 
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -9,10 +11,11 @@ const FlowerServiceRequest: React.FC = () => {
         senderEmail: '',
         roomLongName: '',
         patientName: '',
-        flowerType: '', // Add flowerType to formData
+        flowerType: '',
         deliveryDate: '',
         note: '', // Add note to formData
     });
+
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -27,15 +30,13 @@ const FlowerServiceRequest: React.FC = () => {
 
         });
         try {
-            const response = await fetch('/api/populate-flower-service-request', {
-                method: 'POST',
+            const response = await axios.post("/api/populate-flower-service-request", JSON.stringify(formData), {
                 headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                    "Content-Type": 'application/json'
+                }
             });
 
-            if (response.ok) {
+            if (response.status == 200) {
                 console.log('Data sent successfully');
             } else {
                 console.error('Error sending data');
@@ -47,14 +48,14 @@ const FlowerServiceRequest: React.FC = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-        console.log(event.target.value);
+        // console.log(event.target.value);
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
     };
     const currentDateTime = new Date().toISOString().slice(0, 16);
-    console.log(currentDateTime);
+    // console.log(currentDateTime);
     return (
         <form onSubmit={handleSubmit}>
             <BackButton link={"/UserSelection"}></BackButton>

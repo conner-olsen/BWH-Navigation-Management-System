@@ -4,6 +4,7 @@ import DragNDrop from "../components/DragNDrop.tsx";
 import {Container} from "react-bootstrap";
 import NavBar from "../components/NavBar.tsx";
 import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
+import ExportEdgeDataButton from "../components/ExportEdgeDataButton.tsx";
 
 export function EdgeData() {
 
@@ -21,7 +22,7 @@ export function EdgeData() {
                 console.log(csvString);
 
                 try {
-                    const res = await fetch("/api/node-populate", {
+                    const res = await fetch("/api/edge-populate", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json", // Set the appropriate content type
@@ -57,6 +58,9 @@ export function EdgeData() {
             />
 
             <br/>
+            <Container>
+                <ExportEdgeDataButton></ExportEdgeDataButton>
+            </Container>
             <br/>
 
             <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>

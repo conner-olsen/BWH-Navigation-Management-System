@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import BackButton from "../components/BackButton.tsx";
 import { useNavigate } from "react-router-dom";
 
-
 const AdminLogin = () => {
 
   const [username, setUsername] = useState('');

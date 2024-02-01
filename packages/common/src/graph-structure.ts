@@ -111,12 +111,18 @@ export class Graph {
    * @param edgePath - path to edgeID csv file
    */
   fromCSV(nodePath: string, edgePath: string) {
+    // Read the CSV file as plain text
+    const nodeCSVString = fs.readFileSync(nodePath, "utf8");
+    const edgeCSVString = fs.readFileSync(edgePath, "utf8");
+    this.fromString(nodeCSVString, edgeCSVString);
+  }
+
+  fromString(nodeCSVString: string, edgeCSVString: string) {
     // Specify the path to your CSV file
     let rows: CSVRow[];
 
     // Read the CSV file as plain text
-    const nodeData = fs.readFileSync(nodePath, "utf-8");
-    rows = parseCSV(nodeData);
+    rows = parseCSV(nodeCSVString);
     // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
     for (const row of rows) {
       const nodeID = row["nodeID"];
@@ -142,8 +148,7 @@ export class Graph {
     }
 
     // Populate edges
-    const edgeData = fs.readFileSync(edgePath, "utf-8");
-    rows = parseCSV(edgeData);
+    rows = parseCSV(edgeCSVString);
 
     for (const row of rows) {
       const startNode = row["startNode"];
@@ -168,6 +173,7 @@ export class Graph {
     //define needed objects
     //store lists of nodeID paths
     const queue: string[][] = [];
+    const visited: string[][] = [];
 
     //used for iterating through the loop
     let currentNode: Node | undefined;
@@ -194,6 +200,7 @@ export class Graph {
       //if currentNode is undefined, pop path from queue
       if (currentNode == undefined) {
         queue.shift();
+        visited.push(currentNodeIDPath);
       }
 
       //elif it is the end node, return current path
@@ -207,12 +214,16 @@ export class Graph {
         neighbors.forEach(function (item) {
           newPath = [...currentNodeIDPath];
           newPath.push(item);
-          queue.push(newPath);
+
+          //if path hasn't been visited and nodes aren't repeated, add to queue
+          if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
+            queue.push(newPath);
+          }
         });
 
         //pop current node ID path from queue
         queue.shift();
-
+        visited.push(currentNodeIDPath);
       }
     }
 
