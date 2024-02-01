@@ -7,28 +7,10 @@ const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
   const flowerRequestAttempt: Prisma.FlowerServiceRequestUncheckedCreateInput = req.body;
-  console.log("request data:", req.body);
 
   try {
-
     // Create the FlowerServiceRequest with the connected room
-    await PrismaClient.flowerServiceRequest.create({
-      data: flowerRequestAttempt
-      // data: {
-      //   senderName: req.body.senderName,
-      //   senderEmail: req.body.senderEmail,
-      //   roomLongName: req.body.roomLongName,
-      //   patientName: req.body.patientName,
-      //   flowerType: req.body.flowerType,
-      //   deliveryDate: req.body.deliveryDate,
-      //   note: req.body.note,
-      //   node: {
-      //     connect: {
-      //       longName: req.body.roomLongName
-      //     }
-      //   }
-      // }
-    });
+    await PrismaClient.flowerServiceRequest.create({data: flowerRequestAttempt});
 
     res.sendStatus(200);
   } catch (error) {
