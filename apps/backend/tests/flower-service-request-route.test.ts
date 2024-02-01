@@ -1,8 +1,10 @@
 import { test, expect } from 'vitest';
 import supertest from 'supertest';
 import app from '../src/app';
+import populateDatabase from "common/dev/populateDatabase.ts";
 
 test('POST /api/pop', async () => {
+  await populateDatabase();
   const response = await supertest(app)
     .post('/api/populate-flower-service-request')
     .send({
