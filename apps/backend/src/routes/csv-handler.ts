@@ -3,29 +3,13 @@ import { parseCSV} from "common/src/parser.ts";
 import * as fs from "fs";
 import * as path from "path";
 import PrismaClient from "../bin/database-connection.ts";
+import {node} from "common/interfaces/interfaces.ts";
+import {edge} from "common/interfaces/interfaces.ts";
 
 
 
 
 const router: Router = express.Router();
-
-
-interface edge {
-  edgeid:string,
-  startnode:string,
-  endnode:string
-}
-interface node {
-  nodeId:string,
-  xcoord:number,
-  ycoord:number,
-  floor:string,
-  building:string,
-  nodeType:string,
-  longName:string,
-  shortName:string
-
-}
 
 router.post("/", async (req: Request, res: Response) => {
   try {
@@ -74,18 +58,18 @@ router.post("/", async (req: Request, res: Response) => {
     const transformed:edge[] = rows.map((row) => {
       const rowval = Object.values(row);
       return {
-        edgeid:rowval[0],
-        startnode:rowval[1],
-        endnode:rowval[2]
+        edgeID:rowval[0],
+        startNodeID:rowval[1],
+        endNodeID:rowval[2]
       };
     });
 
 
     await PrismaClient.edge.createMany({data:transformed.map((self) => {
       return {
-        startNode:self.startnode,
-        edgeID:self.edgeid,
-        endNode:self.endnode
+        startNodeID:self.startNodeID,
+        edgeID:self.edgeID,
+        endNodeID:self.endNodeID
       };}
       )
     });
