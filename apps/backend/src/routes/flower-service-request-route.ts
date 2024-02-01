@@ -10,28 +10,28 @@ router.post("/", async (req: Request, res: Response) => {
   try {
     // Parse the CSV string to an array of CSVRow objects
     const rowsServiceRequest = parseCSV(req.body["csvString"]);
-    const transformedServiceRequest:flowerServiceRequest[] = rowsServiceRequest.map((row) => {
+    const transformedflowerServiceRequest:flowerServiceRequest[] = rowsServiceRequest.map((row) => {
       const rowval = Object.values(row);
       return {
-        roomLongName:rowval[0],
-        senderName:rowval[1],
-        senderEmail:rowval[2],
-        comment:rowval[3],
-        item:rowval[4],
-        date:rowval[5],
-        status:rowval[6]
+        senderName:rowval[0],
+        senderEmail:rowval[1],
+        roomLongName:rowval[2],
+        patientName:rowval[3],
+        flowerType:rowval[4],
+        deliveryDate:rowval[5],
+        note:rowval[6]
       };
     });
 
-    await PrismaClient.serviceRequest.createMany({data:transformedServiceRequest.map((self) => {
+    await PrismaClient.flowerServiceRequest.createMany({data:transformedflowerServiceRequest.map((self) => {
         return {
           senderName:self.senderName,
           senderEmail:self.senderEmail,
           roomLongName:self.roomLongName,
-          comment:self.comment,
-          item:self.item,
-          date:self.date,
-          status:self.status
+          patientName:self.patientName,
+          flowerType:self.flowerType,
+          deliveryDate:self.deliveryDate,
+          note:self.note
         };}
       )
     });
@@ -47,8 +47,8 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async function (req: Request, res: Response) {
   try{
-    const servicerequestCSV = await PrismaClient.serviceRequest.findMany();
-    res.send(servicerequestCSV);
+    const flowerservicerequestCSV = await PrismaClient.flowerServiceRequest.findMany();
+    res.send(flowerservicerequestCSV);
   } catch (error){
     console.error(`Error exporting Service Request data: ${error}`);
     res.sendStatus(500);

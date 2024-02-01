@@ -5,12 +5,11 @@ import React, { useState } from 'react';
 
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
-        roomLongName: '',
         senderName: '',
         senderEmail: '',
-        flowerType: '', // Add flowerType to formData
-        roomNum: '',
+        roomLongName: '',
         patientName: '',
+        flowerType: '', // Add flowerType to formData
         deliveryDate: '',
         note: '', // Add note to formData
     });
@@ -19,12 +18,12 @@ const FlowerServiceRequest: React.FC = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch('your_backend_endpoint', {
+            const response = await fetch('/api/populate-flower-service-request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({formData}),
             });
 
             if (response.ok) {

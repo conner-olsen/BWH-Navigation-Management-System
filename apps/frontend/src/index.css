@@ -97,7 +97,7 @@ main {
   height: 80px;
   border-radius: 40px;
   background-color: #00336e;
-    box-shadow: #000000;
+  box-shadow: #000000;
 
   color: #fff;
   font-family: sans-serif;
@@ -122,7 +122,7 @@ main {
     height: 100%;
 }
 
-/* ============= MAP PAGE ========= */
+/* ============= MAP ========= */
 .testClass {
   display: flex;
   align-items: center;
@@ -165,12 +165,13 @@ main {
   justify-content: center;
 }
 .BackButton {
-  position: absolute;
-  top: 200px; /* Adjust this value to move the button down */
-  right: 50px; /* Adjust this value as needed */
-  border-radius: 10px; /* Remove background color */
-  border: 3px solid #003a96;
-  padding: 10px;
+    position: absolute;
+    top: 150px; /* Adjust this value to move the button down */
+    right: 25px; /* Adjust this value as needed */
+    border-radius: 10px; /* Remove background color */
+    border: 3px solid #003a96;
+    padding: 10px;
+    scale: 0.75;
 }
 
 /* ============= DRAG AND DROP ========= */
@@ -255,8 +256,27 @@ input[type="file"] {
 .BFSBox {
     align-items: center;
     text-align: center;
+
 }
 
+.idinput {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    font-size: 24px;
+    font-family: "Open Sans", sans-serif;
+}
+
+.route{
+    font-size: 24px;
+    font-family: "Open Sans", sans-serif;
+}
+.routeheader{
+    font-weight: bold;
+    font-size: 28px;
+    font-family: "Open Sans", sans-serif;
+}
 /* ====== Flower Service Page ======= */
 .flowerService{
     align-items: center;
@@ -359,3 +379,24 @@ tr:hover {
 }
 
 
+
+/*===== Export button ======*/
+.exportButton {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #3498db;
+    color: #3498db;
+    background-color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover effect */
+.exportButton:hover {
+    background-color: #3498db;
+    color: white;
+}
