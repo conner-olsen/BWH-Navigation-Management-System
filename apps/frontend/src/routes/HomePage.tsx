@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
     return (
         <div>
             <NavBar/>
-            {/*<canvas ref={canvasRef} style={{marginTop: '60px'}}/>*/}
+            <canvas ref={canvasRef} style={{marginTop: '60px'}}/>
         </div>
     );
 };
