@@ -20,13 +20,9 @@ router.post("/", async (req: Request, res: Response) => {
         flowerType: req.body.flowerType,
         deliveryDate: req.body.deliveryDate,
         note: req.body.note,
-        node: {
-          connect: {
-            longName: req.body.roomLongName
-          }
-        }
       }
     });
+
 
     res.sendStatus(200);
   } catch (error) {

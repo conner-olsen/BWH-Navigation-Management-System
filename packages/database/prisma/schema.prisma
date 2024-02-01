@@ -1,3 +1,4 @@
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -19,51 +20,51 @@ model HighScore {
   score Int
 }
 
-//Node Table
+// Node Table
 model Node {
-  nodeId    String @id
-  xcoord    Int
-  ycoord    Int
-  floor     String
-  building  String
-  nodeType  String
-  longName  String @unique
-  shortName String
-  Edge      Edge[]
+  nodeId         String                 @id
+  xcoord         Int
+  ycoord         Int
+  floor          String
+  building       String
+  nodeType       String
+  longName       String                 @unique
+  shortName      String
+  Edge           Edge[]
   ServiceRequest FlowerServiceRequest[]
 }
 
-//Edge Table
+// Edge Table
 model Edge {
-  edgeID    String  @id
-  node      Node    @relation(fields: [startNodeID], references: [nodeId])
+  edgeID      String @id
+  node        Node   @relation(fields: [startNodeID], references: [nodeId])
   startNodeID String
   endNodeID   String
 }
 
-//User Table
-model User{
+// User Table
+model User {
   Username String @id
   Password String
 }
 
-//Initial Service request Schema to be expanded upon later
+// Initial Service request Schema to be expanded upon later
 
-//model ServiceRequest{
+// model ServiceRequest{
 //  id Int @id @default(autoincrement())
 //  comment String
 //}
 
-//Service Request Table
-model FlowerServiceRequest{
-  id Int @id @default(autoincrement())
-  node Node  @relation(fields: [roomLongName], references: [longName])
-  senderName String
-  senderEmail String
-  roomLongName String
-  patientName String
-  flowerType String
+// Service Request Table
+model FlowerServiceRequest {
+  id           Int    @id @default(autoincrement())
+  node         Node   @relation(fields: [roomLongName], references: [longName])
+  roomLongName String @unique
+  senderName   String
+  senderEmail  String
+  patientName  String
+  flowerType   String
   deliveryDate String
-  note String
+  note         String
 }
 

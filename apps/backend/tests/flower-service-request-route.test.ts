@@ -2,7 +2,7 @@ import { test, expect } from 'vitest';
 import supertest from 'supertest';
 import app from '../src/app';
 
-test('POST /', async () => {
+test('POST /api/pop', async () => {
   const response = await supertest(app)
     .post('/api/populate-flower-service-request')
     .send({
