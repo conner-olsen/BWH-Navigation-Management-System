@@ -55,6 +55,14 @@ describe("Graph Class", () => {
     expect(graph.getNode("fakeid")).toBe(undefined);
   });
 
+  test("no existent pathway", () => {
+    const graph = new Graph();
+
+    graph.addNode(node1);
+
+    expect(graph.getNode("fakeid")).toBe(undefined);
+  });
+
   test("should populate graph from CSV files", () => {
     const graph = new Graph();
     // language=file-reference - Node csv file path
