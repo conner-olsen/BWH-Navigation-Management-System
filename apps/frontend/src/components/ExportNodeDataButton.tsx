@@ -28,7 +28,8 @@ const ExportNodeDataToCSVButton = () => {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                const result = JSON.stringify(response);
+
+                const result = await response.text();
                 // Set the data in the state
                 setFile(result);
             } catch (err) {
