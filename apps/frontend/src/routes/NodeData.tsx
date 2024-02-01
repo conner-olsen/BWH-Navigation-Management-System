@@ -59,7 +59,9 @@ export function NodeData() {
 
                 <br/>
 
-                <ExportNodeDataToCSVButton></ExportNodeDataToCSVButton>
+                <Container>
+                    <ExportNodeDataToCSVButton></ExportNodeDataToCSVButton>
+                </Container>
 
                 <br/>
 
