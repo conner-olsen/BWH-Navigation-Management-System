@@ -10,11 +10,13 @@ const graph = new Graph();
 const node1 = new Node("1", 1, 1, "1", "1", "1", "1", "1");
 const node2 = new Node("2", 2, 2, "2", "2", "2", "2", "2");
 const node3 = new Node("3", 3, 3, "3", "3", "3", "3", "3");
-
+const node4 = new Node("4", 4, 3, "3", "3", "4", "4", "4");
 // add nodes to graph
 graph.addNode(node1);
 graph.addNode(node2);
 graph.addNode(node3);
+graph.addNode(node4);
+
 
 // add edges to graph
 graph.addEdge("1", "2");
@@ -26,6 +28,9 @@ const endNode = '3';
 const answer: string[] = ["1", "3"];
 
 //test full graph
+test("find path 1 4", () => {
+  expect(graph.bfs("1", "4")).toStrictEqual([]);
+});
 test("find path 1 2 3", () => {
   expect(graph.bfs(startNode, endNode)).toStrictEqual(answer);
 });
