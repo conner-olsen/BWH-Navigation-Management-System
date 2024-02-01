@@ -5,7 +5,7 @@ export default function GlobalFooter() {
   return (
     <div className="FooterFormat mt-5">
         <footer className="GlobalFooter">
-            <img className="FooterLogo" src="public/logo-footer.png"/>
+            <img className="FooterLogo" src="public/bwh-logo-footer.png"/>
             <h3 className="FooterText"> © 2024 Brigham and Women's Hospital</h3>
         </footer>
     </div>
