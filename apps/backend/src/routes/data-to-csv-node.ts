@@ -22,10 +22,6 @@ function convertToCSV(data: NodeData[]): string {
 }
 
 
-
-
-
-
 router.get("/", async function (req: Request, res: Response) {
   try{
     const nodeCSV = await PrismaClient.node.findMany();
