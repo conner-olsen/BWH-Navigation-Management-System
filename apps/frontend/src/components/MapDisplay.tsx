@@ -35,7 +35,7 @@ function MapDisplay() {
 
     return (
         <div style={{ position: 'relative' }}>
-            <svg x="0" y="0" viewBox="0 0 5000 3400">
+            <svg className="max-w-full max-h-full object-cover" viewBox="0 0 5000 3400">
                 <image href="../../public/maps/L1map.png" width="5000" height="3400" x="0" y="0"/>
                 {graph && displayEdges(graph)}
                 {graph && Array.from(graph.nodes.values()).map((node: Node) => (
@@ -47,24 +47,24 @@ function MapDisplay() {
                             onClick={() => handleNodeClick(node)}
                             style={{ cursor: 'pointer' }}/>
                 ))}
+                {selectedNode && (
+                    <div style={{
+                        position: 'absolute',
+                        left: `${selectedNode.xCoord}px`,
+                        top: `${selectedNode.yCoord - 100}px`, // Adjust the size
+                        padding: '10px',
+                        backgroundColor: 'white',
+                        border: '1px solid black',
+                        borderRadius: '5px',
+                        pointerEvents: 'none',
+                    }}>
+                        <div><strong>ID:</strong> {selectedNode.id}</div>
+                        <div><strong>Location:</strong> ({selectedNode.xCoord}, {selectedNode.yCoord})</div>
+                        <div><strong>Floor:</strong> ({selectedNode.floor})</div>
+                        <div><strong>Building:</strong> ({selectedNode.building})</div>
+                        <div><strong>Type:</strong> ({selectedNode.nodeType})</div>
+                    </div>)}
             </svg>
-            {selectedNode && (
-                <div style={{
-                    position: 'absolute',
-                    left: `${selectedNode.xCoord}px`,
-                    top: `${selectedNode.yCoord - 100}px`, // Adjust the size
-                    padding: '10px',
-                    backgroundColor: 'white',
-                    border: '1px solid black',
-                    borderRadius: '5px',
-                    pointerEvents: 'none',
-                }}>
-                    <div><strong>ID:</strong> {selectedNode.id}</div>
-                    <div><strong>Location:</strong> ({selectedNode.xCoord}, {selectedNode.yCoord})</div>
-                    <div><strong>Floor:</strong> ({selectedNode.floor})</div>
-                    <div><strong>Building:</strong> ({selectedNode.building})</div>
-                    <div><strong>Type:</strong> ({selectedNode.nodeType})</div>
-                </div>)}
         </div>
     );
 }
