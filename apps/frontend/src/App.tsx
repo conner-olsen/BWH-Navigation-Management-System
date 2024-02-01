@@ -13,6 +13,7 @@ import FlowerServiceRequest from "./routes/ServiceRequests/FlowerServiceRequest.
 import CleaningServiceRequest from "./routes/ServiceRequests/CleaningServiceRequest.tsx";
 import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRequest.tsx";
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
+import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
 
 function App() {
   const router = createBrowserRouter([
@@ -65,6 +66,10 @@ function App() {
               path: "/ServiceList",
               element: <ServiceList/>
           },
+          {
+              path: "/ServiceLog",
+              element: <ServiceLog/>
+          }
 
       ],
     },

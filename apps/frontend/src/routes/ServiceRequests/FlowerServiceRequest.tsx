@@ -16,7 +16,16 @@ const FlowerServiceRequest: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        setFormData({
+            senderName: '',
+            senderEmail: '',
+            roomLongName: '',
+            patientName: '',
+            flowerType: '', // Add flowerType to formData
+            deliveryDate: '',
+            note: '', // Add note to formData
 
+        });
         try {
             const response = await fetch('/api/populate-flower-service-request', {
                 method: 'POST',
@@ -59,6 +68,7 @@ const FlowerServiceRequest: React.FC = () => {
                     name="senderName"
                     placeholder={"Mr. Worldwide"}
                     required
+                    value={formData.senderName}
                     onChange={handleChange}
                 />
                 <label htmlFor="senderEmail">Sender Email</label>
@@ -68,6 +78,7 @@ const FlowerServiceRequest: React.FC = () => {
                     name="senderEmail"
                     placeholder={"mr305mrworldwide@gmail.com"}
                     required
+                    value={formData.senderEmail}
                     onChange={handleChange}
                 />
 
@@ -78,6 +89,7 @@ const FlowerServiceRequest: React.FC = () => {
                     name="roomLongName"
                     placeholder={"Hotel Room"}
                     required
+                    value={formData.roomLongName}
                     onChange={handleChange}
                 />
                 <label htmlFor="patientName">Patient's Name</label>
