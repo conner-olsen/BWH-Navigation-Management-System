@@ -354,3 +354,24 @@ tr:hover {
 }
 
 
+
+/*===== Export button ======*/
+.exportButton {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #3498db;
+    color: #3498db;
+    background-color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover effect */
+.exportButton:hover {
+    background-color: #3498db;
+    color: white;
+}

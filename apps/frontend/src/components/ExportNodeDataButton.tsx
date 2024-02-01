@@ -1,49 +1,59 @@
-// import {node} from "common/interfaces/interfaces.ts";
-//
-// export const GetDataNodes = () => {
-//     const [data, setData] = useState<node[]>([]);
-//     const [loading, setLoading] = useState(true);
-//     const [error, setError] = useState(null);
-//
-//     useEffect(() => {
-//         const fetchData = async () => {
-//             try {
-//                 // Make a GET request to the API endpoint
-//                 const response = await fetch("/api/node-populate");
-//
-//                 // Check if the request was successful (status code 2xx)
-//                 if (!response.ok) {
-//                     throw new Error(`HTTP error! Status: ${response.status}`);
-//                 }
-//
-//                 // Parse the JSON response
-//                 const result = await response.json();
-//
-//                 // Set the data in the state
-//                 setData(result);
-//             } catch (err) {
-//                 // Handle errors
-//                 setError(err.message);
-//             } finally {
-//                 // Set loading to false, indicating that the request has completed
-//                 setLoading(false);
-//             }
-//         };
-//
-//         fetchData().then();
-//     }, []); //
-//
-//     if (loading) {
-//         return <div>Loading...</div>;
-//     }
-//
-//     if (error) {
-//         return <div>Error: {error}</div>;
-//     }
-//
-//     return (
-//         <div>
-//             <TableNodes tableData={data}></TableNodes>
-//         </div>
-//     );
-// };
+import {useEffect, useState} from "react";
+
+const ExportNodeDataToCSVButton = () => {
+    const [file, setFile] = useState("");
+    const [loading, setLoading] = useState(true);
+
+    const handleExportButton = (props: { dataToExport: string  }) =>{
+        // Convert data to CSV format
+        const csvData = convertToCSV(props.dataToExport);
+
+        // Create a Blob and download the CSV file
+        const blob = new Blob([csvData], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'exported_data.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Make a GET request to the API endpoint
+                const response = await fetch("/api/download-node-csv");
+
+                // Check if the request was successful (status code 2xx)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                // Parse the JSON response
+                const result = await JSON.stringify(response);
+
+                // Set the data in the state
+                setFile(result);
+            } catch (err) {
+                // Handle errors
+                console.log("Failed");
+            } finally {
+                // Set loading to false, indicating that the request has completed
+                setLoading(false);
+            }
+        };
+
+        fetchData().then();
+    }, []); //
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <button className="exportButton" onClick={handleExportButton(file)}>Export</button>
+    );
+};
+
+
+export default ExportNodeDataToCSVButton;
