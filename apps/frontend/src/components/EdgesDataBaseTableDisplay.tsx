@@ -38,7 +38,7 @@ export const GetDataEdges = () => {
         const fetchData = async () => {
             try {
                 // Make a GET request to the API endpoint
-                const response = await fetch("/api/node-populate");
+                const response = await fetch("/api/edge-populate");
 
                 // Check if the request was successful (status code 2xx)
                 if (!response.ok) {

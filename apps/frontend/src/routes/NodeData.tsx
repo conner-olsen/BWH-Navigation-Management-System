@@ -4,7 +4,6 @@ import DragNDrop from "../components/DragNDrop.tsx";
 import {Container} from "react-bootstrap";
 import NavBar from "../components/NavBar.tsx";
 import {GetDataNodes} from "../components/NodesDataBaseTableDisplay.tsx";
-import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
 
 export function NodeData() {
 
@@ -66,9 +65,6 @@ export function NodeData() {
                     <GetDataNodes></GetDataNodes>
                 </Container>
 
-                <Container>
-                    <GetDataEdges></GetDataEdges>
-                </Container>
             </div>
         );
 
