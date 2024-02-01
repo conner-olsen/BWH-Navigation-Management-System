@@ -18,7 +18,7 @@ const FlowerServiceRequest: React.FC = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch('your_backend_endpoint', {
+            const response = await fetch('/api/populate-flower-service-request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
