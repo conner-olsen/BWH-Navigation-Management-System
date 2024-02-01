@@ -148,7 +148,12 @@ main {
 .btn {
   background-color: var(--medium-blue) !important;
 }
-
+.svgOfL1 {
+    border-radius: 1.25rem;
+    flex-shrink: 0;
+    margin: auto;
+    justify-content: center;
+}
 .pictureOfL1 {
   border-radius: 1.25rem;
   width: 50rem;

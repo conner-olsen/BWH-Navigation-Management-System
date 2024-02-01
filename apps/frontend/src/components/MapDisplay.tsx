@@ -1,6 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, CSSProperties} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
+
+interface MapDisplayProps {
+    className?: string;
+    style?: CSSProperties;
+}
 
 /**
  * Displays a map with nodes and edges.
@@ -8,7 +13,7 @@ import populatedGraph from 'common/dev/populatedGraph.ts';
  * @constructor
  * @returns {JSX.Element} The map display component.
  */
-function MapDisplay() {
+const MapDisplay: React.FC<MapDisplayProps> = ({ className, style }): React.JSX.Element => {
     const [graph, setGraph] = useState<Graph | null>(null);
 
     useEffect(() => {
@@ -38,7 +43,7 @@ function MapDisplay() {
     };
 
     return (
-        <div style={{position: 'relative'}}>
+        <div style={{position: 'relative', ...style}} className={className}>
             <svg className="max-w-full max-h-full object-cover" viewBox="0 0 5000 3400">
                 <image href="../../public/maps/L1map.png" width="5000" height="3400" x="0" y="0"/>
                 {graph && displayEdges(graph)}
@@ -54,7 +59,7 @@ function MapDisplay() {
             </svg>
         </div>
     );
-}
+};
 
 /**
  * This is the default export of the MapDisplay component.
