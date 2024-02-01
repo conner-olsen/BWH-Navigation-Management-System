@@ -1,37 +1,31 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
-import { Prisma } from "database";
 
 const router: Router = express.Router();
 
 
 router.post("/", async (req: Request, res: Response) => {
-  const flowerRequestAttempt: Prisma.FlowerServiceRequestCreateInput = req.body;
-  try {
-    // Assuming that 'roomLongName' is the unique identifier for a room
-    const existingNode = await PrismaClient.node.findUnique({
-      where: {
-        longName: req.body.roomLongName,
-      },
-    });
+  //const flowerRequestAttempt: Prisma.FlowerServiceRequestCreateInput = req.body;
+  console.log(req.body);
 
-    if (existingNode) {
-      // If the room exists, connect it to the FlowerServiceRequest
-      flowerRequestAttempt.node = {
-        connect: {
-          longName: existingNode.longName,
-        },
-      };
-    } else {
-      // Handle the case where the room doesn't exist (optional)
-      console.error(`Room with longName '${req.body.roomLongName}' not found.`);
-      res.sendStatus(404); // Not Found
-      return;
-    }
+  try {
 
     // Create the FlowerServiceRequest with the connected room
     await PrismaClient.flowerServiceRequest.create({
-      data: flowerRequestAttempt,
+      data: {
+        senderName: req.body.senderName,
+        senderEmail: req.body.senderEmail,
+        roomLongName: req.body.roomLongName,
+        patientName: req.body.patientName,
+        flowerType: req.body.flowerType,
+        deliveryDate: req.body.deliveryDate,
+        note: req.body.note,
+        node: {
+          connect: {
+            longName: req.body.roomLongName
+          }
+        }
+      }
     });
 
     res.sendStatus(200);

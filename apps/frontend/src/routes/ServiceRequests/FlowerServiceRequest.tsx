@@ -25,6 +25,7 @@ const FlowerServiceRequest: React.FC = () => {
             formDataToSend.append(key, value);
         });
 
+        console.log(formDataToSend);
         try {
             const response = await fetch('/api/populate-flower-service-request', {
                 method: 'POST',
