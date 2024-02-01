@@ -10,10 +10,10 @@ function MapDisplay() {
         setGraph(populatedGraph);
     }, []);
     const displayEdges = (graph: Graph) => {
-        let edges = [];
-        for (let [nodeId, node] of graph.nodes) {
+        const edges : React.JSX.Element[] = [];
+        for (const [nodeId, node] of graph.nodes) {
             node.edges.forEach(edgeNodeId => {
-                let targetNode = graph.getNode(edgeNodeId);
+                const targetNode = graph.getNode(edgeNodeId);
                 if (targetNode) {
                     edges.push(
                         <line key={`${nodeId}-${edgeNodeId}`}
