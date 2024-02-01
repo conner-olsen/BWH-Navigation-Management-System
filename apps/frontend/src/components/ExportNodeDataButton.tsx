@@ -4,12 +4,11 @@ const ExportNodeDataToCSVButton = () => {
     const [file, setFile] = useState("");
     const [loading, setLoading] = useState(true);
 
-    const handleExportButton = (props: { dataToExport: string  }) =>{
+    const handleExportButton = () =>{
         // Convert data to CSV format
-        const csvData = convertToCSV(props.dataToExport);
 
         // Create a Blob and download the CSV file
-        const blob = new Blob([csvData], { type: 'text/csv' });
+        const blob = new Blob([file], { type: 'text/csv' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = 'exported_data.csv';
@@ -29,9 +28,7 @@ const ExportNodeDataToCSVButton = () => {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                // Parse the JSON response
-                const result = await JSON.stringify(response);
-
+                const result = JSON.stringify(response);
                 // Set the data in the state
                 setFile(result);
             } catch (err) {
@@ -51,7 +48,7 @@ const ExportNodeDataToCSVButton = () => {
     }
 
     return (
-        <button className="exportButton" onClick={handleExportButton(file)}>Export</button>
+        <button className="exportButton" onClick={handleExportButton}>Export</button>
     );
 };
 
