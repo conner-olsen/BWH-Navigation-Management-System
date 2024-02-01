@@ -60,7 +60,7 @@ model FlowerServiceRequest{
   node Node  @relation(fields: [roomLongName], references: [longName])
   senderName String
   senderEmail String
-  roomLongName String
+  roomLongName String @unique
   patientName String
   flowerType String
   deliveryDate String
