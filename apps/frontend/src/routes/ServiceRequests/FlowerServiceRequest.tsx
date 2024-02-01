@@ -2,6 +2,8 @@
 import BackButton from "../../components/BackButton.tsx";
 import NavBar from "../../components/NavBar.tsx";
 import React, { useState } from 'react';
+import axios from "axios";
+
 
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -22,21 +24,27 @@ const FlowerServiceRequest: React.FC = () => {
 
         // Append each form field to the FormData object
         Object.entries(formData).forEach(([key, value]) => {
+            // console.log("key: ", key, "    value: ", value);
             formDataToSend.append(key, value);
         });
 
-        console.log(formDataToSend);
+        console.log(formData);
         try {
-            const response = await fetch('/api/populate-flower-service-request', {
-                method: 'POST',
+            const response = await axios.post("/api/populate-flower-service-request", JSON.stringify(formData), {
                 headers: {
-                    // Ensure the correct content type for FormData
-                    'Content-Type': 'multipart/form-data',
-                },
-                body: formDataToSend, // Use FormData instead of JSON.stringify
+                    "Content-Type": 'application/json'
+                }
             });
+            // const response = await fetch('/api/populate-flower-service-request', {
+            //     method: 'POST',
+            //     headers: {
+            //         // Ensure the correct content type for FormData
+            //         'Content-Type': 'multipart/form-data',
+            //     },
+            //     body: formData, // Use FormData instead of JSON.stringify
+            // });
 
-            if (response.ok) {
+            if (response.status == 200) {
                 console.log('Data sent successfully');
             } else {
                 console.error('Error sending data');
@@ -48,14 +56,14 @@ const FlowerServiceRequest: React.FC = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-        console.log(event.target.value);
+        // console.log(event.target.value);
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
     };
     const currentDateTime = new Date().toISOString().slice(0, 16);
-    console.log(currentDateTime);
+    // console.log(currentDateTime);
     return (
         <form onSubmit={handleSubmit}>
             <BackButton link={"/UserSelection"}></BackButton>
