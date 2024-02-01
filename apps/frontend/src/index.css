@@ -252,21 +252,25 @@ input[type="file"] {
     text-align: center;
 
 }
-#startidinput {
-    font-size: 30px;
-    max-width: 600px;
+
+.idinput {
+    max-width: 500px;
     margin: auto;
-    padding: 20px;
+    padding: 60px;
+    background-color: white;
+    font-size: 24px;
+    font-family: "Open Sans", sans-serif;
 }
 
-
-#endidinput {
-    font-size: 30px;
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
+.route{
+    font-size: 24px;
+    font-family: "Open Sans", sans-serif;
 }
-
+.routeheader{
+    font-weight: bold;
+    font-size: 28px;
+    font-family: "Open Sans", sans-serif;
+}
 /* ====== Flower Service Page ======= */
 .flowerService{
     align-items: center;
