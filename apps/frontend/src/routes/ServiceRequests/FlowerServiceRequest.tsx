@@ -5,12 +5,11 @@ import React, { useState } from 'react';
 
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
-        roomLongName: '',
         senderName: '',
         senderEmail: '',
-        flowerType: '', // Add flowerType to formData
-        roomNum: '',
+        roomLongName: '',
         patientName: '',
+        flowerType: '', // Add flowerType to formData
         deliveryDate: '',
         note: '', // Add note to formData
     });
