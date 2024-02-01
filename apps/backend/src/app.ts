@@ -10,6 +10,7 @@ import flowersevicerequestRouter from "./routes/flower-service-request-route.ts"
 import nodeRouter from "./routes/node-route.ts";
 import edgeRouter from "./routes/populate-edges.ts";
 import downloadNodeDataRouter from "./routes/data-to-csv-node.ts";
+import downloadEdgeDataRouter from "./routes/data-to-csv-edge.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -37,6 +38,7 @@ app.use("/api/populate-flower-service-request", flowersevicerequestRouter);
 app.use("/api/edge-populate", edgeRouter);
 app.use("/api/user", userRouter);
 app.use("/api/download-node-csv", downloadNodeDataRouter);
+app.use("/api/download-edge-csv", downloadEdgeDataRouter);
 /**
  * Catch all 404 errors, and forward them to the error handler
  */
@@ -56,7 +58,6 @@ app.use((err: HttpError, req: Request, res: Response): void => {
   // Reply with the error
   res.status(err.status || 500);
 });
-
 
 
 
