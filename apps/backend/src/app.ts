@@ -57,4 +57,7 @@ app.use((err: HttpError, req: Request, res: Response): void => {
   res.status(err.status || 500);
 });
 
+
+
+
 export default app; // Export the backend, so that www.ts can start it
