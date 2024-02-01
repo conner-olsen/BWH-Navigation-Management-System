@@ -3,7 +3,7 @@ import supertest from 'supertest';
 import app from '../src/app';
 import populateDatabase from "common/dev/populateDatabase.ts";
 
-test('POST /api/pop', async () => {
+test('POST /api/populate-flower-service-request', async () => {
   await populateDatabase();
   const response = await supertest(app)
     .post('/api/populate-flower-service-request')
