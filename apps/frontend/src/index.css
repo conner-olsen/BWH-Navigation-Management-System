@@ -254,9 +254,9 @@ input[type="file"] {
 }
 
 .idinput {
-    max-width: 500px;
+    max-width: 550px;
     margin: auto;
-    padding: 60px;
+    padding: 25px;
     background-color: white;
     font-size: 24px;
     font-family: "Open Sans", sans-serif;

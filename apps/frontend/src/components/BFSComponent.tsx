@@ -158,7 +158,7 @@ export function BFSComponent() {
             </select>
             <h1></h1>
             <br/>
-            <p className = "routeheader" > Below is the path to take to get to your destination starting from your current location: </p>
+            <p className = "routeheader" > Beginning from your start location, below is the path to take to get to your destination: </p>
             <h2></h2>
             {bfsResult.length > 0 ? (
                 <div>
