@@ -1,20 +1,10 @@
 import express, {Router, Request, Response} from "express";
 import { parseCSV} from "common/src/parser.ts";
 import PrismaClient from "../bin/database-connection.ts";
+import {node} from "common/interfaces/interfaces.ts";
 
 const router: Router = express.Router();
 
-interface node {
-  nodeId:string,
-  xcoord:number,
-  ycoord:number,
-  floor:string,
-  building:string,
-  nodeType:string,
-  longName:string,
-  shortName:string
-
-}
 
 router.post("/", async (req: Request, res: Response) => {
   try {

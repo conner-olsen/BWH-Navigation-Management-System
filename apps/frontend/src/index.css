@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /*font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/
   background-color: #ffffff;
@@ -74,9 +78,12 @@ main {
 .loginForm input {
   padding: 20px;
 }
+.selectionPage{
+    align-items: center;
+}
 
 .PatientLoginHeader {
-  font-family: sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 80px;
 }
 
@@ -86,16 +93,17 @@ main {
 
 /* ============= USER SELECTION PAGE ========= */
 .LargeButton {
-  width: 100%;
+  width: 50%;
   height: 80px;
   border-radius: 40px;
-  background-color: #3498db;
+  background-color: #00336e;
+    box-shadow: #000000;
 
   color: #fff;
   font-family: sans-serif;
   border: none;
   cursor: pointer;
-  font-size: 40px;
+  font-size: 20px;
 }
 
 .LargeButton:hover {
@@ -310,9 +318,39 @@ input[type="submit"]:hover {
     background-color: #4ba1ff;
 }
 
-.mapSVG {
-    display: flex;
-    align-items: center;
-    width: 5000px;
-    height: 3400px;
+/* ========== CSV Table ========== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Style for table headers */
+th {
+    background-color: #f2f2f2;
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 12px;
+    font-weight: bold;
+}
+
+/* Style for alternating row colors */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Style for table cells */
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+}
+
+/* Hover effect for table rows */
+tr:hover {
+    background-color: #e5e5e5;
+}
+
+
