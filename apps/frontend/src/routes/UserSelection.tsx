@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Container, Row, Col, Stack } from "react-bootstrap";
+import { Container, Row, Col, Image, Stack } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LargeButton from "../components/LargeButton.tsx";
 import { useNavigate } from "react-router-dom";
@@ -25,8 +25,16 @@ export default function UserSelection (){
     <Container fluid>
       <Outlet />
         <BackButton link={"/"}></BackButton>
-      <Row className={"selectionPage"}>
-        <Col>
+      <Row>
+        <Col md={6}>
+          <Image
+            className="hospitalImage img-fluid"
+            src="public/hospital.jpeg"
+            alt="Hospital Image"
+            fluid
+          />
+        </Col>
+        <Col md={6}>
           <Stack className="stack" gap={5}>
             <div className="SignInBox">
               <br />
