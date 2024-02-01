@@ -54,7 +54,7 @@ export function BFSComponent() {
             <h2>Lower Floor 1 Navigation</h2>
             <p></p>
             <h4>Start Location: </h4>
-            <select value={startNode} onChange={e => setStartNode(e.target.value)}>
+            <select name = "startidinput" id = "startidinput" value={startNode} onChange={e => setStartNode(e.target.value)}>
                 <option></option>
                 <option value="CCONF001L1"> Anesthesia Conf Floor L1</option>
                 <option value="CCONF002L1">Medical Records Conference Room Floor L1</option>
@@ -106,7 +106,7 @@ export function BFSComponent() {
             <p></p>
 
             <h4>End Location: </h4>
-            <select value={endNode} onChange={e => setEndNode(e.target.value)}>
+            <select name = "endidinput" id = "endidinput" value={endNode} onChange={e => setEndNode(e.target.value)}>
                 <option></option>
                 <option value="CCONF001L1"> Anesthesia Conf Floor L1</option>
                 <option value="CCONF002L1">Medical Records Conference Room Floor L1</option>

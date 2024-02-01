@@ -250,6 +250,21 @@ input[type="file"] {
 .BFSBox {
     align-items: center;
     text-align: center;
+
+}
+#startidinput {
+    font-size: 30px;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+
+#endidinput {
+    font-size: 30px;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
 }
 
 /* ====== Flower Service Page ======= */
