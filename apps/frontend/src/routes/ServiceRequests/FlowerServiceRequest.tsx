@@ -20,15 +20,26 @@ const FlowerServiceRequest: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const formDataToSend = new FormData();
 
-        // Append each form field to the FormData object
-        Object.entries(formData).forEach(([key, value]) => {
-            // console.log("key: ", key, "    value: ", value);
-            formDataToSend.append(key, value);
-        });
-
-        console.log(formData);
+        // const formDataToSend = new FormData();
+        //
+        // try {
+        //     const response = await fetch('/api/populate-flower-service-request', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({formData}),
+        //     });
+        //
+        //
+        // // Append each form field to the FormData object
+        // Object.entries(formData).forEach(([key, value]) => {
+        //     // console.log("key: ", key, "    value: ", value);
+        //     formDataToSend.append(key, value);
+        // });
+        //
+        // console.log(formData);
         try {
             const response = await axios.post("/api/populate-flower-service-request", JSON.stringify(formData), {
                 headers: {

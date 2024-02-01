@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "module": "true",
   "devDependencies": {
+    "@testing-library/react": "^14.2.0",
     "@types/node": "^20.11.10",
     "eslint": "latest",
     "eslint-config-custom": "workspace:*",

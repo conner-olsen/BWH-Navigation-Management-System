@@ -54,7 +54,8 @@ export function BFSComponent() {
             <h2>Lower Floor 1 Navigation</h2>
             <p></p>
             <h4>Start Location: </h4>
-            <select value={startNode} onChange={e => setStartNode(e.target.value)}>
+            <select className="idinput" value={startNode}
+                    onChange={e => setStartNode(e.target.value)}>
                 <option></option>
                 <option value="CCONF001L1"> Anesthesia Conf Floor L1</option>
                 <option value="CCONF002L1">Medical Records Conference Room Floor L1</option>
@@ -106,7 +107,7 @@ export function BFSComponent() {
             <p></p>
 
             <h4>End Location: </h4>
-            <select value={endNode} onChange={e => setEndNode(e.target.value)}>
+            <select className="idinput" value={endNode} onChange={e => setEndNode(e.target.value)}>
                 <option></option>
                 <option value="CCONF001L1"> Anesthesia Conf Floor L1</option>
                 <option value="CCONF002L1">Medical Records Conference Room Floor L1</option>
@@ -155,16 +156,15 @@ export function BFSComponent() {
                 <option value="WELEV00LL1">Elevator L Floor L1</option>
                 <option value="WELEV00ML1">Elevator M Floor L1</option>
             </select>
-
-            <p></p>
-            <h5> Below is the path to take to get to your destination starting from your current location: </h5>
-            <p></p>
-
+            <h1></h1>
+            <br/>
+            <p className = "routeheader" > Below is the path to take to get to your destination starting from your current location: </p>
+            <h2></h2>
             {bfsResult.length > 0 ? (
                 <div>
                     <ul>
                         {collectLongNames().map((longName, index) => (
-                            <h6  key={index}>{longName} </h6>
+                            <p className = "route" key={index}>{longName} </p>
                         ))}
                     </ul>
                 </div>
