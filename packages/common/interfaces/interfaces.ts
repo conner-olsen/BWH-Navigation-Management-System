@@ -17,11 +17,11 @@ export interface edge {
 
 
 export interface flowerServiceRequest {
-  roomLongName:string
   senderName:string
   senderEmail:string
-  item:string
-  comment:string
-  date: string
-  status:string
+  roomLongName:string
+  patientName:string
+  flowerType:string
+  deliveryDate: string
+  note:string
 }
