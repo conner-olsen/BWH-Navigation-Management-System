@@ -4,6 +4,7 @@ import DragNDrop from "../components/DragNDrop.tsx";
 import {Container} from "react-bootstrap";
 import NavBar from "../components/NavBar.tsx";
 import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
+import ExportEdgeDataButton from "../components/ExportEdgeDataButton.tsx";
 
 export function EdgeData() {
 
@@ -57,6 +58,9 @@ export function EdgeData() {
             />
 
             <br/>
+            <Container>
+                <ExportEdgeDataButton></ExportEdgeDataButton>
+            </Container>
             <br/>
 
             <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
