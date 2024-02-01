@@ -5,10 +5,13 @@ import React, { useState } from 'react';
 
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
+        roomLongName: '',
+        senderName: '',
+        senderEmail: '',
         flowerType: '', // Add flowerType to formData
         roomNum: '',
         patientName: '',
-        deliveryDateTime: '',
+        deliveryDate: '',
         note: '', // Add note to formData
     });
 
@@ -46,10 +49,49 @@ const FlowerServiceRequest: React.FC = () => {
     console.log(currentDateTime);
     return (
         <form onSubmit={handleSubmit}>
-            <BackButton link={"/"}></BackButton>
+            <BackButton link={"/UserSelection"}></BackButton>
             <NavBar></NavBar>
             <h1 style={{ fontSize: 30 }}>Flower Delivery Form</h1>
             <div className={"flowerService"}>
+                <label htmlFor="senderName">Sender Name</label>
+                <input
+                    type="text"
+                    id="senderName"
+                    name="senderName"
+                    placeholder={"Mr. Worldwide"}
+                    required
+                    onChange={handleChange}
+                />
+                <label htmlFor="senderEmail">Sender Email</label>
+                <input
+                    type="text"
+                    id="senderEmail"
+                    name="senderEmail"
+                    placeholder={"mr305mrworldwide@gmail.com"}
+                    required
+                    onChange={handleChange}
+                />
+
+                <label htmlFor="roomLongName">Room Name</label>
+                <input
+                    type="text"
+                    id="roomLongName"
+                    name="roomLongName"
+                    placeholder={"Hotel Room"}
+                    required
+                    onChange={handleChange}
+                />
+                <label htmlFor="patientName">Patient's Name</label>
+                <input
+                    type="text"
+                    id="patientName"
+                    name="patientName"
+                    placeholder="Armando Pérez"
+                    required
+                    value={formData.patientName}
+                    onChange={handleChange}
+                />
+
                 <label htmlFor="flowerType">Select the type of flowers</label>
                 <select
                     id="flowerType"
@@ -71,57 +113,29 @@ const FlowerServiceRequest: React.FC = () => {
                     <option value="tulips">Tulips</option>
                 </select>
 
-                <br />
-
-                <label htmlFor="roomDetails">Room Details</label>
+                <label htmlFor="deliveryDateTime">Date of Delivery</label>
                 <input
                     type="text"
-                    id="roomDetails"
-                    name="roomNum"
-                    placeholder="Ex. 305"
+                    id="deliveryDate"
+                    name="deliveryDate"
+                    placeholder={"01/15/1981"}
                     required
-                    value={formData.roomNum}
-                    onChange={handleChange}
-                />
-
-                <br />
-
-                <label htmlFor="patientName">Patient's Name</label>
-                <input
-                    type="text"
-                    id="patientName"
-                    name="patientName"
-                    placeholder="Armando Pérez"
-                    required
-                    value={formData.patientName}
-                    onChange={handleChange}
-                />
-
-                <br />
-
-                <label htmlFor="deliveryDateTime">Date and Time of Delivery</label>
-                <input
-                    type="datetime-local"
-                    id="deliveryDateTime"
-                    name="deliveryDateTime"
-                    required
-                    value={formData.deliveryDateTime}
+                    value={formData.deliveryDate}
                     onChange={handleChange}
                     min={currentDateTime}
                 />
 
-                <br />
-
                 <label>Add a note</label>
                 <textarea
-                    placeholder={"Get well soon! We miss you so much"}
+                    placeholder={"I heard you're going through tough times. Get well soon!"}
                     name="note"
                     value={formData.note}
                     onChange={handleChange}
                 ></textarea>
-
-                <br />
-                <input type="submit" value="Submit" />
+                <br/>
+                <br/>
+                <br/>
+                <input type="submit" value="Submit"/>
             </div>
         </form>
     );
