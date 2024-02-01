@@ -1,7 +1,7 @@
-
 import BackButton from "../../components/BackButton.tsx";
 import NavBar from "../../components/NavBar.tsx";
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -18,25 +18,14 @@ const FlowerServiceRequest: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        const formDataToSend = new FormData();
-
-        // Append each form field to the FormData object
-        Object.entries(formData).forEach(([key, value]) => {
-            formDataToSend.append(key, value);
-        });
-
-        console.log(formDataToSend);
         try {
-            const response = await fetch('/api/populate-flower-service-request', {
-                method: 'POST',
+            const response = await axios.post('/api/populate-flower-service-request', formData, {
                 headers: {
-                    // Ensure the correct content type for FormData
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
                 },
-                body: formDataToSend, // Use FormData instead of JSON.stringify
             });
 
-            if (response.ok) {
+            if (response.status === 200) {
                 console.log('Data sent successfully');
             } else {
                 console.error('Error sending data');
@@ -47,7 +36,7 @@ const FlowerServiceRequest: React.FC = () => {
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         console.log(event.target.value);
         setFormData((prevFormData) => ({
             ...prevFormData,
@@ -60,7 +49,7 @@ const FlowerServiceRequest: React.FC = () => {
         <form onSubmit={handleSubmit}>
             <BackButton link={"/UserSelection"}></BackButton>
             <NavBar></NavBar>
-            <h1 style={{ fontSize: 30 }}>Flower Delivery Form</h1>
+            <h1 style={{fontSize: 30}}>Flower Delivery Form</h1>
             <div className={"flowerService"}>
                 <label htmlFor="senderName">Sender Name</label>
                 <input
