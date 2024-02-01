@@ -9,7 +9,7 @@ const FlowerServiceRequest: React.FC = () => {
         senderEmail: '',
         roomLongName: '',
         patientName: '',
-        flowerType: '', // Add flowerType to formData
+        flowerType: '',
         deliveryDate: '',
         note: '', // Add note to formData
     });
@@ -28,6 +28,10 @@ const FlowerServiceRequest: React.FC = () => {
         try {
             const response = await fetch('/api/populate-flower-service-request', {
                 method: 'POST',
+                headers: {
+                    // Ensure the correct content type for FormData
+                    'Content-Type': 'multipart/form-data',
+                },
                 body: formDataToSend, // Use FormData instead of JSON.stringify
             });
 
