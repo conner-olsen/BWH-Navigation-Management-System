@@ -30,7 +30,7 @@ model Node {
   longName  String @unique
   shortName String
   Edge      Edge[]
-  ServiceRequest ServiceRequest[]
+  ServiceRequest FlowerServiceRequest[]
 }
 
 //Edge Table
@@ -57,14 +57,13 @@ model User{
 //Service Request Table
 model FlowerServiceRequest{
   id Int @id @default(autoincrement())
-  roomLongName String
+  node Node  @relation(fields: [roomLongName], references: [longName])
   senderName String
   senderEmail String
+  roomLongName String
+  patientName String
   flowerType String
-  node Node  @relation(fields: [roomLongName], references: [longName])
-  comment String
-  date String
-  item String
-  status String
+  deliveryDate String
+  note String
 }
 
