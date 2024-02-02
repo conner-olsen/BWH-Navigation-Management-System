@@ -5,7 +5,13 @@ import {edge} from "common/interfaces/interfaces.ts";
 import nodeCSVString from "./nodeCSVString.ts";
 import edgeCSVString from "./edgeCSVString.ts";
 
-
+/**
+ * Populates the database with data from CSV files.
+ * This method deletes all records in the node and edge tables, then parses CSV strings to create new records.
+ * It ensures that all node records are created before creating edge records.
+ *
+ * @returns {Promise<void>} - A Promise that resolves when the database population is complete.
+ */
 async function populateDatabase() {
   // Delete all records in the node and edge tables
   await PrismaClient.flowerServiceRequest.deleteMany();
