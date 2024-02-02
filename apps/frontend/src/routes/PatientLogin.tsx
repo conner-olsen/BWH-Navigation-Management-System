@@ -28,7 +28,7 @@ const PatientLogin = () => {
         let patientPassword: string = "patient";
 
         if (patientID === username && patientPassword === password) {
-            navigate("/");
+            navigate("/Home");
         }
         else {
             navigate("/PatientLogin");
