@@ -34,6 +34,9 @@ export default function NavBar() {
                     <NavDropdown.Item as={Link} to="/CleaningService">
                         Cleaning Services
                     </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/ServiceLog">
+                        Service Log
+                    </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="More" id="basic-nav-dropdown">
                     <NavDropdown.Item as={Link} to="/Home">
