@@ -7,7 +7,7 @@ const ServiceList = () => {
     return (
         <div>
             <NavBar/>
-            <BackButton link={"/"}></BackButton>
+            <BackButton></BackButton>
             <h1>
                 Coming Soon :)
             </h1>
