@@ -1,16 +1,21 @@
 # Project Setup and Usage Guide
 
 ## Environment Setup
-1. Install yarn globally: `npm install -g yarn`
-2. Install project dependencies: `yarn install`
-3. Build the project: `yarn run build:dev`
+1. Open the project in Webstorm.
+2. Run the following commands:
+   - Install yarn globally: `npm install -g yarn`
+   - Install project dependencies: `yarn install`
+   - Build the project: `yarn run build:dev`
+3. Launch Docker.
+4. Run the `Start Dev` configuration.
 
 ## Accessing the Application
 Open [http://localhost:3000](http://localhost:3000) in a web browser.
 
-## Front End
+## How to Use Features
 - [http://localhost:3000](http://localhost:3000) sends you to the login page.
 - To login, click “Login as Admin” and use “admin” as the username and password.
+- If you are a patient you can log in using ‘patient’ as the username and password. Your specific user authorities over what you can access will not change just yet in this prototype. So logging in as a patient, admin, or guest all have the same access on the site.
 - After logging in, the main homepage contains the Lower Floor 1 Navigation pathfinding page.
 - Choose the rooms from both drop-downs and the path, in text, will be displayed below if a path is found.
 - To access the different pages, use the navigation bar at the top of your screen.
