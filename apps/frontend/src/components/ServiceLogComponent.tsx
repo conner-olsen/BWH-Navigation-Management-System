@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {flowerServiceRequest} from "common/interfaces/interfaces.ts";
 
-function GenerateTableRowsEdges(tableData: flowerServiceRequest[]): JSX.Element[] {
+function GenerateTableRowsServices(tableData: flowerServiceRequest[]): JSX.Element[] {
     return tableData.map((item, index) => (
         <tr key={index}>
             <td>{tableData[index].senderName}</td>
@@ -15,7 +15,7 @@ function GenerateTableRowsEdges(tableData: flowerServiceRequest[]): JSX.Element[
     ));
 }
 
-const TableEdges: React.FC<{ tableData: flowerServiceRequest[] }> = ({tableData}) => {
+const TableServices: React.FC<{ tableData: flowerServiceRequest[] }> = ({tableData}) => {
     return (
         <table>
             <thead>
@@ -30,7 +30,7 @@ const TableEdges: React.FC<{ tableData: flowerServiceRequest[] }> = ({tableData}
             </tr>
             </thead>
             <tbody>
-            {GenerateTableRowsEdges(tableData)}
+            {GenerateTableRowsServices(tableData)}
             </tbody>
         </table>
     );
@@ -80,7 +80,7 @@ export const ServiceLogComponent = () => {
 
     return (
         <div>
-            <TableEdges tableData={data}></TableEdges>
+            <TableServices tableData={data}></TableServices>
         </div>
     );
 };
