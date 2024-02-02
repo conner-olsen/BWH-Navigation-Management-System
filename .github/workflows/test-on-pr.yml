@@ -32,6 +32,8 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: yarn install --immutable
+      - name: build project
+        run: yarn run build
       - name: test
         run: yarn run vitest --run
 
