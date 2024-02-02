@@ -34,7 +34,7 @@ describe('parseCSV function', () => {
 });
 
 // ConvertToJSON function
-test('convertToJSON function', () => {
+describe('convertToJSON function', () => {
   // Test case 1: Verify that the function correctly converts a CSVRow array into a JSON string
   test('converts CSVRow array into a JSON string', () => {
     const rows: CSVRow[] = [

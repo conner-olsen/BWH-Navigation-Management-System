@@ -22,7 +22,7 @@ function App() {
       element: <Root />,
       children: [
         {
-          path: "/UserSelection",
+          path: "/",
           element: <UserSelection />,
         },
         {
@@ -38,7 +38,7 @@ function App() {
               element: <EdgeData />,
           },
         {
-          path: "/Home",
+          path: "/HomeOUTDATED",
           element: <HomePage />,
         },
         {
@@ -46,7 +46,7 @@ function App() {
           element: <AdminLogin />,
         },
           {
-              path: "/",
+              path: "/Home",
               element: <BFSRoute/>
           },
           {

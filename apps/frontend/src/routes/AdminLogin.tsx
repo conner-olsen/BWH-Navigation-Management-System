@@ -30,7 +30,7 @@ const AdminLogin = () => {
       let adminPassword: string = "admin";
 
       if (adminID === username && adminPassword === password) {
-          navigate("/");
+          navigate("/Home");
       }
       else {
           setShowAlert(true);

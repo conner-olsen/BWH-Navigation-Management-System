@@ -17,7 +17,7 @@ export default function UserSelection (){
   };
 
   const handleGuestLoginClick = () => {
-    navigate("/");
+    navigate("/Home");
   };
 
   return (
