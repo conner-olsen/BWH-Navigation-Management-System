@@ -49,7 +49,7 @@ export function EdgeData() {
 
             <h1>Edge Data</h1>
 
-            <BackButton link={"/"}></BackButton>
+            <BackButton></BackButton>
             <img
                 className={"pictureOfL1"}
                 src="public/maps/L1map.png"
