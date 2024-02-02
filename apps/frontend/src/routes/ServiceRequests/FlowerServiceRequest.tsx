@@ -58,7 +58,7 @@ const FlowerServiceRequest: React.FC = () => {
     // console.log(currentDateTime);
     return (
         <form onSubmit={handleSubmit}>
-            <BackButton link={"/UserSelection"}></BackButton>
+            <BackButton></BackButton>
             <NavBar></NavBar>
             <h1 style={{ fontSize: 30 }}>Flower Delivery Form</h1>
             <div className={"flowerService"}>
@@ -67,7 +67,7 @@ const FlowerServiceRequest: React.FC = () => {
                     type="text"
                     id="senderName"
                     name="senderName"
-                    placeholder={"Mr. Worldwide"}
+                    placeholder={"John Doe"}
                     required
                     value={formData.senderName}
                     onChange={handleChange}
@@ -77,7 +77,7 @@ const FlowerServiceRequest: React.FC = () => {
                     type="text"
                     id="senderEmail"
                     name="senderEmail"
-                    placeholder={"mr305mrworldwide@gmail.com"}
+                    placeholder={"John@gmail.com"}
                     required
                     value={formData.senderEmail}
                     onChange={handleChange}
@@ -88,7 +88,7 @@ const FlowerServiceRequest: React.FC = () => {
                     type="text"
                     id="roomLongName"
                     name="roomLongName"
-                    placeholder={"Hotel Room"}
+                    placeholder={"Anesthesia Conf Floor L1 (Node longName)"}
                     required
                     value={formData.roomLongName}
                     onChange={handleChange}
@@ -98,7 +98,7 @@ const FlowerServiceRequest: React.FC = () => {
                     type="text"
                     id="patientName"
                     name="patientName"
-                    placeholder="Armando Pérez"
+                    placeholder="Jared Smith"
                     required
                     value={formData.patientName}
                     onChange={handleChange}
