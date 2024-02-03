@@ -53,7 +53,7 @@ export const GetDataNodes = () => {
 
                 // Check if the request was successful (status code 2xx)
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw new Error(`Please load node data ${response.status}`);
                 }
 
                 // Parse the JSON response

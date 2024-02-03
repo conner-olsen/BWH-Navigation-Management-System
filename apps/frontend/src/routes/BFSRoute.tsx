@@ -7,7 +7,7 @@ export default function BFSRoute() {
     return (
         <div className="BFSBox">
             <NavBar></NavBar>
-            <BackButton link={"/"}></BackButton>
+            <BackButton></BackButton>
             <BFSComponent />
         </div>
     );

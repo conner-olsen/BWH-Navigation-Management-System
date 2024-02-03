@@ -4,6 +4,7 @@ import DragNDrop from "../components/DragNDrop.tsx";
 import {Container} from "react-bootstrap";
 import NavBar from "../components/NavBar.tsx";
 import {GetDataNodes} from "../components/NodesDataBaseTableDisplay.tsx";
+import ExportNodeDataToCSVButton from "../components/ExportNodeDataButton.tsx";
 
 export function NodeData() {
 
@@ -46,20 +47,20 @@ export function NodeData() {
                 <Outlet></Outlet>
                 <NavBar></NavBar>
 
-                <h1>Node Data</h1>
+                <h1 className={"pageHeader"}>Node Data</h1>
 
                 <BackButton></BackButton>
-                <img
-                    className={"pictureOfL1"}
-                    src="public/maps/L1map.png"
-                    alt="Lower Level of Hospital (L1)"
-                    style={{marginTop: "60px"}}
-                />
 
                 <br/>
+
+                <Container>
+                <ExportNodeDataToCSVButton></ExportNodeDataToCSVButton>
+                </Container>
+
                 <br/>
 
                 <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
+
                 <br/>
                 <Container>
                     <GetDataNodes></GetDataNodes>
