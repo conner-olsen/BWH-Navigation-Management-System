@@ -50,7 +50,7 @@ export const ServiceLogComponent = () => {
 
                 // Check if the request was successful (status code 2xx)
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw new Error(`Please ensure that node data is populated ${response.status}`);
                 }
 
                 // Parse the JSON response

@@ -280,14 +280,11 @@ input[type="file"] {
 }
 
 /* ====== Flower Service Page ======= */
-.flowerService{
-    align-items: center;
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.4;
-    font-family: "Open Sans", sans-serif;
-}
+
 .flowerService {
+    text-align: center;
+    background-color: var(--dark-blue);
+    border-radius: 15px;
     max-width: 600px;
     margin: auto;
     padding: 20px;
@@ -401,4 +398,12 @@ tr:hover {
 .exportButton:hover {
     background-color: #3498db;
     color: white;
+}
+
+
+/* ====== Page Headers ===== */
+.pageHeader {
+    text-align: center;
+    margin: 0;
+    letter-spacing: 2px; /* Adjust letter spacing for a decorative effect */
 }
