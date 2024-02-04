@@ -23,5 +23,7 @@ export interface flowerServiceRequest {
   patientName:string
   flowerType:string
   deliveryDate: string
-  note:string
+  note:string,
+  status:string
+  employeeID:string
 }

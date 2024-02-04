@@ -47,17 +47,11 @@ model User{
   Password String
 }
 
-//Initial Service request Schema to be expanded upon later
-
-//model ServiceRequest{
-//  id Int @id @default(autoincrement())
-//  comment String
-//}
-
 //Service Request Table
 model FlowerServiceRequest{
   id Int @id @default(autoincrement())
   node Node  @relation(fields: [roomLongName], references: [longName])
+  //employee Employee @relation(fields: [employeeID], references: [id])
   senderName String
   senderEmail String
   roomLongName String @unique
@@ -65,5 +59,7 @@ model FlowerServiceRequest{
   flowerType String
   deliveryDate String
   note String
+  status String
+  employeeID Int
 }
 
