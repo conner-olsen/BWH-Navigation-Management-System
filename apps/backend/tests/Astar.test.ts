@@ -11,7 +11,8 @@ const node1 = new Node("1", 0, 0, "1", "1", "1", "1", "1");
 const node2 = new Node("2", 0, 1, "2", "2", "2", "2", "2");
 const node3 = new Node("3", 0, 2, "3", "3", "3", "3", "3");
 const node4 = new Node("4", 0, 3, "3", "3", "4", "4", "4");
-const node5 = new Node("4", 1, 4, "3", "3", "4", "4", "4");
+const node5 = new Node("5", 1, 4, "3", "3", "4", "4", "5");
+
 // add nodes to graph
 graph.addNode(node1);
 graph.addNode(node2);

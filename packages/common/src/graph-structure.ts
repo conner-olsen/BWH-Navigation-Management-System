@@ -164,45 +164,135 @@ export class Graph {
    * @param {string} endNode - The ID of the ending node.
    * @return {string[]} - array of NodeIDs of nodes in path
    */
-
-  bfsAstar(startNode: string, endNode: string): string[] {
+  bfs(startNode: string, endNode: string): string[] {
+    //add an error catcher for invalid inputs
     if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
       return [];
     }
 
+    //define needed objects
+    //store lists of nodeID paths
+    const queue: string[][] = [];
+    const visited: string[][] = [];
+
+    //used for iterating through the loop
+    let currentNode: Node | undefined;
+    let currentNodeIDPath: string[];
+    let newPath: string[];
+    let neighbors: Set<string>;
+
+    //put startNode path in the queue
+    queue.push([startNode]);
+
+    //start loop
+    while (queue.length > 0) {
+      //get first path from queue
+      currentNodeIDPath = queue[0];
+
+      //get last node
+      if(currentNodeIDPath.length > 1) {
+        currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
+      }
+      else {
+        currentNode = this.getNode(currentNodeIDPath[0]);
+      }
+
+      //if currentNode is undefined, pop path from queue
+      if (currentNode == undefined) {
+        queue.shift();
+        visited.push(currentNodeIDPath);
+      }
+
+      //elif it is the end node, return current path
+      else if (currentNode.id == endNode) {
+        return currentNodeIDPath;
+      }
+
+      //else, cast as currentNode as Node (determined above) and add neighbor to path for each
+      else {
+        neighbors = (currentNode as Node).edges;
+        neighbors.forEach(function (item) {
+          newPath = [...currentNodeIDPath];
+          newPath.push(item);
+
+          //if path hasn't been visited and nodes aren't repeated, add to queue
+          if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
+            queue.push(newPath);
+          }
+        });
+
+        //pop current node ID path from queue
+        queue.shift();
+        visited.push(currentNodeIDPath);
+      }
+    }
+
+    //return empty if endNode not reached (probably should return something else)
+    console.log("not reached");
+    return [];
+  }
+
+  /**
+   * Finds the path from inputted startNode to endNode in given graph
+   * @param {string} startNode - The ID of the starting node.
+   * @param {string} endNode - The ID of the ending node.
+   * @return {string[]} - array of NodeIDs of nodes in path
+   */
+
+  bfsAstar(startNode: string, endNode: string): string[] {
+    //if start or end is undefined, return empty array
+    if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
+      return [];
+    }
+
+    //make queue with each element being a path and its value + visited array
     const priorityQueue: [string[], number][] = []; // [path, f(n)] pairs
     const visited: Set<string> = new Set();
 
+
+    //calculate the manhattan distance (not hypotenuse) from one node to another
     const calculateManhattanDistance = (node1: Node, node2: Node): number => {
       return Math.abs(node1.xCoord - node2.xCoord) + Math.abs(node1.yCoord - node2.yCoord);
     };
 
+    //add first path to queue
     priorityQueue.push([[startNode], 0]);
 
     while (priorityQueue.length > 0) {
+
+      //get first queue element as set to the current path
       const [currentNodeIDPath, gValue] = priorityQueue.shift()!;
+
+      //get last node in the current path and set to current
       const currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
 
+      //if current node is undefined, add to visited
       if (currentNode == undefined) {
         visited.add(currentNodeIDPath.join('-'));
         continue;
       }
 
+      //if current node is the end node, return current path
       if (currentNode.id === endNode) {
         return currentNodeIDPath;
       }
 
       const neighbors = currentNode.edges;
 
+      //for each neighbor of the currentNode, find its fValue
       for (const neighborID of neighbors) {
         const neighbor = this.getNode(neighborID);
+
+        //if neighbor doesn't exist or has been visited, continue to next neighbor
         if (neighbor == undefined || visited.has(neighbor.id)) {
           continue;
         }
 
+        //calculate fValue
         const hValue = calculateManhattanDistance(neighbor, this.getNode(endNode)!);
         const fValue = gValue + hValue;
 
+        //add neighbor to path and add to queue
         const newPath = [...currentNodeIDPath, neighbor.id];
         priorityQueue.push([newPath, fValue]);
       }

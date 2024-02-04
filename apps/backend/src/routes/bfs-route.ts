@@ -4,7 +4,6 @@ import * as path from "path";
 import PathFindingRequest from "common/src/PathfindingRequest.ts";
 
 const router: Router = express.Router();
-
 router.post("/", async (req: Request, res: Response) => {
   try {
     const requestData: PathFindingRequest = req.body;
