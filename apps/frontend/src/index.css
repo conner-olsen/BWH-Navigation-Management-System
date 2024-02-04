@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 :root {
   /*font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/
@@ -30,6 +30,15 @@ main {
     flex-direction: column;
     min-height: 100vh;
 }
+label {
+    display: block;
+}
+/* ============== DARK MODE =========== */
+body.darkMode {
+    background-color: darkgray;
+
+}
+
 
 /* ============== GLOBAL HEADER =========== */
 .GlobalHeader {
