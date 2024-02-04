@@ -47,12 +47,6 @@ model User{
   Password String
 }
 
-model Employee{
-  id Int @id
-  type String
-  //ServiceRequests FlowerServiceRequest[]
-}
-
 //Service Request Table
 model FlowerServiceRequest{
   id Int @id @default(autoincrement())
