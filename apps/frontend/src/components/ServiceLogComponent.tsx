@@ -11,8 +11,15 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[]): JSX.Eleme
             <td>{tableData[index].flowerType}</td>
             <td>{tableData[index].deliveryDate}</td>
             <td>{tableData[index].note}</td>
-        </tr>
-    ));
+            {/*<td>
+                <input type="select"/>
+                <option>Unassigned</option>
+                <option>Assigned</option>
+                <option>In Progress</option>
+                <option>Completed</option></input></td>*/}
+</tr>
+))
+    ;
 }
 
 const TableServices: React.FC<{ tableData: flowerServiceRequest[] }> = ({tableData}) => {
