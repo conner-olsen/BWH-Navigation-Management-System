@@ -27,3 +27,11 @@ export interface flowerServiceRequest {
   status:string
   employeeID:string
 }
+
+export interface employee {
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
