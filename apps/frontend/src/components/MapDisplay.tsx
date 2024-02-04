@@ -1,5 +1,5 @@
-import React, { CSSProperties, useEffect, useState } from 'react';
-import { Graph, Node } from 'common/src/graph-structure.ts';
+import React, {CSSProperties, useEffect, useState} from 'react';
+import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
 
 interface MapDisplayProps {
@@ -7,7 +7,7 @@ interface MapDisplayProps {
     className?: string;
 }
 
-function MapDisplay({ style, className }: MapDisplayProps) {
+function MapDisplay({style, className}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -56,8 +56,10 @@ function MapDisplay({ style, className }: MapDisplayProps) {
             setStartNodeId(node.id);
         } else if (!endNodeId) {
             setEndNodeId(node.id);
-            const path = graph.bfs(startNodeId, node.id);
-            setPath(path);
+            if (graph && startNodeId) {
+                const path = graph.bfs(startNodeId, node.id);
+                setPath(path);
+            }
         }
     };
     const clearSelection = () => {
