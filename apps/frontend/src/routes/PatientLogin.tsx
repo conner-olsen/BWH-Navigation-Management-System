@@ -28,7 +28,7 @@ const PatientLogin = () => {
         let patientPassword: string = "patient";
 
         if (patientID === username && patientPassword === password) {
-            navigate("/");
+            navigate("/Home");
         }
         else {
             navigate("/PatientLogin");
@@ -38,7 +38,7 @@ const PatientLogin = () => {
 
   return (
       <div>
-          <BackButton link={"/UserSelection"}></BackButton>
+          <BackButton></BackButton>
 
           <div className="container-sm mt-5">
       <div className="row justify-content-center">

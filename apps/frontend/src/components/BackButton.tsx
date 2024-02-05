@@ -1,17 +1,13 @@
-import { Link } from "react-router-dom";
-
-interface BackButton {
-    link: string;
-}
+import { useNavigate } from "react-router-dom";
 
 
-const BackButton: React.FC<BackButton> = ({ link }) => {
+
+const BackButton = () => {
+    const navigate = useNavigate();
   return (
-      <Link to={link}>
-        <button className= {"BackButton"}>
+        <button className= {"BackButton"} onClick={() => navigate(-1)}>
           <img className="BackButtonImg" src="public/icon/Vector.png" alt="" />
         </button>
-      </Link>
   );
 };
 

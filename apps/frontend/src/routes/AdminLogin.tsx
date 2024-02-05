@@ -7,8 +7,10 @@ const AdminLogin = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
 
-  const navigate = useNavigate();
+
+    const navigate = useNavigate();
 
     const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(event.target.value);
@@ -28,17 +30,17 @@ const AdminLogin = () => {
       let adminPassword: string = "admin";
 
       if (adminID === username && adminPassword === password) {
-          navigate("/");
+          navigate("/Home");
       }
       else {
-          navigate("/AdminLogin");
+          setShowAlert(true);
       }
 
   };
 
   return (
       <div>
-          <BackButton link={"/UserSelection"}></BackButton>
+          <BackButton></BackButton>
 
           <div className="container-sm mt-5">
       <div className="row justify-content-center">
@@ -69,8 +71,13 @@ const AdminLogin = () => {
                 required
               />
             </div>
+              {showAlert && (
+                  <div className="mb-3 testClass" style={{ color: 'red' }}>
+                      Invalid username or password. Please try again.
+                  </div>
+              )}
 
-            <div className="mb-3 testClass2">
+              <div className="mb-3 testClass2">
               <div>
                 <input type="checkbox"></input>
                 <label>Remember me</label>

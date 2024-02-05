@@ -42,7 +42,7 @@ export const GetDataEdges = () => {
 
                 // Check if the request was successful (status code 2xx)
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw new Error(`Please load edge data and ensure that node data is already populated ${response.status}`);
                 }
 
                 // Parse the JSON response

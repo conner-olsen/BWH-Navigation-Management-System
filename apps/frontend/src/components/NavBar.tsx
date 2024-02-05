@@ -9,10 +9,10 @@ export default function NavBar() {
             <Nav
                 className="generalNavBar"
             >
-                <Nav.Link className={"navMap"} as={Link} to="/">
+                <Nav.Link className={"navMap"} as={Link} to="/Home">
                         Home
                 </Nav.Link>
-                <Nav.Link className={"navMap"} as={Link} to="/UserSelection">
+                <Nav.Link className={"navMap"} as={Link} to="/">
                         Login
                 </Nav.Link>
                 <Nav.Link className={"navMap"} as={Link} to="/NodeData">
@@ -34,12 +34,15 @@ export default function NavBar() {
                     <NavDropdown.Item as={Link} to="/CleaningService">
                         Cleaning Services
                     </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/ServiceLog">
+                        Service Log
+                    </NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="More" id="basic-nav-dropdown">
-                    <NavDropdown.Item as={Link} to="/">
+                    <NavDropdown.Item as={Link} to="/Home">
                         Home
                     </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/UserSelection">
+                    <NavDropdown.Item as={Link} to="/">
                         Login
                     </NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/NodeData">
@@ -50,6 +53,9 @@ export default function NavBar() {
                     </NavDropdown.Item>
                     <NavDropdown.Item as={Link} to="/ServiceList">
                         Services
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/MapPage">
+                        Map Page
                     </NavDropdown.Item>
                 </NavDropdown>
             </Nav>

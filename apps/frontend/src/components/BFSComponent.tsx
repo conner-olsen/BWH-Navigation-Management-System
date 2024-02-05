@@ -50,9 +50,10 @@ export function BFSComponent() {
 
     return (
         <div>
-            <p></p>
-            <h2>Lower Floor 1 Navigation</h2>
-            <p></p>
+            <br/>
+            <h1 className={"pageHeader"}>Lower Floor 1 Navigation</h1>
+
+            <br/>
             <h4>Start Location: </h4>
             <select className="idinput" value={startNode}
                     onChange={e => setStartNode(e.target.value)}>
@@ -104,7 +105,7 @@ export function BFSComponent() {
                 <option value="WELEV00LL1">Elevator L Floor L1</option>
                 <option value="WELEV00ML1">Elevator M Floor L1</option>
             </select>
-            <p></p>
+            <br/>
 
             <h4>End Location: </h4>
             <select className="idinput" value={endNode} onChange={e => setEndNode(e.target.value)}>
@@ -156,9 +157,9 @@ export function BFSComponent() {
                 <option value="WELEV00LL1">Elevator L Floor L1</option>
                 <option value="WELEV00ML1">Elevator M Floor L1</option>
             </select>
-            <h1></h1>
             <br/>
-            <p className = "routeheader" > Below is the path to take to get to your destination starting from your current location: </p>
+            <br/>
+            <p className = "routeheader" > Beginning from your start location, below is the path to take to get to your destination: </p>
             <h2></h2>
             {bfsResult.length > 0 ? (
                 <div>
@@ -169,7 +170,7 @@ export function BFSComponent() {
                     </ul>
                 </div>
             ) : (
-                <p>No route found...</p>
+                <p>Please select two locations above</p>
             )}
         </div>
     );

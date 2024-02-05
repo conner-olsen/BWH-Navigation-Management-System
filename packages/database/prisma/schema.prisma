@@ -45,25 +45,29 @@ model Edge {
 model User{
   Username String @id
   Password String
+  employee Employee?
 }
 
-//Initial Service request Schema to be expanded upon later
-
-//model ServiceRequest{
-//  id Int @id @default(autoincrement())
-//  comment String
-//}
+//Employee table
+model Employee{
+  user User @relation(fields: [Username], references: [Username])
+  Username String @id
+  //flowerServiceRequests FlowerServiceRequest[]
+}
 
 //Service Request Table
 model FlowerServiceRequest{
   id Int @id @default(autoincrement())
   node Node  @relation(fields: [roomLongName], references: [longName])
+  //employee Employee @relation(fields: [employeeUser], references: [Username])
   senderName String
   senderEmail String
-  roomLongName String
+  roomLongName String @unique
   patientName String
   flowerType String
   deliveryDate String
   note String
+  status String @default("Assigned")
+  employeeUser String
 }
 
