@@ -7,7 +7,7 @@ const LoginButtonAdmin = () => {
 
     return (
         <>
-            <button onClick={() => loginWithRedirect()}>Log in as Admin</button>
+            <button className="LoginButtonAdmin" onClick={() => loginWithRedirect()}>Admin Login</button>
         </>
     );
 };

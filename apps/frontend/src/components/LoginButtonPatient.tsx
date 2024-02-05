@@ -7,7 +7,7 @@ const LoginButtonPatient = () => {
 
   return (
     <>
-    <button onClick={() => loginWithRedirect()}>Log as patient</button>
+    <button className="LoginButtonPatient" onClick={() => loginWithRedirect()}>Patient Login</button>
     </>
   );
 };

@@ -43,7 +43,7 @@ export default function UserSelection (){
               </p>
             </div>
             <LargeButton onClick={handleGuestLoginClick}>
-                <h1> Login as Guest</h1>
+                <h1>Guest Login</h1>
             </LargeButton>
 
               <LoginButtonPatient></LoginButtonPatient>
