@@ -245,9 +245,9 @@ export class Graph {
       return [];
     }
 
-    //make queue with each element being a path and its value + visited array
+    //make queue with each element being a path + its value and then visited array
     const priorityQueue: [string[], number][] = []; // [path, f(n)] pairs
-    const visited: Set<string> = new Set();
+    const visited: string[][] = [];
 
 
     //calculate the manhattan distance (not hypotenuse) from one node to another
@@ -260,15 +260,15 @@ export class Graph {
 
     while (priorityQueue.length > 0) {
 
-      //get first queue element as set to the current path
-      const [currentNodeIDPath, gValue] = priorityQueue.shift()!;
+      //get first queue element and set to the current path
+      let [currentNodeIDPath, gValue] = priorityQueue.shift()!;
 
       //get last node in the current path and set to current
       const currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
 
       //if current node is undefined, add to visited
       if (currentNode == undefined) {
-        visited.add(currentNodeIDPath.join('-'));
+        visited.push(currentNodeIDPath);
         continue;
       }
 
@@ -283,22 +283,30 @@ export class Graph {
       for (const neighborID of neighbors) {
         const neighbor = this.getNode(neighborID);
 
-        //if neighbor doesn't exist or has been visited, continue to next neighbor
-        if (neighbor == undefined || visited.has(neighbor.id)) {
+        //if neighbor doesn't exist, continue to next neighbor
+        if(neighbor == undefined) {
           continue;
         }
 
         //calculate fValue
+        gValue = gValue + calculateManhattanDistance(currentNode, neighbor);
         const hValue = calculateManhattanDistance(neighbor, this.getNode(endNode)!);
         const fValue = gValue + hValue;
 
-        //add neighbor to path and add to queue
+        //add neighbor to path
         const newPath = [...currentNodeIDPath, neighbor.id];
-        priorityQueue.push([newPath, fValue]);
+
+        //if path hasn't been visited and nodes aren't repeated, add to queue
+        if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(neighbor.id))) {
+          priorityQueue.push([newPath, fValue]);
+        }
       }
 
-      priorityQueue.sort((a, b) => a[1] - b[1]);
-      visited.add(currentNodeIDPath.join('-'));
+      //put node with current lowest f/"cost" at the front of the queue by sorting
+      //if the number in a is less than that in b, keep it in front by giving sort function a positive number
+      priorityQueue.sort((a, b)  => a[1] > b[1] ? 1 : -1);
+      console.log(priorityQueue);
+      visited.push(currentNodeIDPath);
     }
 
     return [];

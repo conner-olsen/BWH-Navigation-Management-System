@@ -28,11 +28,6 @@ graph.addEdge("3", "4");
 graph.addEdge("4", "5");
 graph.addEdge("1", "5");
 
-
-const startNode = '1';
-const endNode = '3';
-const answer: string[] = ["1", "3"];
-
 //test full graph
 test("find path 1 4 astar", () => {
   expect(graph.bfsAstar("1", "4")).toStrictEqual(["1", "2", "3", "4"]);
@@ -40,13 +35,14 @@ test("find path 1 4 astar", () => {
 test("find path 1 4 bfs", () => {
   expect(graph.bfs("1", "4")).toStrictEqual(["1", "5", "4"]);
 });
-test("find path 1 2 3", () => {
-  expect(graph.bfsAstar(startNode, endNode)).toStrictEqual(answer);
+test("find path 1 to 3", () => {
+  expect(graph.bfsAstar("1", "3")).toStrictEqual(["1", "2", "3"]);
 });
+
 
 //test the same node
 test("find path 1 1", () => {
-  expect(graph.bfsAstar("1", "3")).toStrictEqual(["1", "3"]);
+  expect(graph.bfsAstar("1", "1")).toStrictEqual(["1"]);
 });
 
 //test backwards
@@ -60,8 +56,8 @@ test("find path nothing", () => {
 });
 
 //test non-existent nodes
-test("find path 5 6", () => {
-  expect(graph.bfsAstar("5", "6")).toStrictEqual([]);
+test("find path 7 6", () => {
+  expect(graph.bfsAstar("7", "6")).toStrictEqual([]);
 });
 
 //test one non-existent node
