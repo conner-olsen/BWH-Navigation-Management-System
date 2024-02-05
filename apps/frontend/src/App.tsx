@@ -14,6 +14,7 @@ import CleaningServiceRequest from "./routes/ServiceRequests/CleaningServiceRequ
 import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRequest.tsx";
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
+import MapPage from "./routes/MapPage.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -64,6 +65,10 @@ function App() {
           {
               path: "/ServiceList",
               element: <ServiceList/>
+          },
+          {
+              path: "/MapPage",
+              element: <MapPage/>
           },
           {
               path: "/ServiceLog",

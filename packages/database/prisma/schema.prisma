@@ -41,21 +41,25 @@ model Edge {
   endNodeID   String
 }
 
-//Employee Table
-model Employee{
-  username String @id
-  password String
-  firstName String
-  lastName String
-  email String
+//User Table
+model User{
+  Username String @id
+  Password String
+  employee Employee?
 }
 
+//Employee table
+model Employee{
+  user User @relation(fields: [Username], references: [Username])
+  Username String @id
+  //flowerServiceRequests FlowerServiceRequest[]
+}
 
 //Service Request Table
 model FlowerServiceRequest{
   id Int @id @default(autoincrement())
   node Node  @relation(fields: [roomLongName], references: [longName])
-  //employee Employee @relation(fields: [employeeID], references: [id])
+  //employee Employee @relation(fields: [employeeUser], references: [Username])
   senderName String
   senderEmail String
   roomLongName String @unique
@@ -63,7 +67,7 @@ model FlowerServiceRequest{
   flowerType String
   deliveryDate String
   note String
-  status String
-  employeeID Int
+  status String @default("Assigned")
+  employeeUser String
 }
 
