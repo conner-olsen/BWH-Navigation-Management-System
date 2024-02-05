@@ -47,7 +47,7 @@ export function EdgeData() {
             <Outlet></Outlet>
             <NavBar></NavBar>
 
-            <h1 className={"pageHeader"}>Edge Data</h1>
+            <h1 className="m-0 text-center">Edge Data</h1>
 
             <BackButton></BackButton>
 

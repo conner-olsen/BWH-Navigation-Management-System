@@ -47,7 +47,7 @@ export function NodeData() {
                 <Outlet></Outlet>
                 <NavBar></NavBar>
 
-                <h1 className={"pageHeader"}>Node Data</h1>
+                <h1 className="m-0 text-center">Node Data</h1>
 
                 <BackButton></BackButton>
 

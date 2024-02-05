@@ -49,7 +49,11 @@ const ExportEdgeDataToCSVButton = () => {
     }
 
     return (
-        <button className="exportButton" onClick={handleExportButton}>Export</button>
+        <button className="inline-block p-2.5 text-center text-light-blue cursor-pointer
+                           border-light-blue rounded-md border-solid border-2
+                           transition-all transition-duration-300
+                           hover:bg-light-blue hover:text-white"
+                onClick={handleExportButton}>Export</button>
     );
 };
 
