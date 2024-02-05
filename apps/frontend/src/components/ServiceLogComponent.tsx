@@ -44,10 +44,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
     ));
 }
 
-const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData: employee[] }> = ({
-                                                                                                      tableData,
-                                                                                                      employeeData,
-                                                                                                  }) => {
+const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData: employee[] }> = ({tableData, employeeData,}) => {
     return (
         <table>
             <thead>

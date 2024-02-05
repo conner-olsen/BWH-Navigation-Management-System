@@ -41,11 +41,15 @@ model Edge {
   endNodeID   String
 }
 
-//User Table
-model User{
-  Username String @id
-  Password String
+//Employee Table
+model Employee{
+  username String @id
+  password String
+  firstName String
+  lastName String
+  email String
 }
+
 
 //Service Request Table
 model FlowerServiceRequest{

@@ -13,7 +13,9 @@ const FlowerServiceRequest: React.FC = () => {
         patientName: '',
         flowerType: '',
         deliveryDate: '',
-        note: '', // Add note to formData
+        note: '',
+        status: 'Assigned',
+        employeeID: ''
     });
 
 
@@ -24,9 +26,11 @@ const FlowerServiceRequest: React.FC = () => {
             senderEmail: '',
             roomLongName: '',
             patientName: '',
-            flowerType: '', // Add flowerType to formData
+            flowerType: '',
             deliveryDate: '',
-            note: '', // Add note to formData
+            note: '',
+            status: 'Assigned',
+            employeeID: ''
 
         });
         try {
