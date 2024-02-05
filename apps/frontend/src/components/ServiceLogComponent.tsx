@@ -101,8 +101,8 @@ export const ServiceLogComponent = () => {
             }
         };
 
-        fetchData();
-        fetchEmployeeData();
+        fetchData().then();
+        fetchEmployeeData().then();
     }, []); // Empty dependency array to run only once on mount
 
     return (
