@@ -15,7 +15,7 @@ const FlowerServiceRequest: React.FC = () => {
         deliveryDate: '',
         note: '',
         status: 'Assigned',
-        employeeID: ''
+        employeeID: 'none'
     });
 
 
@@ -30,7 +30,7 @@ const FlowerServiceRequest: React.FC = () => {
             deliveryDate: '',
             note: '',
             status: 'Assigned',
-            employeeID: ''
+            employeeID: 'none'
 
         });
         try {
@@ -40,7 +40,7 @@ const FlowerServiceRequest: React.FC = () => {
                 }
             });
 
-            if (response.status == 200) {
+            if (response.status === 200) {
                 console.log('Data sent successfully');
             } else {
                 console.error('Error sending data');
@@ -52,13 +52,11 @@ const FlowerServiceRequest: React.FC = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-        // console.log(event.target.value);
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
     };
-    const currentDateTime = new Date().toISOString().slice(0, 16);
     return (
         <div>
             <BackButton></BackButton>
@@ -139,7 +137,6 @@ const FlowerServiceRequest: React.FC = () => {
                         required
                         value={formData.deliveryDate}
                         onChange={handleChange}
-                        min={currentDateTime}
                     />
 
                     <label>Add a note</label>
