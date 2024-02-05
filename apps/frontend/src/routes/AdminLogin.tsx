@@ -40,7 +40,7 @@ const AdminLogin = () => {
 
   return (
       <div>
-          <BackButton link={"/UserSelection"}></BackButton>
+          <BackButton></BackButton>
 
           <div className="container-sm mt-5">
       <div className="row justify-content-center">

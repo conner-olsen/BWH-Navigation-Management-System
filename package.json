@@ -46,6 +46,7 @@
     "vitest": "^1.2.2"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@popperjs/core": "^2.11.8",
     "@prisma/client": "^5.9.0",
     "@yarnpkg/pnpify": "^4.0.0-rc.45",
