@@ -3,18 +3,20 @@ import { Container, Row, Col, Image, Stack } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LargeButton from "../components/LargeButton.tsx";
 import { useNavigate } from "react-router-dom";
+import LoginButtonPatient from "../components/LoginButtonPatient.tsx";
+import LoginButtonAdmin from "../components/LoginButtonAdmin.tsx";
 
 export default function UserSelection (){
   const navigate = useNavigate();
 
-  const handlePatientLoginClick = () => {
+  //const handlePatientLoginClick = () => {
     // Use the navigate function to redirect to the PatientLogin page
-    navigate("/PatientLogin");
-  };
+  //  navigate("/PatientLogin");
+  //};
 
-  const handleAdminLoginClick = () => {
-    navigate("/AdminLogin");
-  };
+  //const handleAdminLoginClick = () => {
+  //    navigate("/AdminLogin");
+  //};
 
   const handleGuestLoginClick = () => {
     navigate("/Home");
@@ -44,13 +46,9 @@ export default function UserSelection (){
                 <h1> Login as Guest</h1>
             </LargeButton>
 
-              <LargeButton onClick={handlePatientLoginClick}>
-                  <h1> Login as Patient</h1>
-              </LargeButton>
+              <LoginButtonPatient></LoginButtonPatient>
 
-              <LargeButton onClick={handleAdminLoginClick}>
-                  <h1> Login as Admin</h1>
-              </LargeButton>
+              <LoginButtonAdmin></LoginButtonAdmin>
           </Stack>
         </Col>
       </Row>
