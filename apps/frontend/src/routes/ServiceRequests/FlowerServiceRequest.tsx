@@ -31,7 +31,6 @@ const FlowerServiceRequest: React.FC = () => {
             note: '',
             status: 'Assigned',
             employeeID: 'none'
-
         });
         try {
             const response = await axios.post("/api/populate-flower-service-request", JSON.stringify(formData), {

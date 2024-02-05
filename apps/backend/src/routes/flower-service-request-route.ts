@@ -30,4 +30,8 @@ router.get("/", async function (req: Request, res: Response) {
   res.sendStatus(200);
 });
 
+router.patch("/", async function (req: Request, res: Response)){
+
+}
+
 export default router;
