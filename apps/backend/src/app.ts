@@ -12,69 +12,9 @@ import edgeRouter from "./routes/populate-edges.ts";
 import downloadNodeDataRouter from "./routes/data-to-csv-node.ts";
 import downloadEdgeDataRouter from "./routes/data-to-csv-edge.ts";
 import employeeRouter from "./routes/populate-employee.ts";
-import path from "path";
-import fs from "fs";
-import {parseCSV} from "common/src/parser.ts";
-import {employee, user} from "common/interfaces/interfaces.ts";
-import  client  from "./bin/database-connection.ts";
 
 
 const app: Express = express(); // Setup the backend
-
-
-function populatedatabase(){
-
-  console.log("function is being called");
-  const relativeNodePath = "../testData/users.csv";
-  const absoluteNodePath = path.join(__dirname, relativeNodePath);
-  const csvFileNode = fs.readFileSync(absoluteNodePath, "utf-8");
-
-  console.log(csvFileNode);
-  // Parse the CSV string to an array of CSVRow objects
-  const rowsNode = parseCSV(csvFileNode);
-  const transformedNode:user[] = rowsNode.map((row) => {
-    const rowval = Object.values(row);
-    return {
-      Username:rowval[0]
-    };
-  });
-
-  client.user.createMany({data:transformedNode.map((self) => {
-      return {
-        Username: self.Username
-      };}
-    )
-  }).then();
-
-
-  const absolutePath = path.join(__dirname, "../testData/employees.csv");
-  const csvFile = fs.readFileSync(absolutePath, "utf-8");
-
-  const rows = parseCSV(csvFile);
-  const transformed:employee[] = rows.map((row) => {
-    const rowval = Object.values(row);
-    return {
-      username: rowval[0],
-      firstName: rowval[1],
-      lastName: rowval[2],
-      email: rowval[3]
-    };
-  });
-
-
-  client.employee.createMany({data:transformed.map((self) => {
-      return {
-        username: self.username,
-        firstName: self.firstName,
-        lastName: self.lastName,
-        email: self.email
-      };}
-    )
-  }).then();
-}
-
-populatedatabase();
-
 
 // Setup generic middlewear
 app.use(
