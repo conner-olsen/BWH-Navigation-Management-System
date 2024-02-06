@@ -65,6 +65,7 @@ const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData:
     );
 };
 
+// GETTING data for service request and
 export const ServiceLogComponent = () => {
     const [data, setData] = useState<flowerServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
