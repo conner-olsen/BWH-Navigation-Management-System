@@ -61,15 +61,6 @@ function MapDisplay({style, className}: MapDisplayProps) {
                 setPath(path);
             }
         }
-        return (
-        <text>
-            this is
-            node.nodeType;
-            node.longName;
-            node.shortName;
-            /*status*/
-        </text>
-        );
     };
     const clearSelection = () => {
         setStartNodeId(null);
@@ -107,7 +98,7 @@ function MapDisplay({style, className}: MapDisplayProps) {
     return (
         <div className={className} style={{position: 'relative', ...style}}>
             <svg viewBox="0 0 5000 3400">
-                <image href="../../public/maps/L1map.png" width="5000" height="3400" x="0" y="0"/>
+                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).map((node: Node) => (
