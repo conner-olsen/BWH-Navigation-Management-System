@@ -5,23 +5,21 @@ import { Link } from "react-router-dom";
 export default function NavBar() {
 
     return (
-        <div>
-            <Nav
-                className="generalNavBar"
+        <div >
+            <Nav className={"navbarStyling"}
             >
-                <Nav.Link className={"navMap"} as={Link} to="/Home">
+                <Nav.Link as={Link} to="/Home">
                         Home
                 </Nav.Link>
-                <Nav.Link className={"navMap"} as={Link} to="/">
-                        Login
-                </Nav.Link>
-                <Nav.Link className={"navMap"} as={Link} to="/NodeData">
+                <Nav.Link as={Link} to="/NodeData">
                         Node Data
                 </Nav.Link>
-                <Nav.Link className={"navMap"} as={Link} to="/EdgeData">
+                <Nav.Link as={Link} to="/EdgeData">
                     Edge Data
                 </Nav.Link>
-                <NavDropdown title="Service Requests" id="basic-nav-dropdown">
+                <NavDropdown
+                    title="Service Requests"
+                    id="basic-nav-dropdown">
                     <NavDropdown.Item as={Link} to="/ServiceList">
                         All Services
                     </NavDropdown.Item>
