@@ -222,7 +222,7 @@ body.darkMode {
     background: white;
 }
 /* ============= NAV BAR ========= */
-.generalNavBar {
+/*.generalNavBar {
     justify-content: space-evenly;
     align-items: center;
     background-color: var(--dark-blue);
@@ -240,8 +240,11 @@ body.darkMode {
 .generalNavBar .nav-link:hover {
     color: #3498db;
     font-weight: bold;
+}*/
+.navbarStyling{
+    justify-content: center;
+    font-size: small;
 }
-
 /* ====== BFS ======= */
 
 .BFSBox {
