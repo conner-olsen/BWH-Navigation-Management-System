@@ -4,7 +4,6 @@ import {Node} from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
  import {parseCSV} from "common/src/parser.ts";
  import nodeCSVString from "common/dev/nodeCSVString.ts";
-// import path from "path";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
