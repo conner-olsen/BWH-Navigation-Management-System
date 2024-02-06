@@ -15,7 +15,7 @@ const FlowerServiceRequest: React.FC = () => {
         deliveryDate: '',
         note: '',
         status: '',
-        employeeUser: ''
+        username: ''
     });
 
 
@@ -26,11 +26,11 @@ const FlowerServiceRequest: React.FC = () => {
             senderEmail: '',
             roomLongName: '',
             patientName: '',
-            flowerType: '', // Add flowerType to formData
+            flowerType: '',
             deliveryDate: '',
             note: '',
-            status: '',
-            employeeUser: ''// Add note to formData
+            status: 'Assigned',
+            username: 'florist'
         });
         try {
             const response = await axios.post("/api/populate-flower-service-request", JSON.stringify(formData), {

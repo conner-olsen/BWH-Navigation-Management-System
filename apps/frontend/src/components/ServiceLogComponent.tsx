@@ -8,7 +8,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
     };
 
     const handleAssignmentChange = (index: number, value: string) => {
-        tableData[index].employeeID = value;
+        tableData[index].employeeUser = value;
     };
 
     return tableData.map((item, index) => (
@@ -29,7 +29,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             </td>
             <td>
                 <select
-                    value={tableData[index].employeeID}
+                    value={tableData[index].employeeUser}
                     onChange={(e) => handleAssignmentChange(index, e.target.value)}
                 >
                     {/* Dynamically populate options from the employeeData */}

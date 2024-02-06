@@ -42,24 +42,27 @@ model Edge {
 }
 
 //User Table
-model User{
-  Username String @id
-  Password String
+model User {
+  Username String    @id
   employee Employee?
 }
 
-//Employee table
-model Employee{
-  user User @relation(fields: [Username], references: [Username])
-  Username String @id
-  //flowerServiceRequests FlowerServiceRequest[]
+//Employee Table
+model Employee {
+  user      User   @relation(fields: [username], references: [Username])
+  username  String @id
+  firstName String
+  lastName  String
+  email     String
+  flowerServiceRequest FlowerServiceRequest[]
 }
+
 
 //Service Request Table
 model FlowerServiceRequest{
   id Int @id @default(autoincrement())
   node Node  @relation(fields: [roomLongName], references: [longName])
-  //employee Employee @relation(fields: [employeeUser], references: [Username])
+  employee Employee @relation(fields: [employeeUser], references: [username])
   senderName String
   senderEmail String
   roomLongName String @unique
