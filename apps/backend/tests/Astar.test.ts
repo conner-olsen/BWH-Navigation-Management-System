@@ -38,9 +38,14 @@ test("find path 1 4 bfs", () => {
 test("find path 1 to 3", () => {
   expect(graph.bfsAstar("1", "3")).toStrictEqual(["1", "2", "3"]);
 });
-
+test("find path 1 to 5", () => {
+  expect(graph.bfsAstar("1", "5")).toStrictEqual(["1", "5"]);
+});
+test("find path 2 to 4", () => {
+  expect(graph.bfsAstar("2", "4")).toStrictEqual(["2", "3", "4"]);
+});
 test("find path 2 to 5", () => {
-  expect(graph.bfsAstar("2", "5")).toStrictEqual(["2", "1", "5"]);
+  expect(graph.bfsAstar("2", "5")).toStrictEqual(["2", "3", "4", "5"]);
 });
 
 

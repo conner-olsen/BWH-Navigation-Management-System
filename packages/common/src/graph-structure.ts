@@ -287,24 +287,31 @@ export class Graph {
           continue;
         }
 
-        // calculate fValue
+        //calculate fValue
+        //distance from current node gValue + distance between neighbor and current
+        const tempGValue = gValue + calculateManhattanDistance(currentNode, neighbor);
+
+        //distance from neighbor to end
         const hValue = calculateManhattanDistance(neighbor, this.getNode(endNode)!);
-        const fValue = gValue + hValue;
+
+        //sum together
+        const fValue = tempGValue + hValue;
 
         // add neighbor to path
         const newPath = [...currentNodeIDPath, neighbor.id];
 
-        // if path hasn't been visited and nodes aren't repeated, add to queue
-        if (!(visited.some(visitedPath => visitedPath.join('-') === newPath.join('-'))) &&
-          !(currentNodeIDPath.includes(neighbor.id))) {
+        //if path hasn't been visited and nodes aren't repeated, add to queue
+        if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(neighbor.id))) {
           priorityQueue.push([newPath, fValue]);
         }
       }
 
-      // put node with current lowest f/"cost" at the front of the queue by sorting
-      // if the number in a is less than that in b, keep it in front by giving sort function a positive number
+      //put node with current lowest f/"cost" at the front of the queue by sorting
+      //if the number in a is less than that in b, keep it in front by giving sort function a positive number
       priorityQueue.sort((a, b)  => a[1] > b[1] ? 1 : -1);
       console.log("Current priority queue:", priorityQueue);
+
+      //add current path to visited
       visited.push(currentNodeIDPath);
     }
 
