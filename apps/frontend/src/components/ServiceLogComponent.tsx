@@ -1,14 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { flowerServiceRequest } from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
+import axios from "axios";
 
 function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeData: employee[]): JSX.Element[] {
-    const handleStatusChange = (index: number, value: string) => {
-        tableData[index].status = value;
+    //const [status, setStatus] = useState("Assigned");
+
+    const handleStatusChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
+            axios.patch("/api/populate-flower-service-request", {
+                senderName: tableData[index].senderName,
+                senderEmail: tableData[index].senderEmail,
+                roomLongName: tableData[index].roomLongName,
+                flowerType: tableData[index].flowerType,
+                deliveryDate: tableData[index].deliveryDate,
+                note: tableData[index].note,
+                status: value,
+                employeeUser: tableData[index].employeeUser
+
+            }).then(response => console.log(response.data))
+                .catch(error => console.error(error));
     };
 
-    const handleAssignmentChange = (index: number, value: string) => {
-        tableData[index].employeeUser = value;
+    const handleAssignmentChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
+        axios.patch("/api/populate-flower-service-request", {
+            senderName: tableData[index].senderName,
+            senderEmail: tableData[index].senderEmail,
+            roomLongName: tableData[index].roomLongName,
+            flowerType: tableData[index].flowerType,
+            deliveryDate: tableData[index].deliveryDate,
+            note: tableData[index].note,
+            status: tableData[index].status,
+            employeeUser: value
+
+        }).then(response => console.log(response.data))
+            .catch(error => console.error(error));
     };
 
     return tableData.map((item, index) => (
@@ -21,7 +46,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             <td>{tableData[index].deliveryDate}</td>
             <td>{tableData[index].note}</td>
             <td>
-                <select value={tableData[index].status} onChange={(e) => handleStatusChange(index, e.target.value)}>
+                <select value={tableData[index].status} onChange={(e) => handleStatusChange(index, e.target.value, tableData)}>
                     <option value="Assigned">Assigned</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
@@ -30,9 +55,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             <td>
                 <select
                     value={tableData[index].employeeUser}
-                    onChange={(e) => handleAssignmentChange(index, e.target.value)}
-                >
-                    {/* Dynamically populate options from the employeeData */}
+                    onChange={(e) => handleAssignmentChange(index, e.target.value, tableData)}>
                     {employeeData.map((employee, employeeIndex) => (
                         <option key={employeeIndex} value={employeeData[employeeIndex].username}>
                             {employeeData[employeeIndex].username}

@@ -30,4 +30,19 @@ router.get("/", async function (req: Request, res: Response) {
   res.sendStatus(200);
 });
 
+router.patch("/", async (req: Request, res: Response) => {
+  const flowerRequestUpdate: Prisma.FlowerServiceRequestUpdateManyArgs = req.body;
+
+  try {
+    // Create the FlowerServiceRequest with the connected room
+    await PrismaClient.flowerServiceRequest.updateMany({ data: flowerRequestUpdate});
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(`Error populating node data: ${error}`);
+    res.sendStatus(500);
+  }
+});
+
+
 export default router;
