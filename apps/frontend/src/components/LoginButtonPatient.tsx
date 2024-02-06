@@ -1,15 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 
 const LoginButtonPatient = () => {
   const { loginWithRedirect } = useAuth0();
+    const [isHovered, setHovered] = useState<boolean>(false);
+    const handleMouseEnter = () => {
+        setHovered(true);
+    };
+    const handleMouseLeave = () => {
+        setHovered(false);
+    };
 
-  return (
-    <>
-    <button className="LoginButtonPatient" onClick={() => loginWithRedirect()}>Patient Login</button>
-    </>
-  );
+
+    return (
+        <div className="container">
+            <button
+                className="LoginButtonPatient"
+                onClick={() => loginWithRedirect()}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                    color: isHovered ? '#your-hover-color' : '#your-default-color',
+                    transition: 'color 0.5s ease', // Add a smooth color transition effect
+                }}
+            >
+                LOGIN AS PATIENT
+            </button>
+        </div>
+    );
 };
 
 export default LoginButtonPatient;

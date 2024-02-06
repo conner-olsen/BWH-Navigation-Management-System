@@ -3,8 +3,7 @@ import { Container, Row, Col, Image, Stack } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LargeButton from "../components/LargeButton.tsx";
 import { useNavigate } from "react-router-dom";
-import LoginButtonPatient from "../components/LoginButtonPatient.tsx";
-import LoginButtonAdmin from "../components/LoginButtonAdmin.tsx";
+
 
 export default function UserSelection (){
   const navigate = useNavigate();
@@ -46,9 +45,6 @@ export default function UserSelection (){
                 <h1>Guest Login</h1>
             </LargeButton>
 
-              <LoginButtonPatient></LoginButtonPatient>
-
-              <LoginButtonAdmin></LoginButtonAdmin>
           </Stack>
         </Col>
       </Row>

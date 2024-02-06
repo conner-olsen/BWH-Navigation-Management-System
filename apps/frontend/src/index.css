@@ -33,6 +33,9 @@ main {
 label {
     display: block;
 }
+
+/* ============== HOMEPAGE =========== */
+
 /* ============== DARK MODE =========== */
 body.darkMode {
     background-color: darkgray;
@@ -75,40 +78,39 @@ body.darkMode {
   background-color: #297fb8;
 }
 
-.LoginButtonAdmin {
-    width: 50%;
-    height: 80px;
-    border-radius: 40px;
-    background-color: #00336e;
-    box-shadow: #000000;
+#root {
+    position: relative;
+}
 
+.LoginButtonAdmin,
+.LoginButtonPatient,
+.LoginButtonGuest{
+    position: absolute;
+    height: 80px;
     color: #fff;
     font-family: sans-serif;
     border: none;
     cursor: pointer;
-    font-size: 40px;
+    font-size: 20px;
 }
 
-.LoginButtonAdmin:hover{
-    background-color: #297fb8;
+.LoginButtonAdmin {
+    top: 0;
+    right: 20px;
 }
 
 .LoginButtonPatient {
-    width: 50%;
-    height: 80px;
-    border-radius: 40px;
-    background-color: #00336e;
-    box-shadow: #000000;
-
-    color: #fff;
-    font-family: sans-serif;
-    border: none;
-    cursor: pointer;
-    font-size: 40px;
+    top: 30px;
+    right: 20px;
+}
+.LoginButtonGuest{
+    top: 85px;
+    right: 20px;
 }
 
+.LoginButtonAdmin:hover,
 .LoginButtonPatient:hover{
-    background-color: #297fb8;
+    color: #297fb8;
 }
 
 .stack {

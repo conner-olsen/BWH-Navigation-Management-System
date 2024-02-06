@@ -8,7 +8,7 @@ export default function NavBar() {
         <div >
             <Nav className={"navbarStyling"}
             >
-                <Nav.Link as={Link} to="/Home">
+                <Nav.Link as={Link} to="/NodeData">
                         Home
                 </Nav.Link>
                 <Nav.Link as={Link} to="/NodeData">

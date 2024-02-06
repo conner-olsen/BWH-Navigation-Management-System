@@ -1,10 +1,8 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Global_Header from "./components/Global_Header.tsx";
 import Global_Footer from "./components/Global_Footer.tsx";
 import { NodeData } from "./routes/NodeData.tsx";
 import {EdgeData} from "./routes/EdgeData.tsx";
-import UserSelection from "./routes/UserSelection.tsx";
 import PatientLogin from "./routes/PatientLogin.tsx";
 import HomePage from "./routes/HomePage.tsx";
 import AdminLogin from "./routes/AdminLogin.tsx";
@@ -15,6 +13,7 @@ import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRe
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
 import MapPage from "./routes/MapPage.tsx";
+import BwhHomepage from "./routes/BwhHomepage.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -24,8 +23,12 @@ function App() {
       children: [
         {
           path: "/",
-          element: <UserSelection />,
+          element: <BwhHomepage />,
         },
+          {
+              path: "/BwhHomepage",
+              element: <BwhHomepage />,
+          },
         {
           path: "/PatientLogin",
           element: <PatientLogin />,
@@ -85,7 +88,6 @@ function App() {
 function Root() {
   return (
     <main>
-      <Global_Header></Global_Header>
       <Outlet />
       <Global_Footer></Global_Footer>
     </main>
