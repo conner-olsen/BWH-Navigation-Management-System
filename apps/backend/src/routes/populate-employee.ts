@@ -57,7 +57,7 @@ router.patch("/", async function (req: Request, res: Response) {
       };
     });
 
-    client.user.createMany({data:transformedNode.map((self) => {
+    await client.user.createMany({data:transformedNode.map((self) => {
         return {
           Username: self.Username
         };}
@@ -80,7 +80,7 @@ router.patch("/", async function (req: Request, res: Response) {
     });
 
 
-    client.employee.createMany({data:transformed.map((self) => {
+    await client.employee.createMany({data:transformed.map((self) => {
         return {
           username: self.username,
           firstName: self.firstName,

@@ -1,6 +1,6 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
-import { Prisma } from "database";
+import {FlowerServiceRequest, Prisma} from "database";
 
 const router: Router = express.Router();
 
@@ -31,7 +31,7 @@ router.get("/", async function (req: Request, res: Response) {
 });
 
 router.patch("/", async (req: Request, res: Response) => {
-  const flowerRequestUpdate: Prisma.FlowerServiceRequestCreateInput= req.body;
+  const flowerRequestUpdate: FlowerServiceRequest = req.body;
 
   try {
 
@@ -40,7 +40,12 @@ router.patch("/", async (req: Request, res: Response) => {
     await PrismaClient.flowerServiceRequest.update({
       where: {id: flowerRequestUpdate.id},
       data: {status: flowerRequestUpdate.status,
-             employee: flowerRequestUpdate.employee}
+      employee:{
+        connect: {
+            username: flowerRequestUpdate.employeeUser
+        }
+      }
+      }
     });
 
     res.sendStatus(200);
