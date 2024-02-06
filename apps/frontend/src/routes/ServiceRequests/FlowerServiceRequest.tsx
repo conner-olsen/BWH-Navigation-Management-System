@@ -62,10 +62,23 @@ const FlowerServiceRequest: React.FC = () => {
             [name]: value,
         }));
     };
+
+
+    const populateEmployeeTable = () => {
+        axios.patch("/api/populate-employee", {
+
+        }).then(response => console.log(response.data))
+            .catch(error => console.error(error));
+    };
+
     return (
         <div>
             <BackButton></BackButton>
             <NavBar></NavBar>
+            <button className="inline-block p-2.5 text-center text-light-blue cursor-pointer
+                           border-light-blue rounded-md border-solid border-2
+                           transition-all transition-duration-300
+                           hover:bg-light-blue hover:text-white" onClick={populateEmployeeTable}>Populate Employee Table</button>
             <h1 className={"pageHeader"}>Flower Delivery Form</h1>
             <br/>
             <form className={"flowerService"} onSubmit={handleSubmit}>
