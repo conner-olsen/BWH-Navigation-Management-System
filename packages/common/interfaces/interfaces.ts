@@ -25,7 +25,7 @@ export interface flowerServiceRequest {
   deliveryDate: string
   note:string,
   status:string
-  employeeID:string
+  employeeUser:string
 }
 
 export interface employee {

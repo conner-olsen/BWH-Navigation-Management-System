@@ -6,25 +6,26 @@ const router: Router = express.Router();
 
 
 router.post("/", async (req: Request, res: Response) => {
-  const flowerRequestAttempt: Prisma.FlowerServiceRequestUncheckedCreateInput = req.body;
+
+  const employeeRequestAttempt: Prisma.EmployeeUncheckedCreateInput = req.body;
 
   try {
     // Create the FlowerServiceRequest with the connected room
-    await PrismaClient.flowerServiceRequest.create({data: flowerRequestAttempt});
+    await PrismaClient.employee.create({data: employeeRequestAttempt});
 
     res.sendStatus(200);
   } catch (error) {
-    console.error(`Error populating node data: ${error}`);
+    console.error(`Error populating employee data: ${error}`);
     res.sendStatus(500);
   }
 });
 
 router.get("/", async function (req: Request, res: Response) {
   try{
-    const flowerservicerequestCSV = await PrismaClient.flowerServiceRequest.findMany();
-    res.send(flowerservicerequestCSV);
+    const employeeCSV = await PrismaClient.employee.findMany();
+    res.send(employeeCSV);
   } catch (error){
-    console.error(`Error exporting Service Request data: ${error}`);
+    console.error(`Error exporting employee data: ${error}`);
     res.sendStatus(500);
   }
   res.sendStatus(200);
