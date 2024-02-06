@@ -5,17 +5,26 @@ import populatedGraph from 'common/dev/populatedGraph.ts';
 interface MapDisplayProps {
     style?: CSSProperties;
     className?: string;
+    startNode?: string;
+    endNode?: string;
 }
 
-function MapDisplay({style, className}: MapDisplayProps) {
+function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
 
+
     useEffect(() => {
         setGraph(populatedGraph);
-    }, []);
+        if (startNode && endNode && graph) {
+            const path = graph.bfsAstar(startNode, endNode);
+            setPath(path);
+            setStartNodeId(startNode);
+            setEndNodeId(endNode);
+        }
+    }, [startNode, endNode, graph]);
 
     const displayEdges = (graph: Graph) => {
         const edges: React.JSX.Element[] = [];
@@ -61,6 +70,7 @@ function MapDisplay({style, className}: MapDisplayProps) {
                 setPath(path);
             }
         }
+
     };
     const clearSelection = () => {
         setStartNodeId(null);

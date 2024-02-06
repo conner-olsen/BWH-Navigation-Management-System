@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {Node} from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
-import MapDisplay from './MapDisplay';
+import MapDisplay from "./MapDisplay.tsx";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -169,7 +169,7 @@ export function BFSComponent() {
                             <p className = "route" key={index}>{longName} </p>
                         ))}
                     </ul>
-                    <MapDisplay />
+                    <MapDisplay startNode={startNode} endNode={endNode}/>
                 </div>
             ) : (
                 <p>Please select two locations above</p>
