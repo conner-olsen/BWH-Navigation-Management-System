@@ -61,6 +61,13 @@ function MapDisplay({style, className}: MapDisplayProps) {
                 setPath(path);
             }
         }
+        <text>
+            this is
+            node.nodeType;
+            node.longName;
+            node.shortName;
+            /*status*/
+        </text>;
     };
     const clearSelection = () => {
         setStartNodeId(null);
@@ -70,7 +77,7 @@ function MapDisplay({style, className}: MapDisplayProps) {
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
             <g>
-                <rect x={node.xCoord - 100} y={node.yCoord - 50} width="100" height="60" fill="lightgrey"/>
+            <rect x={node.xCoord - 100} y={node.yCoord - 50} width="100" height="60" fill="lightgrey"/>
                 <text x={node.xCoord - 85} y={node.yCoord - 30} fill="black">
                     {type === 'start' ? 'Start Node' : 'End Node'}
                 </text>
