@@ -50,9 +50,13 @@ export function BFSComponent() {
         return bfsResult.map(node => node.longName);
     };
 
-    let CSVRow = parseCSV(nodeCSVString);
+    //parse node CSV into array of CSVRows
+    const CSVRow = parseCSV(nodeCSVString);
 
+    //make array to be inserted in the html code
     const roomNames = [];
+
+    //for each CSV row, add an option with the value as id and name as longName into array
     for(let i = 0; i < CSVRow.length; i++) {
         const id = CSVRow[i].id;
         const longName = CSVRow[i].longName;
@@ -69,9 +73,7 @@ export function BFSComponent() {
             <select className="idinput" value={startNode}
                     onChange={e => setStartNode(e.target.value)}>
                 <option></option>
-                <option value="CCONF001L1"> Anesthesia Conf Floor L1</option>
-                <option value="CCONF002L1">Medical Records Conference Room Floor L1</option>
-                <tbody>{roomNames}</tbody>;
+                {roomNames}
             </select>
             <br/>
 
