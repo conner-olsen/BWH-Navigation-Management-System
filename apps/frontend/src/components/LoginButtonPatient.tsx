@@ -22,7 +22,7 @@ const LoginButtonPatient = () => {
                 onMouseLeave={handleMouseLeave}
                 style={{
                     color: isHovered ? '#your-hover-color' : '#your-default-color',
-                    transition: 'color 0.5s ease', // Add a smooth color transition effect
+                    transition: 'color 0.5s ease', // smooth color fade in
                 }}
             >
                 LOGIN AS PATIENT

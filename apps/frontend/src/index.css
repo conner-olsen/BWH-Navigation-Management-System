@@ -35,6 +35,16 @@ label {
 }
 
 /* ============== HOMEPAGE =========== */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.typing-animation {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 2s steps(30, end);
+}
 
 /* ============== DARK MODE =========== */
 body.darkMode {
@@ -110,7 +120,7 @@ body.darkMode {
 
 .LoginButtonAdmin:hover,
 .LoginButtonPatient:hover{
-    color: #297fb8;
+    color: #d9f99d;
 }
 
 .stack {
