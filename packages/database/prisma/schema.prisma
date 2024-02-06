@@ -60,7 +60,7 @@ model Employee {
 
 //Service Request Table
 model FlowerServiceRequest{
-  id Int @id @default(autoincrement())
+  id Int @id
   node Node  @relation(fields: [roomLongName], references: [longName])
   employee Employee @relation(fields: [employeeUser], references: [username])
   senderName String

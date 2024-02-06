@@ -31,11 +31,13 @@ router.get("/", async function (req: Request, res: Response) {
 });
 
 router.patch("/", async (req: Request, res: Response) => {
-  const flowerRequestUpdate: Prisma.FlowerServiceRequestUpdateManyArgs = req.body;
+  const flowerRequestUpdate: Prisma.FlowerServiceRequestCreateInput= req.body;
 
   try {
     // Create the FlowerServiceRequest with the connected room
-    await PrismaClient.flowerServiceRequest.updateMany({ data: flowerRequestUpdate});
+    await PrismaClient.flowerServiceRequest.update({
+      where: {id: flowerRequestUpdate.id},
+      data: flowerRequestUpdate});
 
     res.sendStatus(200);
   } catch (error) {

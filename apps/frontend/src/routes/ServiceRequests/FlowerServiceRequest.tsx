@@ -6,6 +6,7 @@ import axios from "axios";
 
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
+        id: Math.random(),
         senderName: '',
         senderEmail: '',
         roomLongName: '',
@@ -21,6 +22,7 @@ const FlowerServiceRequest: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setFormData({
+            id: 0,
             senderName: '',
             senderEmail: '',
             roomLongName: '',

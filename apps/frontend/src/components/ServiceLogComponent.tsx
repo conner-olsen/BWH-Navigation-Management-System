@@ -9,6 +9,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
     const handleStatusChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
             axios.patch("/api/populate-flower-service-request", {
                 body: {
+                    id:  tableData[index].id,
                     senderName: tableData[index].senderName,
                     senderEmail: tableData[index].senderEmail,
                     roomLongName: tableData[index].roomLongName,
@@ -26,6 +27,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
     const handleAssignmentChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
         axios.patch("/api/populate-flower-service-request", {
             body: {
+                id:  tableData[index].id,
                 senderName: tableData[index].senderName,
                 senderEmail: tableData[index].senderEmail,
                 roomLongName: tableData[index].roomLongName,
