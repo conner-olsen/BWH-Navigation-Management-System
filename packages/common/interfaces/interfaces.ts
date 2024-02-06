@@ -28,9 +28,12 @@ export interface flowerServiceRequest {
   employeeUser:string
 }
 
+export interface user{
+  Username: string;
+}
+
 export interface employee {
   username: string;
-  password: string;
   firstName: string;
   lastName: string;
   email: string;

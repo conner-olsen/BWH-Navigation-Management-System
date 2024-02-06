@@ -1,6 +1,10 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
 import { Prisma } from "database";
+import path from "path";
+import fs from "fs";
+import {parseCSV} from "common/src/parser.ts";
+import {edge, employee, node, user} from "common/interfaces/interfaces.ts";
 
 const router: Router = express.Router();
 
@@ -11,6 +15,7 @@ router.post("/", async (req: Request, res: Response) => {
 
   try {
     // Create the FlowerServiceRequest with the connected room
+
     await PrismaClient.employee.create({data: employeeRequestAttempt});
 
     res.sendStatus(200);

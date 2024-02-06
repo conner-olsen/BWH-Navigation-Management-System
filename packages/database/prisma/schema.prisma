@@ -65,7 +65,7 @@ model FlowerServiceRequest{
   employee Employee @relation(fields: [employeeUser], references: [username])
   senderName String
   senderEmail String
-  roomLongName String @unique
+  roomLongName String
   patientName String
   flowerType String
   deliveryDate String

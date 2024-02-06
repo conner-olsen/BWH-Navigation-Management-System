@@ -4,7 +4,6 @@ import NavBar from "../../components/NavBar.tsx";
 import React, { useState } from 'react';
 import axios from "axios";
 
-
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
         senderName: '',
@@ -14,8 +13,8 @@ const FlowerServiceRequest: React.FC = () => {
         flowerType: '',
         deliveryDate: '',
         note: '',
-        status: '',
-        username: ''
+        status: 'Assigned',
+        employeeUser: 'none'
     });
 
 
@@ -29,8 +28,8 @@ const FlowerServiceRequest: React.FC = () => {
             flowerType: '',
             deliveryDate: '',
             note: '',
-            status: 'Assigned',
-            username: 'florist'
+            status: '',
+            employeeUser: ''
         });
         try {
             const response = await axios.post("/api/populate-flower-service-request", JSON.stringify(formData), {
