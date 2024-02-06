@@ -8,25 +8,6 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
 
     const handleStatusChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
             axios.patch("/api/populate-flower-service-request", {
-                body: {
-                    id:  tableData[index].id,
-                    senderName: tableData[index].senderName,
-                    senderEmail: tableData[index].senderEmail,
-                    roomLongName: tableData[index].roomLongName,
-                    flowerType: tableData[index].flowerType,
-                    deliveryDate: tableData[index].deliveryDate,
-                    note: tableData[index].note,
-                    status: value,
-                    employeeUser: tableData[index].employeeUser
-                }
-
-            }).then(response => console.log(response.data))
-                .catch(error => console.error(error));
-    };
-
-    const handleAssignmentChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
-        axios.patch("/api/populate-flower-service-request", {
-            body: {
                 id:  tableData[index].id,
                 senderName: tableData[index].senderName,
                 senderEmail: tableData[index].senderEmail,
@@ -34,9 +15,24 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
                 flowerType: tableData[index].flowerType,
                 deliveryDate: tableData[index].deliveryDate,
                 note: tableData[index].note,
-                status: tableData[index].status,
-                employeeUser: value
-            }
+                status: value,
+                employeeUser: tableData[index].employeeUser
+
+            }).then(response => console.log(response.data))
+                .catch(error => console.error(error));
+    };
+
+    const handleAssignmentChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
+        axios.patch("/api/populate-flower-service-request", {
+            id:  tableData[index].id,
+            senderName: tableData[index].senderName,
+            senderEmail: tableData[index].senderEmail,
+            roomLongName: tableData[index].roomLongName,
+            flowerType: tableData[index].flowerType,
+            deliveryDate: tableData[index].deliveryDate,
+            note: tableData[index].note,
+            status: tableData[index].status,
+            employeeUser: value
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));

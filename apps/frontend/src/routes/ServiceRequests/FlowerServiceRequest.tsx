@@ -4,9 +4,14 @@ import NavBar from "../../components/NavBar.tsx";
 import React, { useState } from 'react';
 import axios from "axios";
 
+
+function getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+}
+
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
-        id: Math.random(),
+        id: getRandomInt(10000),
         senderName: '',
         senderEmail: '',
         roomLongName: '',

@@ -34,10 +34,14 @@ router.patch("/", async (req: Request, res: Response) => {
   const flowerRequestUpdate: Prisma.FlowerServiceRequestCreateInput= req.body;
 
   try {
-    // Create the FlowerServiceRequest with the connected room
+
+    console.log(flowerRequestUpdate);
+
     await PrismaClient.flowerServiceRequest.update({
       where: {id: flowerRequestUpdate.id},
-      data: flowerRequestUpdate});
+      data: {status: flowerRequestUpdate.status,
+             employee: flowerRequestUpdate.employee}
+    });
 
     res.sendStatus(200);
   } catch (error) {
