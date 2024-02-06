@@ -8,14 +8,16 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
 
     const handleStatusChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
             axios.patch("/api/populate-flower-service-request", {
-                senderName: tableData[index].senderName,
-                senderEmail: tableData[index].senderEmail,
-                roomLongName: tableData[index].roomLongName,
-                flowerType: tableData[index].flowerType,
-                deliveryDate: tableData[index].deliveryDate,
-                note: tableData[index].note,
-                status: value,
-                employeeUser: tableData[index].employeeUser
+                body: {
+                    senderName: tableData[index].senderName,
+                    senderEmail: tableData[index].senderEmail,
+                    roomLongName: tableData[index].roomLongName,
+                    flowerType: tableData[index].flowerType,
+                    deliveryDate: tableData[index].deliveryDate,
+                    note: tableData[index].note,
+                    status: value,
+                    employeeUser: tableData[index].employeeUser
+                }
 
             }).then(response => console.log(response.data))
                 .catch(error => console.error(error));
@@ -23,14 +25,16 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
 
     const handleAssignmentChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
         axios.patch("/api/populate-flower-service-request", {
-            senderName: tableData[index].senderName,
-            senderEmail: tableData[index].senderEmail,
-            roomLongName: tableData[index].roomLongName,
-            flowerType: tableData[index].flowerType,
-            deliveryDate: tableData[index].deliveryDate,
-            note: tableData[index].note,
-            status: tableData[index].status,
-            employeeUser: value
+            body: {
+                senderName: tableData[index].senderName,
+                senderEmail: tableData[index].senderEmail,
+                roomLongName: tableData[index].roomLongName,
+                flowerType: tableData[index].flowerType,
+                deliveryDate: tableData[index].deliveryDate,
+                note: tableData[index].note,
+                status: tableData[index].status,
+                employeeUser: value
+            }
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
