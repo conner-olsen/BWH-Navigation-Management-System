@@ -35,7 +35,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
                     {/* Dynamically populate options from the employeeData */}
                     {employeeData.map((employee, employeeIndex) => (
                         <option key={employeeIndex} value={employeeData[employeeIndex].username}>
-                            {employee.username}
+                            {employeeData[employeeIndex].username}
                         </option>
                     ))}
                 </select>
@@ -87,7 +87,7 @@ export const ServiceLogComponent = () => {
         const fetchEmployeeData = async () => {
             try {
                 // Make a GET request to the API endpoint for employees
-                const response = await fetch('/api/populate-employees');
+                const response = await fetch('/api/populate-employee');
                 if (!response.ok) {
                     throw new Error(`Failed to fetch employees: ${response.status}`);
                 }
