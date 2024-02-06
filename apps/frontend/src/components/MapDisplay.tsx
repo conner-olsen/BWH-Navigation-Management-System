@@ -57,7 +57,7 @@ function MapDisplay({style, className}: MapDisplayProps) {
         } else if (!endNodeId) {
             setEndNodeId(node.id);
             if (graph && startNodeId) {
-                const path = graph.bfs(startNodeId, node.id);
+                const path = graph.bfsAstar(startNodeId, node.id);
                 setPath(path);
             }
         }

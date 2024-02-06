@@ -240,72 +240,71 @@ export class Graph {
    */
 
   bfsAstar(startNode: string, endNode: string): string[] {
-    //if start or end is undefined, return empty array
+    // if start or end is undefined, return empty array
     if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
       return [];
     }
 
-    //make queue with each element being a path + its value and then visited array
+    // make queue with each element being a path + its value and then visited array
     const priorityQueue: [string[], number][] = []; // [path, f(n)] pairs
     const visited: string[][] = [];
 
-
-    //calculate the manhattan distance (not hypotenuse) from one node to another
+    // calculate the Manhattan distance (not hypotenuse) from one node to another
     const calculateManhattanDistance = (node1: Node, node2: Node): number => {
       return Math.abs(node1.xCoord - node2.xCoord) + Math.abs(node1.yCoord - node2.yCoord);
     };
 
-    //add first path to queue
+    // add first path to queue
     priorityQueue.push([[startNode], 0]);
 
     while (priorityQueue.length > 0) {
-
-      //get first queue element and set to the current path
+      // get first queue element and set to the current path
       let [currentNodeIDPath, gValue] = priorityQueue.shift()!;
 
-      //get last node in the current path and set to current
+      // get last node in the current path and set to current
       const currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
 
-      //if current node is undefined, add to visited
+      // if current node is undefined, add to visited
       if (currentNode == undefined) {
         visited.push(currentNodeIDPath);
         continue;
       }
 
-      //if current node is the end node, return current path
+      // if current node is the end node, return current path
       if (currentNode.id === endNode) {
+        console.log("Reached end node:", currentNodeIDPath);
         return currentNodeIDPath;
       }
 
       const neighbors = currentNode.edges;
 
-      //for each neighbor of the currentNode, find its fValue
+      // for each neighbor of the currentNode, find its fValue
       for (const neighborID of neighbors) {
         const neighbor = this.getNode(neighborID);
 
-        //if neighbor doesn't exist, continue to next neighbor
-        if(neighbor == undefined) {
+        // if neighbor doesn't exist, continue to next neighbor
+        if (neighbor == undefined) {
           continue;
         }
 
-        //calculate fValue
-        gValue = gValue + calculateManhattanDistance(currentNode, neighbor);
+        // calculate fValue
         const hValue = calculateManhattanDistance(neighbor, this.getNode(endNode)!);
         const fValue = gValue + hValue;
 
-        //add neighbor to path
+        // add neighbor to path
         const newPath = [...currentNodeIDPath, neighbor.id];
 
-        //if path hasn't been visited and nodes aren't repeated, add to queue
-        if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(neighbor.id))) {
+        // if path hasn't been visited and nodes aren't repeated, add to queue
+        if (!(visited.some(visitedPath => visitedPath.join('-') === newPath.join('-'))) &&
+          !(currentNodeIDPath.includes(neighbor.id))) {
           priorityQueue.push([newPath, fValue]);
         }
       }
 
-      //put node with current lowest f/"cost" at the front of the queue by sorting
-      //if the number in a is less than that in b, keep it in front by giving sort function a positive number
+      // put node with current lowest f/"cost" at the front of the queue by sorting
+      // if the number in a is less than that in b, keep it in front by giving sort function a positive number
       priorityQueue.sort((a, b)  => a[1] > b[1] ? 1 : -1);
-      console.log(priorityQueue);
+      console.log("Current priority queue:", priorityQueue);
       visited.push(currentNodeIDPath);
     }
 
