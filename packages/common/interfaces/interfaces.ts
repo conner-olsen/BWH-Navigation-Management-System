@@ -17,6 +17,7 @@ export interface edge {
 
 
 export interface flowerServiceRequest {
+  id: number
   senderName:string
   senderEmail:string
   roomLongName:string
@@ -25,5 +26,16 @@ export interface flowerServiceRequest {
   deliveryDate: string
   note:string,
   status:string
-  employeeID:string
+  employeeUser:string
+}
+
+export interface user{
+  Username: string;
+}
+
+export interface employee {
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
 }
