@@ -61,13 +61,15 @@ function MapDisplay({style, className}: MapDisplayProps) {
                 setPath(path);
             }
         }
+        return (
         <text>
             this is
             node.nodeType;
             node.longName;
             node.shortName;
             /*status*/
-        </text>;
+        </text>
+        );
     };
     const clearSelection = () => {
         setStartNodeId(null);
@@ -77,13 +79,26 @@ function MapDisplay({style, className}: MapDisplayProps) {
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
             <g>
-            <rect x={node.xCoord - 100} y={node.yCoord - 50} width="100" height="60" fill="lightgrey"/>
+                <rect x={node.xCoord - 100} y={node.yCoord - 50} width="100" height="60" fill="lightgrey"/>
                 <text x={node.xCoord - 85} y={node.yCoord - 30} fill="black">
                     {type === 'start' ? 'Start Node' : 'End Node'}
                 </text>
                 <text x={node.xCoord - 70} y={node.yCoord - 5} fill="blue" style={{cursor: 'pointer'}}
                       onClick={() => clearSelection()}>
                     Clear
+                </text>
+                <rect x={node.xCoord - 415} y={node.yCoord - 150} width="315" height="125" fill="lightgrey"/>
+                <text x={node.xCoord - 400} y={node.yCoord - 125} fill="black">
+                    Type: {node.nodeType}
+                </text>
+                <text x={node.xCoord - 400} y={node.yCoord - 100} fill="black">
+                    {node.longName}
+                </text>
+                <text x={node.xCoord - 400} y={node.yCoord - 75} fill="black">
+                    {node.shortName}
+                </text>
+                <text x={node.xCoord - 400} y={node.yCoord - 50} fill="black">
+                    Status: (not implemented yet)
                 </text>
             </g>
         );
