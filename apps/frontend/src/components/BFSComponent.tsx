@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import {Node} from "common/src/graph-structure.ts";
+import {Graph, Node} from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import {parseCSV} from "common/src/parser.ts";
 import nodeCSVString from "common/dev/nodeCSVString.ts";
+import path from "path";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -50,17 +51,30 @@ export function BFSComponent() {
         return bfsResult.map(node => node.longName);
     };
 
+    // language=file-reference - Node csv file path
+    const nodePath = path.join(__dirname, "/packages/common/dev/data/csv/L1Nodes.csv");
+    // language=file-reference - Edge csv file path
+    const edgePath = path.join(__dirname, "/packages/common/dev/data/csv/L1Edges.csv");
+    const graphCSV = new Graph();
+
+    //populate graph
+    graphCSV.fromCSV(
+        nodePath,
+        edgePath,
+    );
+
     //parse node CSV into array of CSVRows
     const CSVRow = parseCSV(nodeCSVString);
-
     //make array to be inserted in the html code
     const roomNames = [];
 
     //for each CSV row, add an option with the value as id and name as longName into array
     for(let i = 0; i < CSVRow.length; i++) {
-        const id = CSVRow[i].id;
-        const longName = CSVRow[i].longName;
-        roomNames.push(<option value = {id}> {longName} </option>);
+        const row = CSVRow[i];
+        const rowval = Object.values(row);
+        const id = rowval[0];
+        const longName = row["longName"];
+        roomNames.push(<option value={id}> {longName} </option>);
     }
 
     return (
@@ -73,13 +87,15 @@ export function BFSComponent() {
             <select className="idinput" value={startNode}
                     onChange={e => setStartNode(e.target.value)}>
                 <option></option>
+                <option value="CCONF001L1"> Anesthesia Conf Floor L1</option>
+                <option value="CCONF002L1">Medical Records Conference Room Floor L1</option>
                 {roomNames}
             </select>
             <br/>
 
             <h4>End Location: </h4>
             <select className="idinput" value={endNode} onChange={e => setEndNode(e.target.value)}>
-                <option></option>
+            <option></option>
                 <option value="CCONF001L1"> Anesthesia Conf Floor L1</option>
                 <option value="CCONF002L1">Medical Records Conference Room Floor L1</option>
                 <option value="CCONF003L1">Abrams Conference Room</option>
