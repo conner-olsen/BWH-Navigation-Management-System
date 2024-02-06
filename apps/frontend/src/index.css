@@ -39,50 +39,6 @@ body.darkMode {
 
 }
 
-
-/* ============== GLOBAL HEADER =========== */
-.GlobalHeader {
-  width: 100%;
-  background-color: white;
-}
-
-.CompanyLogo {
-  width: 20%;
-  height: auto;
-  padding-left: 15px;
-}
-
-.Spacer {
-  background-color: var(--dark-blue);
-  width: 100%;
-  padding: 2px;
-}
-
-/* ============== GLOBAL FOOTER =========== */
-.GlobalFooter {
-    background-color: var(--dark-blue);
-    text-align: center;
-    width: 100%;
-}
-
-.FooterFormat {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: flex-end;
-}
-
-.FooterLogo {
-  scale: 75%;
-  padding-left: 15px;
-}
-
-.FooterText {
-    scale: 67%;
-    color: white;
-    text-align: center;
-}
-
 /* =========== LOGIN PAGE ========== */
 .loginForm input {
   padding: 20px;
@@ -241,17 +197,7 @@ body.darkMode {
     filter: grayscale(0%);
     transition: 0.3s ease-in-out;
 }
-input[type="file"] {
-    display: none;
-}
-.csvButton {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-}
+
 
 .file-drop-box.dragging {
     border: 2px dashed #2ecc71;
@@ -276,7 +222,7 @@ input[type="file"] {
     background: white;
 }
 /* ============= NAV BAR ========= */
-.generalNavBar {
+/*.generalNavBar {
     justify-content: space-evenly;
     align-items: center;
     background-color: var(--dark-blue);
@@ -294,8 +240,11 @@ input[type="file"] {
 .generalNavBar .nav-link:hover {
     color: #3498db;
     font-weight: bold;
+}*/
+.navbarStyling{
+    justify-content: center;
+    font-size: small;
 }
-
 /* ====== BFS ======= */
 
 .BFSBox {
@@ -420,36 +369,5 @@ td {
 /* Hover effect for table rows */
 tr:hover {
     background-color: #e5e5e5;
-}
-
-
-
-/*===== Export button ======*/
-.exportButton {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border: 2px solid #3498db;
-    color: #3498db;
-    background-color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-/* Hover effect */
-.exportButton:hover {
-    background-color: #3498db;
-    color: white;
-}
-
-
-/* ====== Page Headers ===== */
-.pageHeader {
-    text-align: center;
-    margin: 0;
-    letter-spacing: 2px; /* Adjust letter spacing for a decorative effect */
 }
 
