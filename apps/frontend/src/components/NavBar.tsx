@@ -1,10 +1,23 @@
 import React from "react";
-import {Nav, NavDropdown} from "react-bootstrap";
+import {Button, Dropdown, Nav, NavDropdown} from "react-bootstrap";
 import  DarkModeButton  from "./DarkModeButton.tsx";
 import { Link } from "react-router-dom";
+import {useAuth0} from "@auth0/auth0-react";
 
 
 export default function NavBar() {
+
+    const {
+        user,
+        isAuthenticated,
+        loginWithRedirect,
+        logout,
+    } = useAuth0();
+
+    const lohgoutWithRedirect = () =>
+        logout( {
+            logoutParams: { returnTo: window.location.origin },
+        });
 
     const handleMouseEnter = () => {
         const customElement = document.getElementById('bg-blur');
@@ -27,9 +40,19 @@ export default function NavBar() {
         <nav>
             <Nav className="navbarStyling relative filter-none z-10
                             shadow-md">
+                {!isAuthenticated && (
                 <Link to="/Home" className="text-sm no-underline p-2">Home</Link>
+                )}
+                {!isAuthenticated && (
+                <Link to="/MapPage" className="text-sm no-underline p-2">Map Page</Link>
+                )}
+                {isAuthenticated && (
                 <Link to="/NodeData" className="text-sm no-underline p-2">Node Data</Link>
+                )}
+                {isAuthenticated && (
                 <Link to="/EdgeData" className="text-sm no-underline p-2">Edge Data</Link>
+                )}
+                {isAuthenticated && (
                 <Link to="/ServiceList" className="group text-center text-sm no-underline p-2"
                           onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     Service Request
@@ -47,24 +70,27 @@ export default function NavBar() {
                     </div>
 
                 </Link>
-                <Link to="/Home" className="group text-center text-sm no-underline p-2"
-                          onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>More
-                    <div className="mt-7 h-0 w-screen max-w-full group-hover:h-[20vh] absolute
-                                    bg-white left-0 overflow-hidden
-                                    transition-all duration-500">
-                        <NavDropdown.Item as={Link} to="/Home" className="nav-drop-down-link">Home</NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/" className="nav-drop-down-link">Login</NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/NodeData" className="nav-drop-down-link">Node
-                            Data</NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/EdgeData" className="nav-drop-down-link">Edge
-                            Data</NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/ServiceList"
-                                          className="nav-drop-down-link">Services</NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/MapPage" className="nav-drop-down-link">Map
-                            Page</NavDropdown.Item>
-                    </div>
+                )}
 
-                </Link>
+                {isAuthenticated && (
+                    <Dropdown id={"dropdown-button"} className="text-sm no-underline p-2">
+                        <Dropdown.Toggle id="dropdown-basic">
+                            <img src={user.picture} alt={"Profile"} className={"UserProfile"}/>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Header>{user.name}</Dropdown.Header>
+                        </Dropdown.Menu>
+
+                        <Dropdown.Item onClick={() => lohgoutWithRedirect()}>Log Out</Dropdown.Item>
+
+                        </Dropdown>
+                )}
+
+                {!isAuthenticated && (
+                <Button onClick={() => loginWithRedirect()}>Log in</Button>
+                )}
+
                 <DarkModeButton></DarkModeButton>
             </Nav>
 
