@@ -1,0 +1,21 @@
+'Log files:
+/Users/tanyakhan/Desktop/team-D-production/team-D-production-new/C:UserstanyakhanDesktopnode_cache/_logs/2024-02-06T03_39_40_406Z-debug-0.log
+
+# npm resolution error report
+
+While resolving: softeng-starter-code@1.0.0
+Found: @vitest/ui@0.33.0
+node_modules/@vitest/ui
+  dev @vitest/ui@"^0.33.0" from the root project
+
+Could not resolve dependency:
+peerOptional @vitest/ui@"^1.0.0" from vitest@1.2.2
+node_modules/vitest
+  dev vitest@"^1.2.2" from the root project
+  peer vitest@"^1.0.0" from @vitest/browser@1.2.2
+  node_modules/@vitest/browser
+    peerOptional @vitest/browser@"^1.0.0" from vitest@1.2.2
+
+Fix the upstream dependency conflict, or retry
+this command with --force or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.

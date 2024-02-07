@@ -42,6 +42,20 @@ main {
 label {
     display: block;
 }
+
+/* ============== HOMEPAGE =========== */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.typing-animation {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 2s steps(30, end);
+}
+
+
 /* ============== DARK MODE =========== */
 body.darkMode {
     background-color: darkgray;
@@ -84,40 +98,42 @@ body.darkMode {
   background-color: #297fb8;
 }
 
-.LoginButtonAdmin {
-    width: 50%;
-    height: 80px;
-    border-radius: 40px;
-    background-color: #00336e;
-    box-shadow: #000000;
+#root {
+    position: relative;
+}
 
+
+
+
+.LoginButtonAdmin,
+.LoginButtonPatient,
+.LoginButtonGuest{
+    position: absolute;
+    height: 80px;
     color: #fff;
     font-family: sans-serif;
     border: none;
     cursor: pointer;
-    font-size: 40px;
+    font-size: 20px;
 }
 
-.LoginButtonAdmin:hover{
-    background-color: #297fb8;
+.LoginButtonAdmin {
+    top: 0;
+    right: 20px;
 }
 
 .LoginButtonPatient {
-    width: 50%;
-    height: 80px;
-    border-radius: 40px;
-    background-color: #00336e;
-    box-shadow: #000000;
-
-    color: #fff;
-    font-family: sans-serif;
-    border: none;
-    cursor: pointer;
-    font-size: 40px;
+    top: 30px;
+    right: 20px;
+}
+.LoginButtonGuest{
+    top: 85px;
+    right: 20px;
 }
 
+.LoginButtonAdmin:hover,
 .LoginButtonPatient:hover{
-    background-color: #297fb8;
+    color: #d9f99d;
 }
 
 .stack {
@@ -235,6 +251,35 @@ body.darkMode {
     font-size: small;
 }
 /* ====== BFS ======= */
+
+.map-container {
+    margin-top: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.dropdown-box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-right: 20px;
+}
+
+.route-container {
+    flex: 1;
+}
+
+.route-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.route {
+    margin-bottom: 5px;
+}
 
 .BFSBox {
     align-items: center;

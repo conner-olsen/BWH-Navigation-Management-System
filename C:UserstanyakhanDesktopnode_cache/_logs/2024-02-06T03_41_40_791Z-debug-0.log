@@ -1,0 +1,143 @@
+0 verbose cli /usr/local/bin/node /usr/local/bin/npm
+1 info using npm@10.3.0
+2 info using node@v20.11.0
+3 timing npm:load:whichnode Completed in 1ms
+4 timing config:load:defaults Completed in 1ms
+5 timing config:load:file:/usr/local/lib/node_modules/npm/npmrc Completed in 1ms
+6 timing config:load:builtin Completed in 1ms
+7 timing config:load:cli Completed in 1ms
+8 timing config:load:env Completed in 0ms
+9 timing config:load:file:/Users/tanyakhan/Desktop/team-D-production/team-D-production-new/.npmrc Completed in 0ms
+10 timing config:load:project Completed in 0ms
+11 timing config:load:file:/Users/tanyakhan/.npmrc Completed in 1ms
+12 timing config:load:user Completed in 2ms
+13 timing config:load:file:/usr/local/etc/npmrc Completed in 0ms
+14 timing config:load:global Completed in 0ms
+15 timing config:load:setEnvs Completed in 0ms
+16 timing config:load Completed in 6ms
+17 timing npm:load:configload Completed in 6ms
+18 timing config:load:flatten Completed in 1ms
+19 timing npm:load:mkdirpcache Completed in 1ms
+20 timing npm:load:mkdirplogs Completed in 0ms
+21 verbose title npm i framer-motion react-anchor-link-smooth-scroll@1.0.12 @heroicons/react
+22 verbose argv "i" "framer-motion" "react-anchor-link-smooth-scroll@1.0.12" "@heroicons/react"
+23 timing npm:load:setTitle Completed in 8ms
+24 timing npm:load:display Completed in 0ms
+25 verbose logfile logs-max:10 dir:/Users/tanyakhan/Desktop/team-D-production/team-D-production-new/C:UserstanyakhanDesktopnode_cache/_logs/2024-02-06T03_41_40_791Z-
+26 verbose logfile /Users/tanyakhan/Desktop/team-D-production/team-D-production-new/C:UserstanyakhanDesktopnode_cache/_logs/2024-02-06T03_41_40_791Z-debug-0.log
+27 timing npm:load:logFile Completed in 7ms
+28 timing npm:load:timers Completed in 0ms
+29 timing npm:load:configScope Completed in 0ms
+30 timing npm:load Completed in 34ms
+31 timing arborist:ctor Completed in 0ms
+32 silly logfile done cleaning log files
+33 timing arborist:ctor Completed in 0ms
+34 timing idealTree:init Completed in 31ms
+35 timing idealTree:userRequests Completed in 3ms
+36 silly idealTree buildDeps
+37 silly fetch manifest @auth0/auth0-react@^2.2.4
+38 http fetch GET 200 https://registry.npmjs.org/@auth0%2fauth0-react 13ms (cache hit)
+39 silly fetch manifest react@^18.2.0
+40 http fetch GET 200 https://registry.npmjs.org/react 6ms (cache hit)
+41 silly fetch manifest react-dom@^18.2.0
+42 http fetch GET 200 https://registry.npmjs.org/react-dom 6ms (cache hit)
+43 silly fetch manifest @popperjs/core@^2.11.8
+44 http fetch GET 200 https://registry.npmjs.org/@popperjs%2fcore 5ms (cache hit)
+45 silly fetch manifest @prisma/client@^5.9.0
+46 http fetch GET 200 https://registry.npmjs.org/@prisma%2fclient 41ms (cache hit)
+47 silly fetch manifest prisma@^5.9.0
+48 http fetch GET 200 https://registry.npmjs.org/prisma 28ms (cache hit)
+49 silly fetch manifest @yarnpkg/pnpify@^4.0.0-rc.45
+50 http fetch GET 200 https://registry.npmjs.org/@yarnpkg%2fpnpify 6ms (cache hit)
+51 silly fetch manifest bootstrap@^5.3.2
+52 http fetch GET 200 https://registry.npmjs.org/bootstrap 2ms (cache hit)
+53 silly fetch manifest react-bootstrap@^2.10.0
+54 http fetch GET 200 https://registry.npmjs.org/react-bootstrap 3ms (cache hit)
+55 silly fetch manifest @types/react@^18.0.37
+56 http fetch GET 200 https://registry.npmjs.org/@types%2freact 3ms (cache hit)
+57 silly fetch manifest react-select@^5.8.0
+58 http fetch GET 200 https://registry.npmjs.org/react-select 2ms (cache hit)
+59 silly fetch manifest framer-motion@*
+60 http fetch GET 200 https://registry.npmjs.org/framer-motion 5ms (cache hit)
+61 silly fetch manifest react-anchor-link-smooth-scroll@1.0.12
+62 http fetch GET 200 https://registry.npmjs.org/react-anchor-link-smooth-scroll 473ms (cache miss)
+63 silly fetch manifest @heroicons/react@*
+64 http fetch GET 200 https://registry.npmjs.org/@heroicons%2freact 3ms (cache hit)
+65 silly fetch manifest @testing-library/react@^14.2.0
+66 http fetch GET 200 https://registry.npmjs.org/@testing-library%2freact 3ms (cache hit)
+67 silly fetch manifest @types/bootstrap@^5
+68 http fetch GET 200 https://registry.npmjs.org/@types%2fbootstrap 2ms (cache hit)
+69 silly fetch manifest @types/react-dom@^18.0.11
+70 http fetch GET 200 https://registry.npmjs.org/@types%2freact-dom 2ms (cache hit)
+71 silly fetch manifest @vitest/ui@^0.33.0
+72 http fetch GET 200 https://registry.npmjs.org/@vitest%2fui 3ms (cache hit)
+73 silly fetch manifest vitest@^1.2.2
+74 http fetch GET 200 https://registry.npmjs.org/vitest 3ms (cache hit)
+75 silly fetch manifest vitest@>=0.30.1 <1
+76 silly fetch manifest @edge-runtime/vm@*
+77 http fetch GET 200 https://registry.npmjs.org/@edge-runtime%2fvm 1ms (cache hit)
+78 silly fetch manifest @types/node@^18.0.0 || >=20.0.0
+79 http fetch GET 200 https://registry.npmjs.org/@types%2fnode 4ms (cache hit)
+80 silly fetch manifest @vitest/browser@^1.0.0
+81 http fetch GET 200 https://registry.npmjs.org/@vitest%2fbrowser 6ms (cache hit)
+82 silly fetch manifest playwright@*
+83 http fetch GET 200 https://registry.npmjs.org/playwright 12ms (cache hit)
+84 silly fetch manifest webdriverio@*
+85 http fetch GET 200 https://registry.npmjs.org/webdriverio 4ms (cache hit)
+86 silly fetch manifest devtools@^8.14.0
+87 http fetch GET 200 https://registry.npmjs.org/devtools 8ms (cache hit)
+88 silly fetch manifest @vitest/ui@^1.0.0
+89 silly fetch manifest vitest@^1.0.0
+90 silly fetch manifest happy-dom@*
+91 http fetch GET 200 https://registry.npmjs.org/happy-dom 4ms (cache hit)
+92 silly fetch manifest jsdom@*
+93 http fetch GET 200 https://registry.npmjs.org/jsdom 1ms (cache hit)
+94 silly fetch manifest canvas@^2.11.2
+95 http fetch GET 200 https://registry.npmjs.org/canvas 3ms (cache hit)
+96 timing idealTree Completed in 1083ms
+97 timing command:i Completed in 1090ms
+98 verbose stack Error: unable to resolve dependency tree
+98 verbose stack     at #failPeerConflict (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/build-ideal-tree.js:1376:25)
+98 verbose stack     at #loadPeerSet (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/build-ideal-tree.js:1369:29)
+98 verbose stack     at async #loadPeerSet (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/build-ideal-tree.js:1321:23)
+98 verbose stack     at async #buildDepStep (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/build-ideal-tree.js:917:11)
+98 verbose stack     at async Arborist.buildIdealTree (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/build-ideal-tree.js:196:7)
+98 verbose stack     at async Promise.all (index 1)
+98 verbose stack     at async Arborist.reify (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/reify.js:159:5)
+98 verbose stack     at async Install.exec (/usr/local/lib/node_modules/npm/lib/commands/install.js:153:5)
+98 verbose stack     at async module.exports (/usr/local/lib/node_modules/npm/lib/cli-entry.js:61:5)
+99 verbose cwd /Users/tanyakhan/Desktop/team-D-production/team-D-production-new
+100 verbose Darwin 22.2.0
+101 verbose node v20.11.0
+102 verbose npm  v10.3.0
+103 error code ERESOLVE
+104 error ERESOLVE unable to resolve dependency tree
+105 error
+106 error While resolving: [1msofteng-starter-code[22m@[1m1.0.0[22m
+106 error Found: [1m@vitest/ui[22m@[1m0.33.0[22m[2m[22m
+106 error [2mnode_modules/@vitest/ui[22m
+106 error   [33mdev[39m [1m@vitest/ui[22m@"[1m^0.33.0[22m" from the root project
+106 error
+106 error Could not resolve dependency:
+106 error peerOptional [1m@vitest/ui[22m@"[1m^1.0.0[22m" from [1mvitest[22m@[1m1.2.2[22m[2m[22m
+106 error [2mnode_modules/vitest[22m
+106 error   [33mdev[39m [1mvitest[22m@"[1m^1.2.2[22m" from the root project
+106 error   [35mpeer[39m [1mvitest[22m@"[1m^1.0.0[22m" from [1m@vitest/browser[22m@[1m1.2.2[22m[2m[22m
+106 error   [2mnode_modules/@vitest/browser[22m
+106 error     peerOptional [1m@vitest/browser[22m@"[1m^1.0.0[22m" from [1mvitest[22m@[1m1.2.2[22m
+106 error
+106 error Fix the upstream dependency conflict, or retry
+106 error this command with --force or --legacy-peer-deps
+106 error to accept an incorrect (and potentially broken) dependency resolution.
+107 error
+107 error
+107 error For a full report see:
+107 error /Users/tanyakhan/Desktop/team-D-production/team-D-production-new/C:UserstanyakhanDesktopnode_cache/_logs/2024-02-06T03_41_40_791Z-eresolve-report.txt
+108 verbose exit 1
+109 timing npm Completed in 1293ms
+110 verbose unfinished npm timer reify 1707190900993
+111 verbose unfinished npm timer reify:loadTrees 1707190900996
+112 verbose unfinished npm timer idealTree:buildDeps 1707190901031
+113 verbose unfinished npm timer idealTree:#root 1707190901031
+114 verbose code 1
+115 error A complete log of this run can be found in: /Users/tanyakhan/Desktop/team-D-production/team-D-production-new/C:UserstanyakhanDesktopnode_cache/_logs/2024-02-06T03_41_40_791Z-debug-0.log
