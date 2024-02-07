@@ -12,6 +12,7 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
+    const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
 
     useEffect(() => {
         setGraph(populatedGraph);
@@ -62,6 +63,40 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
             }
         }
     };
+
+    const handleNodeHover = (node: Node) => {
+        if (!hoverNodeId) {
+            setHoverNodeId(node.id);
+        }
+    };
+
+    const handleNodeHoverLeave = () => {
+        console.log("hover left");
+        if (hoverNodeId) {
+            setHoverNodeId(null);
+        }
+    };
+
+    const displayHoverInfo = (node: Node, type: 'hover') => {
+        return (
+            <g>
+                {type === 'hover'}
+                <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>;
+                <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
+                    Type: {node.nodeType}
+                </text>;
+                <text x={node.xCoord - 400} y={node.yCoord - 80} fill="black">
+                    {node.longName}
+                </text>;
+                <text x={node.xCoord - 400} y={node.yCoord - 55} fill="black">
+                    {node.shortName}
+                </text>;
+                <text x={node.xCoord - 400} y={node.yCoord - 30} fill="black">
+                    Status: -/-
+                </text>;
+            </g>
+        );
+    };
     const clearSelection = () => {
         setStartNodeId(null);
         setEndNodeId(null);
@@ -78,19 +113,6 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
                       onClick={() => clearSelection()}>
                     Clear
                 </text>
-                <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>
-                <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
-                    Type: {node.nodeType}
-                </text>
-                <text x={node.xCoord - 400} y={node.yCoord - 80} fill="black">
-                    {node.longName}
-                </text>
-                <text x={node.xCoord - 400} y={node.yCoord - 55} fill="black">
-                    {node.shortName}
-                </text>
-                <text x={node.xCoord - 400} y={node.yCoord - 30} fill="black">
-                    Status: (not implemented yet)
-                </text>
             </g>
         );
     };
@@ -102,10 +124,11 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).map((node: Node) => (
-                    <g key={node.id} onClick={() => handleNodeClick(node)}>
+                    <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)} onMouseLeave={() => handleNodeHoverLeave()}>
                         <circle cx={node.xCoord} cy={node.yCoord} r="5" fill="red" style={{cursor: 'pointer'}}/>
                         {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                        {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
                     </g>
                 ))}
             </svg>
