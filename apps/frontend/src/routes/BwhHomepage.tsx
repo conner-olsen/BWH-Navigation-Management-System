@@ -66,7 +66,7 @@ const BwhHomepage: React.FC = () => {
                     <LoginButtonPatient/>
                     <div className="LoginButtonGuest">
                         <Link
-                            to="/NodeData"
+                            to="/Home"
                             style={{
                                 textDecoration: 'none',
                                 color: isHovered ? '#d9f99d' : 'white',
