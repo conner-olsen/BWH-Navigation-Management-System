@@ -33,8 +33,8 @@ export default function NavBar() {
                 <Link to="/ServiceList" className="group text-center text-sm no-underline p-2"
                           onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     Service Request
-                    <div className="mt-7 h-0 w-screen max-w-full group-hover:h-[20vh] absolute
-                                    bg-white left-0 overflow-hidden flex justify-center
+                    <div className="flex flex-col justify-center h-0 w-screen max-w-full group-hover:h-[20vh] absolute
+                                    bg-white left-0 overflow-hidden
                                     transition-all duration-500">
                         <div>
                             <NavDropdown.Item as={Link} to="/ServiceList">All Services</NavDropdown.Item>
@@ -49,7 +49,7 @@ export default function NavBar() {
                 </Link>
                 <Link to="/Home" className="group text-center text-sm no-underline p-2"
                           onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>More
-                    <div className="mt-7 h-0 w-screen max-w-full group-hover:h-[20vh] absolute
+                    <div className="flex flex-col justify-center h-0 w-screen max-w-full group-hover:h-[20vh] absolute
                                     bg-white left-0 overflow-hidden
                                     transition-all duration-500">
                         <NavDropdown.Item as={Link} to="/Home" className="nav-drop-down-link">Home</NavDropdown.Item>

@@ -25,16 +25,17 @@
 
 }
 
-input, textarea {
-    border: 3px solid black;
-}
-
 @layer components {
     .bg-custom-white {
 
     }
     .nav-drop-down-link {
         @apply text-left
+    }
+    .form-input {
+        @apply border-[1px] border-gray rounded-md
+               focus:border-light-blue focus-visible:outline-2 focus-visible:outline-light-blue
+               transition-all duration-200
     }
 }
 
@@ -382,9 +383,11 @@ input[type="submit"] {
     cursor: pointer;
     padding: 10px;
     border: none;
-    width: 50%;
+    max-width: 150px;
     border-radius: 40px;
     align-self: center;
+    transition: background-color;
+    transition-duration: 200ms;
 }
 
 input[type="submit"]:hover {
