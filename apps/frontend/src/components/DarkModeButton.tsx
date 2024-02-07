@@ -1,7 +1,7 @@
 // ButtonComponent.js
 import React, { useState } from 'react';
 
-const ButtonComponent = () => {
+const DarkModeButton = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const toggleDarkMode = () => {
@@ -20,10 +20,10 @@ const ButtonComponent = () => {
     };
 
     return (
-        <button onClick={toggleDarkMode}>
-            Toggle Dark Mode
+        <button onClick={toggleDarkMode} className="text-sm">
+            Dark Mode
         </button>
     );
 };
 
-export default ButtonComponent;
+export default DarkModeButton;

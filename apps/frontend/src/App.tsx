@@ -89,7 +89,7 @@ function Root() {
   return (
     <main>
       <Outlet />
-      <Global_Footer></Global_Footer>
+      <Global_Footer />
     </main>
   );
 }

@@ -25,6 +25,15 @@
 
 }
 
+@layer components {
+    .bg-custom-white {
+
+    }
+    .nav-drop-down-link {
+        @apply text-left
+    }
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -237,26 +246,6 @@ body.darkMode {
     border: 2px dashed var(--dark-blue);
     background: white;
 }
-/* ============= NAV BAR ========= */
-/*.generalNavBar {
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: var(--dark-blue);
-    color: #ecf0f1;
-    padding: 5px;
-    width: 100%;
-    font-size: 1.2rem;
-
-}
-
-.generalNavBar .nav-link {
-    color: #ffffff;
-}
-
-.generalNavBar .nav-link:hover {
-    color: #3498db;
-    font-weight: bold;
-}*/
 .navbarStyling{
     justify-content: center;
     font-size: small;
@@ -364,6 +353,23 @@ textarea {
 
 textarea {
     resize: vertical;
+}
+
+.populateEmployeeButton {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* No border */
+    color: white; /* White text */
+    padding: 15px 32px; /* Padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Inline block display */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margin */
+    transition-duration: 0.4s; /* Transition */
+    cursor: pointer; /* Cursor pointer */
+    border-radius: 8px; /* Rounded corners */
+    border: 2px solid transparent; /* Border */
+    outline: none; /* No outline */
 }
 
 input[type="submit"] {

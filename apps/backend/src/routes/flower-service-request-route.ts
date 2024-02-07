@@ -1,6 +1,6 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
-import { Prisma } from "database";
+import {FlowerServiceRequest, Prisma} from "database";
 
 const router: Router = express.Router();
 
@@ -29,5 +29,31 @@ router.get("/", async function (req: Request, res: Response) {
   }
   res.sendStatus(200);
 });
+
+router.patch("/", async (req: Request, res: Response) => {
+  const flowerRequestUpdate: FlowerServiceRequest = req.body;
+
+  try {
+
+    console.log(flowerRequestUpdate);
+
+    await PrismaClient.flowerServiceRequest.update({
+      where: {id: flowerRequestUpdate.id},
+      data: {status: flowerRequestUpdate.status,
+      employee:{
+        connect: {
+            username: flowerRequestUpdate.employeeUser
+        }
+      }
+      }
+    });
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(`Error populating node data: ${error}`);
+    res.sendStatus(500);
+  }
+});
+
 
 export default router;
