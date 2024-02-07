@@ -3048,7 +3048,7 @@ const RAW_RUNTIME_STATE =
           ["fraction.js", "npm:4.3.7"],\
           ["normalize-range", "npm:0.1.2"],\
           ["picocolors", "npm:1.0.0"],\
-          ["postcss", "npm:8.4.33"],\
+          ["postcss", "npm:8.4.34"],\
           ["postcss-value-parser", "npm:4.2.0"]\
         ],\
         "packagePeers": [\
@@ -5082,7 +5082,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.4.5"],\
           ["localforage", "npm:1.10.0"],\
           ["match-sorter", "npm:6.3.3"],\
-          ["postcss", "npm:8.4.33"],\
+          ["postcss", "npm:8.4.34"],\
           ["prettier", "npm:3.2.4"],\
           ["prettier-config-custom", "workspace:configs/prettier-config-custom"],\
           ["react", "npm:18.2.0"],\
@@ -7400,6 +7400,16 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/postcss-npm-8.4.33-6ba8157009-e22a4594c2.zip/node_modules/postcss/",\
         "packageDependencies": [\
           ["postcss", "npm:8.4.33"],\
+          ["nanoid", "npm:3.3.7"],\
+          ["picocolors", "npm:1.0.0"],\
+          ["source-map-js", "npm:1.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:8.4.34", {\
+        "packageLocation": "./.yarn/cache/postcss-npm-8.4.34-2179f0d4b5-ff4769ff69.zip/node_modules/postcss/",\
+        "packageDependencies": [\
+          ["postcss", "npm:8.4.34"],\
           ["nanoid", "npm:3.3.7"],\
           ["picocolors", "npm:1.0.0"],\
           ["source-map-js", "npm:1.0.2"]\

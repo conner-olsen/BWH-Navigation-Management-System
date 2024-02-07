@@ -11,6 +11,7 @@ import nodeRouter from "./routes/node-route.ts";
 import edgeRouter from "./routes/populate-edges.ts";
 import downloadNodeDataRouter from "./routes/data-to-csv-node.ts";
 import downloadEdgeDataRouter from "./routes/data-to-csv-edge.ts";
+import employeeRouter from "./routes/populate-employee.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -39,6 +40,8 @@ app.use("/api/edge-populate", edgeRouter);
 app.use("/api/user", userRouter);
 app.use("/api/download-node-csv", downloadNodeDataRouter);
 app.use("/api/download-edge-csv", downloadEdgeDataRouter);
+app.use("/api/populate-employee", employeeRouter);
+
 /**
  * Catch all 404 errors, and forward them to the error handler
  */

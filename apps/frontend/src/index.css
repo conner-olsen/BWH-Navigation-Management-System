@@ -307,6 +307,23 @@ textarea {
     resize: vertical;
 }
 
+.populateEmployeeButton {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* No border */
+    color: white; /* White text */
+    padding: 15px 32px; /* Padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Inline block display */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margin */
+    transition-duration: 0.4s; /* Transition */
+    cursor: pointer; /* Cursor pointer */
+    border-radius: 8px; /* Rounded corners */
+    border: 2px solid transparent; /* Border */
+    outline: none; /* No outline */
+}
+
 input[type="submit"] {
     background-color: #001c3d;
     color: white;
