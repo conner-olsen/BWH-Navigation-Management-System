@@ -26,8 +26,11 @@
 }
 
 @layer components {
+    .bg-custom-white {
+
+    }
     .nav-drop-down-link {
-        @apply text-center
+        @apply text-left
     }
 }
 
