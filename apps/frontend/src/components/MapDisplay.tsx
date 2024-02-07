@@ -70,14 +70,6 @@ function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
                 setPath(path);
             }
         }
-        <text>
-            this is
-            node.nodeType;
-            node.longName;
-            node.shortName;
-            /*status*/
-        </text>;
-
     };
     const clearSelection = () => {
         setStartNodeId(null);
