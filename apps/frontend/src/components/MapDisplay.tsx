@@ -5,17 +5,26 @@ import populatedGraph from 'common/dev/populatedGraph.ts';
 interface MapDisplayProps {
     style?: CSSProperties;
     className?: string;
+    startNode?: string;
+    endNode?: string;
 }
 
-function MapDisplay({style, className}: MapDisplayProps) {
+function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
 
+
     useEffect(() => {
         setGraph(populatedGraph);
-    }, []);
+        if (startNode && endNode && graph) {
+            const path = graph.bfsAstar(startNode, endNode);
+            setPath(path);
+            setStartNodeId(startNode);
+            setEndNodeId(endNode);
+        }
+    }, [startNode, endNode, graph]);
 
     const displayEdges = (graph: Graph) => {
         const edges: React.JSX.Element[] = [];
@@ -57,7 +66,7 @@ function MapDisplay({style, className}: MapDisplayProps) {
         } else if (!endNodeId) {
             setEndNodeId(node.id);
             if (graph && startNodeId) {
-                const path = graph.bfs(startNodeId, node.id);
+                const path = graph.bfsAstar(startNodeId, node.id);
                 setPath(path);
             }
         }
@@ -70,26 +79,13 @@ function MapDisplay({style, className}: MapDisplayProps) {
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
             <g>
-                <rect x={node.xCoord - 105} y={node.yCoord - 65} width="100" height="60" fill="lightgrey"/>
-                <text x={node.xCoord - 90} y={node.yCoord - 45} fill="black">
+            <rect x={node.xCoord - 100} y={node.yCoord - 50} width="100" height="60" fill="lightgrey"/>
+                <text x={node.xCoord - 85} y={node.yCoord - 30} fill="black">
                     {type === 'start' ? 'Start Node' : 'End Node'}
                 </text>
-                <text x={node.xCoord - 75} y={node.yCoord - 20} fill="blue" style={{cursor: 'pointer'}}
+                <text x={node.xCoord - 70} y={node.yCoord - 5} fill="blue" style={{cursor: 'pointer'}}
                       onClick={() => clearSelection()}>
                     Clear
-                </text>
-                <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>
-                <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
-                    Type: {node.nodeType}
-                </text>
-                <text x={node.xCoord - 400} y={node.yCoord - 80} fill="black">
-                    {node.longName}
-                </text>
-                <text x={node.xCoord - 400} y={node.yCoord - 55} fill="black">
-                    {node.shortName}
-                </text>
-                <text x={node.xCoord - 400} y={node.yCoord - 30} fill="black">
-                    Status: (not implemented yet)
                 </text>
             </g>
         );
@@ -98,7 +94,7 @@ function MapDisplay({style, className}: MapDisplayProps) {
     return (
         <div className={className} style={{position: 'relative', ...style}}>
             <svg viewBox="0 0 5000 3400">
-                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
+                <image href="../../public/maps/L1map.png" width="5000" height="3400" x="0" y="0"/>
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).map((node: Node) => (
