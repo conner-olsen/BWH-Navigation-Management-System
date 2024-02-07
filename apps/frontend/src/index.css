@@ -25,6 +25,10 @@
 
 }
 
+input, textarea {
+    border: 3px solid black;
+}
+
 @layer components {
     .bg-custom-white {
 
