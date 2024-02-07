@@ -5,32 +5,38 @@ import React, { useState } from 'react';
 import axios from "axios";
 
 
+function getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+}
+
 const FlowerServiceRequest: React.FC = () => {
     const [formData, setFormData] = useState({
+        id: getRandomInt(10000),
         senderName: '',
         senderEmail: '',
         roomLongName: '',
         patientName: '',
         flowerType: '',
         deliveryDate: '',
-        note: '', // Add note to formData
-        status: '',
-        employeeUser: ''
+        note: '',
+        status: 'Assigned',
+        employeeUser: 'none'
     });
 
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setFormData({
+            id: 0,
             senderName: '',
             senderEmail: '',
             roomLongName: '',
             patientName: '',
-            flowerType: '', // Add flowerType to formData
+            flowerType: '',
             deliveryDate: '',
             note: '',
             status: '',
-            employeeUser: ''// Add note to formData
+            employeeUser: ''
         });
         try {
             const response = await axios.post("/api/populate-flower-service-request", JSON.stringify(formData), {
@@ -39,7 +45,7 @@ const FlowerServiceRequest: React.FC = () => {
                 }
             });
 
-            if (response.status == 200) {
+            if (response.status === 200) {
                 console.log('Data sent successfully');
             } else {
                 console.error('Error sending data');
@@ -51,17 +57,28 @@ const FlowerServiceRequest: React.FC = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
-        // console.log(event.target.value);
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
     };
-    const currentDateTime = new Date().toISOString().slice(0, 16);
+
+
+    const populateEmployeeTable = () => {
+        axios.patch("/api/populate-employee", {
+
+        }).then(response => console.log(response.data))
+            .catch(error => console.error(error));
+    };
+
     return (
         <div>
             <BackButton></BackButton>
             <NavBar></NavBar>
+            <button className="inline-block p-2.5 text-center text-light-blue cursor-pointer
+                           border-light-blue rounded-md border-solid border-2
+                           transition-all transition-duration-300
+                           hover:bg-light-blue hover:text-white" onClick={populateEmployeeTable}>Populate Employee Table</button>
             <h1 className={"pageHeader"}>Flower Delivery Form</h1>
             <br/>
             <form className={"flowerService"} onSubmit={handleSubmit}>
@@ -138,7 +155,6 @@ const FlowerServiceRequest: React.FC = () => {
                         required
                         value={formData.deliveryDate}
                         onChange={handleChange}
-                        min={currentDateTime}
                     />
 
                     <label>Add a note</label>

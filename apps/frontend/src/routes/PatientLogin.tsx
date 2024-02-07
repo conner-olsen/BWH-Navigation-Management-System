@@ -24,16 +24,10 @@ const PatientLogin = () => {
         console.log('Password:', password);
         // Hard-coded authentication (will connect to database in the future)
 
-        let patientID: string = "patient";
-        let patientPassword: string = "patient";
+        //let patientID: string = "patient";
+        //let patientPassword: string = "patient";
 
-        if (patientID === username && patientPassword === password) {
-            navigate("/Home");
-        }
-        else {
-            navigate("/PatientLogin");
-        }
-
+        navigate("/Home");
     };
 
   return (

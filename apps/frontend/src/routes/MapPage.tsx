@@ -2,9 +2,9 @@ import React, {useEffect, useState} from "react";
 import { Outlet } from "react-router-dom";
 import BackButton from "../components/BackButton.tsx";
 import NavBar from "../components/NavBar.tsx";
-import MapDisplay from "../components/MapDisplay.tsx";
+// import MapDisplay from "../components/MapDisplay.tsx";
 import MapGroundFloor from "../components/MapGroundFloor.tsx";
-// import MapLowerLevel1 from "../components/MapLowerLevel1.tsx";
+import MapLowerLevel1 from "../components/MapLowerLevel1.tsx";
 import MapLowerLevel2 from "../components/MapLowerLevel2.tsx";
 import MapFloor1 from "../components/MapFloor1.tsx";
 import MapFloor2 from "../components/MapFloor2.tsx";
@@ -99,7 +99,7 @@ export default function MapPage() {
                     <option value="floor3">Floor 3</option>
                 </select>
                 {groundFloorContentVisible && <MapGroundFloor />}
-                {lowerLevel1ContentVisible && <MapDisplay />}
+                {lowerLevel1ContentVisible && <MapLowerLevel1 />}
                 {lowerLevel2ContentVisible && <MapLowerLevel2 />}
                 {floor1ContentVisible && <MapFloor1 />}
                 {floor2ContentVisible && <MapFloor2 />}
