@@ -15,7 +15,7 @@ const ServiceList = () => {
             <p className="font-roboto text-neutral-500 italic font-light"
                style={{marginRight: '30%', marginLeft: '0%', marginTop: '5%', textAlign: "right", fontSize: '25px', lineHeight: '30px'}}>
                 At Brigham and Women's we value our patients and want to accommodate to their needs
-                as seamlessly as possible. Below is a list of rhe services we offer.
+                as seamlessly as possible. Below is a list of the services we offer.
             </p>
             </div>
             <div style={{marginTop: '5%', marginLeft: '24%'}}>
