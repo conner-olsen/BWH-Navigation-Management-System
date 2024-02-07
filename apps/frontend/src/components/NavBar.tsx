@@ -40,12 +40,9 @@ export default function NavBar() {
         <nav>
             <Nav className="navbarStyling relative filter-none z-10
                             shadow-md">
-                {!isAuthenticated && (
                 <Link to="/Home" className="text-sm no-underline p-2">Home</Link>
-                )}
-                {!isAuthenticated && (
                 <Link to="/MapPage" className="text-sm no-underline p-2">Map Page</Link>
-                )}
+
                 {isAuthenticated && (
                 <Link to="/NodeData" className="text-sm no-underline p-2">Node Data</Link>
                 )}
@@ -72,17 +69,19 @@ export default function NavBar() {
                 </Link>
                 )}
 
+                <DarkModeButton></DarkModeButton>
+
                 {isAuthenticated && (
                     <Dropdown id={"dropdown-button"} className="text-sm no-underline p-2">
-                        <Dropdown.Toggle id="dropdown-basic">
-                            <img src={user.picture} alt={"Profile"} className={"UserProfile"}/>
+                        <Dropdown.Toggle className="dropdown-basic">
+                            <img src={user.picture} alt={"Profile"}  className={"UserProfile rounded-full w-8 h-8"}/>
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
                             <Dropdown.Header>{user.name}</Dropdown.Header>
+                            <Dropdown.Item onClick={() => lohgoutWithRedirect()}>Log Out</Dropdown.Item>
                         </Dropdown.Menu>
 
-                        <Dropdown.Item onClick={() => lohgoutWithRedirect()}>Log Out</Dropdown.Item>
 
                         </Dropdown>
                 )}
@@ -91,7 +90,6 @@ export default function NavBar() {
                 <Button onClick={() => loginWithRedirect()}>Log in</Button>
                 )}
 
-                <DarkModeButton></DarkModeButton>
             </Nav>
 
             <div id="bg-blur" className="h-0 w-screen max-w-full max-h-full absolute
