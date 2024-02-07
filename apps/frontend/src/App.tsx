@@ -1,6 +1,5 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Global_Header from "./components/Global_Header.tsx";
 import Global_Footer from "./components/Global_Footer.tsx";
 import { NodeData } from "./routes/NodeData.tsx";
 import {EdgeData} from "./routes/EdgeData.tsx";
@@ -85,9 +84,8 @@ function App() {
 function Root() {
   return (
     <main>
-      <Global_Header></Global_Header>
       <Outlet />
-      <Global_Footer></Global_Footer>
+      <Global_Footer />
     </main>
   );
 }
