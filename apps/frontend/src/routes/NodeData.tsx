@@ -1,5 +1,4 @@
 import {Outlet} from "react-router-dom";
-import BackButton from "../components/BackButton.tsx";
 import DragNDrop from "../components/DragNDrop.tsx";
 import {Container} from "react-bootstrap";
 import NavBar from "../components/NavBar.tsx";
@@ -48,8 +47,6 @@ export function NodeData() {
                 <NavBar></NavBar>
 
                 <h1 className="m-0 text-center">Node Data</h1>
-
-                <BackButton></BackButton>
 
                 <br/>
 

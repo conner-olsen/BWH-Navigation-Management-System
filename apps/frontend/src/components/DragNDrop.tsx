@@ -69,7 +69,7 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
       >
-          <img className="m-auto" src="../public/icon/csv_drop.svg"/>
+          <img className="h-4" src="../public/icon/csv_drop.svg"/>
           <h3>Select a CSV file to upload</h3>
           <label htmlFor="csv-upload"
                  className="absolute top-0 left-0 w-full h-full cursor-pointer"></label>

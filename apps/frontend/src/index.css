@@ -252,9 +252,12 @@ body.darkMode {
     background: white;
 }
 .navbarStyling{
+    text-align: center;
+    justify-items: center;
     justify-content: center;
     font-size: small;
 }
+
 /* ====== BFS ======= */
 
 .map-container {
