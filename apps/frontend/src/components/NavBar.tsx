@@ -52,7 +52,7 @@ export default function NavBar() {
                     <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white hover:bg-sky-700"
                           onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                         Service Request
-                        <div className="mt-5 h-0 w-screen max-w-full group-hover:h-[15vh] absolute
+                        <div className="mt-5 h-0 w-screen max-w-full group-hover:h-[20vh] absolute
                                     bg-dark-blue left-0 overflow-hidden flex justify-center
                                     transition-all duration-500">
                             <div>
