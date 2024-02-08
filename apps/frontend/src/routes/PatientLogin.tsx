@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import BackButton from "../components/BackButton.tsx";
 import {useNavigate} from "react-router-dom";
 
 const PatientLogin = () => {
@@ -32,7 +31,6 @@ const PatientLogin = () => {
 
   return (
       <div>
-          <BackButton></BackButton>
 
           <div className="container-sm mt-5">
       <div className="row justify-content-center">

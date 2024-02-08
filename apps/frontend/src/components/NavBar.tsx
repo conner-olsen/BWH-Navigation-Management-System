@@ -38,7 +38,7 @@ export default function NavBar() {
 
     return (
         <nav>
-            <Nav className="navbarStyling relative filter-none z-1 shadow-md bg-dark-blue">
+            <Nav className="navbarStyling relative filter-none z-1 shadow-md bg-dark-blue space-x-12">
                 <Link to="/Home" className="text-lg no-underline p-2 text-white hover:bg-sky-700">Home</Link>
                 <Link to="/MapPage" className="text-lg no-underline p-2 text-white hover:bg-sky-700">Map Page</Link>
 
@@ -52,7 +52,7 @@ export default function NavBar() {
                     <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white hover:bg-sky-700"
                           onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                         Service Request
-                        <div className="mt-7 h-0 w-screen max-w-full group-hover:h-[20vh] absolute
+                        <div className="mt-5 h-0 w-screen max-w-full group-hover:h-[20vh] absolute
                                     bg-dark-blue left-0 overflow-hidden flex justify-center
                                     transition-all duration-500">
                             <div>
@@ -84,7 +84,7 @@ export default function NavBar() {
                 )}
 
                 {!isAuthenticated && (
-                    <Button onClick={() => loginWithRedirect()}>Log in</Button>
+                    <Button onClick={() => loginWithRedirect()} size={"sm"}>Log in</Button>
                 )}
 
                 <DarkModeButton></DarkModeButton>
