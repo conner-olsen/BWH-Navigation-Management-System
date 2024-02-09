@@ -154,6 +154,17 @@ body.darkMode {
 }
 
 /* ============= MAP ========= */
+.img-rotate {
+    max-width: 50%;
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
+    filter: grayscale(100%);
+    transition: all;
+    transition-duration: 300ms;
+}
+.img-rotate:hover {
+    filter: none;
+}
+
 .testClass {
   display: flex;
   align-items: center;

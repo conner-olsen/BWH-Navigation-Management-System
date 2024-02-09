@@ -40,7 +40,7 @@ export default function NavBar() {
         <nav>
             <Nav className="navbarStyling relative filter-none z-1 shadow-md bg-dark-blue space-x-12">
                 <Link to="/Home" className="text-lg no-underline p-2 text-white hover:bg-sky-700">Home</Link>
-                <Link to="/MapPage" className="text-lg no-underline p-2 text-white hover:bg-sky-700">Map Page</Link>
+                <Link to="/NavMapPage" className="text-lg no-underline p-2 text-white hover:bg-sky-700">Map Page</Link>
 
                 {isAuthenticated && (
                     <Link to="/NodeData" className="text-lg no-underline p-2 text-white hover:bg-sky-700">Node Data</Link>

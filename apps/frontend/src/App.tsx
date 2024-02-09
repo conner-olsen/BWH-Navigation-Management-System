@@ -13,6 +13,7 @@ import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRe
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
 import MapPage from "./routes/MapPage.tsx";
+import NavMapPage from "./routes/NavMapPage.tsx";
 import BwhHomepage from "./routes/BwhHomepage.tsx";
 function App() {
   const router = createBrowserRouter([
@@ -72,6 +73,10 @@ function App() {
           {
               path: "/MapPage",
               element: <MapPage/>
+          },
+          {
+              path: "/NavMapPage",
+              element: <NavMapPage/>
           },
           {
               path: "/ServiceLog",
