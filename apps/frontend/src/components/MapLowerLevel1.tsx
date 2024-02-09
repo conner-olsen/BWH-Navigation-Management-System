@@ -18,23 +18,6 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
         setGraph(populatedGraph);
     }, []);
 
-    const displayEdges = (graph: Graph) => {
-        const edges: React.JSX.Element[] = [];
-        for (const [nodeId, node] of graph.nodes) {
-            node.edges.forEach(edgeNodeId => {
-                const targetNode = graph.getNode(edgeNodeId);
-                if (targetNode) {
-                    edges.push(
-                        <line key={`${nodeId}-${edgeNodeId}`}
-                              x1={node.xCoord} y1={node.yCoord}
-                              x2={targetNode.xCoord} y2={targetNode.yCoord}
-                              stroke="black" strokeWidth="1"/>
-                    );
-                }
-            });
-        }
-        return edges;
-    };
     const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
         for (let i = 0; i < path.length - 1; i++) {
@@ -45,7 +28,7 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
                     <line key={`${node.id}-${nextNode.id}`}
                           x1={node.xCoord} y1={node.yCoord}
                           x2={nextNode.xCoord} y2={nextNode.yCoord}
-                          stroke="red" strokeWidth="2"/>
+                          stroke="red" strokeWidth="5"/>
                 );
             }
         }
@@ -55,7 +38,11 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
     const handleNodeClick = (node: Node) => {
         if (!startNodeId) {
             setStartNodeId(node.id);
-        } else if (!endNodeId) {
+        }
+        else if (node.id == startNodeId) {
+            clearSelection();
+        }
+        else if (!endNodeId) {
             setEndNodeId(node.id);
             if (graph && startNodeId) {
                 const path = graph.bfs(startNodeId, node.id);
@@ -71,7 +58,6 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
     };
 
     const handleNodeHoverLeave = () => {
-        console.log("hover left");
         if (hoverNodeId) {
             setHoverNodeId(null);
         }
@@ -121,11 +107,10 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
         <div className={className} style={{position: 'relative', ...style}}>
             <svg viewBox="0 0 5000 3400">
                 <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
-                {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).map((node: Node) => (
                     <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)} onMouseLeave={() => handleNodeHoverLeave()}>
-                        <circle cx={node.xCoord} cy={node.yCoord} r="5" fill="red" style={{cursor: 'pointer'}}/>
+                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue" style={{cursor: 'pointer'}}/>
                         {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                         {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
