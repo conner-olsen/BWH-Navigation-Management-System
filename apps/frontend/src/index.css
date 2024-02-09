@@ -155,7 +155,7 @@ body.darkMode {
 
 /* ============= MAP ========= */
 .img-rotate {
-    max-width: 50%;
+    max-width: 45%;
     transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
     filter: grayscale(100%);
     transition: all;
