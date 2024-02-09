@@ -43,7 +43,6 @@ const TableNodes: React.FC<{ tableData: node[] }> = ({tableData}) => {
 export const GetDataNodes = () => {
     const [data, setData] = useState<node[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,7 +62,7 @@ export const GetDataNodes = () => {
                 setData(result);
             } catch (err) {
                 // Handle errors
-                setError(err.message);
+                console.log(err);
             } finally {
                 // Set loading to false, indicating that the request has completed
                 setLoading(false);
@@ -75,10 +74,6 @@ export const GetDataNodes = () => {
 
     if (loading) {
         return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
     }
 
     return (

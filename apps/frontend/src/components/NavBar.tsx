@@ -38,7 +38,7 @@ export default function NavBar() {
 
     return (
         <nav>
-            <Nav className="navbarStyling relative filter-none z-1 shadow-md bg-dark-blue space-x-12">
+            <Nav className="navbarStyling relative filter-none z-1 shadow-md bg-blue-950 space-x-12">
                 <Link to="/Home" className="text-lg no-underline p-2 text-white hover:bg-sky-700">Home</Link>
                 <Link to="/MapPage" className="text-lg no-underline p-2 text-white hover:bg-sky-700">Map Page</Link>
 

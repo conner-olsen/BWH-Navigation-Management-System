@@ -32,7 +32,6 @@ const TableEdges: React.FC<{ tableData: edge[] }> = ({tableData}) => {
 export const GetDataEdges = () => {
     const [data, setData] = useState<edge[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,7 +51,7 @@ export const GetDataEdges = () => {
                 setData(result);
             } catch (err) {
                 // Handle errors
-                setError(err.message);
+                console.log(err);
             } finally {
                 // Set loading to false, indicating that the request has completed
                 setLoading(false);
@@ -64,10 +63,6 @@ export const GetDataEdges = () => {
 
     if (loading) {
         return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
     }
 
     return (
