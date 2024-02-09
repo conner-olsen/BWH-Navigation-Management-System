@@ -2,12 +2,15 @@
 import React from 'react';
 import NavBar from "../../components/NavBar.tsx";
 import { Link } from 'react-router-dom';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from  "../../components/ui/card.tsx";
+import {Col, Container, Row} from "react-bootstrap";
+
 
 const ServiceList = () => {
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
             <NavBar/>
-            <div style={{ display: 'flex', alignItems: 'center', marginTop: '5%', marginLeft: '15%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginLeft: '15%' }}>
             <h1 className="font-roboto font-extrabold italic"
                 style={{marginTop: '5%', marginLeft: '10%', fontSize: '60px'}}>
                 SERVICE REQUESTS
@@ -18,87 +21,101 @@ const ServiceList = () => {
                 as seamlessly as possible. Below is a list of the services we offer.
             </p>
             </div>
-            <div style={{marginTop: '5%', marginLeft: '24%'}}>
-                <div style={{marginBottom: '10px'}}>
-                    <Link className={"font-bold"}
-                          to="/FlowerService"
-                          style={{
-                              fontSize: '20px',
-                              textDecoration: 'underline',
-                              color: '#3382fe',
-                              cursor: 'pointer'
-                          }}
-                    >
-                        FLOWER SERVICE REQUEST
-                    </Link>
-                </div>
-                <div style={{marginBottom: '10px'}}>
-                    <Link className={"font-bold"}
-                          to="/CleaningService"
-                          style={{
-                              fontSize: '20px',
-                              textDecoration: 'underline',
-                              color: '#3382fe',
-                              cursor: 'pointer'
-                          }}
-                    >
-                        CLEANING SERVICE REQUEST
-                    </Link>
-                </div>
-                <div style={{marginBottom: '10px'}}>
-                    <Link className={"font-bold"}
-                          to="/ReligiousService"
-                          style={{
-                              fontSize: '20px',
-                              textDecoration: 'underline',
-                              color: '#3382fe',
-                              cursor: 'pointer'
-                          }}
-                    >
-                        RELIGIOUS REQUESTS
-                    </Link>
-                </div>
-                <div style={{marginBottom: '10px'}}>
-                    <Link className={"font-bold"}
-                          to="/MedicationDeliveryService"
-                          style={{
-                              fontSize: '20px',
-                              textDecoration: 'underline',
-                              color: '#3382fe',
-                              cursor: 'pointer'
-                          }}
-                    >
-                        MEDICATION DELIVERY
-                    </Link>
-                </div>
-                <div style={{marginBottom: '10px'}}>
-                    <Link className={"font-bold"}
-                          to="/InternalTransportationService"
-                          style={{
-                              fontSize: '20px',
-                              textDecoration: 'underline',
-                              color: '#3382fe',
-                              cursor: 'pointer'
-                          }}
-                    >
-                        INTERNAL HOSPITAL TRANSPORTATION
-                    </Link>
-                </div>
-                <div style={{marginBottom: '10px'}}>
-                    <Link className={"font-bold"}
-                          to="/ExternalTransportationService"
-                          style={{
-                              fontSize: '20px',
-                              textDecoration: 'underline',
-                              color: '#3382fe',
-                              cursor: 'pointer'
-                          }}
-                    >
-                        EXTERNAL HOSPITAL TRANSPORTATION
-                    </Link>
-                </div>
 
-            </div>
+            <br/>
+
+            <Container>
+                <Row>
+                    <Col>
+                        <Link to="/flowerService" className={"no-underline"}>
+                            <Card className="max-w-md border-gray-200">
+                                <CardHeader>
+                                    <CardTitle className="text-xl">Flower Service Request</CardTitle>
+                                    <CardDescription className="text-sm">Send a bogue of flowers to send your regards to any patient on long term stay </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <img src="public/flower_service.jpg" alt="flower service"/>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    </Col>
+                    <Col>
+
+                        <Link to="/flowerService" className={"no-underline"}>
+                            <Card className="max-w-md border-gray-200">
+                                <CardHeader>
+                                    <CardTitle className="text-xl">Cleaning Service Request</CardTitle>
+                                    <CardDescription className="text-sm">Send a cleaning request for quick, deep, or emergency cleaning for patients on long term stay</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <img src="public/cleaning_request.webp" alt="cleaning service"/>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    </Col>
+
+                    <Col>
+
+                        <Link to="/flowerService" className={"no-underline"}>
+                            <Card className="max-w-md border-gray-200">
+                                <CardHeader>
+                                    <CardTitle className="text-xl">Religious Service Request</CardTitle>
+                                    <CardDescription className="text-sm">Send a request for religious sermons and rituals conducted for patients on long terms stay </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <img src="public/religous_service.jpg" alt="Religious service"/>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    </Col>
+                </Row>
+
+                <br/>
+
+                <Row>
+                    <Col>
+                        <Link to="/flowerService" className={"no-underline"}>
+                            <Card className="max-w-md border-gray-200">
+                                <CardHeader>
+                                    <CardTitle className="text-xl">Medication Delivery Service Request</CardTitle>
+                                    <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <img src="public/medicine.jpg" alt="medicine delivery service"/>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    </Col>
+
+                    <Col>
+                        <Link to="/flowerService" className={"no-underline"}>
+                            <Card className="max-w-md border-gray-200">
+                                <CardHeader>
+                                    <CardTitle className="text-xl">Internal Transportation Request</CardTitle>
+                                    <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <img src="public/internal.jpg" alt="medicine delivery service"/>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    </Col>
+
+                    <Col>
+                        <Link to="/flowerService" className={"no-underline"}>
+                            <Card className="max-w-md border-gray-200">
+                                <CardHeader>
+                                    <CardTitle className="text-xl">External Transportation Request</CardTitle>
+                                    <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <img src="public/ambulance.jpg" alt="medicine delivery service"/>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 };
