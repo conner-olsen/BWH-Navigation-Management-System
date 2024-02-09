@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar.tsx";
-import MapGroundFloor from "../components/MapGroundFloor.tsx";
+// import MapGroundFloor from "../components/MapGroundFloor.tsx";
 import MapLowerLevel1 from "../components/MapLowerLevel1.tsx";
 import MapLowerLevel2 from "../components/MapLowerLevel2.tsx";
 import MapFloor1 from "../components/MapFloor1.tsx";
@@ -12,7 +12,7 @@ import Form from "react-bootstrap/Form";
 export default function MapPage() {
     const [map, setMap] = useState("lowerLevel1");
 
-    const [groundFloorContentVisible, setGroundFloorContentVisible] = useState(false);
+    // const [groundFloorContentVisible, setGroundFloorContentVisible] = useState(false);
     const [lowerLevel1ContentVisible, setLowerLevel1ContentVisible] = useState(false);
     const [lowerLevel2ContentVisible, setLowerLevel2ContentVisible] = useState(false);
     const [floor1ContentVisible, setFloor1ContentVisible] = useState(false);
@@ -20,8 +20,8 @@ export default function MapPage() {
     const [floor3ContentVisible, setFloor3ContentVisible] = useState(false);
 
     useEffect(() => {
-        map === "groundFloor"
-            ? setGroundFloorContentVisible(true) : setGroundFloorContentVisible(false);
+        // map === "groundFloor"
+        //     ? setGroundFloorContentVisible(true) : setGroundFloorContentVisible(false);
         map === "lowerLevel1"
             ? setLowerLevel1ContentVisible(true) : setLowerLevel1ContentVisible(false);
         map === "lowerLevel2"
@@ -51,7 +51,7 @@ export default function MapPage() {
 
                 <Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>
 
-                    <option value="groundFloor">The Ground Floor</option>
+                    {/*<option value="groundFloor">The Ground Floor</option>*/}
                     <option value="lowerLevel1">The Lower Level 1</option>
                     <option value="lowerLevel2">The Lower Level 2</option>
                     <option value="floor1">Floor 1</option>
@@ -62,7 +62,7 @@ export default function MapPage() {
 
                 <br/>
 
-                {groundFloorContentVisible && <MapGroundFloor/>}
+                {/*{groundFloorContentVisible && <MapGroundFloor/>}*/}
                 {lowerLevel1ContentVisible && <MapLowerLevel1/>}
                 {lowerLevel2ContentVisible && <MapLowerLevel2/>}
                 {floor1ContentVisible && <MapFloor1/>}
