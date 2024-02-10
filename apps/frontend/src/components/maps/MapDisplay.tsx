@@ -3,14 +3,16 @@ import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
+
 interface MapDisplayProps {
     style?: CSSProperties;
     className?: string;
     startNode?: string;
     endNode?: string;
+    sendHoverMapPath: (path: PathfindingRequest) => void;
 }
 
-function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
+function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -72,10 +74,15 @@ function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
         else if (!endNodeId) {
             setEndNodeId(node.id);
             if (graph && startNodeId) {
+                setStartNodeId(startNodeId);
+                setEndNodeId(node.id);
                 const path: PathfindingRequest = { startid: startNodeId, endid: node.id };
+                sendHoverMapPath(path);
             }
         }
     };
+
+
 
     const handleNodeHover = (node: Node) => {
         if (!hoverNodeId) {
@@ -148,6 +155,7 @@ function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
         </div>
     );
 }
+
 
 /**
  * This is the default export of the MapDisplay component.

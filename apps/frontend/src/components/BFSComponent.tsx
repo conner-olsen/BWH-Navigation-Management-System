@@ -10,6 +10,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
 import { Button } from "./ui/button.tsx";
 
+
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
     const [startNode, setStartNode] = useState<string>("Select Start Location");
@@ -77,6 +78,11 @@ export function BFSComponent() {
         roomNames.push(<option value={id}> {longName} </option>);
     }
 
+    const sendHoverMapPath = (path: PathfindingRequest) => {
+        setStartNode(path.startid);
+        setEndNode(path.endid);
+    };
+
     return (
         <div>
             <h1 className="font-roboto font-extrabold italic"
@@ -137,7 +143,8 @@ export function BFSComponent() {
             </Container>
             <br />
 
-            <MapDisplay key={mapKey} startNode={startNode} endNode={endNode}/>
+            <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} sendHoverMapPath={sendHoverMapPath}/>
+
         </div>
 
     );
