@@ -1,3 +1,7 @@
+import React, {CSSProperties, useEffect, useState} from 'react';
+import {Graph, Node} from 'common/src/graph-structure.ts';
+import populatedGraph from 'common/dev/populatedGraph.ts';
+import {useMapLogic,} from './useMapLogicFull';
 const MapLowerLevel2 = () => {
     return (
         <div className ={"lowerLevel2"}>
