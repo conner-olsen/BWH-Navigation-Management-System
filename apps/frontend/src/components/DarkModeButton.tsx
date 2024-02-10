@@ -1,28 +1,35 @@
 // ButtonComponent.js
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 const DarkModeButton = () => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
 
-    const toggleDarkMode = () => {
-        // Toggle the state
-        setIsDarkMode((prevMode) => !prevMode);
+    useEffect(() => {
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setDarkMode(prefersDarkMode);
 
-        // Get the HTML tag
-        const bodyTag = document.body;
-
-        // Toggle the "darkMode" class on the HTML tag
-        if (isDarkMode) {
-            bodyTag.classList.remove('darkMode');
+        // Add or remove 'dark' class based on user's preferred color scheme
+        if (prefersDarkMode) {
+            document.body.classList.add('dark');
         } else {
-            bodyTag.classList.add('darkMode');
+            document.body.classList.remove('dark');
+        }
+    }, []);
+
+    const handleToggle = () => {
+        setDarkMode(prevMode => !prevMode);
+        if (!darkMode) {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
         }
     };
 
     return (
-        <button onClick={toggleDarkMode} className="text-sm text-black border-cyan-600 hover:bg-cyan-600">
-            Dark Mode
-        </button>
+        <label className="switch">
+            <input type="checkbox" checked={darkMode} onChange={handleToggle}/>
+            <span className="slider round"></span>
+        </label>
     );
 };
 

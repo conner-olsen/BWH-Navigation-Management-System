@@ -4,7 +4,7 @@
 
 @layer base {
     :root {
-        --background: 0 0% 100%;
+        --background: 0 100% 50%;
         --foreground: 0 0% 3.9%;
 
         --card: 0 0% 100%;
@@ -36,8 +36,8 @@
     }
 
     .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
+        --background: 0, 100%, 50%;
+        --foreground: 0, 100%, 50%;
 
         --card: 0 0% 3.9%;
         --card-foreground: 0 0% 98%;
@@ -46,7 +46,7 @@
         --popover-foreground: 0 0% 98%;
 
         --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
+        --primary-foreground: 0 100% 50%;
 
         --secondary: 0 0% 14.9%;
         --secondary-foreground: 0 0% 98%;
@@ -64,9 +64,7 @@
         --input: 0 0% 14.9%;
         --ring: 0 0% 83.1%;
     }
-}
 
-@layer base {
     * {
         @apply border-border;
     }
@@ -74,7 +72,6 @@
         @apply bg-background text-foreground;
     }
 }
-
 
 :root {
   /*font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/
@@ -129,12 +126,6 @@ label {
     animation: typing 2s steps(30, end);
 }
 
-
-/* ============== DARK MODE =========== */
-body.darkMode {
-    background-color: darkgray;
-
-}
 
 /* =========== LOGIN PAGE ========== */
 .loginForm input {
@@ -499,5 +490,70 @@ td {
 /* Hover effect for table rows */
 tr:hover {
     background-color: #e5e5e5;
+}
+
+
+
+/* ================================================= */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: black;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px black;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 
