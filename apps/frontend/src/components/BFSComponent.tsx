@@ -72,8 +72,7 @@ export function BFSComponent() {
 
     return (
         <div>
-            <h1 className="font-roboto font-extrabold italic"
-                style={{marginTop: '5%', fontSize: '60px'}}>Map Page</h1>
+            <h1>Map Page</h1>
 
             <br/>
 

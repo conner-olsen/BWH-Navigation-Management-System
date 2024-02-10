@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Global_Footer from "./components/Global_Footer.tsx";
-import { NodeData } from "./routes/NodeData.tsx";
+import { NodeEdgeData } from "./routes/NodeEdgeData.tsx";
 import {EdgeData} from "./routes/EdgeData.tsx";
 import HomePage from "./routes/HomePage.tsx";
 import BFSRoute from "./routes/BFSRoute.tsx";
@@ -29,7 +29,7 @@ function App() {
           },
         {
           path: "/NodeData",
-          element: <NodeData />,
+          element: <NodeEdgeData />,
         },
           {
               path: "/EdgeData",
