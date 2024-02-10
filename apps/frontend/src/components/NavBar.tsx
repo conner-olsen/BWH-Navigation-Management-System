@@ -1,23 +1,36 @@
 import React from "react";
-import {Button, Dropdown, Nav, NavDropdown} from "react-bootstrap";
+import {Button, Nav, NavDropdown} from "react-bootstrap";
 import  DarkModeButton  from "./DarkModeButton.tsx";
 import { Link } from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
-
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuGroup,
+    DropdownMenuPortal,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+} from "./ui/dropdown-menu.tsx";
 
 export default function NavBar() {
 
     const {
-        user,
+        //user,
         isAuthenticated,
         loginWithRedirect,
-        logout,
+        //logout,
     } = useAuth0();
 
-    const lohgoutWithRedirect = () =>
-        logout( {
-            logoutParams: { returnTo: window.location.origin },
-        });
+    // const lohgoutWithRedirect = () =>
+    //     logout( {
+    //         logoutParams: { returnTo: window.location.origin },
+    //     });
 
     const handleMouseEnter = () => {
         const customElement = document.getElementById('bg-blur');
@@ -35,8 +48,7 @@ export default function NavBar() {
         }
     };
 
-
-    return (
+return (
         <nav>
             <Nav className="navbarStyling relative filter-none z-1 shadow-md bg-blue-950 space-x-12">
                 <Link to="/Home" className="text-lg no-underline p-2 text-white hover:bg-sky-700">Home</Link>
@@ -69,18 +81,76 @@ export default function NavBar() {
                 )}
 
                 {isAuthenticated && (
-                    <Dropdown id={"dropdown-button"} className="text-sm no-underline p-2">
-                        <Dropdown.Toggle className="dropdown-basic">
-                            <img src={user.picture} alt={"Profile"}  className={"UserProfile rounded-full w-8 h-8"}/>
-                        </Dropdown.Toggle>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline">Open</Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56">
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem>
+                                    Profile
+                                    <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    Billing
+                                    <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    Settings
+                                    <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    Keyboard shortcuts
+                                    <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem>Team</DropdownMenuItem>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem>Email</DropdownMenuItem>
+                                            <DropdownMenuItem>Message</DropdownMenuItem>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem>More...</DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
+                                <DropdownMenuItem>
+                                    New Team
+                                    <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>GitHub</DropdownMenuItem>
+                            <DropdownMenuItem>Support</DropdownMenuItem>
+                            <DropdownMenuItem disabled>API</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>
+                                Log out
+                                <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
 
-                        <Dropdown.Menu>
-                            <Dropdown.Header>{user.name}</Dropdown.Header>
-                            <Dropdown.Item onClick={() => lohgoutWithRedirect()}>Log Out</Dropdown.Item>
-                        </Dropdown.Menu>
+
+                    //
+                    // <Dropdown id={"dropdown-button"} className="text-sm no-underline p-2">
+                    //     <Dropdown.Toggle className="dropdown-basic">
+                    //         <img src={user.picture} alt={"Profile"}  className={"UserProfile rounded-full w-8 h-8"}/>
+                    //     </Dropdown.Toggle>
+                    //
+                    //     <Dropdown.Menu>
+                    //         <Dropdown.Header>{user.name}</Dropdown.Header>
+                    //         <Dropdown.Item onClick={() => lohgoutWithRedirect()}>Log Out</Dropdown.Item>
+                    //     </Dropdown.Menu>
 
 
-                    </Dropdown>
+                    // </Dropdown>
                 )}
 
                 {!isAuthenticated && (
@@ -95,5 +165,9 @@ export default function NavBar() {
                                         left-0 backdrop-blur-sm
                                         transition-all duration-500"></div>
         </nav>
+
+
+
+
     );
 };
