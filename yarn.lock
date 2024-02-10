@@ -926,26 +926,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-aspect-ratio@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "@radix-ui/react-aspect-ratio@npm:1.0.3"
-  dependencies:
-    "@babel/runtime": "npm:^7.13.10"
-    "@radix-ui/react-primitive": "npm:1.0.3"
-  peerDependencies:
-    "@types/react": "*"
-    "@types/react-dom": "*"
-    react: ^16.8 || ^17.0 || ^18.0
-    react-dom: ^16.8 || ^17.0 || ^18.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    "@types/react-dom":
-      optional: true
-  checksum: 2c3302be0f14f4737b0100f2c1bd5a5b7fabb90cd4f9ff567a1151824d80710d9354ef10b1c521d608c478720babf4d243cdeada44205b45e2f2631f475eba98
-  languageName: node
-  linkType: hard
-
 "@radix-ui/react-collection@npm:1.0.3":
   version: 1.0.3
   resolution: "@radix-ui/react-collection@npm:1.0.3"

@@ -1,5 +1,6 @@
 // ButtonComponent.js
 import React, {useEffect, useState} from 'react';
+import {Switch} from "./ui/switch.tsx";
 
 const DarkModeButton = () => {
     const [darkMode, setDarkMode] = useState(false);
@@ -26,7 +27,7 @@ const DarkModeButton = () => {
     };
 
     return (
-        <Switch onClick={toggleDarkMode} className="mt-2.5">
+        <Switch onClick={handleToggle} className="mt-2.5">
             Dark Mode
         </Switch>
     );
