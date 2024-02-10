@@ -2,6 +2,13 @@ import React, {CSSProperties, useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
 
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "@/components/ui/hover-card";
+
+
 interface MapDisplayProps {
     style?: CSSProperties;
     className?: string;
@@ -93,21 +100,34 @@ function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
     const displayHoverInfo = (node: Node, type: 'hover') => {
         return (
             <g>
-                {type === 'hover'}
-                <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>;
-                <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
+            {type === 'hover'}
+            <HoverCard>
+                <HoverCardTrigger>Hover</HoverCardTrigger>
+                <HoverCardContent>
                     Type: {node.nodeType}
-                </text>;
-                <text x={node.xCoord - 400} y={node.yCoord - 80} fill="black">
                     {node.longName}
-                </text>;
-                <text x={node.xCoord - 400} y={node.yCoord - 55} fill="black">
                     {node.shortName}
-                </text>;
-                <text x={node.xCoord - 400} y={node.yCoord - 30} fill="black">
-                    Status: -/-
-                </text>;
+                    Status:
+                </HoverCardContent>
+            </HoverCard>
             </g>
+
+        // <g>
+        //         {type === 'hover'}
+        //         <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>;
+        //         <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
+        //             Type: {node.nodeType}
+        //         </text>;
+        //         <text x={node.xCoord - 400} y={node.yCoord - 80} fill="black">
+        //             {node.longName}
+        //         </text>;
+        //         <text x={node.xCoord - 400} y={node.yCoord - 55} fill="black">
+        //             {node.shortName}
+        //         </text>;
+        //         <text x={node.xCoord - 400} y={node.yCoord - 30} fill="black">
+        //             Status: -/-
+        //         </text>;
+        //     </g>
         );
     };
     const clearSelection = () => {
