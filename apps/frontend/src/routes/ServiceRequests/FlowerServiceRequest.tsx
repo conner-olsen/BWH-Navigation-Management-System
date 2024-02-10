@@ -11,12 +11,12 @@ const FlowerServiceRequest: React.FC = () => {
         id: getRandomInt(10000),
         senderName: '',
         senderEmail: '',
-        roomLongName: '',
+        nodeID: '',
         patientName: '',
         flowerType: '',
         deliveryDate: '',
         note: '',
-        status: 'Assigned',
+        status: 'UnAssigned',
         employeeUser: 'none'
     });
 
@@ -27,7 +27,7 @@ const FlowerServiceRequest: React.FC = () => {
             id: 0,
             senderName: '',
             senderEmail: '',
-            roomLongName: '',
+            nodeID: '',
             patientName: '',
             flowerType: '',
             deliveryDate: '',
@@ -90,9 +90,9 @@ const FlowerServiceRequest: React.FC = () => {
                             <label htmlFor="senderEmail" className="font-bold">Sender Email</label>
                             <input type="text" id="senderEmail" name="senderEmail" placeholder={"John@gmail.com"} required
                                 value={formData.senderEmail} onChange={handleChange} className="form-input"/>
-                            <label htmlFor="roomLongName" className="font-bold">Room Name</label>
-                            <input type="text" id="roomLongName" name="roomLongName" placeholder={"Anesthesia Conf Floor L1 (Node longName)"} required
-                                value={formData.roomLongName} onChange={handleChange} className="form-input"/>
+                            <label htmlFor="nodeID" className="font-bold">Room ID</label>
+                            <input type="text" id="nodeID" name="nodeID" placeholder={"ACONF00102"} required
+                                value={formData.nodeID} onChange={handleChange} className="form-input"/>
                         </div>
                         <div className="flex flex-col grow pl-2">
                             <label htmlFor="patientName" className="font-bold">Patient's Name</label>
