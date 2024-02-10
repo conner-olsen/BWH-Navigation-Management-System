@@ -1,5 +1,5 @@
 import React from "react";
-//import  DarkModeButton  from "./DarkModeButton.tsx";
+import  DarkModeButton  from "./DarkModeButton.tsx";
 //import { Link } from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
 import {
@@ -125,8 +125,7 @@ return (
                 </DropdownMenu>
             )}
 
-            {/*<DarkModeButton></DarkModeButton>*/}
-
+            <DarkModeButton/>
         </Nav>
 
         <div id="bg-blur" className="h-0 w-screen max-w-full max-h-full absolute

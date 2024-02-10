@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {Node} from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
-import MapDisplay from "./MapDisplay.tsx";
+import MapDisplay from "./maps/MapDisplay.tsx";
  import {parseCSV} from "common/src/parser.ts";
  import nodeCSVString from "common/dev/nodeCSVString.ts";
 
