@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
 import { Button } from "./ui/button.tsx";
+import {aStarPathfinding} from "common/src/PathfindingMethod.ts";
 
 
 export function BFSComponent() {
@@ -17,6 +18,7 @@ export function BFSComponent() {
     const [endNode, setEndNode] = useState<string>("End Location");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
+    const [pathFindingMethod, setPathFindingMethod] = useState(new aStarPathfinding());
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {

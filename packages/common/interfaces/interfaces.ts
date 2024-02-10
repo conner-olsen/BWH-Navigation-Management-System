@@ -15,7 +15,6 @@ export interface edge {
   endNodeID: string;
 }
 
-
 export interface flowerServiceRequest {
   id: number
   senderName:string
@@ -39,3 +38,5 @@ export interface employee {
   lastName: string;
   email: string;
 }
+
+

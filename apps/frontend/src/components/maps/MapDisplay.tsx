@@ -2,6 +2,7 @@ import React, {CSSProperties, useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
+import { PathfindingMethod } from 'common/src/PathfindingMethod';
 
 
 interface MapDisplayProps {
@@ -10,9 +11,10 @@ interface MapDisplayProps {
     startNode?: string;
     endNode?: string;
     sendHoverMapPath: (path: PathfindingRequest) => void;
+    pathfindingMethod: PathfindingMethod;
 }
 
-function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: MapDisplayProps) {
+function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pathfindingMethod}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -22,13 +24,18 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: Ma
 
     useEffect(() => {
         setGraph(populatedGraph);
+        graph?.setPathfindingMethod(pathfindingMethod);
         if (startNode && endNode && graph) {
-            const path = graph.bfsAstar(startNode, endNode);
+            // setStartNodeId(startNode);
+            // setEndNodeId(endNode);
+            // const path: PathfindingRequest = { startid: startNode, endid: endNode };
+            // sendHoverMapPath(path);
+            const path = graph.runPathfinding(startNode, endNode);
             setPath(path);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
         }
-    }, [startNode, endNode, graph]);
+    }, [startNode, endNode, graph, sendHoverMapPath]);
 
     // const displayEdges = (graph: Graph) => {
     //     const edges: React.JSX.Element[] = [];

@@ -1,5 +1,6 @@
 import fs from "fs";
 import {CSVRow, parseCSV} from "./parser.ts";
+import {aStarPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
 
 /**
  * Class representing a Node.
@@ -65,12 +66,31 @@ export class Node {
  */
 export class Graph {
   nodes: Map<string, Node>; // Map of node IDs to Node objects
+  private pathfindingMethod: PathfindingMethod;
 
   /**
    * Create a new Graph.
    */
   constructor() {
     this.nodes = new Map();
+    this.pathfindingMethod = new aStarPathfinding();
+  }
+
+  /**
+   * change the pathfinding method
+   * @param pathfindingMethod method to change to (bfs, Astar, dfs)
+   */
+  setPathfindingMethod(pathfindingMethod: PathfindingMethod) {
+    this.pathfindingMethod = pathfindingMethod;
+  }
+
+  /**
+   * run the pathfinding algorithm specified by the current field
+   * @param startNode
+   * @param endNode
+   */
+  runPathfinding(startNode: string, endNode: string): string[] {
+    return this.pathfindingMethod.runPathfinding(startNode, endNode);
   }
 
   /**
