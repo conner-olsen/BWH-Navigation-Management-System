@@ -117,6 +117,7 @@ label {
     display: block;
 }
 
+
 /* ============== HOMEPAGE =========== */
 @keyframes typing {
     from { width: 0; }
@@ -373,16 +374,6 @@ body.darkMode {
     font-family: "Open Sans", sans-serif;
 }
 
-.route{
-    font-size: 24px;
-    font-family: "Open Sans", sans-serif;
-}
-
-.routeheader{
-    font-weight: bold;
-    font-size: 28px;
-    font-family: "Open Sans", sans-serif;
-}
 
 /* ====== Flower Service Page ======= */
 

@@ -1,7 +1,6 @@
 // ButtonComponent.js
 import React, { useState } from 'react';
-import {Toggle} from "./ui/toggle.tsx";
-
+import {Switch} from "./ui/switch.tsx";
 const DarkModeButton = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -21,9 +20,9 @@ const DarkModeButton = () => {
     };
 
     return (
-        <Toggle variant={"outline"} size={"sm"} onClick={toggleDarkMode} className="mt-1">
+        <Switch onClick={toggleDarkMode} className="mt-2.5">
             Dark Mode
-        </Toggle>
+        </Switch>
     );
 };
 
