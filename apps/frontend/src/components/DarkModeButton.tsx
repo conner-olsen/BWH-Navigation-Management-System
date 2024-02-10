@@ -26,10 +26,9 @@ const DarkModeButton = () => {
     };
 
     return (
-        <label className="switch">
-            <input type="checkbox" checked={darkMode} onChange={handleToggle}/>
-            <span className="slider round"></span>
-        </label>
+        <Switch onClick={toggleDarkMode} className="mt-2.5">
+            Dark Mode
+        </Switch>
     );
 };
 
