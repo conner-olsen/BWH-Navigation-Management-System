@@ -2,11 +2,11 @@ import React, {useEffect, useState} from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar.tsx";
 // import MapGroundFloor from "../components/MapGroundFloor.tsx";
-import MapLowerLevel1 from "../components/MapLowerLevel1.tsx";
-import MapLowerLevel2 from "../components/MapLowerLevel2.tsx";
-import MapFloor1 from "../components/MapFloor1.tsx";
-import MapFloor2 from "../components/MapFloor2.tsx";
-import MapFloor3 from "../components/MapFloor3.tsx";
+import MapLowerLevel1 from "../components/maps/MapLowerLevel1.tsx";
+import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
+import MapFloor1 from "../components/maps/MapFloor1.tsx";
+import MapFloor2 from "../components/maps/MapFloor2.tsx";
+import MapFloor3 from "../components/maps/MapFloor3.tsx";
 import Form from "react-bootstrap/Form";
 
 export default function MapPage() {
