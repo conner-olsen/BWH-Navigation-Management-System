@@ -2,7 +2,6 @@ import NavBar from "../../components/NavBar.tsx";
 import React, { useState } from 'react';
 import axios from "axios";
 
-
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
 }
@@ -78,6 +77,8 @@ const FlowerServiceRequest: React.FC = () => {
                            hover:bg-light-blue hover:text-white" onClick={populateEmployeeTable}>Populate Employee Table
             </button>
             <div className="container">
+
+
                 <h1 className="font-roboto font-bold text-dark-blue">FLOWER DELIVERY FORM</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="flex justify-between">

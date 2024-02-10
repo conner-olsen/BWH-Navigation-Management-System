@@ -3,9 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Global_Footer from "./components/Global_Footer.tsx";
 import { NodeData } from "./routes/NodeData.tsx";
 import {EdgeData} from "./routes/EdgeData.tsx";
-import PatientLogin from "./routes/PatientLogin.tsx";
 import HomePage from "./routes/HomePage.tsx";
-import AdminLogin from "./routes/AdminLogin.tsx";
 import BFSRoute from "./routes/BFSRoute.tsx";
 import FlowerServiceRequest from "./routes/ServiceRequests/FlowerServiceRequest.tsx";
 import CleaningServiceRequest from "./routes/ServiceRequests/CleaningServiceRequest.tsx";
@@ -30,10 +28,6 @@ function App() {
               element: <BwhHomepage />,
           },
         {
-          path: "/PatientLogin",
-          element: <PatientLogin />,
-        },
-        {
           path: "/NodeData",
           element: <NodeData />,
         },
@@ -44,10 +38,6 @@ function App() {
         {
           path: "/HomeOUTDATED",
           element: <HomePage />,
-        },
-        {
-          path: "/AdminLogin",
-          element: <AdminLogin />,
         },
           {
               path: "/Home",
