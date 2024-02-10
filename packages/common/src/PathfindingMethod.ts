@@ -1,10 +1,14 @@
 import {Node, Graph} from "./graph-structure.ts";
 
 export interface PathfindingMethod {
+  route: string;
   runPathfinding(startNode: string, endNode: string): string[];
 }
 
 export class bfsPathfinding extends Graph implements PathfindingMethod  {
+
+  route = "/api/bfs-searching";
+
   /**
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.
@@ -81,6 +85,8 @@ export class bfsPathfinding extends Graph implements PathfindingMethod  {
 }
 
 export class aStarPathfinding extends Graph implements PathfindingMethod {
+
+  route = "/api/bfsAstar-searching";
   /**
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.
@@ -169,6 +175,8 @@ export class aStarPathfinding extends Graph implements PathfindingMethod {
 
 //not yet implemented, dummy run function right now
 export class dfsPathfinding extends Graph implements PathfindingMethod {
+
+  route = "/api/bfs-searching"; //change later
   /**
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.

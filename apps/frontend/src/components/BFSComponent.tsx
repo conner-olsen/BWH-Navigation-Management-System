@@ -9,7 +9,7 @@ import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
 import { Button } from "./ui/button.tsx";
-import {aStarPathfinding} from "common/src/PathfindingMethod.ts";
+import {aStarPathfinding, bfsPathfinding, PathfindingMethod} from "common/src/PathfindingMethod.ts";
 
 
 export function BFSComponent() {
@@ -18,7 +18,7 @@ export function BFSComponent() {
     const [endNode, setEndNode] = useState<string>("End Location");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
-    const [pathFindingMethod, setPathFindingMethod] = useState(new aStarPathfinding());
+    const [pathFindingMethod, setPathFindingMethod] = useState<PathfindingMethod>(new aStarPathfinding());
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -26,7 +26,7 @@ export function BFSComponent() {
                 startid: startNode,
                 endid: endNode
             };
-            const response: AxiosResponse<Node[]> = await axios.post(pathFindingType, request, {
+            const response: AxiosResponse<Node[]> = await axios.post(pathFindingMethod.route, request, {
                 headers: {
                     'Content-Type': "application/json"
                 }
@@ -41,7 +41,7 @@ export function BFSComponent() {
             console.error("Error fetching BFS result:", (error as AxiosError).message);
             throw error;
         }
-    }, [startNode, endNode, pathFindingType]);
+    }, [startNode, endNode, pathFindingType, pathFindingMethod]);
 
     useEffect(() => {
         fetchData()
@@ -111,9 +111,9 @@ export function BFSComponent() {
 
                     <Col>
                         <p>Select Search Type</p>
-                        <Form.Select value={pathFindingType} size={"sm"} onChange={e => setPathFindingType(e.target.value)}>
-                            <option value={"/api/bfs-searching"}>bfs searching</option>
-                            <option value={"/api/bfsAstar-searching"}>A-star searching</option>
+                        <Form.Select value={pathFindingMethod} size={"sm"} onChange={e => setPathFindingMethod(e.target.value)}>
+                            <option value={new bfsPathfinding()}>bfs searching</option>
+                            <option value={new aStarPathfinding()}>A-star searching</option>
                         </Form.Select>
 
                     </Col>
