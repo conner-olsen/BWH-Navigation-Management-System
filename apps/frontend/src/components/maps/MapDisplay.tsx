@@ -1,6 +1,7 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
+import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
 interface MapDisplayProps {
     style?: CSSProperties;
@@ -71,8 +72,7 @@ function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
         else if (!endNodeId) {
             setEndNodeId(node.id);
             if (graph && startNodeId) {
-                const path = graph.bfs(startNodeId, node.id);
-                setPath(path);
+                const path: PathfindingRequest = { startid: startNodeId, endid: node.id };
             }
         }
     };
