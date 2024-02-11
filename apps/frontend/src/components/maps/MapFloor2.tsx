@@ -43,4 +43,8 @@ const MapFloor2 = () => {
         </div>
 );
 };
+
+
+
+
 export default MapFloor2;
