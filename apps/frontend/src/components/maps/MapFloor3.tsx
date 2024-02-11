@@ -18,16 +18,12 @@ const MapFloor3 = () => {
     return (
         <div className={"floor3"}>
             <svg viewBox="0 0 5000 3400">
-                <img
-                    className="pictureOfF3"
-                    src={`public/maps/03_thethirdfloor.png`}
-                    alt={`Map: Floor 3`}
-                    style={{
-                        display: "block",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        borderRadius: "10px"
-                    }}
+                <image
+                    href={'public/maps/03_thethirdfloor.png'}
+                    x="0"
+                    y="0"
+                    height="100%"
+                    width="100%"
                 />
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).filter(node => node.floor === '3').map((node: Node) => (

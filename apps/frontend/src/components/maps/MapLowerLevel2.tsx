@@ -18,16 +18,12 @@ const MapLowerLevel2 = () => {
     return (
         <div className={"lowerLevel2"}>
             <svg viewBox="0 0 5000 3400">
-                <img
-                    className="pictureOfL2"
-                    src={`public/maps/00_thelowerlevel2.png`}
-                    alt={`Map: The Lower Level 2`}
-                    style={{
-                        display: "block",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        borderRadius: "10px"
-                    }}
+                <image
+                    href={'public/maps/00_thelowerlevel2.png'}
+                    x="0"
+                    y="0"
+                    height="100%"
+                    width="100%"
                 />
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).filter(node => node.floor === 'L2').map((node: Node) => (
