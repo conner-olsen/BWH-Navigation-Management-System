@@ -45,4 +45,6 @@ const MapFloor2 = () => {
 };
 
 
+
+
 export default MapFloor2;
