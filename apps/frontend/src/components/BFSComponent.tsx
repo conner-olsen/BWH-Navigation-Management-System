@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import {Node} from "common/src/graph-structure.ts";
+import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
-import {parseCSV} from "common/src/parser.ts";
+import { parseCSV } from "common/src/parser.ts";
 import nodeCSVString from "common/dev/nodeCSVString.ts";
 import Form from "react-bootstrap/Form";
-import {Col, Container, Row} from "react-bootstrap";
-import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "./ui/sheet.tsx";
-import {Button} from "./ui/button.tsx";
+import { Col, Container, Row } from "react-bootstrap";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
+import { Button } from "./ui/button.tsx";
+
+
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
     const [startNode, setStartNode] = useState<string>("Select Start Location");
     const [endNode, setEndNode] = useState<string>("End Location");
+    const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
+    const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -20,7 +24,7 @@ export function BFSComponent() {
                 startid: startNode,
                 endid: endNode
             };
-            const response: AxiosResponse<Node[]> = await axios.post("/api/bfs-searching", request, {
+            const response: AxiosResponse<Node[]> = await axios.post(pathFindingType, request, {
                 headers: {
                     'Content-Type': "application/json"
                 }
@@ -35,7 +39,7 @@ export function BFSComponent() {
             console.error("Error fetching BFS result:", (error as AxiosError).message);
             throw error;
         }
-    }, [startNode, endNode]);
+    }, [startNode, endNode, pathFindingType]);
 
     useEffect(() => {
         fetchData()
@@ -50,6 +54,11 @@ export function BFSComponent() {
             });
     }, [fetchData]);
 
+    useEffect(() => {
+        // When pathFindingType changes, update mapKey to force remount of MapDisplay
+        setMapKey(prevKey => prevKey + 1);
+    }, [pathFindingType]);
+
     const collectLongNames = () => {
         return bfsResult.map(node => node.longName);
     };
@@ -61,7 +70,7 @@ export function BFSComponent() {
 
 
     //for each CSV row, add an option with the value as id and name as longName into array
-    for(let i = 0; i < CSVRow.length; i++) {
+    for (let i = 0; i < CSVRow.length; i++) {
         const row = CSVRow[i];
         const rowval = Object.values(row);
         const id = rowval[0];
@@ -69,12 +78,17 @@ export function BFSComponent() {
         roomNames.push(<option value={id}> {longName} </option>);
     }
 
+    const sendHoverMapPath = (path: PathfindingRequest) => {
+        setStartNode(path.startid);
+        setEndNode(path.endid);
+    };
 
     return (
         <div>
-            <h1>Map Page</h1>
+            <h1 className="font-roboto font-extrabold italic"
+                style={{ marginTop: '5%', fontSize: '60px' }}>Map Page</h1>
 
-            <br/>
+            <br />
 
             <Container>
                 <Row>
@@ -92,6 +106,16 @@ export function BFSComponent() {
                             {roomNames}
                         </Form.Select>
                     </Col>
+
+                    <Col>
+                        <p>Select Search Type</p>
+                        <Form.Select value={pathFindingType} size={"sm"} onChange={e => setPathFindingType(e.target.value)}>
+                            <option value={"/api/bfs-searching"}>bfs searching</option>
+                            <option value={"/api/bfsAstar-searching"}>A-star searching</option>
+                        </Form.Select>
+
+                    </Col>
+
                     <Col>
                         <p>View Text Route</p>
                         <Sheet>
@@ -104,23 +128,22 @@ export function BFSComponent() {
                                     <SheetDescription>
                                         Follow this path to reach your destination
                                     </SheetDescription>
-                                    <br/>
+                                    <br />
                                 </SheetHeader>
-                                    <ol type="1">
-                                        {collectLongNames().map((longName, index) => (
-                                            <li key={index}>{longName}</li>
-                                        ))}
-                                    </ol>
+                                <ol type="1">
+                                    {collectLongNames().map((longName, index) => (
+                                        <li key={index}>{longName}</li>
+                                    ))}
+                                </ol>
                             </SheetContent>
                         </Sheet>
 
                     </Col>
                 </Row>
             </Container>
-            <br/>
+            <br />
 
-            <MapDisplay startNode={startNode} endNode={endNode}/>
-
+            <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} sendHoverMapPath={sendHoverMapPath}/>
 
         </div>
 
