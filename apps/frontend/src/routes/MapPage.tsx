@@ -8,6 +8,8 @@ import MapFloor1 from "../components/maps/MapFloor1.tsx";
 import MapFloor2 from "../components/maps/MapFloor2.tsx";
 import MapFloor3 from "../components/maps/MapFloor3.tsx";
 import Form from "react-bootstrap/Form";
+import {Container} from "react-bootstrap";
+import MapSidebar from "../components/MapSidebar.tsx";
 
 export default function MapPage() {
     const [map, setMap] = useState("lowerLevel1");
@@ -45,8 +47,8 @@ export default function MapPage() {
         <div>
             <Outlet/>
             <NavBar/>
-
-            <div>
+            <MapSidebar/>
+            <Container className="hidden">
                 <br/>
 
                 <Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>
@@ -68,7 +70,7 @@ export default function MapPage() {
                 {floor1ContentVisible && <MapFloor1/>}
                 {floor2ContentVisible && <MapFloor2/>}
                 {floor3ContentVisible && <MapFloor3/>}
-            </div>
+            </Container>
 
         </div>
 
