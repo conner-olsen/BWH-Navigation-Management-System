@@ -7,7 +7,7 @@ import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 import MapFloor1 from "../components/maps/MapFloor1.tsx";
 import MapFloor2 from "../components/maps/MapFloor2.tsx";
 import MapFloor3 from "../components/maps/MapFloor3.tsx";
-import Form from "react-bootstrap/Form";
+//import Form from "react-bootstrap/Form";
 import {Container} from "react-bootstrap";
 import MapSidebar from "../components/MapSidebar.tsx";
 
@@ -37,32 +37,30 @@ export default function MapPage() {
     }, [map]);
 
 
-    const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    // const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    //
+    //     setMap(event.target.value);
+    //
+    // };
 
-        setMap(event.target.value);
-
-    };
 
     return (
         <div>
             <Outlet/>
             <NavBar/>
-            <MapSidebar/>
-            <Container className="hidden">
-                <br/>
+            <MapSidebar onChange={(value: string) => {
+                setMap(value);
+            }}></MapSidebar>
+            <Container>
+                {/*<Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>*/}
 
-                <Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>
-
-                    {/*<option value="groundFloor">The Ground Floor</option>*/}
-                    <option value="lowerLevel1">The Lower Level 1</option>
-                    <option value="lowerLevel2">The Lower Level 2</option>
-                    <option value="floor1">Floor 1</option>
-                    <option value="floor2">Floor 2</option>
-                    <option value="floor3">Floor 3</option>
-                </Form.Select>
-
-
-                <br/>
+                {/*    /!*<option value="groundFloor">The Ground Floor</option>*!/*/}
+                {/*    <option value="lowerLevel1">The Lower Level 1</option>*/}
+                {/*    <option value="lowerLevel2">The Lower Level 2</option>*/}
+                {/*    <option value="floor1">Floor 1</option>*/}
+                {/*    <option value="floor2">Floor 2</option>*/}
+                {/*    <option value="floor3">Floor 3</option>*/}
+                {/*</Form.Select>*/}
 
                 {/*{groundFloorContentVisible && <MapGroundFloor/>}*/}
                 {lowerLevel1ContentVisible && <MapLowerLevel1/>}
