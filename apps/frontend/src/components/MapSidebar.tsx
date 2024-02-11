@@ -123,8 +123,8 @@ const MapSidebar: React.FC<SideBarProps> = ({ onChange }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("");
 
-    //const [open2, setOpen2] = useState(false);
-    //const [value2, setValue2] = useState("");
+    const [open2, setOpen2] = useState(false);
+    const [value2, setValue2] = useState("");
   return (
       <div>
           <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} sendHoverMapPath={sendHoverMapPath}/>
@@ -187,6 +187,8 @@ const MapSidebar: React.FC<SideBarProps> = ({ onChange }) => {
                                               onSelect={(currentValue) => {
                                                   setValue(currentValue === value ? "" : currentValue);
                                                   setOpen(false);
+                                                  setStartNode(value);
+                                                  console.log(value);
                                               }}
                                           >
                                               <Check
@@ -203,7 +205,49 @@ const MapSidebar: React.FC<SideBarProps> = ({ onChange }) => {
                       </PopoverContent>
                   </Popover>
 
+                  <Popover open={open2} onOpenChange={setOpen2}>
+                      <PopoverTrigger asChild>
+                          <Button
+                              variant="outline"
+                              role="combobox"
+                              aria-expanded={open2}
+                              className="w-[200px] justify-between"
+                          >
+                              {value
+                                  ? frameworks.find((framework) => framework.value === value)?.label
+                                  : "Select framework..."}
 
+                          </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                          <Command>
+                              <CommandInput placeholder="Search framework..." className="h-9" />
+                              <CommandEmpty>No framework found.</CommandEmpty>
+                              <CommandGroup>
+                                  {frameworks.map((framework) => (
+                                      <CommandItem
+                                          key={framework.value}
+                                          value={framework.value}
+                                          onSelect={(currentValue) => {
+                                              setValue2(currentValue === value2 ? "" : currentValue);
+                                              setOpen2(false);
+                                              setEndNode(value2);
+                                              console.log(value2);
+                                          }}
+                                      >
+                                          {framework.label}
+                                          {/*<CheckIcon*/}
+                                          {/*    className={cn(*/}
+                                          {/*        "ml-auto h-4 w-4",*/}
+                                          {/*        value === framework.value ? "opacity-100" : "opacity-0"*/}
+                                          {/*    )}*/}
+                                          {/*/>*/}
+                                      </CommandItem>
+                                  ))}
+                              </CommandGroup>
+                          </Command>
+                      </PopoverContent>
+                  </Popover>
 
 
               </div>
