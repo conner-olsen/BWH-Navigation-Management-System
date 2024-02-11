@@ -23,9 +23,10 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
     useEffect(() => {
         setGraph(populatedGraph);
 
-        //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
-        graph?.setPathfindingMethodStringRoute(pathFindingType);
         if (startNode && endNode && graph) {
+            //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
+            graph.setPathfindingMethodStringRoute(pathFindingType);
+
             const path = graph.runPathfinding(startNode, endNode);
             setPath(path);
             setStartNodeId(startNode);
