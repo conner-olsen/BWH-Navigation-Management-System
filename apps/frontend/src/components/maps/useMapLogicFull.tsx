@@ -1,7 +1,7 @@
 
-import { useState, useEffect } from '../../../../../../../WebStorm 2023.3.2/plugins/javascript-impl/jsLanguageServicesImpl/external/react';
-import { Graph, Node } from "../../../../../packages/common/src/graph-structure";
-import populatedGraph from "../../../../../packages/common/dev/populatedGraph";
+import { useState, useEffect } from 'react';
+import { Graph, Node } from "common/src/graph-structure";
+import populatedGraph from "common/dev/populatedGraph";
 import React from "react";
 
 interface UseMapLogicReturn {
@@ -36,7 +36,7 @@ export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicRe
         }
     }, [startNode, endNode, graph]);
 
-    export const displayPath = (graph: Graph, path: string[]) => {
+    const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
         for (let i = 0; i < path.length - 1; i++) {
             const node = graph.getNode(path[i]);
@@ -53,7 +53,7 @@ export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicRe
         return pathElements;
     };
 
-    export const handleNodeClick = (node: Node) => {
+    const handleNodeClick = (node: Node) => {
         if (!startNodeId) {
             setStartNodeId(node.id);
         }
@@ -69,20 +69,20 @@ export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicRe
         }
     };
 
-    export const handleNodeHover = (node: Node) => {
+    const handleNodeHover = (node: Node) => {
         if (!hoverNodeId) {
             setHoverNodeId(node.id);
         }
     };
 
-    export const handleNodeHoverLeave = () => {
+    const handleNodeHoverLeave = () => {
         console.log("hover left");
         if (hoverNodeId) {
             setHoverNodeId(null);
         }
     };
 
-    const displayHoverInfo = (node: Node, type: 'hover') => {
+    const displayHoverInfo = (node: Node, type: string) => {
         return (
             <g>
                 {type === 'hover'}
@@ -107,7 +107,7 @@ export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicRe
         setEndNodeId(null);
         setPath([]);
     };
-    export const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
+    const displaySelectedNodes = (node: Node, type: string) => {
         return (
             <g>
                 <rect x={node.xCoord - 100} y={node.yCoord - 50} width="100" height="60" fill="lightgrey"/>
