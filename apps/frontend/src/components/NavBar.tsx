@@ -21,6 +21,13 @@ import {Nav} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {NavDropdown} from "react-bootstrap";
 import {Button} from "./ui/button.tsx";
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem, NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger
+} from "./ui/navigation-menu.tsx";
 
 
 export default function NavBar() {
@@ -127,6 +134,17 @@ return (
 
             <DarkModeButton/>
         </Nav>
+
+        <NavigationMenu>
+            <NavigationMenuList>
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <NavigationMenuLink>Link</NavigationMenuLink>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
+            </NavigationMenuList>
+        </NavigationMenu>
 
         <div id="bg-blur" className="h-0 w-screen max-w-full max-h-full absolute
                                         left-0 backdrop-blur-sm
