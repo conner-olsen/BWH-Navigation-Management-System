@@ -492,13 +492,11 @@ tr:hover {
     background-color: #e5e5e5;
 }
 
+button.h-16{
+    width: 100% !important;
+}
 
-.sidebar {
-    transition: transform 0.3s ease;
+::placeholder{
+    color: red;
 }
-.sidebar-expanded {
-    transform: translateX(0);
-}
-.sidebar-collapsed {
-    transform: translateX(-80%);
-}
+
