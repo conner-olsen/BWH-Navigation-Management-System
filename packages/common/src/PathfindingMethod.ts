@@ -85,7 +85,6 @@ export class bfsPathfinding implements PathfindingMethod  {
 }
 
 export class aStarPathfinding implements PathfindingMethod {
-
   route = "/api/bfsAstar-searching";
   /**
    * Finds the path from inputted startNode to endNode in given graph
@@ -176,8 +175,7 @@ export class aStarPathfinding implements PathfindingMethod {
 
 //not yet implemented, dummy run function right now
 export class dfsPathfinding implements PathfindingMethod {
-
-  route = "/api/bfs-searching"; //change later
+  route = "/api/bfs-searching"; //change later when we have dfs route
   /**
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.
@@ -185,6 +183,7 @@ export class dfsPathfinding implements PathfindingMethod {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
+    //dummy outputs
     return [startNode, endNode, graph.formatBFS([""])];
   }
 }
