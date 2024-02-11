@@ -1,6 +1,5 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
-import {Graph, Node} from 'common/src/graph-structure.ts';
-import populatedGraph from 'common/dev/populatedGraph.ts';
+import React from 'react';
+import {Node} from 'common/src/graph-structure.ts';
 import {useMapLogic,} from './useMapLogicFull';
 const MapFloor3 = () => {
     const {

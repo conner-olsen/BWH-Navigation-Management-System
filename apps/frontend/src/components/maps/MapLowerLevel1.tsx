@@ -1,14 +1,9 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
-import {Graph, Node} from 'common/src/graph-structure.ts';
-import populatedGraph from 'common/dev/populatedGraph.ts';
+import React from 'react';
+import {Node} from 'common/src/graph-structure.ts';
 import {useMapLogic} from "./useMapLogicFull.tsx";
 
-interface MapDisplayProps {
-    style?: CSSProperties;
-    className?: string;
-}
 
-function MapLowerLevel1({style, className}: MapDisplayProps) {
+function MapLowerLevel1() {
     const {
         graph,
         startNodeId,
@@ -24,12 +19,23 @@ function MapLowerLevel1({style, className}: MapDisplayProps) {
     } = useMapLogic();
 
     return (
-        <div className={className} style={{position: 'relative', ...style}}>
+        <div className={'floor L1'}>
             <svg viewBox="0 0 5000 3400">
-                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
+                <img
+                    className="pictureOfL1"
+                    src={`public/maps/00_thelowerlevel1.png`}
+                    alt={`Map: The Lower Level 1`}
+                    style={{
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        borderRadius: "10px"
+                    }}
+                />
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).filter(node => node.floor === 'L1').map((node: Node) => (
-                    <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)} onMouseLeave={() => handleNodeHoverLeave()}>
+                    <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)}
+                       onMouseLeave={() => handleNodeHoverLeave()}>
                         <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue" style={{cursor: 'pointer'}}/>
                         {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}

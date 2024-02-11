@@ -1,13 +1,6 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
-import {Graph, Node} from 'common/src/graph-structure.ts';
-import populatedGraph from 'common/dev/populatedGraph.ts';
+import React from 'react';
+import { Node} from 'common/src/graph-structure.ts';
 import {useMapLogic,} from './useMapLogicFull';
-interface MapFloor2Props {
-    style?: CSSProperties;
-    className?: string;
-    startNode?: string;
-    endNode?: string;
-}
 const MapFloor2 = () => {
     const {
         graph,

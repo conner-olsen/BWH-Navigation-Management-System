@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React from 'react';
 import {Node} from 'common/src/graph-structure.ts';
 import {useMapLogic,} from './useMapLogicFull';
 
