@@ -16,6 +16,7 @@ export class bfsPathfinding extends Graph implements PathfindingMethod  {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfinding(startNode: string, endNode: string): string[] {
+    console.log("ran bfs");
     //add an error catcher for invalid inputs
     if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
       return [];
@@ -94,6 +95,7 @@ export class aStarPathfinding extends Graph implements PathfindingMethod {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfinding(startNode: string, endNode: string): string[] {
+    console.log("ran astar");
     // if start or end is undefined, return empty array
     if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
       return [];
