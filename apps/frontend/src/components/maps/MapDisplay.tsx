@@ -6,7 +6,7 @@ import {
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
-} from "@/components/ui/hover-card";
+} from "../ui/hovercard.tsx";
 
 
 interface MapDisplayProps {

@@ -6057,6 +6057,7 @@ const RAW_RUNTIME_STATE =
           ["@popperjs/core", "npm:2.11.8"],\
           ["@radix-ui/react-dialog", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.0.5"],\
           ["@radix-ui/react-dropdown-menu", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:2.0.6"],\
+          ["@radix-ui/react-hover-card", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:1.0.7"],\
           ["@radix-ui/react-icons", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0"],\
           ["@radix-ui/react-navigation-menu", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.1.4"],\
           ["@radix-ui/react-slot", "virtual:e8b380440e490ed581b5194c0f62d1534b1204b90800caa3ff1d8e882ee5c33fb501736a46a4de969e0d3b24d52453ecb48aaf6e548c53a4b1c4a7bae6e34bb6#npm:1.0.2"],\
