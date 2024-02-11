@@ -61,10 +61,7 @@ return (
             <Link to="/MapPage" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Map Page</div></Link>
 
             {isAuthenticated && (
-                <Link to="/NodeData" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Node Data</div></Link>
-            )}
-            {isAuthenticated && (
-                <Link to="/EdgeData" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Edge Data</div></Link>
+                <Link to="/DataUpload" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Data Upload</div></Link>
             )}
             {isAuthenticated && (
                 <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white">
