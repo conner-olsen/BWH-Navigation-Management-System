@@ -1,6 +1,6 @@
 import fs from "fs";
 import {CSVRow, parseCSV} from "./parser.ts";
-import {aStarPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
+import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
 
 /**
  * Class representing a Node.
@@ -82,6 +82,22 @@ export class Graph {
    */
   setPathfindingMethod(pathfindingMethod: PathfindingMethod) {
     this.pathfindingMethod = pathfindingMethod;
+  }
+
+  /**
+   * change the pathfinding method to partner of inputted route
+   * @param pathfindingMethod string name of method to change to (bfs, Astar, dfs)
+   */
+  setPathfindingMethodStringRoute(pathfindingMethod: string) {
+    if(pathfindingMethod == "/api/bfs-searching"){
+      this.pathfindingMethod = new bfsPathfinding();
+    }
+    else if (pathfindingMethod == "/api/bfsAstar-searching") {
+      this.pathfindingMethod = new aStarPathfinding();
+    }
+    else if (pathfindingMethod == "dummy") {
+      this.pathfindingMethod = new dfsPathfinding();
+    }
   }
 
   /**
