@@ -21,16 +21,12 @@ function MapLowerLevel1() {
     return (
         <div className={'floor L1'}>
             <svg viewBox="0 0 5000 3400">
-                <img
-                    className="pictureOfL1"
-                    src={`public/maps/00_thelowerlevel1.png`}
-                    alt={`Map: The Lower Level 1`}
-                    style={{
-                        display: "block",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        borderRadius: "10px"
-                    }}
+                <image
+                    href={'public/maps/00_thelowerlevel1.png'}
+                    x="0"
+                    y="0"
+                    height="100%"
+                    width="100%"
                 />
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).filter(node => node.floor === 'L1').map((node: Node) => (
