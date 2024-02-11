@@ -2,11 +2,10 @@ import {Node, Graph} from "./graph-structure.ts";
 
 export interface PathfindingMethod {
   route: string;
-  runPathfinding(startNode: string, endNode: string): string[];
+  runPathfinding(startNode: string, endNode: string, graph: Graph): string[];
 }
 
-export class bfsPathfinding extends Graph implements PathfindingMethod  {
-
+export class bfsPathfinding implements PathfindingMethod  {
   route = "/api/bfs-searching";
 
   /**
@@ -15,10 +14,10 @@ export class bfsPathfinding extends Graph implements PathfindingMethod  {
    * @param {string} endNode - The ID of the ending node.
    * @return {string[]} - array of NodeIDs of nodes in path
    */
-  runPathfinding(startNode: string, endNode: string): string[] {
+  runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
     console.log("ran bfs");
     //add an error catcher for invalid inputs
-    if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
+    if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];
     }
 
@@ -43,10 +42,10 @@ export class bfsPathfinding extends Graph implements PathfindingMethod  {
 
       //get last node
       if(currentNodeIDPath.length > 1) {
-        currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
+        currentNode = graph.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
       }
       else {
-        currentNode = this.getNode(currentNodeIDPath[0]);
+        currentNode = graph.getNode(currentNodeIDPath[0]);
       }
 
       //if currentNode is undefined, pop path from queue
@@ -85,7 +84,7 @@ export class bfsPathfinding extends Graph implements PathfindingMethod  {
   }
 }
 
-export class aStarPathfinding extends Graph implements PathfindingMethod {
+export class aStarPathfinding implements PathfindingMethod {
 
   route = "/api/bfsAstar-searching";
   /**
@@ -94,10 +93,10 @@ export class aStarPathfinding extends Graph implements PathfindingMethod {
    * @param {string} endNode - The ID of the ending node.
    * @return {string[]} - array of NodeIDs of nodes in path
    */
-  runPathfinding(startNode: string, endNode: string): string[] {
+  runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
     console.log("ran astar");
     // if start or end is undefined, return empty array
-    if (this.getNode(startNode) == undefined || this.getNode(endNode) == undefined) {
+    if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];
     }
 
@@ -118,7 +117,7 @@ export class aStarPathfinding extends Graph implements PathfindingMethod {
       let [currentNodeIDPath, gValue] = priorityQueue.shift()!;
 
       // get last node in the current path and set to current
-      const currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
+      const currentNode = graph.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
 
       // if current node is undefined, add to visited
       if (currentNode == undefined) {
@@ -136,7 +135,7 @@ export class aStarPathfinding extends Graph implements PathfindingMethod {
 
       // for each neighbor of the currentNode, find its fValue
       for (const neighborID of neighbors) {
-        const neighbor = this.getNode(neighborID);
+        const neighbor = graph.getNode(neighborID);
 
         // if neighbor doesn't exist, continue to next neighbor
         if (neighbor == undefined) {
@@ -148,7 +147,7 @@ export class aStarPathfinding extends Graph implements PathfindingMethod {
         const tempGValue = gValue + calculateManhattanDistance(currentNode, neighbor);
 
         //distance from neighbor to end
-        const hValue = calculateManhattanDistance(neighbor, this.getNode(endNode)!);
+        const hValue = calculateManhattanDistance(neighbor, graph.getNode(endNode)!);
 
         //sum together
         const fValue = tempGValue + hValue;
@@ -176,7 +175,7 @@ export class aStarPathfinding extends Graph implements PathfindingMethod {
 }
 
 //not yet implemented, dummy run function right now
-export class dfsPathfinding extends Graph implements PathfindingMethod {
+export class dfsPathfinding implements PathfindingMethod {
 
   route = "/api/bfs-searching"; //change later
   /**
@@ -185,7 +184,7 @@ export class dfsPathfinding extends Graph implements PathfindingMethod {
    * @param {string} endNode - The ID of the ending node.
    * @return {string[]} - array of NodeIDs of nodes in path
    */
-  runPathfinding(startNode: string, endNode: string): string[] {
-    return [startNode, endNode];
+  runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
+    return [startNode, endNode, graph.formatBFS([""])];
   }
 }

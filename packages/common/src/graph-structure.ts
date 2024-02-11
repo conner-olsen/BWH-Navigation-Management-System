@@ -106,7 +106,7 @@ export class Graph {
    * @param endNode
    */
   runPathfinding(startNode: string, endNode: string): string[] {
-    return this.pathfindingMethod.runPathfinding(startNode, endNode);
+    return this.pathfindingMethod.runPathfinding(startNode, endNode, this);
   }
 
   /**
