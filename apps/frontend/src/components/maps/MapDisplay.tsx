@@ -2,6 +2,7 @@ import React, {CSSProperties, useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
+import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 
 
 interface MapDisplayProps {
@@ -139,20 +140,46 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: Ma
 
     return (
         <div className={className} style={{position: 'relative', ...style}}>
-            <svg viewBox="0 0 5000 3400">
-                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
-                {/*{graph && displayEdges(graph)}*/}
-                {graph && path.length > 0 && displayPath(graph, path)}
-                {graph && Array.from(graph.nodes.values()).map((node: Node) => (
-                    <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)} onMouseLeave={() => handleNodeHoverLeave()}>
-                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue" style={{cursor: 'pointer'}}/>
-                        {startNodeId === node.id && displaySelectedNodes(node, 'start')}
-                        {endNodeId === node.id && displaySelectedNodes(node, 'end')}
-                        {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
-                    </g>
-                ))}
-            </svg>
+            <TransformWrapper
+                initialScale={1}
+                initialPositionX={0}
+                initialPositionY={0}
+                wheel={{step: 0.1, smoothStep: 0.01}}
+            >
+                {({zoomIn, zoomOut, resetTransform}) => (
+                    <React.Fragment>
+                        <div className="tools">
+                            <button onClick={() => zoomIn()}>+</button>
+                            <button onClick={() => zoomOut()}>-</button>
+                            <button onClick={() => resetTransform()}>x</button>
+                        </div>
+                        <TransformComponent>
+                            <svg viewBox="0 0 5000 3400" className={"w-screen"}>
+                                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
+                                       y="0"/>
+                                {/*{graph && displayEdges(graph)}*/}
+                                {graph && path.length > 0 && displayPath(graph, path)}
+                                {graph && Array.from(graph.nodes.values()).map((node: Node) => (
+                                    <g key={node.id} onClick={() => handleNodeClick(node)}
+                                       onMouseEnter={() => handleNodeHover(node)}
+                                       onMouseLeave={() => handleNodeHoverLeave()}>
+                                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
+                                                style={{cursor: 'pointer'}}/>
+                                        {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                                        {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                                        {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
+                                    </g>
+                                ))}
+                            </svg>
+                        </TransformComponent>
+                    </React.Fragment>
+                )}
+            </TransformWrapper>
+
+
         </div>
+
+
     );
 }
 

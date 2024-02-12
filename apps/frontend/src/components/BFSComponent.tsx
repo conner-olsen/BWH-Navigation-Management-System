@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import { Col, Container, Row } from "react-bootstrap";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
 import { Button } from "./ui/button.tsx";
+//import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 
 
 export function BFSComponent() {
@@ -144,6 +145,8 @@ export function BFSComponent() {
             <br />
 
             <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} sendHoverMapPath={sendHoverMapPath}/>
+
+
 
         </div>
 
