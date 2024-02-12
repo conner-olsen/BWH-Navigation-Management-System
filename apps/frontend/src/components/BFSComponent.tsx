@@ -17,6 +17,7 @@ export function BFSComponent() {
     const [endNode, setEndNode] = useState<string>("End Location");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
+   // const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -96,6 +97,7 @@ export function BFSComponent() {
                         <p>Starting Location</p>
                         <Form.Select value={startNode} size={"sm"}
                                      onChange={e => setStartNode(e.target.value)}>
+                            <option></option>
                             {roomNames}
                         </Form.Select>
                     </Col>
@@ -103,6 +105,7 @@ export function BFSComponent() {
                         <p>Destination</p>
                         <Form.Select value={endNode} size={"sm"}
                                      onChange={e => setEndNode(e.target.value)}>
+                            <option></option>
                             {roomNames}
                         </Form.Select>
                     </Col>
@@ -143,7 +146,8 @@ export function BFSComponent() {
             </Container>
             <br />
 
-            <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} sendHoverMapPath={sendHoverMapPath}/>
+            <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} sendHoverMapPath={sendHoverMapPath}
+            doDisplayEdges={false} doDisplayNodes={true}/>
 
         </div>
 
