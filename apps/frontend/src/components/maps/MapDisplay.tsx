@@ -3,7 +3,6 @@ import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
-
 interface MapDisplayProps {
     style?: CSSProperties;
     className?: string;
@@ -13,9 +12,10 @@ interface MapDisplayProps {
     doDisplayEdges: boolean;
     doDisplayNodes: boolean;
     doDisplayNames: boolean;
+    pathFindingType: string;
 }
 
-function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, doDisplayEdges, doDisplayNodes, doDisplayNames}: MapDisplayProps) {
+function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pathFindingType, doDisplayEdges, doDisplayNodes, doDisplayNames}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -25,13 +25,17 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, doD
 
     useEffect(() => {
         setGraph(populatedGraph);
+
         if (startNode && endNode && graph) {
-            const path = graph.bfsAstar(startNode, endNode);
+            //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
+            graph.setPathfindingMethodStringRoute(pathFindingType);
+
+            const path = graph.runPathfinding(startNode, endNode);
             setPath(path);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
         }
-    }, [startNode, endNode, graph]);
+    }, [startNode, endNode, graph, sendHoverMapPath, pathFindingType]);
 
     const displayEdges = (graph: Graph) => {
         if(doDisplayEdges) {
