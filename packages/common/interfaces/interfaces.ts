@@ -20,7 +20,7 @@ export interface flowerServiceRequest {
   id: number
   senderName:string
   senderEmail:string
-  roomLongName:string
+  nodeID:string
   patientName:string
   flowerType:string
   deliveryDate: string
