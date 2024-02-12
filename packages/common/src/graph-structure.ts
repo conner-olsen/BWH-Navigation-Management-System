@@ -1,9 +1,7 @@
-import fs from "fs";
-import {CSVRow, parseCSV} from "./parser.ts";
 import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
-import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
-import PrismaClient from 'apps/backend/src/bin/database-connection.ts';
-import {edge} from "../interfaces/interfaces.ts";
+import PrismaClient from "../../../apps/backend/src/bin/database-connection.ts";
+import {node} from "common/interfaces/interfaces.ts";
+import {edge} from "common/interfaces/interfaces.ts";
 
 const prisma = new PrismaClient();
 /**
@@ -216,16 +214,16 @@ export class Graph {
     }
   }
 
-  private populateGraph(nodes: Node[], edges: edge[]) {
+  private populateGraph(nodes: node[], edges: edge[]) {
     // Clear existing nodes and edges
     this.nodes.clear();
 
     // Populate nodes
     for (const node of nodes) {
       const newNode = new Node(
-        node.id,
-        node.xCoord,
-        node.yCoord,
+        node.nodeId,
+        node.xcoord,
+        node.ycoord,
         node.floor,
         node.building,
         node.nodeType,
