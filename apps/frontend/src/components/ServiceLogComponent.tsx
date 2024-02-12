@@ -11,7 +11,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
                 id:  tableData[index].id,
                 senderName: tableData[index].senderName,
                 senderEmail: tableData[index].senderEmail,
-                roomLongName: tableData[index].roomLongName,
+                nodeID: tableData[index].nodeID,
                 flowerType: tableData[index].flowerType,
                 deliveryDate: tableData[index].deliveryDate,
                 note: tableData[index].note,
@@ -27,7 +27,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             id:  tableData[index].id,
             senderName: tableData[index].senderName,
             senderEmail: tableData[index].senderEmail,
-            roomLongName: tableData[index].roomLongName,
+            nodeID: tableData[index].nodeID,
             flowerType: tableData[index].flowerType,
             deliveryDate: tableData[index].deliveryDate,
             note: tableData[index].note,
@@ -42,7 +42,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
         <tr key={index}>
             <td>{tableData[index].senderName}</td>
             <td>{tableData[index].senderEmail}</td>
-            <td>{tableData[index].roomLongName}</td>
+            <td>{tableData[index].nodeID}</td>
             <td>{tableData[index].patientName}</td>
             <td>{tableData[index].flowerType}</td>
             <td>{tableData[index].deliveryDate}</td>
@@ -76,7 +76,7 @@ const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData:
             <tr>
                 <th>Sender Name</th>
                 <th>Sender Email</th>
-                <th>Room Name</th>
+                <th>Room ID</th>
                 <th>Patient's Name</th>
                 <th>Flower Type</th>
                 <th>Delivery Date</th>

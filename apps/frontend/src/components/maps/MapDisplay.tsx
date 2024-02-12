@@ -1,12 +1,14 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
+import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
 import {
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
-} from "../ui/hovercard.tsx";
+} from "../ui/hover-card.tsx";
+import {Button} from "../ui/button.tsx";
 
 
 interface MapDisplayProps {
@@ -14,9 +16,11 @@ interface MapDisplayProps {
     className?: string;
     startNode?: string;
     endNode?: string;
+    sendHoverMapPath: (path: PathfindingRequest) => void;
+    pathFindingType: string;
 }
 
-function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
+function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pathFindingType}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -26,13 +30,17 @@ function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
 
     useEffect(() => {
         setGraph(populatedGraph);
+
         if (startNode && endNode && graph) {
-            const path = graph.bfsAstar(startNode, endNode);
+            //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
+            graph.setPathfindingMethodStringRoute(pathFindingType);
+
+            const path = graph.runPathfinding(startNode, endNode);
             setPath(path);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
         }
-    }, [startNode, endNode, graph]);
+    }, [startNode, endNode, graph, sendHoverMapPath, pathFindingType]);
 
     // const displayEdges = (graph: Graph) => {
     //     const edges: React.JSX.Element[] = [];
@@ -78,11 +86,15 @@ function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
         else if (!endNodeId) {
             setEndNodeId(node.id);
             if (graph && startNodeId) {
-                const path = graph.bfs(startNodeId, node.id);
-                setPath(path);
+                setStartNodeId(startNodeId);
+                setEndNodeId(node.id);
+                const path: PathfindingRequest = { startid: startNodeId, endid: node.id };
+                sendHoverMapPath(path);
             }
         }
     };
+
+
 
     const handleNodeHover = (node: Node) => {
         if (!hoverNodeId) {
@@ -165,9 +177,31 @@ function MapDisplay({style, className, startNode, endNode}: MapDisplayProps) {
                     </g>
                 ))}
             </svg>
+            <HoverCard openDelay={20}>
+                <HoverCardTrigger asChild>
+                    <Button className="variant: link">O</Button>
+                </HoverCardTrigger>
+                <HoverCardContent className="w-80">
+                    <div className="flex justify-between space-x-4">
+                        <p className="text-sm">
+                            Type: node.nodeType
+                        </p>
+                        <p className="text-sm">
+                            node.longName
+                        </p>
+                        <p className="text-sm">
+                            node.shortName
+                        </p>
+                        <p className="text-sm">
+                            Status:
+                        </p>
+                    </div>
+                </HoverCardContent>
+            </HoverCard>
         </div>
     );
 }
+
 
 /**
  * This is the default export of the MapDisplay component.
