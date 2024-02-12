@@ -1,6 +1,7 @@
 import fs from "fs";
 import {CSVRow, parseCSV} from "./parser.ts";
 import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
+import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
 import PrismaClient from 'apps/backend/src/bin/database-connection.ts';
 import {edge} from "../interfaces/interfaces.ts";
 
@@ -109,7 +110,7 @@ export class Graph {
    * @param endNode
    */
   runPathfinding(startNode: string, endNode: string): string[] {
-    return this.pathfindingMethod.runPathfinding(startNode, endNode);
+    return this.pathfindingMethod.runPathfinding(startNode, endNode, this);
   }
 
   /**
