@@ -66,7 +66,7 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                     <line key={`${node.id}-${nextNode.id}`}
                           x1={node.xCoord} y1={node.yCoord}
                           x2={nextNode.xCoord} y2={nextNode.yCoord}
-                          stroke="red" strokeWidth="5"/>
+                          stroke="red" strokeWidth="8"/>
                 );
             }
         }
