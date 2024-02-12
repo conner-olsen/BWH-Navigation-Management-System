@@ -3,7 +3,7 @@ import PrismaClient from "../../../apps/backend/src/bin/database-connection.ts";
 import {node} from "common/interfaces/interfaces.ts";
 import {edge} from "common/interfaces/interfaces.ts";
 
-const prisma = new PrismaClient();
+
 /**
  * Class representing a Node.
  */
@@ -202,10 +202,10 @@ export class Graph {
   async fromDB() {
     try {
       // Fetch nodes from the database
-      const nodes = await prisma.node.findMany();
+      const nodes = await PrismaClient.node.findMany();
 
       // Fetch edges from the database
-      const edges = await prisma.edge.findMany();
+      const edges = await PrismaClient.edge.findMany();
 
       // Populate the graph with nodes and edges
       this.populateGraph(nodes, edges);
