@@ -6,7 +6,7 @@ import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
 import nodeCSVString from "common/dev/nodeCSVString.ts";
 import Form from "react-bootstrap/Form";
-import { Col, Container, Row } from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
 import { Button } from "./ui/button.tsx";
 
@@ -17,9 +17,9 @@ export function BFSComponent() {
     const [endNode, setEndNode] = useState<string>("End Location");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
-    // const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
-    // const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
-    // const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+    const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
+     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
+     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -96,6 +96,28 @@ export function BFSComponent() {
             <Container>
                 <Row>
                     <Col>
+                        <p>Display Options</p>
+                        <Form.Check
+                            type="switch"
+                            label='Display Edges'
+                            checked={doDisplayEdges}
+                            onChange={() => setDoDisplayEdges(!doDisplayEdges)}
+                        />
+                        <Form.Check
+                            type="switch"
+                            label='Display Nodes'
+                            checked={doDisplayNodes}
+                            onChange={() => setDoDisplayNodes(!doDisplayNodes)}
+                        />
+                        <Form.Check
+                            type="switch"
+                            label='Display Names'
+                            checked={doDisplayNames}
+                            onChange={() => setDoDisplayNames(!doDisplayNames)}
+                        />
+                    </Col>
+
+                    <Col>
                         <p>Starting Location</p>
                         <Form.Select value={startNode} size={"sm"}
                                      onChange={e => setStartNode(e.target.value)}>
@@ -103,6 +125,7 @@ export function BFSComponent() {
                             {roomNames}
                         </Form.Select>
                     </Col>
+
                     <Col>
                         <p>Destination</p>
                         <Form.Select value={endNode} size={"sm"}
@@ -149,7 +172,7 @@ export function BFSComponent() {
             <br />
 
             <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} sendHoverMapPath={sendHoverMapPath}
-            doDisplayEdges={false} doDisplayNodes={true} doDisplayNames={false}/>
+            doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes} doDisplayNames={doDisplayNames}/>
 
         </div>
 
