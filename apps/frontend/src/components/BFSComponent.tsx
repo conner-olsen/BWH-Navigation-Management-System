@@ -17,7 +17,9 @@ export function BFSComponent() {
     const [endNode, setEndNode] = useState<string>("End Location");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
-   // const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
+    // const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
+    // const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
+    // const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -147,7 +149,7 @@ export function BFSComponent() {
             <br />
 
             <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} sendHoverMapPath={sendHoverMapPath}
-            doDisplayEdges={false} doDisplayNodes={true}/>
+            doDisplayEdges={false} doDisplayNodes={true} doDisplayNames={false}/>
 
         </div>
 

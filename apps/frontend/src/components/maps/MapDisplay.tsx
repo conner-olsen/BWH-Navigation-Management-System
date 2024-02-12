@@ -12,9 +12,10 @@ interface MapDisplayProps {
     sendHoverMapPath: (path: PathfindingRequest) => void;
     doDisplayEdges: boolean;
     doDisplayNodes: boolean;
+    doDisplayNames: boolean;
 }
 
-function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, doDisplayEdges, doDisplayNodes}: MapDisplayProps) {
+function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, doDisplayEdges, doDisplayNodes, doDisplayNames}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -154,14 +155,25 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, doD
         }
     };
 
+    const displayNames = (graph: Graph) => {
+        if (doDisplayNames) {
+            return (
+                Array.from(graph.nodes.values()).map((node: Node) => (
+                    <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                        {node.shortName}
+                    </text>
+                )));
+        }
+    };
+
     return (
         <div className={className} style={{position: 'relative', ...style}}>
             <svg viewBox="0 0 5000 3400">
                 <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
-
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && displayNodes(graph)}
+                {graph && displayNames(graph)}
             </svg>
         </div>
     );
