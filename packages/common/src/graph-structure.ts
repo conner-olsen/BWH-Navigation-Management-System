@@ -1,6 +1,10 @@
 import fs from "fs";
 import {CSVRow, parseCSV} from "./parser.ts";
+import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
+import PrismaClient from 'apps/backend/src/bin/database-connection.ts';
+import {edge} from "../interfaces/interfaces.ts";
 
+const prisma = new PrismaClient();
 /**
  * Class representing a Node.
  */
@@ -65,12 +69,47 @@ export class Node {
  */
 export class Graph {
   nodes: Map<string, Node>; // Map of node IDs to Node objects
+  private pathfindingMethod: PathfindingMethod;
 
   /**
    * Create a new Graph.
    */
   constructor() {
     this.nodes = new Map();
+    this.pathfindingMethod = new aStarPathfinding();
+  }
+
+  /**
+   * change the pathfinding method
+   * @param pathfindingMethod method to change to (bfs, Astar, dfs)
+   */
+  setPathfindingMethod(pathfindingMethod: PathfindingMethod) {
+    this.pathfindingMethod = pathfindingMethod;
+  }
+
+  /**
+   * change the pathfinding method to partner of inputted route
+   * @param pathfindingMethod string name of method to change to (bfs, Astar, dfs)
+   */
+  setPathfindingMethodStringRoute(pathfindingMethod: string) {
+    if(pathfindingMethod == "/api/bfs-searching"){
+      this.pathfindingMethod = new bfsPathfinding();
+    }
+    else if (pathfindingMethod == "/api/bfsAstar-searching") {
+      this.pathfindingMethod = new aStarPathfinding();
+    }
+    else if (pathfindingMethod == "dummy") {
+      this.pathfindingMethod = new dfsPathfinding();
+    }
+  }
+
+  /**
+   * run the pathfinding algorithm specified by the current field
+   * @param startNode
+   * @param endNode
+   */
+  runPathfinding(startNode: string, endNode: string): string[] {
+    return this.pathfindingMethod.runPathfinding(startNode, endNode);
   }
 
   /**
@@ -110,54 +149,96 @@ export class Graph {
    * @param nodePath - path to nodeID csv file
    * @param edgePath - path to edgeID csv file
    */
-  fromCSV(nodePath: string, edgePath: string) {
-    // Read the CSV file as plain text
-    const nodeCSVString = fs.readFileSync(nodePath, "utf8");
-    const edgeCSVString = fs.readFileSync(edgePath, "utf8");
-    this.fromString(nodeCSVString, edgeCSVString);
+  // fromCSV(nodePath: string, edgePath: string) {
+  //   // Read the CSV file as plain text
+  //   const nodeCSVString = fs.readFileSync(nodePath, "utf8");
+  //   const edgeCSVString = fs.readFileSync(edgePath, "utf8");
+  //   this.fromString(nodeCSVString, edgeCSVString);
+  // }
+  // async fromDB() {
+  //  const nodes = await PrismaClient.node.findMany();
+  //  const edges = await PrismaClient.edge.findMany();
+  // }
+  //
+  // fromString(nodeCSVString: string, edgeCSVString: string) {
+  //   // Specify the path to your CSV file
+  //   let rows: CSVRow[];
+  //
+  //   // Read the CSV file as plain text
+  //   rows = parseCSV(nodeCSVString);
+  //   // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
+  //   for (const row of rows) {
+  //     const nodeID = row["nodeID"];
+  //     const xcoord = row["xcoord"];
+  //     const ycoord = row["ycoord"];
+  //     const floor = row["floor"];
+  //     const building = row["building"];
+  //     const nodeType = row["nodeType"];
+  //     const longName = row["longName"];
+  //     const shortName = row["shortName"];
+  //
+  //     const node = new Node(
+  //       nodeID,
+  //       +xcoord,
+  //       +ycoord,
+  //       floor,
+  //       building,
+  //       nodeType,
+  //       longName,
+  //       shortName,
+  //     );
+  //     this.addNode(node);
+  //   }
+  //
+  //   // Populate edges
+  //   rows = parseCSV(edgeCSVString);
+  //
+  //   for (const row of rows) {
+  //     const startNode = row["startNode"];
+  //     const endNode = row["endNode"];
+  //
+  //     this.addEdge(startNode, endNode);
+  //   }
+  // }
+  async fromDB() {
+    try {
+      // Fetch nodes from the database
+      const nodes = await prisma.node.findMany();
+
+      // Fetch edges from the database
+      const edges = await prisma.edge.findMany();
+
+      // Populate the graph with nodes and edges
+      this.populateGraph(nodes, edges);
+    } catch (error) {
+      console.error('Error fetching data from the database:', error);
+    }
   }
 
-  fromString(nodeCSVString: string, edgeCSVString: string) {
-    // Specify the path to your CSV file
-    let rows: CSVRow[];
+  private populateGraph(nodes: Node[], edges: edge[]) {
+    // Clear existing nodes and edges
+    this.nodes.clear();
 
-    // Read the CSV file as plain text
-    rows = parseCSV(nodeCSVString);
-    // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
-    for (const row of rows) {
-      const nodeID = row["nodeID"];
-      const xcoord = row["xcoord"];
-      const ycoord = row["ycoord"];
-      const floor = row["floor"];
-      const building = row["building"];
-      const nodeType = row["nodeType"];
-      const longName = row["longName"];
-      const shortName = row["shortName"];
-
-      const node = new Node(
-        nodeID,
-        +xcoord,
-        +ycoord,
-        floor,
-        building,
-        nodeType,
-        longName,
-        shortName,
+    // Populate nodes
+    for (const node of nodes) {
+      const newNode = new Node(
+        node.id,
+        node.xCoord,
+        node.yCoord,
+        node.floor,
+        node.building,
+        node.nodeType,
+        node.longName,
+        node.shortName,
       );
-      this.addNode(node);
+      this.addNode(newNode);
     }
 
     // Populate edges
-    rows = parseCSV(edgeCSVString);
-
-    for (const row of rows) {
-      const startNode = row["startNode"];
-      const endNode = row["endNode"];
-
-      this.addEdge(startNode, endNode);
+    for (const edge of edges) {
+      this.addEdge(edge.startNodeID, edge.endNodeID);
     }
   }
-
   /**
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.

@@ -10,18 +10,12 @@ router.post("/", async (req: Request, res: Response) => {
     console.log(requestData);
     // set up objects needed to call bfs
     // language=file-reference - Node csv file path
-    const nodePath = path.join(__dirname, "../../data/csv/L1Nodes.csv");
-    // language=file-reference - Edge csv file path
-    const edgePath = path.join(__dirname, "../../data/csv/L1Edges.csv");
     const graphCSV = new Graph();
     const startNodeCSV =  requestData.startid;
     const endNodeCSV = requestData.endid;
 
     //populate graph
-    graphCSV.fromCSV(
-      nodePath,
-      edgePath,
-    );
+    await graphCSV.fromDB();
 
     //run bfs, convert to an array of nodes
     res.json(graphCSV.stringsToNodes(graphCSV.bfsAstar(startNodeCSV, endNodeCSV)));
