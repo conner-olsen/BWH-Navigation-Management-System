@@ -10,7 +10,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
 import { Button } from "./ui/button.tsx";
 
-
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
     const [startNode, setStartNode] = useState<string>("Select Start Location");
@@ -110,7 +109,7 @@ export function BFSComponent() {
                     <Col>
                         <p>Select Search Type</p>
                         <Form.Select value={pathFindingType} size={"sm"} onChange={e => setPathFindingType(e.target.value)}>
-                            <option value={"/api/bfs-searching"}>bfs searching</option>
+                            <option value={"/api/bfs-searching"}>BFS searching</option>
                             <option value={"/api/bfsAstar-searching"}>A-star searching</option>
                         </Form.Select>
 
@@ -143,7 +142,7 @@ export function BFSComponent() {
             </Container>
             <br />
 
-            <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} sendHoverMapPath={sendHoverMapPath}/>
+            <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>
 
         </div>
 
