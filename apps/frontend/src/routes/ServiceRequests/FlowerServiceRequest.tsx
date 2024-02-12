@@ -11,15 +11,14 @@ const FlowerServiceRequest: React.FC = () => {
         id: getRandomInt(10000),
         senderName: '',
         senderEmail: '',
-        roomLongName: '',
+        nodeID: '',
         patientName: '',
         flowerType: '',
         deliveryDate: '',
         note: '',
-        status: 'Assigned',
+        status: 'UnAssigned',
         employeeUser: 'none'
     });
-
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -27,7 +26,7 @@ const FlowerServiceRequest: React.FC = () => {
             id: 0,
             senderName: '',
             senderEmail: '',
-            roomLongName: '',
+            nodeID: '',
             patientName: '',
             flowerType: '',
             deliveryDate: '',
@@ -53,7 +52,7 @@ const FlowerServiceRequest: React.FC = () => {
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
@@ -90,9 +89,9 @@ const FlowerServiceRequest: React.FC = () => {
                             <label htmlFor="senderEmail" className="font-bold">Sender Email</label>
                             <input type="text" id="senderEmail" name="senderEmail" placeholder={"John@gmail.com"} required
                                 value={formData.senderEmail} onChange={handleChange} className="form-input"/>
-                            <label htmlFor="roomLongName" className="font-bold">Room Name</label>
-                            <input type="text" id="roomLongName" name="roomLongName" placeholder={"Anesthesia Conf Floor L1 (Node longName)"} required
-                                value={formData.roomLongName} onChange={handleChange} className="form-input"/>
+                            <label htmlFor="nodeID" className="font-bold">Room ID</label>
+                            <input type="text" id="nodeID" name="nodeID" placeholder={"ACONF00102"} required
+                                value={formData.nodeID} onChange={handleChange} className="form-input"/>
                         </div>
                         <div className="flex flex-col grow pl-2">
                             <label htmlFor="patientName" className="font-bold">Patient's Name</label>
@@ -118,17 +117,85 @@ const FlowerServiceRequest: React.FC = () => {
                                 value={formData.deliveryDate} onChange={handleChange} className="form-input"/>
                         </div>
                     </div>
-                    <label className="font-bold">Add a note</label>
-                    <textarea placeholder={"I heard you're going through tough times. Get well soon!"}
-                        name="note" value={formData.note} onChange={handleChange} className="form-input"></textarea>
-                    <input type="submit" value="Submit"
-                           className="mt-5"/>
+
+                    <div className="mb-3">
+                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="patientName">PATIENT'S
+                            NAME</label>
+                        <Textarea label="" id="patientName" name="patientName" placeholder="Jared Smith" required
+                                  value={formData.patientName} onChange={handleChange} className="font-roboto text-lg"/>
+                    </div>
+
+                    {/* Third Row - Sender Email and Flower Type */}
+                    <div className="mb-3">
+                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="senderEmail">SENDER
+                            EMAIL</label>
+                        <Textarea label="" id="senderEmail" name="senderEmail" placeholder="John@gmail.com" required
+                                  value={formData.senderEmail} onChange={handleChange} className="font-roboto text-lg"/>
+                    </div>
+
+                    <div className="mb-3">
+                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="flowerType">TYPE OF
+                            FLOWERS</label>
+                        <Select>
+                            <SelectTrigger>
+                                <SelectValue placeholder="FLOWER TYPE" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectItem value="daffodils">Daffodil</SelectItem>
+                                    <SelectItem value="daisies">Daisies</SelectItem>
+                                    <SelectItem value="hydrangeas">Hydrangeas</SelectItem>
+                                    <SelectItem value="lilies">Lilies</SelectItem>
+                                    <SelectItem value="marigolds">Marigolds</SelectItem>
+                                    <SelectItem value="orchids">orchids</SelectItem>
+                                    <SelectItem value="roses">Roses</SelectItem>
+                                    <SelectItem value="marigolds">Marigolds</SelectItem>
+
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {/* Fourth Row - Room Name and Delivery Date */}
+                    <div className="mb-3">
+                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="roomLongName">ROOM
+                            NAME</label>
+                        <Textarea label="" id="roomLongName" name="roomLongName"
+                                  placeholder="Anesthesia Conf Floor L1 (Node longName)" required
+                                  value={formData.roomLongName} onChange={handleChange}
+                                  className="font-roboto text-lg"/>
+                    </div>
+
+                    <div className="mb-3">
+                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="deliveryDate">DATE
+                            OF DELIVERY</label>
+                        <Textarea label="" id="deliveryDate" name="deliveryDate" placeholder="01/15/1981" required
+                                  value={formData.deliveryDate} onChange={handleChange}
+                                  className="font-roboto text-lg"/>
+                    </div>
+
+                    {/* Fifth Row - Add a Note */}
+                    <div className="col-span-2 mb-3">
+                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="note">ADD A
+                            NOTE</label>
+                        <Textarea label="" name="note"
+                                  placeholder="I heard you're going through tough times. Get well soon!"
+                                  value={formData.note} onChange={handleChange} className="font-roboto text-lg"/>
+                    </div>
+
+
+                    {/* Sixth Row - Buttons */}
+                    <div className="col-span-2 mb-3 flex justify-center"> {/* Changed justify-end to justify-center */}
+                        <Button className="cursor-pointer" type="submit">
+                            Submit
+                        </Button>
+                    </div>
+
 
                 </form>
             </div>
-
         </div>
     );
-};
 
+};
 export default FlowerServiceRequest;
