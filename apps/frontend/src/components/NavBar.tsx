@@ -2,6 +2,7 @@ import React from "react";
 import  DarkModeButton  from "./DarkModeButton.tsx";
 //import { Link } from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
+//import Logo from "../../public/BWH_Logo.svg";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -56,15 +57,13 @@ export default function NavBar() {
 return (
 
     <nav>
-        <Nav className="navbarStyling relative filter-none z-1 shadow-md bg-blue-950 space-x-12">
+        <Nav className="navbarStyling relative filter-none z-1 shadow-md bg-blue-950 space-x-12 items-center">
+            <img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img>
             <Link to="/Home" className="text-lg no-underline p-2 text-white"> <div className={"hover:text-blue-500"}>Home</div></Link>
             <Link to="/MapPage" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Map Page</div></Link>
 
             {isAuthenticated && (
-                <Link to="/NodeData" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Node Data</div></Link>
-            )}
-            {isAuthenticated && (
-                <Link to="/EdgeData" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Edge Data</div></Link>
+                <Link to="/DataUpload" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Data Upload</div></Link>
             )}
             {isAuthenticated && (
                 <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white">
