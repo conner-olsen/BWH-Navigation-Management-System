@@ -1,6 +1,7 @@
-import fs from "fs";
-import {CSVRow, parseCSV} from "./parser.ts";
 import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
+import {node} from "common/interfaces/interfaces.ts";
+import {edge} from "common/interfaces/interfaces.ts";
+
 
 /**
  * Class representing a Node.
@@ -146,54 +147,34 @@ export class Graph {
    * @param nodePath - path to nodeID csv file
    * @param edgePath - path to edgeID csv file
    */
-  fromCSV(nodePath: string, edgePath: string) {
-    // Read the CSV file as plain text
-    const nodeCSVString = fs.readFileSync(nodePath, "utf8");
-    const edgeCSVString = fs.readFileSync(edgePath, "utf8");
-    this.fromString(nodeCSVString, edgeCSVString);
+
+  async fromDB() {
   }
 
-  fromString(nodeCSVString: string, edgeCSVString: string) {
-    // Specify the path to your CSV file
-    let rows: CSVRow[];
+  public populateGraph(nodes: node[], edges: edge[]) {
+    // Clear existing nodes and edges
+    this.nodes.clear();
 
-    // Read the CSV file as plain text
-    rows = parseCSV(nodeCSVString);
-    // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
-    for (const row of rows) {
-      const nodeID = row["nodeID"];
-      const xcoord = row["xcoord"];
-      const ycoord = row["ycoord"];
-      const floor = row["floor"];
-      const building = row["building"];
-      const nodeType = row["nodeType"];
-      const longName = row["longName"];
-      const shortName = row["shortName"];
-
-      const node = new Node(
-        nodeID,
-        +xcoord,
-        +ycoord,
-        floor,
-        building,
-        nodeType,
-        longName,
-        shortName,
+    // Populate nodes
+    for (const node of nodes) {
+      const newNode = new Node(
+        node.nodeId,
+        node.xcoord,
+        node.ycoord,
+        node.floor,
+        node.building,
+        node.nodeType,
+        node.longName,
+        node.shortName,
       );
-      this.addNode(node);
+      this.addNode(newNode);
     }
 
     // Populate edges
-    rows = parseCSV(edgeCSVString);
-
-    for (const row of rows) {
-      const startNode = row["startNode"];
-      const endNode = row["endNode"];
-
-      this.addEdge(startNode, endNode);
+    for (const edge of edges) {
+      this.addEdge(edge.startNodeID, edge.endNodeID);
     }
   }
-
   /**
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.
