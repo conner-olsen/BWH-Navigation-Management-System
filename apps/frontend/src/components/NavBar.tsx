@@ -57,7 +57,7 @@ export default function NavBar() {
 return (
 
     <nav>
-        <Nav className="navbarStyling relative filter-none z-1 shadow-md bg-blue-950 space-x-12 items-center">
+        <Nav className="navbarStyling relative filter-none z-50 shadow-md bg-blue-950 space-x-12 items-center">
             <img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img>
             <Link to="/Home" className="text-lg no-underline p-2 text-white"> <div className={"hover:text-blue-500"}>Home</div></Link>
             <Link to="/MapPage" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Map Page</div></Link>

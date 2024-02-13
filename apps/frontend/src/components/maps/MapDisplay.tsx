@@ -112,34 +112,21 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
     const displayHoverInfo = (node: Node, type: 'hover') => {
         return (
             <g>
-            {type === 'hover'}
-            <HoverCard>
-                <HoverCardTrigger>Hover</HoverCardTrigger>
-                <HoverCardContent>
+                {type === 'hover'}
+                <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>;
+                <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
                     Type: {node.nodeType}
+                </text>;
+                <text x={node.xCoord - 400} y={node.yCoord - 80} fill="black">
                     {node.longName}
+                </text>;
+                <text x={node.xCoord - 400} y={node.yCoord - 55} fill="black">
                     {node.shortName}
-                    Status:
-                </HoverCardContent>
-            </HoverCard>
+                </text>;
+                <text x={node.xCoord - 400} y={node.yCoord - 30} fill="black">
+                    Status: -/-
+                </text>;
             </g>
-
-        // <g>
-        //         {type === 'hover'}
-        //         <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>;
-        //         <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
-        //             Type: {node.nodeType}
-        //         </text>;
-        //         <text x={node.xCoord - 400} y={node.yCoord - 80} fill="black">
-        //             {node.longName}
-        //         </text>;
-        //         <text x={node.xCoord - 400} y={node.yCoord - 55} fill="black">
-        //             {node.shortName}
-        //         </text>;
-        //         <text x={node.xCoord - 400} y={node.yCoord - 30} fill="black">
-        //             Status: -/-
-        //         </text>;
-        //     </g>
         );
     };
     const clearSelection = () => {
@@ -164,36 +151,17 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
 
     return (
         <div className={className} style={{position: 'relative', ...style}}>
-            <svg viewBox="0 0 5000 3400">
-                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
+            <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
+                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
+                       y="0"/>
                 {/*{graph && displayEdges(graph)}*/}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).map((node: Node) => (
-                    <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)} onMouseLeave={() => handleNodeHoverLeave()}>
-                        <HoverCard openDelay={200}>
-                            <HoverCardTrigger asChild>
-                                <svg>
-                                    <circle r="9" cx={node.xCoord} cy={node.yCoord} fill="blue" style={{cursor: 'pointer'}}/>
-                                </svg>
-                            </HoverCardTrigger>
-                            <HoverCardContent className="w-80">
-                                <div>
-                                    <p className="text-sm">
-                                        Type: {node.nodeType}
-                                    </p>
-                                    <p className="text-sm">
-                                        {node.longName}
-                                    </p>
-                                    <p className="text-sm">
-                                        {node.shortName}
-                                    </p>
-                                    <p className="text-sm">
-                                        Status: -/-
-                                    </p>
-                                </div>
-                            </HoverCardContent>
-                        </HoverCard>
-                        {/*<circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue" style={{cursor: 'pointer'}}/>*/}
+                    <g key={node.id} onClick={() => handleNodeClick(node)}
+                       onMouseEnter={() => handleNodeHover(node)}
+                       onMouseLeave={() => handleNodeHoverLeave()}>
+                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
+                                style={{cursor: 'pointer'}}/>
                         {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                         {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}

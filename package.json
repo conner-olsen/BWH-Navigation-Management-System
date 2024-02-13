@@ -37,6 +37,7 @@
     "eslint-config-custom": "workspace:*",
     "happy-dom": "^10.6.3",
     "husky": "^8.0.0",
+    "postcss": "^8.4.35",
     "prettier": "2.8.8",
     "prettier-config-custom": "workspace:*",
     "prisma": "^5.9.0",

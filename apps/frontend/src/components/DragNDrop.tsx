@@ -64,7 +64,7 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
 
   return (
       <Container
-          className={`${dragging ? 'DragDropBoxOn' : 'DragDropBox'} ${dragging ? 'dragging' : ''}`}
+          className={`border-border ${dragging ? 'DragDropBoxOn' : 'DragDropBox'} ${dragging ? 'dragging' : ''}`}
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
