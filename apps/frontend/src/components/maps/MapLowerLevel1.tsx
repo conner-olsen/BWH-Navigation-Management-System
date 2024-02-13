@@ -1,115 +1,37 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
-import {Graph, Node} from 'common/src/graph-structure.ts';
-import populatedGraph from 'common/dev/populatedGraph.ts';
+import React from 'react';
+import {Node} from 'common/src/graph-structure.ts';
+import {useMapLogic} from "./useMapLogicFull.tsx";
 
-interface MapDisplayProps {
-    style?: CSSProperties;
-    className?: string;
-}
 
-function MapLowerLevel1({style, className}: MapDisplayProps) {
-    const [graph, setGraph] = useState<Graph | null>(null);
-    const [startNodeId, setStartNodeId] = useState<string | null>(null);
-    const [endNodeId, setEndNodeId] = useState<string | null>(null);
-    const [path, setPath] = useState<string[]>([]);
-    const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
-
-    useEffect(() => {
-        setGraph(populatedGraph);
-    }, []);
-
-    const displayPath = (graph: Graph, path: string[]) => {
-        const pathElements: React.JSX.Element[] = [];
-        for (let i = 0; i < path.length - 1; i++) {
-            const node = graph.getNode(path[i]);
-            const nextNode = graph.getNode(path[i + 1]);
-            if (node && nextNode) {
-                pathElements.push(
-                    <line key={`${node.id}-${nextNode.id}`}
-                          x1={node.xCoord} y1={node.yCoord}
-                          x2={nextNode.xCoord} y2={nextNode.yCoord}
-                          stroke="red" strokeWidth="5"/>
-                );
-            }
-        }
-        return pathElements;
-    };
-
-    const handleNodeClick = (node: Node) => {
-        if (!startNodeId) {
-            setStartNodeId(node.id);
-        }
-        else if (node.id == startNodeId) {
-            clearSelection();
-        }
-        else if (!endNodeId) {
-            setEndNodeId(node.id);
-            if (graph && startNodeId) {
-                const path = graph.bfs(startNodeId, node.id);
-                setPath(path);
-            }
-        }
-    };
-
-    const handleNodeHover = (node: Node) => {
-        if (!hoverNodeId) {
-            setHoverNodeId(node.id);
-        }
-    };
-
-    const handleNodeHoverLeave = () => {
-        if (hoverNodeId) {
-            setHoverNodeId(null);
-        }
-    };
-
-    const displayHoverInfo = (node: Node, type: 'hover') => {
-        return (
-            <g>
-                {type === 'hover'}
-                <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>;
-                <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
-                    Type: {node.nodeType}
-                </text>;
-                <text x={node.xCoord - 400} y={node.yCoord - 80} fill="black">
-                    {node.longName}
-                </text>;
-                <text x={node.xCoord - 400} y={node.yCoord - 55} fill="black">
-                    {node.shortName}
-                </text>;
-                <text x={node.xCoord - 400} y={node.yCoord - 30} fill="black">
-                    Status: -/-
-                </text>;
-            </g>
-        );
-    };
-    const clearSelection = () => {
-        setStartNodeId(null);
-        setEndNodeId(null);
-        setPath([]);
-    };
-    const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
-        return (
-            <g>
-                <rect x={node.xCoord - 105} y={node.yCoord - 65} width="100" height="60" fill="lightgrey"/>
-                <text x={node.xCoord - 90} y={node.yCoord - 45} fill="black">
-                    {type === 'start' ? 'Start Node' : 'End Node'}
-                </text>
-                <text x={node.xCoord - 75} y={node.yCoord - 20} fill="blue" style={{cursor: 'pointer'}}
-                      onClick={() => clearSelection()}>
-                    Clear
-                </text>
-            </g>
-        );
-    };
+function MapLowerLevel1() {
+    const {
+        graph,
+        startNodeId,
+        endNodeId,
+        path,
+        hoverNodeId,
+        displayPath,
+        handleNodeClick,
+        handleNodeHover,
+        handleNodeHoverLeave,
+        displaySelectedNodes,
+        displayHoverInfo
+    } = useMapLogic();
 
     return (
-        <div className={className} style={{position: 'relative', ...style}}>
+        <div className={'floor L1'}>
             <svg viewBox="0 0 5000 3400">
-                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
+                <image
+                    href={'public/maps/00_thelowerlevel1.png'}
+                    x="0"
+                    y="0"
+                    height="100%"
+                    width="100%"
+                />
                 {graph && path.length > 0 && displayPath(graph, path)}
-                {graph && Array.from(graph.nodes.values()).map((node: Node) => (
-                    <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)} onMouseLeave={() => handleNodeHoverLeave()}>
+                {graph && Array.from(graph.nodes.values()).filter(node => node.floor === 'L1').map((node: Node) => (
+                    <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)}
+                       onMouseLeave={() => handleNodeHoverLeave()}>
                         <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue" style={{cursor: 'pointer'}}/>
                         {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}

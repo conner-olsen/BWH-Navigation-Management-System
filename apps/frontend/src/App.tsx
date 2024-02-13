@@ -1,8 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Global_Footer from "./components/Global_Footer.tsx";
-import { NodeData } from "./routes/NodeData.tsx";
-import {EdgeData} from "./routes/EdgeData.tsx";
+import { NodeEdgeData } from "./routes/NodeEdgeData.tsx";
 import HomePage from "./routes/HomePage.tsx";
 import BFSRoute from "./routes/BFSRoute.tsx";
 import FlowerServiceRequest from "./routes/ServiceRequests/FlowerServiceRequest.tsx";
@@ -28,13 +27,9 @@ function App() {
               element: <BwhHomepage />,
           },
         {
-          path: "/NodeData",
-          element: <NodeData />,
+          path: "/DataUpload",
+          element: <NodeEdgeData />,
         },
-          {
-              path: "/EdgeData",
-              element: <EdgeData />,
-          },
         {
           path: "/HomeOUTDATED",
           element: <HomePage />,
