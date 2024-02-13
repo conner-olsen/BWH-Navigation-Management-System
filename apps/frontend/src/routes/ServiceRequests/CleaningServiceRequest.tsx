@@ -4,7 +4,6 @@ import axios from "axios";
 import {Input} from "../../components/ui/input.tsx";
 import {Col, Container, Row} from "react-bootstrap";
 import {Label} from "../../components/ui/label.tsx";
-import {Textarea} from "../../components/ui/textarea.tsx";
 import Form from "react-bootstrap/Form";
 import {Button} from "../../components/ui/button.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
@@ -19,13 +18,10 @@ const CleaningServiceRequest: React.FC = () => {
 
     const [formData, setFormData] = useState({
         id: 0,
-        senderName: '',
-        senderEmail: '',
         nodeID: '',
         patientName: '',
-        flowerType: '',
-        deliveryDate: '',
-        note: '',
+        type: '',
+        priority: '',
         status: 'UnAssigned',
         employeeUser: 'none'
     });
@@ -34,18 +30,15 @@ const CleaningServiceRequest: React.FC = () => {
         event.preventDefault();
         setFormData({
             id: getRandomInt(1000000),
-            senderName: '',
-            senderEmail: '',
             nodeID: '',
             patientName: '',
-            flowerType: '',
-            deliveryDate: '',
-            note: '',
+            type: '',
+            priority: '',
             status: '',
             employeeUser: ''
         });
         try {
-            const response = await axios.post("/api/populate-flower-service-request", JSON.stringify(formData), {
+            const response = await axios.post("/api/", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }
@@ -68,21 +61,27 @@ const CleaningServiceRequest: React.FC = () => {
             <NavBar></NavBar>
 
             <h1>
-                Flower Service Request
+                Cleaning Service Request
             </h1>
 
             <Container>
                 <Row>
                     <Col>
                         <div>
-                            <Label htmlFor="senderName">Sender Name</Label>
-                            <Input type="text" id="senderName" placeholder={"John Doe"}/>
+                            <Label htmlFor="patientName">Patient Name</Label>
+                            <Input type="text" id="patientName" placeholder={"John Doe"}/>
                         </div>
                     </Col>
                     <Col>
                         <div>
-                            <Label htmlFor="senderEmail">Sender Email</Label>
-                            <Input type="email" id="senderEmail" placeholder={"johndoe@gmail.com"}/>
+                            <label
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Type
+                                of Cleaning</label>
+                            <Form.Select>
+                                <option value="Basic">Basic</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Deep">Deep</option>
+                            </Form.Select>
                         </div>
                     </Col>
                 </Row>
@@ -95,43 +94,26 @@ const CleaningServiceRequest: React.FC = () => {
 
                     <Col>
                         <div>
-                            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Flower Selection</label>
+                            <label
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
                             <Form.Select>
-                                <option value="daffodils">Daffodil</option>
-                                <option value="daisies">Daisies</option>
-                                <option value="hydrangeas">Hydrangeas</option>
-                                <option value="lilies">Lilies</option>
-                                <option value="marigolds">Marigolds</option>
-                                <option value="orchids">orchids</option>
-                                <option value="roses">Roses</option>
+                                <option value="Low Priority">Low Priority</option>
+                                <option value="High Priority">High Priority</option>
+                                <option value="Emergency">Emergency</option>
                             </Form.Select>
                         </div>
                     </Col>
                 </Row>
 
-                <br/>
-
-                <Row>
-
-
-                    <Col>
-                        <Label htmlFor="patientName">Patient Name</Label>
-                        <Input type="text" id="patientName" placeholder="John Smith"></Input>
-                    </Col>
-                    <Col>
-                        <Label htmlFor="note">Add a note</Label>
-                        <Textarea id="note" placeholder="Get well soon! Miss you loads <3"></Textarea>
-                    </Col>
-                </Row>
-                <br/>
+                <br/>;
 
                 <Row>
                     <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
                 </Row>
 
+                </Container>
 
-            </Container>
-        </div>
+            </div>
     );
 };
 export default CleaningServiceRequest;
