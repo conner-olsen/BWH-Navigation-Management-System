@@ -11,11 +11,14 @@ interface MapDisplayProps {
     startNode?: string;
     endNode?: string;
     sendHoverMapPath: (path: PathfindingRequest) => void;
+    doDisplayEdges: boolean;
+    doDisplayNodes: boolean;
+    doDisplayNames: boolean;
     pathFindingType: string;
 
 }
 
-function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, pathFindingType}: MapDisplayProps) {
+function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, pathFindingType, doDisplayEdges, doDisplayNodes, doDisplayNames}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -52,7 +55,7 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
                     <line key={`${node.id}-${nextNode.id}`}
                           x1={node.xCoord} y1={node.yCoord}
                           x2={nextNode.xCoord} y2={nextNode.yCoord}
-                          stroke="red" strokeWidth="5"/>
+                          stroke="red" strokeWidth="8"/>
                 );
             }
         }
@@ -76,8 +79,6 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
             }
         }
     };
-
-
 
     const handleNodeHover = (node: Node) => {
         if (!hoverNodeId) {
@@ -132,32 +133,69 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
         );
     };
 
+    const displayNodes = (graph: Graph) => {
+            return (
+            Array.from(graph.nodes.values()).map((node: Node) => {
+                if (node.floor == floor && doDisplayNodes){
+                    return(
+                        <g key={node.id} onClick={() => handleNodeClick(node)}
+                           onMouseEnter={() => handleNodeHover(node)}
+                           onMouseLeave={() => handleNodeHoverLeave()}>
+                            <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
+                                    style={{cursor: 'pointer'}}/>
+                            {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                            {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                            {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
+                        </g>
+                    );
+                }
+            }));
+    };
+
+    const displayNames = (graph: Graph) => {
+        return (
+            Array.from(graph.nodes.values()).map((node: Node) => {
+                if (node.floor == floor && doDisplayNames) {
+                    return (
+                        <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                            {node.shortName}
+                        </text>
+                    );
+                }
+            }));
+    };
+
+    const displayEdges = (graph: Graph) => {
+        if(doDisplayEdges) {
+            const edges: React.JSX.Element[] = [];
+            for (const [nodeId, node] of graph.nodes) {
+                node.edges.forEach(edgeNodeId => {
+                    const targetNode = graph.getNode(edgeNodeId);
+                    if (targetNode && (targetNode.floor == floor && node.floor == floor)) {
+                        edges.push(
+                            <line key={`${nodeId}-${edgeNodeId}`}
+                                  x1={node.xCoord} y1={node.yCoord}
+                                  x2={targetNode.xCoord} y2={targetNode.yCoord}
+                                  stroke="black" strokeWidth="1"/>
+                        );
+                    }
+                });
+            }
+            return edges;
+        }
+    };
+
     return (
         <div className={"relative"}>
             <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
                 <image href={floorMap} width="5000" height="3400" x="0"
                        y="0"/>
-                {/*{graph && displayEdges(graph)}*/}
+                {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
-                {graph && Array.from(graph.nodes.values()).map((node: Node) => {
-                    if (node.floor == floor){
-                        return(
-                            <g key={node.id} onClick={() => handleNodeClick(node)}
-                               onMouseEnter={() => handleNodeHover(node)}
-                               onMouseLeave={() => handleNodeHoverLeave()}>
-                                <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
-                                        style={{cursor: 'pointer'}}/>
-                                {startNodeId === node.id && displaySelectedNodes(node, 'start')}
-                                {endNodeId === node.id && displaySelectedNodes(node, 'end')}
-                                {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
-                            </g>
-                        );
-                    }}
-                )}
+                {graph && displayNames(graph)}
+                {graph && displayNodes(graph)}
             </svg>
         </div>
-
-
     );
 }
 
@@ -192,4 +230,5 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
  *
  * export default App;
  */
+
 export default MapDisplay;
