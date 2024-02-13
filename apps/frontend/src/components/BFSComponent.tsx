@@ -269,7 +269,7 @@ export function BFSComponent() {
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">x</button>
                             </div>
-                            <TransformComponent>
+                            <TransformComponent wrapperClass={"max-h-screen"}>
                                 {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                                           doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
