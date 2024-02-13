@@ -134,7 +134,6 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
     };
 
     const displayNodes = (graph: Graph) => {
-        // if (doDisplayNodes) {
             return (
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes){
@@ -151,18 +150,19 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
                     );
                 }
             }));
-        //}
     };
 
     const displayNames = (graph: Graph) => {
-        if (doDisplayNames) {
-            return (
-                Array.from(graph.nodes.values()).map((node: Node) => (
-                    <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-                        {node.shortName}
-                    </text>
-                )));
-        }
+        return (
+            Array.from(graph.nodes.values()).map((node: Node) => {
+                if (node.floor == floor && doDisplayNames) {
+                    return (
+                        <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                            {node.shortName}
+                        </text>
+                    );
+                }
+            }));
     };
 
     const displayEdges = (graph: Graph) => {
@@ -171,7 +171,7 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
             for (const [nodeId, node] of graph.nodes) {
                 node.edges.forEach(edgeNodeId => {
                     const targetNode = graph.getNode(edgeNodeId);
-                    if (targetNode) {
+                    if (targetNode && (targetNode.floor == floor && node.floor == floor)) {
                         edges.push(
                             <line key={`${nodeId}-${edgeNodeId}`}
                                   x1={node.xCoord} y1={node.yCoord}
