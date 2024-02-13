@@ -1,9 +1,9 @@
 // ButtonComponent.js
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import {Switch} from "./ui/switch.tsx";
 
 const DarkModeButton = () => {
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(document.body.classList.contains('dark'));
 
     // useEffect(() => {
     //     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -27,7 +27,7 @@ const DarkModeButton = () => {
     };
 
     return (
-        <Switch onClick={handleToggle} className="mt-2.5">
+        <Switch onCheckedChange={handleToggle} defaultChecked={document.body.classList.contains('dark')} className="mt-2.5">
             Dark Mode
         </Switch>
     );
