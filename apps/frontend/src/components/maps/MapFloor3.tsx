@@ -17,7 +17,7 @@ const MapFloor3 = () => {
     } = useMapLogic();
     return (
         <div className={"floor3"}>
-            <svg viewBox="0 0 5000 3400">
+            <svg viewBox="0 0 5000 3400" className={"w-[90vw]"}>
                 <image
                     href={'public/maps/03_thethirdfloor.png'}
                     x="0"
