@@ -27,7 +27,7 @@ const ServiceList = () => {
             <Container>
                 <Row>
                     <Col>
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/FlowerService" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Flower Service Request</CardTitle>
@@ -41,7 +41,7 @@ const ServiceList = () => {
                     </Col>
                     <Col>
 
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/CleaningService" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Cleaning Service Request</CardTitle>
@@ -56,7 +56,7 @@ const ServiceList = () => {
 
                     <Col>
 
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/ReligiousService" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Religious Service Request</CardTitle>
