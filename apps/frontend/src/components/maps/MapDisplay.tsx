@@ -185,7 +185,6 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
         }
     };
 
-
     return (
         <div className={"relative"}>
             <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
