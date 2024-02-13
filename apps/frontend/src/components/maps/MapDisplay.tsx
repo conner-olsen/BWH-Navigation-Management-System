@@ -3,13 +3,6 @@ import {Graph, Node} from 'common/src/graph-structure.ts';
 import populatedGraph from 'common/dev/populatedGraph.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 
-import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "../ui/hover-card.tsx";
-import {Button} from "../ui/button.tsx";
-
 
 interface MapDisplayProps {
     style?: CSSProperties;
@@ -20,7 +13,7 @@ interface MapDisplayProps {
     pathFindingType: string;
 }
 
-function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pathFindingType}: MapDisplayProps) {
+function MapDisplay({style, startNode, endNode, sendHoverMapPath, pathFindingType}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -69,7 +62,7 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                     <line key={`${node.id}-${nextNode.id}`}
                           x1={node.xCoord} y1={node.yCoord}
                           x2={nextNode.xCoord} y2={nextNode.yCoord}
-                          stroke="red" strokeWidth="5"/>
+                          stroke="red" strokeWidth="6"/>
                 );
             }
         }
@@ -94,86 +87,69 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
         }
     };
 
-
-
     const handleNodeHover = (node: Node) => {
         if (!hoverNodeId) {
             setHoverNodeId(node.id);
         }
-        <HoverCard openDelay={200}>
-            <HoverCardTrigger asChild>
-                <svg>
-                    <circle className="r=12 cx={node.xCoord} cy={node.yCoord} fill=light-blue" style={{cursor: 'pointer'}}/>
-                </svg>
-            </HoverCardTrigger>
-            <HoverCardContent className="w-80">
-                <div>
-                    <p className="text-sm">
-                        Type: {node.nodeType}
-                    </p>
-                    <p className="text-sm">
-                        {node.longName}
-                    </p>
-                    <p className="text-sm">
-                        {node.shortName}
-                    </p>
-                    <p className="text-sm">
-                        Status: -/-
-                    </p>
-                </div>
-            </HoverCardContent>
-        </HoverCard>;
     };
 
     const handleNodeHoverLeave = () => {
-        console.log("hover left");
         if (hoverNodeId) {
             setHoverNodeId(null);
         }
     };
 
-    const displayHoverInfo = (node: Node, type: 'hover') => {
+    const displayHoverInfo = (node: Node) => {
         return (
-            <g>
-                {type === 'hover'}
-                <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>;
-                <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
-                    Type: {node.nodeType}
-                </text>;
-                <text x={node.xCoord - 400} y={node.yCoord - 80} fill="black">
-                    {node.longName}
-                </text>;
-                <text x={node.xCoord - 400} y={node.yCoord - 55} fill="black">
-                    {node.shortName}
-                </text>;
-                <text x={node.xCoord - 400} y={node.yCoord - 30} fill="black">
-                    Status: -/-
-                </text>;
-            </g>
+            <foreignObject x={node.xCoord - 225} y={node.yCoord-250} width="450" height="250" z="40">
+                <div
+                    className={"h-fit rounded-md border bg-popover p-4 text-2xl text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}>
+                    <g>
+                        <div>
+                            Type: {node.nodeType}
+                        </div>
+                        <div>
+                            {node.longName}
+                        </div>
+                        <div>
+                            {node.shortName}
+                        </div>
+                        <div>
+                            Status: -/-
+                        </div>
+                    </g>
+                </div>
+            </foreignObject>
         );
     };
     const clearSelection = () => {
         setStartNodeId(null);
+
         setEndNodeId(null);
         setPath([]);
     };
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
-            <g>
-            <rect x={node.xCoord - 100} y={node.yCoord - 50} width="100" height="60" fill="lightgrey"/>
-                <text x={node.xCoord - 85} y={node.yCoord - 30} fill="black">
-                    {type === 'start' ? 'Start Node' : 'End Node'}
-                </text>
-                <text x={node.xCoord - 70} y={node.yCoord - 5} fill="blue" style={{cursor: 'pointer'}}
-                      onClick={() => clearSelection()}>
-                    Clear
-                </text>
-            </g>
+            <foreignObject x={node.xCoord - 70} y={node.yCoord + 20} width="200" height="200" className="z-50">
+                <div
+                    className={"w-fit rounded-3xl border bg-popover p-4 text-md text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}>
+                    <g>
+                        <div className="font-bold">
+                            {type === 'start' ? 'Start Node' : 'End Node'}
+                        </div>
+                        <div>
+                            <text className="text-blue-500 font-semibold" style={{cursor: 'pointer'}} onClick={() => clearSelection()}>
+                                Clear
+                            </text>
+                        </div>
+                    </g>
+                </div>
+            </foreignObject>
         );
     };
 
     return (
-        <div className={className} style={{position: 'relative', ...style}}>
+        <div className="z-10" style={{position: 'relative', ...style}}>
             <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
                 <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
                        y="0"/>
@@ -183,40 +159,17 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                     <g key={node.id} onClick={() => handleNodeClick(node)}
                        onMouseEnter={() => handleNodeHover(node)}
                        onMouseLeave={() => handleNodeHoverLeave()}>
-                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
+                        <circle cx={node.xCoord} cy={node.yCoord} r="10" fill="blue"
                                 style={{cursor: 'pointer'}}/>
                         {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}
-                        {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
+                        {hoverNodeId === node.id && displayHoverInfo(node)}
                     </g>
                 ))}
             </svg>
-
-            <HoverCard openDelay={200}>
-                <HoverCardTrigger asChild>
-                    <Button variant="link">O</Button>
-                </HoverCardTrigger>
-                <HoverCardContent className="w-80">
-                    <div>
-                        <p className="text-sm">
-                            Type: node.nodeType
-                        </p>
-                        <p className="text-sm">
-                            node.longName
-                        </p>
-                        <p className="text-sm">
-                            node.shortName
-                        </p>
-                        <p className="text-sm">
-                            Status: -/-
-                        </p>
-                    </div>
-                </HoverCardContent>
-            </HoverCard>
         </div>
     );
 }
-
 
 /**
  * This is the default export of the MapDisplay component.
