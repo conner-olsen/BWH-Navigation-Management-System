@@ -1,6 +1,5 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
-import { Prisma } from "database";
 
 
 const router: Router = express.Router();
@@ -8,12 +7,23 @@ const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
 
-  const employeeRequestAttempt: Prisma.EmployeeUncheckedCreateInput = req.body;
+  const { username, ...employeeUpdateData } = req.body;
 
   try {
     // Create the employee
+    await PrismaClient.user.create({
+      data: {
+        Username: username
+      },
+    });
 
-    await PrismaClient.employee.create({data: employeeRequestAttempt});
+    const employeeData = {
+      username: username,
+      ...employeeUpdateData
+    };
+
+    await PrismaClient.employee.create({data: employeeData
+    });
 
     res.sendStatus(200);
   } catch (error) {
@@ -43,12 +53,6 @@ router.patch("/", async function (req: Request, res: Response) {
     if (!employee) {
       return res.status(404).send("Employee not found");
     }
-
-    await PrismaClient.employee.update({
-      where: { username },
-      data: employeeUpdateData,
-    });
-
     // Update user data associated with the employee
     await PrismaClient.user.update({
       where: { Username: username },
@@ -56,6 +60,13 @@ router.patch("/", async function (req: Request, res: Response) {
         Username: username
       },
     });
+
+    await PrismaClient.employee.update({
+      where: { username },
+      data: employeeUpdateData,
+    });
+
+
 
     res.sendStatus(200);
   } catch (error) {
