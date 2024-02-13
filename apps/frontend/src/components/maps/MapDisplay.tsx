@@ -170,13 +170,37 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).map((node: Node) => (
                     <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)} onMouseLeave={() => handleNodeHoverLeave()}>
-                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue" style={{cursor: 'pointer'}}/>
+                        <HoverCard openDelay={200}>
+                            <HoverCardTrigger asChild>
+                                <svg>
+                                    <circle r="9" cx={node.xCoord} cy={node.yCoord} fill="blue" style={{cursor: 'pointer'}}/>
+                                </svg>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-80">
+                                <div>
+                                    <p className="text-sm">
+                                        Type: {node.nodeType}
+                                    </p>
+                                    <p className="text-sm">
+                                        {node.longName}
+                                    </p>
+                                    <p className="text-sm">
+                                        {node.shortName}
+                                    </p>
+                                    <p className="text-sm">
+                                        Status: -/-
+                                    </p>
+                                </div>
+                            </HoverCardContent>
+                        </HoverCard>
+                        {/*<circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue" style={{cursor: 'pointer'}}/>*/}
                         {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                         {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
                     </g>
                 ))}
             </svg>
+
             <HoverCard openDelay={200}>
                 <HoverCardTrigger asChild>
                     <Button variant="link">O</Button>
