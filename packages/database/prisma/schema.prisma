@@ -9,7 +9,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_URL")
+  url      = "postgresql://teamd:teamd50@database.cs.wpi.edu:5432/teamddb?schema=teamdschema"
 }
 
 // example table used in the express router example
@@ -27,7 +27,7 @@ model Node {
   floor     String
   building  String
   nodeType  String
-  longName  String @unique
+  longName  String
   shortName String
   Edge      Edge[]
   ServiceRequest FlowerServiceRequest[]
@@ -61,16 +61,16 @@ model Employee {
 //Service Request Table
 model FlowerServiceRequest{
   id Int @id
-  node Node  @relation(fields: [roomLongName], references: [longName])
+  node Node  @relation(fields: [nodeID], references: [nodeId])
   employee Employee @relation(fields: [employeeUser], references: [username])
   senderName String
   senderEmail String
-  roomLongName String
+  nodeID String
   patientName String
   flowerType String
   deliveryDate String
   note String
-  status String @default("Assigned")
+  status String @default("UnAssigned")
   employeeUser String
 }
 

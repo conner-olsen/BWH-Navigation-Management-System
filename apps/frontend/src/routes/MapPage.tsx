@@ -8,8 +8,8 @@ import MapFloor1 from "../components/maps/MapFloor1.tsx";
 import MapFloor2 from "../components/maps/MapFloor2.tsx";
 import MapFloor3 from "../components/maps/MapFloor3.tsx";
 import Form from "react-bootstrap/Form";
-import {Container} from "react-bootstrap";
-import MapSidebar from "../components/MapSidebar.tsx";
+import {Node} from "common/src/graph-structure.ts";
+import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 
 export default function MapPage() {
     const [map, setMap] = useState("lowerLevel1");
@@ -47,8 +47,8 @@ export default function MapPage() {
         <div>
             <Outlet/>
             <NavBar/>
-            <MapSidebar/>
-            <Container className="hidden">
+
+            <div>
                 <br/>
 
                 <Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>
@@ -70,7 +70,49 @@ export default function MapPage() {
                 {floor1ContentVisible && <MapFloor1/>}
                 {floor2ContentVisible && <MapFloor2/>}
                 {floor3ContentVisible && <MapFloor3/>}
-            </Container>
+
+                <TransformWrapper
+                    initialScale={1}
+                    initialPositionX={0}
+                    initialPositionY={0}
+                    wheel={{step: 0.1, smoothStep: 0.01}}
+                >
+                    {({zoomIn, zoomOut, resetTransform}) => (
+                        <React.Fragment>
+                            <div className="tools flex flex-col absolute right-2 top-2 z-10">
+                                <button onClick={() => zoomIn()}
+                                        className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+                                    text-2xl shadow-md m-0.5">+</button>
+                                <button onClick={() => zoomOut()}
+                                        className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+                                    text-2xl shadow-md m-0.5">-</button>
+                                <button onClick={() => resetTransform()}
+                                        className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+                                    text-2xl shadow-md m-0.5">x</button>
+                            </div>
+                            <TransformComponent>
+                                <svg viewBox="0 0 5000 3400" className={"w-[90vw]"}>
+                                    <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
+                                           y="0"/>
+                                    {/*{graph && displayEdges(graph)}*/}
+                                    {graph && path.length > 0 && displayPath(graph, path)}
+                                    {graph && Array.from(graph.nodes.values()).map((node: Node) => (
+                                        <g key={node.id} onClick={() => handleNodeClick(node)}
+                                           onMouseEnter={() => handleNodeHover(node)}
+                                           onMouseLeave={() => handleNodeHoverLeave()}>
+                                            <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
+                                                    style={{cursor: 'pointer'}}/>
+                                            {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                                            {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                                            {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
+                                        </g>
+                                    ))}
+                                </svg>
+                            </TransformComponent>
+                        </React.Fragment>
+                    )}
+                </TransformWrapper>
+            </div>
 
         </div>
 

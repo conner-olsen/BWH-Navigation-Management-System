@@ -10,9 +10,10 @@ interface MapDisplayProps {
     startNode?: string;
     endNode?: string;
     sendHoverMapPath: (path: PathfindingRequest) => void;
+    pathFindingType: string;
 }
 
-function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: MapDisplayProps) {
+function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pathFindingType}: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph | null>(null);
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -22,13 +23,17 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: Ma
 
     useEffect(() => {
         setGraph(populatedGraph);
+
         if (startNode && endNode && graph) {
-            const path = graph.bfsAstar(startNode, endNode);
+            //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
+            graph.setPathfindingMethodStringRoute(pathFindingType);
+
+            const path = graph.runPathfinding(startNode, endNode);
             setPath(path);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
         }
-    }, [startNode, endNode, graph]);
+    }, [startNode, endNode, graph, sendHoverMapPath, pathFindingType]);
 
     // const displayEdges = (graph: Graph) => {
     //     const edges: React.JSX.Element[] = [];
@@ -139,13 +144,17 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: Ma
 
     return (
         <div className={className} style={{position: 'relative', ...style}}>
-            <svg viewBox="0 0 5000 3400">
-                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
+            <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
+                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
+                       y="0"/>
                 {/*{graph && displayEdges(graph)}*/}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).map((node: Node) => (
-                    <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)} onMouseLeave={() => handleNodeHoverLeave()}>
-                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue" style={{cursor: 'pointer'}}/>
+                    <g key={node.id} onClick={() => handleNodeClick(node)}
+                       onMouseEnter={() => handleNodeHover(node)}
+                       onMouseLeave={() => handleNodeHoverLeave()}>
+                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
+                                style={{cursor: 'pointer'}}/>
                         {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                         {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
@@ -153,6 +162,8 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: Ma
                 ))}
             </svg>
         </div>
+
+
     );
 }
 
