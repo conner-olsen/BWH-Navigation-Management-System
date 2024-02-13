@@ -4,7 +4,6 @@ import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
-import nodeCSVString from "common/dev/nodeCSVString.ts";
 import Form from "react-bootstrap/Form";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
@@ -64,8 +63,38 @@ export function BFSComponent() {
         return bfsResult.map(node => node.longName);
     };
 
+    const [nodeCSVData, setNodeCSVData] = useState<string>("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Make a GET request to the API endpoint
+                const res = await fetch("/api/download-node-csv");
+
+                // Check if the request was successful (status code 2xx)
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+
+
+                const result = await res.text();
+                // Set the data in the state
+                setNodeCSVData(result);
+            } catch (err) {
+                // Handle errors
+                console.log("Failed");
+            }
+        };
+
+        fetchData().then();
+    }, []); //
+
+
+
+
+
     //parse node CSV into array of CSVRows
-    const CSVRow = parseCSV(nodeCSVString);
+    const CSVRow = parseCSV(nodeCSVData);
     //make array to be inserted in the html code
     const roomNames = [];
 
@@ -75,8 +104,9 @@ export function BFSComponent() {
         const row = CSVRow[i];
         const rowval = Object.values(row);
         const id = rowval[0];
+        const nodeId = row["nodeId"];
         const longName = row["longName"];
-        roomNames.push(<option value={id}> {longName} </option>);
+        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
     }
 
     const sendHoverMapPath = (path: PathfindingRequest) => {
