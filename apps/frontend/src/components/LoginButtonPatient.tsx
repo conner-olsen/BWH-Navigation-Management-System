@@ -25,7 +25,7 @@ const LoginButtonPatient = () => {
                     transition: 'color 0.5s ease', // smooth color fade in
                 }}
             >
-                LOGIN AS PATIENT
+                PATIENT
             </button>
         </div>
     );
