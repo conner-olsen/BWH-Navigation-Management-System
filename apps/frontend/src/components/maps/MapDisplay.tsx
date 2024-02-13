@@ -1,12 +1,13 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
-import populatedGraph from 'common/dev/populatedGraph.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
-import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import axios from "axios";
+// import axios from "axios";
+
 
 interface MapDisplayProps {
-    style?: CSSProperties;
-    className?: string;
+    floorMap: string
+    floor: string
     startNode?: string;
     endNode?: string;
     sendHoverMapPath: (path: PathfindingRequest) => void;
@@ -14,19 +15,25 @@ interface MapDisplayProps {
     doDisplayNodes: boolean;
     doDisplayNames: boolean;
     pathFindingType: string;
+
 }
 
-function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pathFindingType, doDisplayEdges, doDisplayNodes, doDisplayNames}: MapDisplayProps) {
-    const [graph, setGraph] = useState<Graph | null>(null);
+function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, pathFindingType}: MapDisplayProps) {
+    const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
     const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
 
+    useEffect(() => {
+        axios.get("/api/graph").then((res) => {
+            const populatedGraph  = new Graph();
+            populatedGraph.populateGraph(res.data.nodes,res.data.edges);
+            setGraph(populatedGraph);
+        });
+    }, []);
 
     useEffect(() => {
-        setGraph(populatedGraph);
-
         if (startNode && endNode && graph) {
             //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
             graph.setPathfindingMethodStringRoute(pathFindingType);
@@ -36,27 +43,8 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
             setStartNodeId(startNode);
             setEndNodeId(endNode);
         }
-    }, [startNode, endNode, graph, sendHoverMapPath, pathFindingType]);
+    }, [startNode, endNode, sendHoverMapPath, pathFindingType, graph]);
 
-    const displayEdges = (graph: Graph) => {
-        if(doDisplayEdges) {
-            const edges: React.JSX.Element[] = [];
-            for (const [nodeId, node] of graph.nodes) {
-                node.edges.forEach(edgeNodeId => {
-                    const targetNode = graph.getNode(edgeNodeId);
-                    if (targetNode) {
-                        edges.push(
-                            <line key={`${nodeId}-${edgeNodeId}`}
-                                  x1={node.xCoord} y1={node.yCoord}
-                                  x2={targetNode.xCoord} y2={targetNode.yCoord}
-                                  stroke="black" strokeWidth="1"/>
-                        );
-                    }
-                });
-            }
-            return edges;
-        }
-    };
     const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
         for (let i = 0; i < path.length - 1; i++) {
@@ -173,40 +161,28 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
 
 
     return (
-        <div className={className} style={{width: '90%', margin: 'auto', position: 'relative', ...style}}>
-            <TransformWrapper
-                initialScale={1}
-                initialPositionX={0}
-                initialPositionY={0}
-                wheel={{step: 0.1, smoothStep: 0.01}}
-            >
-                {({zoomIn, zoomOut, resetTransform}) => (
-                    <React.Fragment>
-                        <div className="tools flex flex-col absolute right-2 top-2 z-10">
-                            <button onClick={() => zoomIn()}
-                                    className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                    text-2xl shadow-md m-0.5">+</button>
-                            <button onClick={() => zoomOut()}
-                                    className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                    text-2xl shadow-md m-0.5">-</button>
-                            <button onClick={() => resetTransform()}
-                                    className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                    text-2xl shadow-md m-0.5">x</button>
-                        </div>
-                        <TransformComponent>
-                            <svg viewBox="0 0 5000 3400" className={"w-[90vw]"}>
-                                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
-                                       y="0"/>
-                                {graph && displayEdges(graph)}
-                                {graph && path.length > 0 && displayPath(graph, path)}
-                                {graph && displayNodes(graph)}
-                                {graph && displayNames(graph)}
-                            </svg>
-                        </TransformComponent>
-                    </React.Fragment>
+        <div className={"relative"}>
+            <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
+                <image href={floorMap} width="5000" height="3400" x="0"
+                       y="0"/>
+                {/*{graph && displayEdges(graph)}*/}
+                {graph && path.length > 0 && displayPath(graph, path)}
+                {graph && Array.from(graph.nodes.values()).map((node: Node) => {
+                    if (node.floor == floor){
+                        return(
+                            <g key={node.id} onClick={() => handleNodeClick(node)}
+                               onMouseEnter={() => handleNodeHover(node)}
+                               onMouseLeave={() => handleNodeHoverLeave()}>
+                                <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
+                                        style={{cursor: 'pointer'}}/>
+                                {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                                {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                                {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
+                            </g>
+                        );
+                    }}
                 )}
-            </TransformWrapper>
-
+            </svg>
         </div>
     );
 }
