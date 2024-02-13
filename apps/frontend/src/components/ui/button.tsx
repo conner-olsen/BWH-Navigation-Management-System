@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import cn from "../../lib/utils.ts";
 
+import cn from "../../lib/utils.ts";
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
@@ -39,27 +39,17 @@ export interface ButtonProps
 }
 //test
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, asChild = false, ...props }, ref) => {
-        const Comp = asChild ? Slot : "button";
-        return (
-            <Comp
-                className={cn(
-                    "rounded-full",   // Make the button oval
-                    "p-2",            // Reduce padding for height
-                    "border",         // Add border
-                    "border-black",   // Black border
-                    "bg-transparent", // Transparent background
-                    "w-60",           // Increase width, adjust the value as needed
-                    "h-10",            // Reduce height, adjust the value as needed
-                    className
-                )}
-                ref={ref}
-                {...props}
-            />
-        );
-    }
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
 );
 Button.displayName = "Button";
 
 export { Button, buttonVariants };
-
