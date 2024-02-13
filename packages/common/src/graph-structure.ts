@@ -147,57 +147,7 @@ export class Graph {
    * @param nodePath - path to nodeID csv file
    * @param edgePath - path to edgeID csv file
    */
-  // fromCSV(nodePath: string, edgePath: string) {
-  //   // Read the CSV file as plain text
-  //   const nodeCSVString = fs.readFileSync(nodePath, "utf8");
-  //   const edgeCSVString = fs.readFileSync(edgePath, "utf8");
-  //   this.fromString(nodeCSVString, edgeCSVString);
-  // }
-  // async fromDB() {
-  //  const nodes = await PrismaClient.node.findMany();
-  //  const edges = await PrismaClient.edge.findMany();
-  // }
-  //
-  // fromString(nodeCSVString: string, edgeCSVString: string) {
-  //   // Specify the path to your CSV file
-  //   let rows: CSVRow[];
-  //
-  //   // Read the CSV file as plain text
-  //   rows = parseCSV(nodeCSVString);
-  //   // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
-  //   for (const row of rows) {
-  //     const nodeID = row["nodeID"];
-  //     const xcoord = row["xcoord"];
-  //     const ycoord = row["ycoord"];
-  //     const floor = row["floor"];
-  //     const building = row["building"];
-  //     const nodeType = row["nodeType"];
-  //     const longName = row["longName"];
-  //     const shortName = row["shortName"];
-  //
-  //     const node = new Node(
-  //       nodeID,
-  //       +xcoord,
-  //       +ycoord,
-  //       floor,
-  //       building,
-  //       nodeType,
-  //       longName,
-  //       shortName,
-  //     );
-  //     this.addNode(node);
-  //   }
-  //
-  //   // Populate edges
-  //   rows = parseCSV(edgeCSVString);
-  //
-  //   for (const row of rows) {
-  //     const startNode = row["startNode"];
-  //     const endNode = row["endNode"];
-  //
-  //     this.addEdge(startNode, endNode);
-  //   }
-  // }
+
   async fromDB() {
   }
 
