@@ -10,10 +10,6 @@ import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
 // import MapFloor3 from "../components/maps/MapFloor3.tsx";
-import {Col, Container, Row} from "react-bootstrap";
-//import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
-//import { Button } from "./ui/button.tsx";
-//import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -22,8 +18,8 @@ export function BFSComponent() {
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
-     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
-     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+    const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
+    const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -121,7 +117,6 @@ export function BFSComponent() {
         setEndNode(path.endid);
     };
 
-    //restyle :) put in same line
     const [map, setMap] = useState("lowerLevel1");
 
     // const [groundFloorContentVisible, setGroundFloorContentVisible] = useState(false);
@@ -176,7 +171,6 @@ export function BFSComponent() {
                     )}
                 </button>
             </div>
-
             <div
                 className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[96px] pt-[100px] sidebar 
       ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
@@ -184,67 +178,44 @@ export function BFSComponent() {
                 <div className="relative w-full">
                     <h2 className="text-xl font-semibold mb-4">Map Page</h2>
                     <div>
-            <h1 className="font-roboto font-extrabold italic"
-                style={{ marginTop: '5%', fontSize: '60px' }}>Map Page</h1>
+                        <p>Display Options</p>
+                        <Form.Check
+                            inline
+                            type="switch"
+                            id="display-edges-switch"
+                            label="Display Edges"
+                            checked={doDisplayEdges}
+                            onChange={() => setDoDisplayEdges(!doDisplayEdges)}
+                        />
+                        <Form.Check
+                            inline
+                            type="switch"
+                            id="display-nodes-switch"
+                            label="Display Nodes"
+                            checked={doDisplayNodes}
+                            onChange={() => setDoDisplayNodes(!doDisplayNodes)}
+                        />
+                        <Form.Check
+                            inline
+                            type="switch"
+                            id="display-names-switch"
+                            label="Display Names"
+                            checked={doDisplayNames}
+                            onChange={() => setDoDisplayNames(!doDisplayNames)}
+                        />
 
-            <br />
-
-            <Container>
-                <Row>
-                    <Col>
-                        <Container>
-                            <Row>
-                                <Col>
-                                    <Form.Check
-                                        inline
-                                        type="switch"
-                                        id="display-edges-switch"
-                                        label="Display Edges"
-                                        checked={doDisplayEdges}
-                                        onChange={() => setDoDisplayEdges(!doDisplayEdges)}
-                                    />
-                                </Col>
-                                <Col>
-                                    <Form.Check
-                                        inline
-                                        type="switch"
-                                        id="display-nodes-switch"
-                                        label="Display Nodes"
-                                        checked={doDisplayNodes}
-                                        onChange={() => setDoDisplayNodes(!doDisplayNodes)}
-                                    />
-                                </Col>
-                                <Col>
-                                    <Form.Check
-                                        inline
-                                        type="switch"
-                                        id="display-names-switch"
-                                        label="Display Names"
-                                        checked={doDisplayNames}
-                                        onChange={() => setDoDisplayNames(!doDisplayNames)}
-                                    />
-                                </Col>
-                            </Row>
-                        </Container>
-
-                    </Col>
-                </Row>
-            </Container>
-
-                    <Col>
+                </div>
+                    <div>
                         <p>Starting Location</p>
                         <Form.Select value={startNode} size={"sm"}
                                      onChange={e => setStartNode(e.target.value)}>
-                            <option></option>
                             {roomNames}
                         </Form.Select>
-                    </Col>
-
+                    </div>
                     <div>
                         <p>Destination</p>
                         <Form.Select value={endNode} size={"sm"}
                                      onChange={e => setEndNode(e.target.value)}>
-                            <option></option>
                             {roomNames}
                         </Form.Select>
                     </div>
@@ -316,5 +287,7 @@ export function BFSComponent() {
             </div>
 
         </div>
-        </div>
-    );}
+
+    );
+}
+
