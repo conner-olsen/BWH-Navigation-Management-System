@@ -1,6 +1,17 @@
 import NavBar from "../../components/NavBar.tsx";
 import React, { useState } from 'react';
 import axios from "axios";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from "../../components/ui/select.tsx";
+import {Button} from "../../components/ui/button.tsx";
+import {Textarea} from "../../components/ui/textarea.tsx";
+
 
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
@@ -60,62 +71,32 @@ const FlowerServiceRequest: React.FC = () => {
     };
 
 
-    const populateEmployeeTable = () => {
-        axios.patch("/api/populate-employee", {
-
-        }).then(response => console.log(response.data))
-            .catch(error => console.error(error));
-    };
 
     return (
         <div>
-            <NavBar></NavBar>
-            <button className="inline-block p-2.5 text-center text-light-blue cursor-pointer
-                           border-light-blue rounded-md border-solid border-2
-                           transition-all transition-duration-300
-                           hover:bg-light-blue hover:text-white" onClick={populateEmployeeTable}>Populate Employee Table
-            </button>
-            <div className="container">
+            <NavBar></NavBar><div className="mt-20"> {/* Added mx-4 for left and right margins, mt-6 for top margin */}
 
+        </div>
 
-                <h1 className="font-roboto font-bold text-dark-blue">FLOWER DELIVERY FORM</h1>
-                <form onSubmit={handleSubmit}>
-                    <div className="flex justify-between">
-                        <div className="flex flex-col grow pr-2">
-                            <label htmlFor="senderName" className="font-bold">Sender Name</label>
-                            <input type="text" id="senderName" name="senderName" placeholder={"John Doe"} required
-                                value={formData.senderName} onChange={handleChange}
-                                className="form-input"/>
-                            <label htmlFor="senderEmail" className="font-bold">Sender Email</label>
-                            <input type="text" id="senderEmail" name="senderEmail" placeholder={"John@gmail.com"} required
-                                value={formData.senderEmail} onChange={handleChange} className="form-input"/>
-                            <label htmlFor="nodeID" className="font-bold">Room ID</label>
-                            <input type="text" id="nodeID" name="nodeID" placeholder={"ACONF00102"} required
-                                value={formData.nodeID} onChange={handleChange} className="form-input"/>
+            <div className="mx-40">
+                <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
+
+                    {/* First Row - Flower Delivery Service with Smaller Image */}
+                    <div className="mb-3 col-span-2 flex items-center">
+                        <div>
+                            <h1 className="font-roboto font-bold text-6xl text-dark-blue mb-1 text-left">FLOWER</h1>
+                            <h1 className="font-roboto font-bold text-6xl text-dark-blue text-left">DELIVERY</h1>
                         </div>
-                        <div className="flex flex-col grow pl-2">
-                            <label htmlFor="patientName" className="font-bold">Patient's Name</label>
-                            <input type="text" id="patientName" name="patientName" placeholder="Jared Smith" required
-                                value={formData.patientName} onChange={handleChange} className="form-input"/>
-                            <label htmlFor="flowerType" className="font-bold">Select the type of flowers</label>
-                            <select id="flowerType" name="flowerType" required className="form-input"
-                                value={formData.flowerType} onChange={handleChange} >
-                                <option value="/">Select</option>
-                                <option value="daffodils">Daffodil</option>
-                                <option value="daisies">Daisies</option>
-                                <option value="hydrangeas">Hydrangeas</option>
-                                <option value="lilies">Lilies</option>
-                                <option value="marigolds">Marigolds</option>
-                                <option value="orchids">Orchid</option>
-                                <option value="roses">Roses</option>
-                                <option value="sunflowers">Sunflowers</option>
-                                <option value="tulips">Tulips</option>
-                            </select>
+                        <img src="/flower_service.jpg" alt="Flower Service" className="mr-2"
+                             style={{width: '150px', height: '150px'}}/>
+                    </div>
 
-                            <label htmlFor="deliveryDateTime" className="font-bold">Date of Delivery</label>
-                            <input type="text" id="deliveryDate" name="deliveryDate" placeholder={"01/15/1981"} required
-                                value={formData.deliveryDate} onChange={handleChange} className="form-input"/>
-                        </div>
+                    {/* Second Row - Sender Name and Patient's Name */}
+                    <div className="mb-3">
+                        <label className="block text-black text-xl font-bold mb-2" htmlFor="senderName">SENDER
+                            NAME</label>
+                        <Textarea label="" id="senderName" name="senderName" placeholder="John Doe" required
+                                  value={formData.senderName} onChange={handleChange} className="font-roboto text-lg"/>
                     </div>
 
                     <div className="mb-3">
@@ -133,11 +114,11 @@ const FlowerServiceRequest: React.FC = () => {
                                   value={formData.senderEmail} onChange={handleChange} className="font-roboto text-lg"/>
                     </div>
 
-                    <div className="mb-3">
+                    <div className="mb-3 ">
                         <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="flowerType">TYPE OF
                             FLOWERS</label>
                         <Select>
-                            <SelectTrigger>
+                            <SelectTrigger className="w-[180px]">
                                 <SelectValue placeholder="FLOWER TYPE" />
                             </SelectTrigger>
                             <SelectContent>
@@ -149,7 +130,6 @@ const FlowerServiceRequest: React.FC = () => {
                                     <SelectItem value="marigolds">Marigolds</SelectItem>
                                     <SelectItem value="orchids">orchids</SelectItem>
                                     <SelectItem value="roses">Roses</SelectItem>
-                                    <SelectItem value="marigolds">Marigolds</SelectItem>
 
                                 </SelectGroup>
                             </SelectContent>
@@ -183,9 +163,8 @@ const FlowerServiceRequest: React.FC = () => {
                                   value={formData.note} onChange={handleChange} className="font-roboto text-lg"/>
                     </div>
 
-
                     {/* Sixth Row - Buttons */}
-                    <div className="col-span-2 mb-3 flex justify-center"> {/* Changed justify-end to justify-center */}
+                    <div className="mb-2 flex justify-center w-full col-span-2"> {/* Changed justify-end to justify-center */}
                         <Button className="cursor-pointer" type="submit">
                             Submit
                         </Button>
@@ -194,8 +173,8 @@ const FlowerServiceRequest: React.FC = () => {
 
                 </form>
             </div>
+
         </div>
     );
-
 };
 export default FlowerServiceRequest;
