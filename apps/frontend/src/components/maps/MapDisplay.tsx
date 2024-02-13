@@ -144,7 +144,7 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
 
     return (
         <div className={className} style={{position: 'relative', ...style}}>
-            <svg viewBox="0 0 5000 3400" className={"w-[90vw]"}>
+            <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
                 <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
                        y="0"/>
                 {/*{graph && displayEdges(graph)}*/}
