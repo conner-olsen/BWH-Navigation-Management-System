@@ -48,9 +48,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     "p-2",            // Reduce padding for height
                     "border",         // Add border
                     "border-black",   // Black border
-                    "bg-transparent", // Transparent background
-                    "w-60",           // Increase width, adjust the value as needed
-                    "h-10",            // Reduce height, adjust the value as needed
+                    "bg-white", // Transparent background
+                    "w-fit",           // Increase width, adjust the value as needed
+                    "h-fit",            // Reduce height, adjust the value as needed
                     className
                 )}
                 ref={ref}

@@ -102,7 +102,7 @@ return (
             {!isAuthenticated && (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant={"outline"} className={"mt-0.5"} onClick={() => loginWithRedirect()}>
+                        <Button variant={"default"} className={"mt-0.5"} onClick={() => loginWithRedirect()}>
                             Login
                         </Button>
                     </DropdownMenuTrigger>
