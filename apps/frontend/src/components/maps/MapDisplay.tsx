@@ -177,12 +177,12 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                     </g>
                 ))}
             </svg>
-            <HoverCard openDelay={20}>
+            <HoverCard openDelay={200}>
                 <HoverCardTrigger asChild>
-                    <Button className="variant: link">O</Button>
+                    <Button variant="link">O</Button>
                 </HoverCardTrigger>
                 <HoverCardContent className="w-80">
-                    <div className="flex justify-between space-x-4">
+                    <div>
                         <p className="text-sm">
                             Type: node.nodeType
                         </p>
@@ -193,7 +193,7 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                             node.shortName
                         </p>
                         <p className="text-sm">
-                            Status:
+                            Status: -/-
                         </p>
                     </div>
                 </HoverCardContent>
