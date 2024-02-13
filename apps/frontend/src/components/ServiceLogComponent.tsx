@@ -2,24 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { flowerServiceRequest } from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
-
-function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeData: employee[]): JSX.Element[] {
+import Form from "react-bootstrap/Form";
+import {Col, Container, Row} from "react-bootstrap";
+function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
     //const [status, setStatus] = useState("Assigned");
 
     const handleStatusChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
-            axios.patch("/api/populate-flower-service-request", {
-                id:  tableData[index].id,
-                senderName: tableData[index].senderName,
-                senderEmail: tableData[index].senderEmail,
-                nodeID: tableData[index].nodeID,
-                flowerType: tableData[index].flowerType,
-                deliveryDate: tableData[index].deliveryDate,
-                note: tableData[index].note,
-                status: value,
-                employeeUser: tableData[index].employeeUser
+        axios.patch("/api/populate-flower-service-request", {
+            id:  tableData[index].id,
+            senderName: tableData[index].senderName,
+            senderEmail: tableData[index].senderEmail,
+            roomLongName: tableData[index].nodeID,
+            flowerType: tableData[index].flowerType,
+            deliveryDate: tableData[index].deliveryDate,
+            note: tableData[index].note,
+            status: value,
+            employeeUser: tableData[index].employeeUser
 
-            }).then(response => console.log(response.data))
-                .catch(error => console.error(error));
+        }).then(response => console.log(response.data))
+            .catch(error => console.error(error));
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
@@ -27,7 +28,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             id:  tableData[index].id,
             senderName: tableData[index].senderName,
             senderEmail: tableData[index].senderEmail,
-            nodeID: tableData[index].nodeID,
+            roomLongName: tableData[index].nodeID,
             flowerType: tableData[index].flowerType,
             deliveryDate: tableData[index].deliveryDate,
             note: tableData[index].note,
@@ -38,38 +39,43 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             .catch(error => console.error(error));
     };
 
-    return tableData.map((item, index) => (
-        <tr key={index}>
-            <td>{tableData[index].senderName}</td>
-            <td>{tableData[index].senderEmail}</td>
-            <td>{tableData[index].nodeID}</td>
-            <td>{tableData[index].patientName}</td>
-            <td>{tableData[index].flowerType}</td>
-            <td>{tableData[index].deliveryDate}</td>
-            <td>{tableData[index].note}</td>
-            <td>
-                <select value={tableData[index].status} onChange={(e) => handleStatusChange(index, e.target.value, tableData)}>
-                    <option value="Assigned">Assigned</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Completed">Completed</option>
-                </select>
-            </td>
-            <td>
-                <select
-                    value={tableData[index].employeeUser}
-                    onChange={(e) => handleAssignmentChange(index, e.target.value, tableData)}>
-                    {employeeData.map((employee, employeeIndex) => (
-                        <option key={employeeIndex} value={employeeData[employeeIndex].username}>
-                            {employeeData[employeeIndex].username}
-                        </option>
-                    ))}
-                </select>
-            </td>
-        </tr>
-    ));
+    return tableData
+        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .map((item, index) => (
+            <tr key={index}>
+                <td>{tableData[index].senderName}</td>
+                <td>{tableData[index].senderEmail}</td>
+                <td>{tableData[index].nodeID}</td>
+                <td>{tableData[index].patientName}</td>
+                <td>{tableData[index].flowerType}</td>
+                <td>{tableData[index].deliveryDate}</td>
+                <td>{tableData[index].note}</td>
+
+
+                <td>
+                    <select value={tableData[index].status}
+                            onChange={(e) => handleStatusChange(index, e.target.value, tableData)}>
+                        <option value="Assigned">Assigned</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </td>
+                <td>
+                    <select
+                        value={tableData[index].employeeUser}
+                        onChange={(e) => handleAssignmentChange(index, e.target.value, tableData)}>
+                        {employeeData.map((employee, employeeIndex) => (
+                            <option key={employeeIndex} value={employeeData[employeeIndex].username}>
+                                {employeeData[employeeIndex].username}
+                            </option>
+                        ))}
+                    </select>
+                </td>
+            </tr>
+        ));
 }
 
-const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData: employee[] }> = ({tableData, employeeData,}) => {
+const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
     return (
         <table>
             <thead>
@@ -85,7 +91,7 @@ const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData:
                 <th>Assignment</th>
             </tr>
             </thead>
-            <tbody>{GenerateTableRowsServices(tableData, employeeData)}</tbody>
+            <tbody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus)}</tbody>
         </table>
     );
 };
@@ -94,6 +100,8 @@ const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData:
 export const ServiceLogComponent = () => {
     const [data, setData] = useState<flowerServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
+    const [selectedStatus, setSelectedStatus] = useState<string>("");
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -130,7 +138,22 @@ export const ServiceLogComponent = () => {
 
     return (
         <div>
-            <TableServices tableData={data} employeeData={employeeData} />
+            <Container>
+                <Row>
+                    <Col>
+                        <p>Filter by Status:</p>
+                        <Form.Select onChange={(e) => setSelectedStatus(e.target.value)}>
+                            <option value={""}>All</option>
+                            <option value={"Assigned"}>Assigned</option>
+                            <option value={"In Progress"}>In Progress</option>
+                            <option value={"Completed"}>Completed</option>
+                        </Form.Select>
+                    </Col>
+                </Row>
+            </Container>
+
+            <br/>
+            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus}/>
         </div>
     );
 };
