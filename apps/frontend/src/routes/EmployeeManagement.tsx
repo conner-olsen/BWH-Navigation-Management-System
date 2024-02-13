@@ -43,7 +43,7 @@ export const EmployeeManager = () => {
             e.preventDefault();
 
             try {
-                const response = await fetch('/api/employee-mod', {
+                const response = await patch('/api/employee-mod', {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
@@ -60,7 +60,6 @@ export const EmployeeManager = () => {
                 console.error({error});
             }
         };
-    };
 
 
         return (
