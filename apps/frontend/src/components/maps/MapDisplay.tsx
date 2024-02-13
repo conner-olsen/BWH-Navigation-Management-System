@@ -100,6 +100,29 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
         if (!hoverNodeId) {
             setHoverNodeId(node.id);
         }
+        <HoverCard openDelay={200}>
+            <HoverCardTrigger asChild>
+                <svg>
+                    <circle className="r=12 cx={node.xCoord} cy={node.yCoord} fill=light-blue" style={{cursor: 'pointer'}}/>
+                </svg>
+            </HoverCardTrigger>
+            <HoverCardContent className="w-80">
+                <div>
+                    <p className="text-sm">
+                        Type: {node.nodeType}
+                    </p>
+                    <p className="text-sm">
+                        {node.longName}
+                    </p>
+                    <p className="text-sm">
+                        {node.shortName}
+                    </p>
+                    <p className="text-sm">
+                        Status: -/-
+                    </p>
+                </div>
+            </HoverCardContent>
+        </HoverCard>;
     };
 
     const handleNodeHoverLeave = () => {
