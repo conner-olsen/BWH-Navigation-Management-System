@@ -142,7 +142,7 @@ const FlowerServiceRequest: React.FC = () => {
                             NAME</label>
                         <Textarea label="" id="roomLongName" name="roomLongName"
                                   placeholder="Anesthesia Conf Floor L1 (Node longName)" required
-                                  value={formData.roomLongName} onChange={handleChange}
+                                  value={formData.nodeID} onChange={handleChange}
                                   className="font-roboto text-lg"/>
                     </div>
 
