@@ -6,10 +6,10 @@ import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
 import Form from "react-bootstrap/Form";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
-import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
-import MapFloor1 from "../components/maps/MapFloor1.tsx";
-import MapFloor2 from "../components/maps/MapFloor2.tsx";
-import MapFloor3 from "../components/maps/MapFloor3.tsx";
+// import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
+// import MapFloor1 from "../components/maps/MapFloor1.tsx";
+// import MapFloor2 from "../components/maps/MapFloor2.tsx";
+// import MapFloor3 from "../components/maps/MapFloor3.tsx";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -172,7 +172,7 @@ export function BFSComponent() {
                 className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[96px] pt-[100px] sidebar 
       ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
                 {/* Sidebar content */}
-                <div className="relative">
+                <div className="relative w-full">
                     <h2 className="text-xl font-semibold mb-4">Map Page</h2>
                     <div>
                         <p>Starting Location</p>
@@ -210,7 +210,7 @@ export function BFSComponent() {
                     </div>
                     <div>
                         <p className="font-bold">Follow me</p>
-                        <ol type="1">
+                        <ol type="1" className={"overflow-scroll h-96"}>
                             {collectLongNames().map((longName, index) => (
                                 <li key={index}>{longName}</li>
                             ))}
@@ -239,11 +239,11 @@ export function BFSComponent() {
                                         text-2xl shadow-md m-0.5">x</button>
                             </div>
                             <TransformComponent>
-                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
-                                {lowerLevel2ContentVisible && <MapLowerLevel2/>}
-                                {floor1ContentVisible && <MapFloor1/>}
-                                {floor2ContentVisible && <MapFloor2/>}
-                                {floor3ContentVisible && <MapFloor3/>}
+                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
+                                {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
+                                {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
+                                {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
+                                {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
                             </TransformComponent>
                         </React.Fragment>
                     )}
