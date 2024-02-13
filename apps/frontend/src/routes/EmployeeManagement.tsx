@@ -39,11 +39,11 @@ export const EmployeeManager = () => {
         }
     };
 
-    const handleUpdateEmployee = (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
+    const handleUpdateEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
             try {
-                const response = await patch('/api/employee-mod', {
+                const response = await fetch('/api/employee-mod', {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
