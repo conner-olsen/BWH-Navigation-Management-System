@@ -10,6 +10,8 @@ import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRe
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
 import BwhHomepage from "./routes/BwhHomepage.tsx";
+import UserPage from "./routes/UserPage.tsx";
+import EmployeeManager from "./routes/EmployeeManagement.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -56,6 +58,14 @@ function App() {
           {
               path: "/ServiceLog",
               element: <ServiceLog/>
+          },
+          {
+              path: "/UserPage",
+              element: <UserPage/>
+          },
+          {
+              path: "/EmployeeManager",
+              element: <EmployeeManager/>
           }
 
       ],

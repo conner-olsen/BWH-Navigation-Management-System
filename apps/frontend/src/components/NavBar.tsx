@@ -12,7 +12,7 @@ import {
 } from "./ui/dropdown-menu.tsx";
 
 import {Nav} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {NavDropdown} from "react-bootstrap";
 import {Button} from "./ui/button.tsx";
 
@@ -53,6 +53,8 @@ return (
         <Nav className="navbarStyling relative filter-none z-50 shadow-md bg-blue-950 space-x-12 items-center">
             <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img></Link>
             <Link to="/Home" className="text-lg no-underline p-2 text-white"> <div className={"hover:text-blue-500"}>Home</div></Link>
+            <Link to="/EmployeeManager" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Employee Manager</div></Link>
+
             {isAuthenticated && (
                 <Link to="/DataUpload" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Data Upload</div></Link>
             )}
@@ -88,7 +90,9 @@ return (
                         <DropdownMenuSeparator/>
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
+                                <NavLink to="/UserPage" className={"no-underline text-black"}>
                                 {user.name}
+                                </NavLink>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
