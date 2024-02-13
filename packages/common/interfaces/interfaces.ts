@@ -17,7 +17,7 @@ export interface edge {
 
 export interface ServiceRequest {
   id: number;
-  nodeID: string;
+  nodeId: string;
   status: string;
   employeeUser: string;
   priority: string;

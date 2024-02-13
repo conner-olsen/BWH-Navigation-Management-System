@@ -30,7 +30,8 @@ model Node {
   longName  String
   shortName String
   Edge      Edge[]
-  ServiceRequest FlowerServiceRequest[]
+  ServiceRequest ServiceRequest[]
+  internalTransportServiceRequest internalTransportServiceRequest[]
 }
 
 //Edge Table
@@ -59,7 +60,7 @@ model Employee {
 
 // Service Request Table
 model ServiceRequest {
-  id Int      @id @default(uuid())
+  id               String      @id @default(uuid())
   node             Node     @relation(fields: [nodeId], references: [nodeId])
   employee         Employee @relation(fields: [employeeUser], references: [username])
   nodeId           String
@@ -78,7 +79,7 @@ model ServiceRequest {
 //Service Request Table
 model FlowerServiceRequest{
   ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-  id int @id
+  id String @id
   senderName String
   senderEmail String
   patientName String
@@ -89,44 +90,44 @@ model FlowerServiceRequest{
 
 model maintenanceServiceRequest {
   ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-  id int @id
-  requestType: String
-  comment: String
+  id String @id
+  requestType String
+  comment String
 }
 
 model externalTransportationServiceRequest {
   ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-  id int @id
-  name: String
-  destination: String
-  transportation: String
-  date: String
-  description: String
+  id String @id
+  name String
+  destination String
+  transportation String
+  date String
+  description String
 }
 
 model internalTransportServiceRequest {
   ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
   node Node @relation(fields: [destination], references: [nodeId])
-  id int @id
-  name: String
-  mode: String
-  destination: String
+  id String @id
+  name String
+  mode String
+  destination String
 
 }
 
 model languageInterpreterServiceRequest{
   ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-  id int @id
-  name: String
-  languagePref: String
+  id String @id
+  name String
+  languagePref String
 }
 
 model religiousServiceRequest{
   ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-  id int @id
-  name: String
-  religion: String
-  type: String
-  note: String
+  id String @id
+  name String
+  religion String
+  type String
+  note String
 }
 
