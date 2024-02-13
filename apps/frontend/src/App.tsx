@@ -11,6 +11,7 @@ import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
 import MapPage from "./routes/MapPage.tsx";
 import BwhHomepage from "./routes/BwhHomepage.tsx";
+import UserPage from "./routes/UserPage.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -61,6 +62,10 @@ function App() {
           {
               path: "/ServiceLog",
               element: <ServiceLog/>
+          },
+          {
+              path: "/UserPage",
+              element: <UserPage/>
           }
 
       ],

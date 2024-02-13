@@ -19,7 +19,7 @@ import {
 } from "./ui/dropdown-menu.tsx";
 
 import {Nav} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {NavDropdown} from "react-bootstrap";
 import {Button} from "./ui/button.tsx";
 
@@ -96,7 +96,9 @@ return (
                         <DropdownMenuSeparator/>
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
+                                <NavLink to="/UserPage" className={"no-underline text-black"}>
                                 {user.name}
+                                </NavLink>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator/>
