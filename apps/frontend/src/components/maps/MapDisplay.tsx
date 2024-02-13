@@ -157,9 +157,9 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNames) {
                     return (
-                        <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-                            {node.shortName}
-                        </text>
+                        <text className="mapNames" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                             {node.shortName}
+                             </text>
                     );
                 }
             }));
