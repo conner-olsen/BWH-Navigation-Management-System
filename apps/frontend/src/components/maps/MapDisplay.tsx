@@ -139,7 +139,7 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: Ma
     };
 
     return (
-        <div className={className} style={{position: 'relative', ...style}}>
+        <div className={className} style={{width: '90%', margin: 'auto', position: 'relative', ...style}}>
             <TransformWrapper
                 initialScale={1}
                 initialPositionX={0}
@@ -148,13 +148,19 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath}: Ma
             >
                 {({zoomIn, zoomOut, resetTransform}) => (
                     <React.Fragment>
-                        <div className="tools">
-                            <button onClick={() => zoomIn()}>+</button>
-                            <button onClick={() => zoomOut()}>-</button>
-                            <button onClick={() => resetTransform()}>x</button>
+                        <div className="tools flex flex-col absolute right-2 top-2 z-10">
+                            <button onClick={() => zoomIn()}
+                                    className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+                                    text-2xl shadow-md m-0.5">+</button>
+                            <button onClick={() => zoomOut()}
+                                    className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+                                    text-2xl shadow-md m-0.5">-</button>
+                            <button onClick={() => resetTransform()}
+                                    className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+                                    text-2xl shadow-md m-0.5">x</button>
                         </div>
                         <TransformComponent>
-                            <svg viewBox="0 0 5000 3400" className={"w-screen"}>
+                            <svg viewBox="0 0 5000 3400" className={"w-[90vw]"}>
                                 <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
                                        y="0"/>
                                 {/*{graph && displayEdges(graph)}*/}
