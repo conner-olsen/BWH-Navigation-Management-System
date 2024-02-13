@@ -8,7 +8,7 @@ const Select = SelectPrimitive.Root;
 
 const SelectGroup = SelectPrimitive.Group;
 
-const SelectValue = SelectPrimitive.Value
+const SelectValue = SelectPrimitive.Value;
 //added a comment for git
 
 const SelectTrigger = React.forwardRef(
