@@ -74,6 +74,35 @@ router.patch("/", async function (req: Request, res: Response) {
     res.sendStatus(500);
   }
 });
+router.delete("/", async function (req: Request, res: Response) {
+  try {
+    const { username } = req.body; // Destructure username and employee data
+    const employee = await PrismaClient.employee.findUnique({
+      where: { username },
+    });
 
+    if (!employee) {
+      return res.status(404).send("Employee not found");
+    }
+    // delete user data associated with the employee
+    await PrismaClient.employee.delete({
+      where: { username },
+    });
+
+    
+    await PrismaClient.user.delete({
+      where: { Username: username },
+    });
+
+
+
+
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(`Error deleting employee and user data: ${error}`);
+    res.sendStatus(500);
+  }
+});
 
 export default router;
