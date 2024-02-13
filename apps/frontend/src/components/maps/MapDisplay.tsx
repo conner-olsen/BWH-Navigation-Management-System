@@ -154,17 +154,21 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                        y="0"/>
                 {/*{graph && displayEdges(graph)}*/}
                 {graph && path.length > 0 && displayPath(graph, path)}
-                {graph && Array.from(graph.nodes.values()).map((node: Node) => (
-                    <g key={node.id} onClick={() => handleNodeClick(node)}
-                       onMouseEnter={() => handleNodeHover(node)}
-                       onMouseLeave={() => handleNodeHoverLeave()}>
-                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
-                                style={{cursor: 'pointer'}}/>
-                        {startNodeId === node.id && displaySelectedNodes(node, 'start')}
-                        {endNodeId === node.id && displaySelectedNodes(node, 'end')}
-                        {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
-                    </g>
-                ))}
+                {graph && Array.from(graph.nodes.values()).map((node: Node) => {
+                    if (node.floor == "L1"){
+                        return(
+                            <g key={node.id} onClick={() => handleNodeClick(node)}
+                               onMouseEnter={() => handleNodeHover(node)}
+                               onMouseLeave={() => handleNodeHoverLeave()}>
+                                <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
+                                        style={{cursor: 'pointer'}}/>
+                                {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                                {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                                {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
+                            </g>
+                        );
+                    }}
+                )}
             </svg>
         </div>
 
