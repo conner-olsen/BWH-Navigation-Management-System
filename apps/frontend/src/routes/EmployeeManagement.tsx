@@ -5,6 +5,7 @@ import {GetDataEmployees} from "../components/EmployeeManagerComponent.tsx";
 import {Outlet} from "react-router-dom";
 import {useState} from "react";
 import {Button} from "../components/ui/button.tsx";
+import Global_Footer from "../components/Global_Footer.tsx";
 export const EmployeeManager = () => {
 
     const [formData, setFormData] = useState({
@@ -85,7 +86,7 @@ export const EmployeeManager = () => {
 
 
         return (
-            <div>
+            <>
                 <Outlet/>
                 <NavBar/>
                 <div className={"align-content-center"}>
@@ -277,7 +278,8 @@ export const EmployeeManager = () => {
                         </TabsContent>
                     </Tabs>
                 </div>
-            </div>
+                <Global_Footer />
+            </>
 );
 };
 
