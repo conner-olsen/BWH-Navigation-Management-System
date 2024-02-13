@@ -1,7 +1,8 @@
 import React, {CSSProperties, useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
-import populatedGraph from 'common/dev/populatedGraph.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
+import axios from "axios";
+// import axios from "axios";
 
 interface MapDisplayProps {
     style?: CSSProperties;
@@ -13,16 +14,20 @@ interface MapDisplayProps {
 }
 
 function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pathFindingType}: MapDisplayProps) {
-    const [graph, setGraph] = useState<Graph | null>(null);
+    const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
     const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
-
+    useEffect(() => {
+        axios.get("/api/graph").then((res) => {
+            const populatedGraph  = new Graph();
+            populatedGraph.populateGraph(res.data.nodes,res.data.edges);
+            setGraph(populatedGraph);
+        });
+    }, []);
 
     useEffect(() => {
-        setGraph(populatedGraph);
-
         if (startNode && endNode && graph) {
             //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
             graph.setPathfindingMethodStringRoute(pathFindingType);
@@ -32,7 +37,7 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
             setStartNodeId(startNode);
             setEndNodeId(endNode);
         }
-    }, [startNode, endNode, graph, sendHoverMapPath, pathFindingType]);
+    }, [startNode, endNode, sendHoverMapPath, pathFindingType, graph]);
 
     // const displayEdges = (graph: Graph) => {
     //     const edges: React.JSX.Element[] = [];

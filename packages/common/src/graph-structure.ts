@@ -1,5 +1,4 @@
 import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
-import PrismaClient from "../../../apps/backend/src/bin/database-connection.ts";
 import {node} from "common/interfaces/interfaces.ts";
 import {edge} from "common/interfaces/interfaces.ts";
 
@@ -200,21 +199,9 @@ export class Graph {
   //   }
   // }
   async fromDB() {
-    try {
-      // Fetch nodes from the database
-      const nodes = await PrismaClient.node.findMany();
-
-      // Fetch edges from the database
-      const edges = await PrismaClient.edge.findMany();
-
-      // Populate the graph with nodes and edges
-      this.populateGraph(nodes, edges);
-    } catch (error) {
-      console.error('Error fetching data from the database:', error);
-    }
   }
 
-  private populateGraph(nodes: node[], edges: edge[]) {
+  public populateGraph(nodes: node[], edges: edge[]) {
     // Clear existing nodes and edges
     this.nodes.clear();
 

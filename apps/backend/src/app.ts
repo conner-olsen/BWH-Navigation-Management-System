@@ -5,7 +5,7 @@ import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
 import csvRouter from "./routes/csv-handler.ts";
 import bfsRouter from "./routes/bfs-route.ts";
-import bfsAstarRouter from "./routes/bfsAstar-route.ts";
+import bfsAstarRouter from "./routes/Astar-route.ts";
 import userRouter from "./routes/user-route.ts";
 import flowersevicerequestRouter from "./routes/flower-service-request-route.ts";
 import nodeRouter from "./routes/node-route.ts";
@@ -13,6 +13,7 @@ import edgeRouter from "./routes/populate-edges.ts";
 import downloadNodeDataRouter from "./routes/data-to-csv-node.ts";
 import downloadEdgeDataRouter from "./routes/data-to-csv-edge.ts";
 import employeeRouter from "./routes/populate-employee.ts";
+import graphRoute from "./routes/GraphRoute.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -43,6 +44,7 @@ app.use("/api/user", userRouter);
 app.use("/api/download-node-csv", downloadNodeDataRouter);
 app.use("/api/download-edge-csv", downloadEdgeDataRouter);
 app.use("/api/populate-employee", employeeRouter);
+app.use("/api/graph",graphRoute);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
