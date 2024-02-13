@@ -54,23 +54,79 @@ model Employee {
   firstName String
   lastName  String
   email     String
-  flowerServiceRequest FlowerServiceRequest[]
+  serviceRequests ServiceRequest[]
 }
 
+// Service Request Table
+model ServiceRequest {
+  id Int      @id @default(uuid())
+  node             Node     @relation(fields: [nodeId], references: [nodeId])
+  employee         Employee @relation(fields: [employeeUser], references: [username])
+  nodeId           String
+  priority         String
+  status           String   @default("UnAssigned")
+  employeeUser     String
+  flowerServiceRequests FlowerServiceRequest[]
+  maintenanceServiceRequest maintenanceServiceRequest[]
+  externalTransportationServiceRequest externalTransportationServiceRequest[]
+  internalTransportServiceRequest internalTransportServiceRequest[]
+  languageInterpreterServiceRequest languageInterpreterServiceRequest[]
+  religiousServiceRequest religiousServiceRequest[]
+
+}
 
 //Service Request Table
 model FlowerServiceRequest{
-  id Int @id
-  node Node  @relation(fields: [nodeID], references: [nodeId])
-  employee Employee @relation(fields: [employeeUser], references: [username])
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id int @id
   senderName String
   senderEmail String
-  nodeID String
   patientName String
   flowerType String
   deliveryDate String
   note String
-  status String @default("UnAssigned")
-  employeeUser String
+}
+
+model maintenanceServiceRequest {
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id int @id
+  requestType: String
+  comment: String
+}
+
+model externalTransportationServiceRequest {
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id int @id
+  name: String
+  destination: String
+  transportation: String
+  date: String
+  description: String
+}
+
+model internalTransportServiceRequest {
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  node Node @relation(fields: [destination], references: [nodeId])
+  id int @id
+  name: String
+  mode: String
+  destination: String
+
+}
+
+model languageInterpreterServiceRequest{
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id int @id
+  name: String
+  languagePref: String
+}
+
+model religiousServiceRequest{
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id int @id
+  name: String
+  religion: String
+  type: String
+  note: String
 }
 
