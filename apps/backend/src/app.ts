@@ -39,7 +39,7 @@ app.use("/api/high-score", exampleRouter);
 app.use("/api/csv-to-json", csvRouter);
 app.use("/api/node-populate", nodeRouter);
 app.use("/api/bfs-searching", bfsRouter);
-app.use("api/bfsAstar-searching", bfsAstarRouter);
+app.use("/api/bfsAstar-searching", bfsAstarRouter);
 app.use("/api/populate-flower-service-request", flowersevicerequestRouter);
 app.use("/api/edge-populate", edgeRouter);
 app.use("/api/user", userRouter);
