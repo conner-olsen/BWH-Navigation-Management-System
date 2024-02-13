@@ -4873,7 +4873,7 @@ __metadata:
     react-dom: "npm:^18.2.0"
     react-router-bootstrap: "npm:^0.26.2"
     react-router-dom: "npm:^6.11.2"
-    react-zoom-pan-pinch: "npm:^3.1.0"
+    react-zoom-pan-pinch: "npm:^3.4.2"
     sass: "npm:^1.62.1"
     serve: "npm:^14.2.0"
     sort-by: "npm:^1.2.0"
@@ -7029,6 +7029,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.4.35":
+  version: 8.4.35
+  resolution: "postcss@npm:8.4.35"
+  dependencies:
+    nanoid: "npm:^3.3.7"
+    picocolors: "npm:^1.0.0"
+    source-map-js: "npm:^1.0.2"
+  checksum: 93a7ce50cd6188f5f486a9ca98950ad27c19dfed996c45c414fa242944497e4d084a8760d3537f078630226f2bd3c6ab84b813b488740f4432e7c7039cd73a20
+  languageName: node
+  linkType: hard
+
 "postgres-array@npm:~2.0.0":
   version: 2.0.0
   resolution: "postgres-array@npm:2.0.0"
@@ -7522,13 +7533,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-zoom-pan-pinch@npm:^3.1.0":
-  version: 3.3.0
-  resolution: "react-zoom-pan-pinch@npm:3.3.0"
+"react-zoom-pan-pinch@npm:^3.4.2":
+  version: 3.4.2
+  resolution: "react-zoom-pan-pinch@npm:3.4.2"
   peerDependencies:
     react: "*"
     react-dom: "*"
-  checksum: 56e102f603dc5d0dbcff2effe403a1f46b718bde0bbad395fc990db0ef48f25fefb6969fec465948e90471a8e8e702cddaaa93742f77075cb1f4f32b10c1ab43
+  checksum: 3014c26523d69eb6a10fb1862374e4fcfb8bcf14614b0a872ca178473634427753d5c7ed6f80233f973236fcd232dd5eec70365c6eb68703e435a9a74b75bf3f
   languageName: node
   linkType: hard
 
@@ -8097,6 +8108,7 @@ __metadata:
     eslint-config-custom: "workspace:*"
     happy-dom: "npm:^10.6.3"
     husky: "npm:^8.0.0"
+    postcss: "npm:^8.4.35"
     prettier: "npm:2.8.8"
     prettier-config-custom: "workspace:*"
     prisma: "npm:^5.9.0"

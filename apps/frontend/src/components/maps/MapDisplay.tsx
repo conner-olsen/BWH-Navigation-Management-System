@@ -4,6 +4,7 @@ import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios from "axios";
 // import axios from "axios";
 
+
 interface MapDisplayProps {
     style?: CSSProperties;
     className?: string;
@@ -148,13 +149,17 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
 
     return (
         <div className={className} style={{position: 'relative', ...style}}>
-            <svg viewBox="0 0 5000 3400">
-                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
+            <svg viewBox="0 0 5000 3400" className={"w-[90vw]"}>
+                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
+                       y="0"/>
                 {/*{graph && displayEdges(graph)}*/}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && Array.from(graph.nodes.values()).map((node: Node) => (
-                    <g key={node.id} onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)} onMouseLeave={() => handleNodeHoverLeave()}>
-                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue" style={{cursor: 'pointer'}}/>
+                    <g key={node.id} onClick={() => handleNodeClick(node)}
+                       onMouseEnter={() => handleNodeHover(node)}
+                       onMouseLeave={() => handleNodeHoverLeave()}>
+                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
+                                style={{cursor: 'pointer'}}/>
                         {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                         {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
@@ -162,6 +167,8 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                 ))}
             </svg>
         </div>
+
+
     );
 }
 
