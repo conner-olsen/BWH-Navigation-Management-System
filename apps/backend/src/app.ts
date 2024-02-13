@@ -14,6 +14,7 @@ import downloadNodeDataRouter from "./routes/data-to-csv-node.ts";
 import downloadEdgeDataRouter from "./routes/data-to-csv-edge.ts";
 import employeeRouter from "./routes/populate-employee.ts";
 import authoRouter from "./routes/storing-auth0-users.ts";
+import employeeMod from "./routes/employeeMod.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -45,6 +46,7 @@ app.use("/api/download-node-csv", downloadNodeDataRouter);
 app.use("/api/download-edge-csv", downloadEdgeDataRouter);
 app.use("/api/populate-employee", employeeRouter);
 app.use("/api/populate-autho", authoRouter);
+app.use("/api/employee-mod", employeeMod);
 
 
 /**

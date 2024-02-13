@@ -29,7 +29,7 @@ router.post("/", async (req: Request, res: Response) => {
     });
 
 
-    res.sendStatus(201).json(createdUser);
+    res.sendStatus(200).json(createdUser);
 
 
 
@@ -43,7 +43,7 @@ router.post("/", async (req: Request, res: Response) => {
       },
     });
 
-    res.status(201).json(createdEmployee);
+    res.status(200).json(createdEmployee);
   } catch (error) {
     console.error('Error creating employee:', error);
     res.status(500).json({ error: 'Internal server error' });

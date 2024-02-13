@@ -12,6 +12,7 @@ import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
 import MapPage from "./routes/MapPage.tsx";
 import BwhHomepage from "./routes/BwhHomepage.tsx";
 import UserPage from "./routes/UserPage.tsx";
+import EmployeeManager from "./routes/EmployeeManagement.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -66,6 +67,10 @@ function App() {
           {
               path: "/UserPage",
               element: <UserPage/>
+          },
+          {
+              path: "/EmployeeManager",
+              element: <EmployeeManager/>
           }
 
       ],
