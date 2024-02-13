@@ -243,4 +243,5 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
  *
  * export default App;
  */
+
 export default MapDisplay;
