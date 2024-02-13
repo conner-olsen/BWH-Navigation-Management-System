@@ -9,7 +9,6 @@ import CleaningServiceRequest from "./routes/ServiceRequests/CleaningServiceRequ
 import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRequest.tsx";
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
-import MapPage from "./routes/MapPage.tsx";
 import BwhHomepage from "./routes/BwhHomepage.tsx";
 import UserPage from "./routes/UserPage.tsx";
 import EmployeeManager from "./routes/EmployeeManagement.tsx";
@@ -55,10 +54,6 @@ function App() {
           {
               path: "/ServiceList",
               element: <ServiceList/>
-          },
-          {
-              path: "/MapPage",
-              element: <MapPage/>
           },
           {
               path: "/ServiceLog",
