@@ -134,10 +134,10 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
     };
 
     const displayNodes = (graph: Graph) => {
-        if (doDisplayNodes) {
+        // if (doDisplayNodes) {
             return (
             Array.from(graph.nodes.values()).map((node: Node) => {
-                if (node.floor == floor){
+                if (node.floor == floor && doDisplayNodes){
                     return(
                         <g key={node.id} onClick={() => handleNodeClick(node)}
                            onMouseEnter={() => handleNodeHover(node)}
@@ -151,7 +151,7 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
                     );
                 }
             }));
-        }
+        //}
     };
 
     const displayNames = (graph: Graph) => {
