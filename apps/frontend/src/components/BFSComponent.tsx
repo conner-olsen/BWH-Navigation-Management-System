@@ -85,6 +85,7 @@ export function BFSComponent() {
         setEndNode(path.endid);
     };
 
+    //restyle :) put in same line
     return (
         <div>
             <h1 className="font-roboto font-extrabold italic"
@@ -95,25 +96,41 @@ export function BFSComponent() {
             <Container>
                 <Row>
                     <Col>
-                        <p>Display Options</p>
-                        <Form.Check
-                            type="switch"
-                            label='Display Edges'
-                            checked={doDisplayEdges}
-                            onChange={() => setDoDisplayEdges(!doDisplayEdges)}
-                        />
-                        <Form.Check
-                            type="switch"
-                            label='Display Nodes'
-                            checked={doDisplayNodes}
-                            onChange={() => setDoDisplayNodes(!doDisplayNodes)}
-                        />
-                        <Form.Check
-                            type="switch"
-                            label='Display Names'
-                            checked={doDisplayNames}
-                            onChange={() => setDoDisplayNames(!doDisplayNames)}
-                        />
+                        <Container>
+                            <Row>
+                                <Col>
+                                    <Form.Check
+                                        inline
+                                        type="switch"
+                                        id="display-edges-switch"
+                                        label="Display Edges"
+                                        checked={doDisplayEdges}
+                                        onChange={() => setDoDisplayEdges(!doDisplayEdges)}
+                                    />
+                                </Col>
+                                <Col>
+                                    <Form.Check
+                                        inline
+                                        type="switch"
+                                        id="display-nodes-switch"
+                                        label="Display Nodes"
+                                        checked={doDisplayNodes}
+                                        onChange={() => setDoDisplayNodes(!doDisplayNodes)}
+                                    />
+                                </Col>
+                                <Col>
+                                    <Form.Check
+                                        inline
+                                        type="switch"
+                                        id="display-names-switch"
+                                        label="Display Names"
+                                        checked={doDisplayNames}
+                                        onChange={() => setDoDisplayNames(!doDisplayNames)}
+                                    />
+                                </Col>
+                            </Row>
+                        </Container>
+
                     </Col>
 
                     <Col>
