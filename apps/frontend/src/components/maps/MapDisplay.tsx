@@ -207,7 +207,6 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                 )}
             </TransformWrapper>
 
-
         </div>
     );
 }
