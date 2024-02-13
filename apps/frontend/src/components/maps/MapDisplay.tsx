@@ -171,15 +171,7 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
         }
     };
 
-    return (
-        <div className={className} style={{position: 'relative', ...style}}>
-            <svg viewBox="0 0 5000 3400">
-                <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0" y="0"/>
-                {graph && displayEdges(graph)}
-                {graph && path.length > 0 && displayPath(graph, path)}
-                {graph && displayNodes(graph)}
-                {graph && displayNames(graph)}
-            </svg>
+
     return (
         <div className={className} style={{width: '90%', margin: 'auto', position: 'relative', ...style}}>
             <TransformWrapper
@@ -205,19 +197,10 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
                             <svg viewBox="0 0 5000 3400" className={"w-[90vw]"}>
                                 <image href="../../public/maps/00_thelowerlevel1.png" width="5000" height="3400" x="0"
                                        y="0"/>
-                                {/*{graph && displayEdges(graph)}*/}
+                                {graph && displayEdges(graph)}
                                 {graph && path.length > 0 && displayPath(graph, path)}
-                                {graph && Array.from(graph.nodes.values()).map((node: Node) => (
-                                    <g key={node.id} onClick={() => handleNodeClick(node)}
-                                       onMouseEnter={() => handleNodeHover(node)}
-                                       onMouseLeave={() => handleNodeHoverLeave()}>
-                                        <circle cx={node.xCoord} cy={node.yCoord} r="9" fill="blue"
-                                                style={{cursor: 'pointer'}}/>
-                                        {startNodeId === node.id && displaySelectedNodes(node, 'start')}
-                                        {endNodeId === node.id && displaySelectedNodes(node, 'end')}
-                                        {hoverNodeId === node.id && displayHoverInfo(node, 'hover')}
-                                    </g>
-                                ))}
+                                {graph && displayNodes(graph)}
+                                {graph && displayNames(graph)}
                             </svg>
                         </TransformComponent>
                     </React.Fragment>
@@ -226,8 +209,6 @@ function MapDisplay({style, className, startNode, endNode, sendHoverMapPath, pat
 
 
         </div>
-
-
     );
 }
 
