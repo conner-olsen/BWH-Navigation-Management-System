@@ -11,8 +11,8 @@ import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
 // import MapFloor3 from "../components/maps/MapFloor3.tsx";
 import {Col, Container, Row} from "react-bootstrap";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
-import { Button } from "./ui/button.tsx";
+//import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
+//import { Button } from "./ui/button.tsx";
 //import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 
 export function BFSComponent() {
@@ -317,4 +317,4 @@ export function BFSComponent() {
 
         </div>
         </div>
-    )};
+    );}
