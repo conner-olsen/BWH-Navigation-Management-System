@@ -474,29 +474,12 @@ label{
 
 /* ========== CSV Table ========== */
 
-input:checked + .slider {
-    background-color: black;
+body.dark .react-transform-wrapper image {
+    filter: invert(1) saturate(2);
 }
 
-input:focus + .slider {
-    box-shadow: 0 0 1px black;
-}
 
-input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
+/* ====== Side Bar ======= */
 .sidebar {
     transition: transform 0.3s ease;
 }
@@ -506,7 +489,6 @@ input:checked + .slider:before {
 .sidebar-collapsed {
     transform: translateX(-100%);
 }
-
-body.dark .react-transform-wrapper image {
-    filter: invert(1) saturate(2);
+input[type="radio"]:checked + label {
+    color: rgb(59 130 246);
 }
