@@ -24,10 +24,6 @@ export interface ServiceRequest {
 }
 
 export interface flowerServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
   senderName: string;
   senderEmail: string;
   patientName: string;
@@ -43,10 +39,6 @@ export interface cleaningServiceRequest extends ServiceRequest{
 }
 
 export interface externalTransportationServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
   name: string;
   destination: string;
   transportation: string;
@@ -55,29 +47,17 @@ export interface externalTransportationServiceRequest extends ServiceRequest {
 }
 
 export interface internalTransportServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
   name: string;
   mode: string;
   destination: string;
 }
 
 export interface languageInterpreterServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
   name: string;
   languagePref: string;
 }
 
 export interface religiousServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
   patientName: string;
   religion: string;
   note: string;

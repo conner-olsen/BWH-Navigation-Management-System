@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { religiousServiceRequest } from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
@@ -46,7 +45,7 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].node}</TableCell>
+                <TableCell>{tableData[index].nodeId}</TableCell>
                 <TableCell>{tableData[index].destination}</TableCell>
                 <TableCell>{tableData[index].priority}</TableCell>
                 <TableCell>{tableData[index].mode}</TableCell>
@@ -110,7 +109,7 @@ const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; em
 
 // GETTING data for service request and
 export const InternalTransportServiceLogComponent = () => {
-    const [data, setData] = useState<religiousServiceRequest[]>([]);
+    const [data, setData] = useState<internalTransportServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
 
