@@ -16,6 +16,8 @@ import employeeRouter from "./routes/populate-employee.ts";
 import authoRouter from "./routes/storing-auth0-users.ts";
 import employeeMod from "./routes/employeeMod.ts";
 import graphRoute from "./routes/GraphRoute.ts";
+import religiousServiceRequest from "./routes/religious-service-request.ts";
+import languageInterpreterServiceRequest from "./routes/language-interpreter-service-request.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -49,6 +51,8 @@ app.use("/api/populate-employee", employeeRouter);
 app.use("/api/graph",graphRoute);
 app.use("/api/populate-autho", authoRouter);
 app.use("/api/employee-mod", employeeMod);
+app.use("/api/religious-service-request", religiousServiceRequest);
+app.use("/api/language-service-request", languageInterpreterServiceRequest);
 
 
 /**

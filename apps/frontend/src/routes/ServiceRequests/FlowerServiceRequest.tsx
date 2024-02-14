@@ -1,25 +1,24 @@
 
 import React, { useState } from 'react';
 import axios from "axios";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue
-} from "../../components/ui/select.tsx";
-import {Button} from "../../components/ui/button.tsx";
+import {Input} from "../../components/ui/input.tsx";
+import {Col, Container, Row} from "react-bootstrap";
+import {Label} from "../../components/ui/label.tsx";
 import {Textarea} from "../../components/ui/textarea.tsx";
-
-
-function getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-}
+import Form from "react-bootstrap/Form";
+import {Button} from "../../components/ui/button.tsx";
+import LocationDropdown from "../../components/LocationDropdown.tsx";
 
 const FlowerServiceRequest: React.FC = () => {
+
+    function getRandomInt(max: number) {
+        return Math.floor(Math.random() * max);
+    }
+
+
+
     const [formData, setFormData] = useState({
-        id: getRandomInt(10000),
+        id: 0,
         senderName: '',
         senderEmail: '',
         nodeID: '',
@@ -34,7 +33,7 @@ const FlowerServiceRequest: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setFormData({
-            id: 0,
+            id: getRandomInt(1000000),
             senderName: '',
             senderEmail: '',
             nodeID: '',
@@ -62,117 +61,76 @@ const FlowerServiceRequest: React.FC = () => {
         }
     };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const {name, value} = event.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value,
-        }));
-    };
-
-
 
     return (
         <div>
+
             <div className="mt-20"> {/* Added mx-4 for left and right margins, mt-6 for top margin */}
 
-        </div>
+            <h1>
+                Flower Service Request
+            </h1>
 
-            <div className="mx-40">
-                <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-
-                    {/* First Row - Flower Delivery Service with Smaller Image */}
-                    <div className="mb-3 col-span-2 flex items-center">
+            <Container>
+                <Row>
+                    <Col>
                         <div>
-                            <h1 className="font-roboto font-bold text-6xl text-dark-blue mb-1 text-left">FLOWER</h1>
-                            <h1 className="font-roboto font-bold text-6xl text-dark-blue text-left">DELIVERY</h1>
+                            <Label htmlFor="senderName">Sender Name</Label>
+                            <Input type="text" id="senderName" placeholder={"John Doe"}/>
                         </div>
-                        <img src="/service-images-transparent/flower_serviceT.png" alt="Flower Service" className="mr-2"
-                             style={{width: '150px', height: '150px'}}/>
-                    </div>
+                    </Col>
+                    <Col>
+                        <div>
+                            <Label htmlFor="senderEmail">Sender Email</Label>
+                            <Input type="email" id="senderEmail" placeholder={"johndoe@gmail.com"}/>
+                        </div>
+                    </Col>
+                </Row>
+                <br/>
 
-                    {/* Second Row - Sender Name and Patient's Name */}
-                    <div className="mb-3">
-                        <label className="block text-foreground text-xl font-bold mb-2" htmlFor="senderName">SENDER
-                            NAME</label>
-                        <Textarea label="" id="senderName" name="senderName" placeholder="John Doe" required
-                                  value={formData.senderName} onChange={handleChange} className="font-roboto text-lg"/>
-                    </div>
+                <Row>
+                    <Col>
+                        <LocationDropdown></LocationDropdown>
+                    </Col>
 
-                    <div className="mb-3">
-                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="patientName">PATIENT'S
-                            NAME</label>
-                        <Textarea label="" id="patientName" name="patientName" placeholder="Jared Smith" required
-                                  value={formData.patientName} onChange={handleChange} className="font-roboto text-lg"/>
-                    </div>
+                    <Col>
+                        <div>
+                            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Flower Selection</label>
+                            <Form.Select>
+                                <option value="daffodils">Daffodil</option>
+                                <option value="daisies">Daisies</option>
+                                <option value="hydrangeas">Hydrangeas</option>
+                                <option value="lilies">Lilies</option>
+                                <option value="marigolds">Marigolds</option>
+                                <option value="orchids">orchids</option>
+                                <option value="roses">Roses</option>
+                            </Form.Select>
+                        </div>
+                    </Col>
+                </Row>
 
-                    {/* Third Row - Sender Email and Flower Type */}
-                    <div className="mb-3">
-                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="senderEmail">SENDER
-                            EMAIL</label>
-                        <Textarea label="" id="senderEmail" name="senderEmail" placeholder="John@gmail.com" required
-                                  value={formData.senderEmail} onChange={handleChange} className="font-roboto text-lg"/>
-                    </div>
+                <br/>
 
-                    <div className="mb-3 ">
-                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="flowerType">TYPE OF
-                            FLOWERS</label>
-                        <Select>
-                            <SelectTrigger>
-                                <SelectValue placeholder="FLOWER TYPE" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectItem value="daffodils">Daffodil</SelectItem>
-                                    <SelectItem value="daisies">Daisies</SelectItem>
-                                    <SelectItem value="hydrangeas">Hydrangeas</SelectItem>
-                                    <SelectItem value="lilies">Lilies</SelectItem>
-                                    <SelectItem value="marigolds">Marigolds</SelectItem>
-                                    <SelectItem value="orchids">orchids</SelectItem>
-                                    <SelectItem value="roses">Roses</SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
-
-                    {/* Fourth Row - Room Name and Delivery Date */}
-                    <div className="mb-3">
-                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="roomLongName">ROOM
-                            NAME</label>
-                        <Textarea label="" id="roomLongName" name="roomLongName"
-                                  placeholder="Anesthesia Conf Floor L1 (Node longName)" required
-                                  value={formData.nodeID} onChange={handleChange}
-                                  className="font-roboto text-lg"/>
-                    </div>
-
-                    <div className="mb-3">
-                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="deliveryDate">DATE
-                            OF DELIVERY</label>
-                        <Textarea label="" id="deliveryDate" name="deliveryDate" placeholder="01/15/1981" required
-                                  value={formData.deliveryDate} onChange={handleChange}
-                                  className="font-roboto text-lg"/>
-                    </div>
-
-                    {/* Fifth Row - Add a Note */}
-                    <div className="col-span-2 mb-3">
-                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="note">ADD A
-                            NOTE</label>
-                        <Textarea label="" name="note"
-                                  placeholder="I heard you're going through tough times. Get well soon!"
-                                  value={formData.note} onChange={handleChange} className="font-roboto text-lg"/>
-                    </div>
-
-                    {/* Sixth Row - Buttons */}
-                    <div className="mb-2 flex justify-center w-full col-span-2"> {/* Changed justify-end to justify-center */}
-                        <Button className="cursor-pointer" type="submit">
-                            Submit
-                        </Button>
-                    </div>
+                <Row>
 
 
-                </form>
-            </div>
+                    <Col>
+                        <Label htmlFor="patientName">Patient Name</Label>
+                        <Input type="text" id="patientName" placeholder="John Smith"></Input>
+                    </Col>
+                    <Col>
+                        <Label htmlFor="note">Add a note</Label>
+                        <Textarea id="note" placeholder="Get well soon! Miss you loads <3"></Textarea>
+                    </Col>
+                </Row>
+                <br/>
 
+                <Row>
+                    <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
+                </Row>
+
+
+            </Container>
         </div>
     );
 };
