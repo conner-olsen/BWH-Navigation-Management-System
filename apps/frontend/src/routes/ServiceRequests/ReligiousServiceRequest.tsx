@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import {Input} from "../../components/ui/input.tsx";
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Form, Row} from "react-bootstrap";
 import {Label} from "../../components/ui/label.tsx";
 import {Button} from "../../components/ui/button.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
@@ -87,6 +87,20 @@ const CleaningServiceRequest: React.FC = () => {
                     <Col>
                         <LocationDropdown></LocationDropdown>
                     </Col>
+
+                    <Col>
+                        <div>
+                            <label
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
+                            <Form.Select>
+                                <option value="Low Priority">Low Priority</option>
+                                <option value="High Priority">High Priority</option>
+                                <option value="Emergency">Emergency</option>
+                            </Form.Select>
+                        </div>
+                    </Col>
+
+
 
                     <Col>
                         <div>
