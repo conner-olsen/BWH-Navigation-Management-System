@@ -10,6 +10,8 @@ import LocationDropdown from "../../components/LocationDropdown.tsx";
 
 const CleaningServiceRequest: React.FC = () => {
 
+
+
     function getRandomInt(max: number) {
         return Math.floor(Math.random() * max);
     }
@@ -58,7 +60,6 @@ const CleaningServiceRequest: React.FC = () => {
 
     return (
         <div>
-            <NavBar></NavBar>
 
             <h1>
                 Cleaning Service Request

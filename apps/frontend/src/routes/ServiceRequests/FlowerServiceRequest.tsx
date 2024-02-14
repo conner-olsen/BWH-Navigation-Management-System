@@ -1,4 +1,4 @@
-import NavBar from "../../components/NavBar.tsx";
+
 import React, { useState } from 'react';
 import axios from "axios";
 import {Input} from "../../components/ui/input.tsx";
@@ -59,7 +59,8 @@ const FlowerServiceRequest: React.FC = () => {
 
     return (
         <div>
-            <NavBar></NavBar>
+
+            <div className="mt-20"> {/* Added mx-4 for left and right margins, mt-6 for top margin */}
 
             <h1>
                 Flower Service Request

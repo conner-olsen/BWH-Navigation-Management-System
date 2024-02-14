@@ -1,5 +1,4 @@
 import {Col, Container, Row } from "react-bootstrap";
-import NavBar from "../components/NavBar.tsx";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "../components/ui/tabs.tsx";
 import {GetDataEmployees} from "../components/EmployeeManagerComponent.tsx";
 import {Outlet} from "react-router-dom";
@@ -88,7 +87,6 @@ export const EmployeeManager = () => {
         return (
             <>
                 <Outlet/>
-                <NavBar/>
                 <div className={"align-content-center"}>
                     <Tabs defaultValue="node" className="w-screen">
                         <TabsList>

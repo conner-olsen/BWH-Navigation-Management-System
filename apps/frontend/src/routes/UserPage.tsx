@@ -1,13 +1,12 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../components/ui/card.tsx";
-import NavBar from "../components/NavBar.tsx";
 export const Profile = () => {
     const { user } = useAuth0();
 
     return (
         <div>
-            <NavBar />
+
         <Container className="mb-5">
             <Row className="align-items-center profile-header mb-5 text-center text-md-left">
                 <Col md={2}>

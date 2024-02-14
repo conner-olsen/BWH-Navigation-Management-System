@@ -10,6 +10,9 @@ import {Textarea} from "../../components/ui/textarea.tsx";
 
 const CleaningServiceRequest: React.FC = () => {
 
+import React from 'react';
+
+
     function getRandomInt(max: number) {
         return Math.floor(Math.random() * max);
     }
@@ -58,7 +61,8 @@ const CleaningServiceRequest: React.FC = () => {
 
     return (
         <div>
-            <NavBar></NavBar>
+
+
 
             <h1>
                 Religious Service Request
