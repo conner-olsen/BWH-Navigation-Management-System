@@ -63,7 +63,6 @@ return (
             {isAuthenticated && (
                 <Link to="/DataUpload" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Data Upload</div></Link>
             )}
-            {isAuthenticated && (
                 <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white"
                       onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <div className={"hover:text-blue-500"}>Service Request</div>
@@ -79,7 +78,6 @@ return (
                         </div>
                     </div>
                 </Link>
-                )}
 
 
             {isAuthenticated && (
