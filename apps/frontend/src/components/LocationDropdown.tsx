@@ -43,8 +43,7 @@ const LocationDropdown = () => {
         const rowval = Object.values(row);
         const id = rowval[0];
         const nodeId = row["nodeId"];
-        const longName = row["longName"];
-        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+        roomNames.push(<option value={id}> {nodeId} </option>);
     }
 
     return (

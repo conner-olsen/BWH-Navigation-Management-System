@@ -21,6 +21,7 @@ const FlowerServiceRequest: React.FC = () => {
         flowerType: '',
         deliveryDate: '',
         note: '',
+        priority: '',
         status: 'Unassigned',
         employeeUser: 'none'
     });
@@ -36,6 +37,7 @@ const FlowerServiceRequest: React.FC = () => {
             flowerType: '',
             deliveryDate: '',
             note: '',
+            priority: '',
             status: '',
             employeeUser: ''
         });
@@ -115,6 +117,18 @@ const FlowerServiceRequest: React.FC = () => {
                         <Label htmlFor="note">Add a note</Label>
                         <Textarea id="note" placeholder="Get well soon! Miss you loads <3"></Textarea>
                     </Col>
+                </Row>
+                <br/>
+
+                <Row>
+                    <label
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-1">Priority</label>
+                    <Form.Select>
+                        <option value="Low Priority">Low Priority</option>
+                        <option value="Medium Priority">Medium Priority</option>
+                        <option value="High Priority">High Priority</option>
+                        <option value="Emergency">Emergency</option>
+                    </Form.Select>
                 </Row>
                 <br/>
 

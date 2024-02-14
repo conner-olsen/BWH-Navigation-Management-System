@@ -1,30 +1,14 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
 import {ServiceRequest} from "common/interfaces/interfaces.ts";
-import { FlowerServiceRequest } from "database";
+import {FlowerServiceRequest, Prisma} from "database";
+import ServiceRequestCreateInput = Prisma.ServiceRequestCreateInput;
 const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
   const requestData = req.body;
 
   try {
-    const employee = await PrismaClient.employee.findUnique({
-      where: { username: requestData.employeeUser }
-    });
-
-    if (!employee) {
-      console.error(`Error: Employee with username ${requestData.employeeUser} not found`);
-      res.sendStatus(400);
-      return;
-    }
-
-    const serviceRequestData: ServiceRequest = {
-      id: '',
-      nodeId: requestData.nodeId,
-      status: requestData.status,
-      employeeUser: requestData.employeeUser,
-      priority: requestData.priority,
-    };
 
     const flowerServiceRequestData: FlowerServiceRequest = {
       id: '',
@@ -37,7 +21,20 @@ router.post("/", async (req: Request, res: Response) => {
     };
 
     // Create the Service Request
-    const createdServiceRequest = await PrismaClient.serviceRequest.create({ data: serviceRequestData });
+    const createdServiceRequest = await PrismaClient.serviceRequest.create({ data: {
+      node: {
+        connect:{
+          nodeId: requestData.nodeID
+        }
+      },
+      status: requestData.status,
+        employee: {
+          connect: {
+          username: requestData.employeeUser
+          }
+        },
+        priority: requestData.priority
+    } });
 
     // Use the created Service Request's id to set the nodeId in flowerRequestAttempt
     flowerServiceRequestData.id = createdServiceRequest.id;
