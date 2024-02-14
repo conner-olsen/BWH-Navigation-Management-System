@@ -102,8 +102,8 @@ export function NodeEdgeData() {
                 </Row>
             </Container>
 
-            <Container>
-                <Tabs defaultValue="node" className="w-[400px]">
+            <Container className="mt-4">
+                <Tabs defaultValue="node" className="">
                     <TabsList>
                         <TabsTrigger value="node">Node Data</TabsTrigger>
                         <TabsTrigger value="edge">Edge Data</TabsTrigger>

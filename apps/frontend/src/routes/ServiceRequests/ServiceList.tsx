@@ -15,7 +15,7 @@ const ServiceList = () => {
                 style={{marginTop: '5%', marginLeft: '10%', fontSize: '60px'}}>
                 SERVICE REQUESTS
             </h1>
-            <p className="font-roboto text-neutral-500 italic font-light"
+            <p className="font-roboto text-neutral-500 italic font-light dark:text-neutral-300"
                style={{marginRight: '30%', marginLeft: '0%', marginTop: '5%', textAlign: "right", fontSize: '25px', lineHeight: '30px'}}>
                 At Brigham and Women's we value our patients and want to accommodate to their needs
                 as seamlessly as possible. Below is a list of the services we offer.
