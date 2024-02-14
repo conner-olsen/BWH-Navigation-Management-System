@@ -17,7 +17,7 @@ const MapLowerLevel2 = () => {
     } = useMapLogic();
     return (
         <div className={"lowerLevel2"}>
-            <svg viewBox="0 0 5000 3400" className={"w-[90vw]"}>
+            <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
                 <image
                     href={'public/maps/00_thelowerlevel2.png'}
                     x="0"

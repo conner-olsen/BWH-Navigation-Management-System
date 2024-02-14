@@ -5,7 +5,7 @@ import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
 import csvRouter from "./routes/csv-handler.ts";
 import bfsRouter from "./routes/bfs-route.ts";
-import bfsAstarRouter from "./routes/bfsAstar-route.ts";
+import bfsAstarRouter from "./routes/Astar-route.ts";
 import userRouter from "./routes/user-route.ts";
 import flowersevicerequestRouter from "./routes/flower-service-request-route.ts";
 import nodeRouter from "./routes/node-route.ts";
@@ -14,6 +14,10 @@ import downloadNodeDataRouter from "./routes/data-to-csv-node.ts";
 import downloadEdgeDataRouter from "./routes/data-to-csv-edge.ts";
 import employeeRouter from "./routes/populate-employee.ts";
 import authoRouter from "./routes/storing-auth0-users.ts";
+import employeeMod from "./routes/employeeMod.ts";
+import graphRoute from "./routes/GraphRoute.ts";
+import religiousServiceRequest from "./routes/religious-service-request.ts";
+import languageInterpreterServiceRequest from "./routes/language-interpreter-service-request.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -37,14 +41,18 @@ app.use("/api/high-score", exampleRouter);
 app.use("/api/csv-to-json", csvRouter);
 app.use("/api/node-populate", nodeRouter);
 app.use("/api/bfs-searching", bfsRouter);
-app.use("api/bfsAstar-searching", bfsAstarRouter);
+app.use("/api/bfsAstar-searching", bfsAstarRouter);
 app.use("/api/populate-flower-service-request", flowersevicerequestRouter);
 app.use("/api/edge-populate", edgeRouter);
 app.use("/api/user", userRouter);
 app.use("/api/download-node-csv", downloadNodeDataRouter);
 app.use("/api/download-edge-csv", downloadEdgeDataRouter);
 app.use("/api/populate-employee", employeeRouter);
+app.use("/api/graph",graphRoute);
 app.use("/api/populate-autho", authoRouter);
+app.use("/api/employee-mod", employeeMod);
+app.use("/api/religious-service-request", religiousServiceRequest);
+app.use("/api/language-service-request", languageInterpreterServiceRequest);
 
 
 /**

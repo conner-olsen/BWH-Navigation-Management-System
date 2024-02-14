@@ -1,6 +1,5 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Global_Footer from "./components/Global_Footer.tsx";
 import { NodeEdgeData } from "./routes/NodeEdgeData.tsx";
 import HomePage from "./routes/HomePage.tsx";
 import BFSRoute from "./routes/BFSRoute.tsx";
@@ -9,8 +8,10 @@ import CleaningServiceRequest from "./routes/ServiceRequests/CleaningServiceRequ
 import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRequest.tsx";
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
-import MapPage from "./routes/MapPage.tsx";
 import BwhHomepage from "./routes/BwhHomepage.tsx";
+import UserPage from "./routes/UserPage.tsx";
+import EmployeeManager from "./routes/EmployeeManagement.tsx";
+import NavBar from "./components/NavBar.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -55,12 +56,16 @@ function App() {
               element: <ServiceList/>
           },
           {
-              path: "/MapPage",
-              element: <MapPage/>
-          },
-          {
               path: "/ServiceLog",
               element: <ServiceLog/>
+          },
+          {
+              path: "/UserPage",
+              element: <UserPage/>
+          },
+          {
+              path: "/EmployeeManager",
+              element: <EmployeeManager/>
           }
 
       ],
@@ -73,8 +78,9 @@ function App() {
 function Root() {
   return (
     <main>
-      <Outlet />
-      <Global_Footer />
+        <NavBar></NavBar>
+
+        <Outlet />
     </main>
   );
 }

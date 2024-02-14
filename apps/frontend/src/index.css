@@ -3,70 +3,53 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
+    @layer base {
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 0 0% 100%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96.1%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96.1%;
+            --accent-foreground: 222.2 47.4% 11.2%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 221.2 83.2% 53.3%;
+            --radius: 0.5rem;
+        }
 
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
-
-        --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-
-        --primary: 0 0% 9%;
-        --primary-foreground: 0 0% 98%;
-
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-
-        --radius: 0.5rem;
+        .dark {
+            --background: 209, 36%, 13%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --popover: 222.2 84% 4.9%;
+            --popover-foreground: 210 40% 98%;
+            --primary: 203, 88%, 53%;
+            --primary-foreground: 222.2 47.4% 11.2%;
+            --secondary: 142, 46%, 55%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --accent: 217.2 32.6% 17.5%;
+            --accent-foreground: 210 40% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 217.2 32.6% 17.5%;
+            --input: 217.2 32.6% 17.5%;
+            --ring: 224.3 76.3% 48%;
+        }
     }
 
-    .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-    }
-}
-
-@layer base {
     * {
         @apply border-border;
     }
@@ -74,7 +57,6 @@
         @apply bg-background text-foreground;
     }
 }
-
 
 :root {
   /*font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/
@@ -117,6 +99,11 @@ label {
     display: block;
 }
 
+textarea{
+    color:black;
+    border-radius: 5px;
+    height: 45px;
+}
 
 /* ============== HOMEPAGE =========== */
 @keyframes typing {
@@ -130,12 +117,6 @@ label {
     animation: typing 2s steps(30, end);
 }
 
-
-/* ============== DARK MODE =========== */
-body.darkMode {
-    background-color: darkgray;
-
-}
 
 /* =========== LOGIN PAGE ========== */
 .loginForm input {
@@ -304,8 +285,11 @@ body.darkMode {
     transition: 0.3s ease-in-out;
 }
 .DragDropBoxOn, .DragDropBox:hover {
-    border-color: var(--light-blue);
+    border-color: var(--light-blue)!important;
     color: var(--light-blue);
+}
+body.dark .DragDropBox {
+    border-color: white;
 }
 .DragDropBox img {
     filter: grayscale(100%);
@@ -380,7 +364,8 @@ body.darkMode {
 .BFSBox {
     align-items: center;
     text-align: center;
-
+    height: 100vh;
+    overflow: hidden;
 }
 
 .idinput {
@@ -483,39 +468,45 @@ h1 {
     text-transform: uppercase;
     font-style: italic;
 }
+label{
+
+}
 
 /* ========== CSV Table ========== */
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+input:checked + .slider {
+    background-color: black;
 }
 
-/* Style for table headers */
-th {
-    background-color: #f2f2f2;
-    border: 1px solid #dddddd;
-    text-align: center;
-    padding: 12px;
-    font-weight: bold;
+input:focus + .slider {
+    box-shadow: 0 0 1px black;
 }
 
-/* Style for alternating row colors */
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
 }
 
-/* Style for table cells */
-td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 12px;
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
 }
 
-/* Hover effect for table rows */
-tr:hover {
-    background-color: #e5e5e5;
+.slider.round:before {
+    border-radius: 50%;
 }
 
+.sidebar {
+    transition: transform 0.3s ease;
+}
+.sidebar-expanded {
+    transform: translateX(0);
+}
+.sidebar-collapsed {
+    transform: translateX(-100%);
+}
+
+body.dark .react-transform-wrapper image {
+    filter: invert(1) saturate(2);
+}

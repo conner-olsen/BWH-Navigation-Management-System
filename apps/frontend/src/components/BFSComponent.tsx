@@ -4,16 +4,13 @@ import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
-import nodeCSVString from "common/dev/nodeCSVString.ts";
 import Form from "react-bootstrap/Form";
-import { Col, Container, Row } from "react-bootstrap";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet.tsx";
-import { Button } from "./ui/button.tsx";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
-import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
-import MapFloor1 from "../components/maps/MapFloor1.tsx";
-import MapFloor2 from "../components/maps/MapFloor2.tsx";
-import MapFloor3 from "../components/maps/MapFloor3.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+// import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
+// import MapFloor1 from "../components/maps/MapFloor1.tsx";
+// import MapFloor2 from "../components/maps/MapFloor2.tsx";
+// import MapFloor3 from "../components/maps/MapFloor3.tsx";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -21,6 +18,9 @@ export function BFSComponent() {
     const [endNode, setEndNode] = useState<string>("End Location");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
+    const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
+    const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
+    const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -67,8 +67,38 @@ export function BFSComponent() {
         return bfsResult.map(node => node.longName);
     };
 
+    const [nodeCSVData, setNodeCSVData] = useState<string>("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Make a GET request to the API endpoint
+                const res = await fetch("/api/download-node-csv");
+
+                // Check if the request was successful (status code 2xx)
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+
+
+                const result = await res.text();
+                // Set the data in the state
+                setNodeCSVData(result);
+            } catch (err) {
+                // Handle errors
+                console.log("Failed");
+            }
+        };
+
+        fetchData().then();
+    }, []); //
+
+
+
+
+
     //parse node CSV into array of CSVRows
-    const CSVRow = parseCSV(nodeCSVString);
+    const CSVRow = parseCSV(nodeCSVData);
     //make array to be inserted in the html code
     const roomNames = [];
 
@@ -78,8 +108,9 @@ export function BFSComponent() {
         const row = CSVRow[i];
         const rowval = Object.values(row);
         const id = rowval[0];
+        const nodeId = row["nodeId"];
         const longName = row["longName"];
-        roomNames.push(<option value={id}> {longName} </option>);
+        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
     }
 
     const sendHoverMapPath = (path: PathfindingRequest) => {
@@ -112,86 +143,128 @@ export function BFSComponent() {
     }, [map]);
 
 
-    const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    // const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    //
+    //     setMap(event.target.value);
+    //
+    // };
+    const handlePhotoChange = (map: string) => {
+        setMap(map);
+    };
+    const [isExpanded, setIsExpanded] = useState(true);
 
-        setMap(event.target.value);
-
+    const toggleSidebar = () => {
+        setIsExpanded(!isExpanded);
     };
 
     return (
         <div>
-            <h1 className="font-roboto font-extrabold italic"
-                style={{ marginTop: '5%', fontSize: '60px' }}>Map Page</h1>
+            <div className="fixed top-0 left-0 h-screen w-[80px] bg-neutral-500 text-white z-20 px-4 pt-[100px]
+                      flex flex-col">
+                <button onClick={toggleSidebar} className="text-xl text-white focus:outline-none">
+                    {isExpanded ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    )}
+                </button>
+            </div>
+            <div
+                className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[96px] pt-[100px] sidebar 
+      ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
+                {/* Sidebar content */}
+                <div className="relative w-full">
+                    <h2 className="text-xl font-semibold mb-4">Map Page</h2>
+                    <div>
+                        <p>Display Options</p>
+                        <Form.Check
+                            inline
+                            type="switch"
+                            id="display-edges-switch"
+                            label="Display Edges"
+                            checked={doDisplayEdges}
+                            onChange={() => setDoDisplayEdges(!doDisplayEdges)}
+                        />
+                        <Form.Check
+                            inline
+                            type="switch"
+                            id="display-nodes-switch"
+                            label="Display Nodes"
+                            checked={doDisplayNodes}
+                            onChange={() => setDoDisplayNodes(!doDisplayNodes)}
+                        />
+                        <Form.Check
+                            inline
+                            type="switch"
+                            id="display-names-switch"
+                            label="Display Names"
+                            checked={doDisplayNames}
+                            onChange={() => setDoDisplayNames(!doDisplayNames)}
+                        />
 
-            <br />
-
-            <Container>
-                <Row>
-                    <Col>
+                </div>
+                    <div>
                         <p>Starting Location</p>
                         <Form.Select value={startNode} size={"sm"}
                                      onChange={e => setStartNode(e.target.value)}>
                             {roomNames}
                         </Form.Select>
-                    </Col>
-                    <Col>
+                    </div>
+                    <div>
                         <p>Destination</p>
                         <Form.Select value={endNode} size={"sm"}
                                      onChange={e => setEndNode(e.target.value)}>
                             {roomNames}
                         </Form.Select>
-                    </Col>
-
-                    <Col>
+                    </div>
+                    <div>
                         <p>Select Search Type</p>
-                        <Form.Select value={pathFindingType} size={"sm"} onChange={e => setPathFindingType(e.target.value)}>
+                        <Form.Select value={pathFindingType} size={"sm"}
+                                     onChange={e => setPathFindingType(e.target.value)}>
                             <option value={"/api/bfs-searching"}>BFS searching</option>
                             <option value={"/api/bfsAstar-searching"}>A-star searching</option>
                         </Form.Select>
+                    </div>
+                    <div>
+                        <p>Select da floor bro</p>
+                        <Select defaultValue={"floor1"} onValueChange={handlePhotoChange}>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Theme" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="lowerLevel1">The Lower Level 1</SelectItem>
+                                <SelectItem value="lowerLevel2">The Lower Level 2</SelectItem>
+                                <SelectItem value="floor1">Floor 1</SelectItem>
+                            </SelectContent>
+                        </Select>
 
-                    </Col>
+                        {/*<Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>*/}
 
-                    <Col>
-                        <Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>
-
-                            {/*<option value="groundFloor">The Ground Floor</option>*/}
-                            <option value="lowerLevel1">The Lower Level 1</option>
-                            <option value="lowerLevel2">The Lower Level 2</option>
-                            <option value="floor1">Floor 1</option>
-                            <option value="floor2">Floor 2</option>
-                            <option value="floor3">Floor 3</option>
-                        </Form.Select>
-                    </Col>
-
-                    <Col>
-                        <p>View Text Route</p>
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button variant="outline">Check Route</Button>
-                            </SheetTrigger>
-                            <SheetContent>
-                                <SheetHeader>
-                                    <SheetTitle>Route</SheetTitle>
-                                    <SheetDescription>
-                                        Follow this path to reach your destination
-                                    </SheetDescription>
-                                    <br />
-                                </SheetHeader>
-                                <ol type="1">
-                                    {collectLongNames().map((longName, index) => (
-                                        <li key={index}>{longName}</li>
-                                    ))}
-                                </ol>
-                            </SheetContent>
-                        </Sheet>
-
-                    </Col>
-                </Row>
-            </Container>
-            <br />
-
-
-            <div className="relative w-[90vw] m-auto">
+                        {/*    /!*<option value="groundFloor">The Ground Floor</option>*!/*/}
+                        {/*    <option value="lowerLevel1">The Lower Level 1</option>*/}
+                        {/*    <option value="lowerLevel2">The Lower Level 2</option>*/}
+                        {/*    <option value="floor1">Floor 1</option>*/}
+                        {/*    <option value="floor2">Floor 2</option>*/}
+                        {/*    <option value="floor3">Floor 3</option>*/}
+                        {/*</Form.Select>*/}
+                    </div>
+                    <div>
+                        <p className="font-bold">Follow me</p>
+                        <ol type="1" className={"overflow-scroll h-96"}>
+                            {collectLongNames().map((longName, index) => (
+                                <li key={index}>{longName}</li>
+                            ))}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div className="relative w-screen max-w-full m-auto">
                 <TransformWrapper
                     initialScale={1}
                     initialPositionX={0}
@@ -211,12 +284,17 @@ export function BFSComponent() {
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">x</button>
                             </div>
-                            <TransformComponent>
-                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
-                                {lowerLevel2ContentVisible && <MapLowerLevel2/>}
-                                {floor1ContentVisible && <MapFloor1/>}
-                                {floor2ContentVisible && <MapFloor2/>}
-                                {floor3ContentVisible && <MapFloor3/>}
+                            <TransformComponent wrapperClass={"max-h-screen"}>
+                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                          doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                          doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                             </TransformComponent>
                         </React.Fragment>
                     )}
@@ -227,3 +305,4 @@ export function BFSComponent() {
 
     );
 }
+

@@ -2,24 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { flowerServiceRequest } from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
-
-function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeData: employee[]): JSX.Element[] {
+import {Col, Container, Row} from "react-bootstrap";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
     //const [status, setStatus] = useState("Assigned");
 
-    const handleStatusChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
-            axios.patch("/api/populate-flower-service-request", {
-                id:  tableData[index].id,
-                senderName: tableData[index].senderName,
-                senderEmail: tableData[index].senderEmail,
-                nodeID: tableData[index].nodeID,
-                flowerType: tableData[index].flowerType,
-                deliveryDate: tableData[index].deliveryDate,
-                note: tableData[index].note,
-                status: value,
-                employeeUser: tableData[index].employeeUser
 
-            }).then(response => console.log(response.data))
-                .catch(error => console.error(error));
+    const handleStatusChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
+        axios.patch("/api/populate-flower-service-request", {
+            id:  tableData[index].id,
+            senderName: tableData[index].senderName,
+            senderEmail: tableData[index].senderEmail,
+            roomLongName: tableData[index].nodeID,
+            flowerType: tableData[index].flowerType,
+            deliveryDate: tableData[index].deliveryDate,
+            note: tableData[index].note,
+            status: value,
+            employeeUser: tableData[index].employeeUser
+
+        }).then(response => console.log(response.data))
+            .catch(error => console.error(error));
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
@@ -27,7 +30,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             id:  tableData[index].id,
             senderName: tableData[index].senderName,
             senderEmail: tableData[index].senderEmail,
-            nodeID: tableData[index].nodeID,
+            roomLongName: tableData[index].nodeID,
             flowerType: tableData[index].flowerType,
             deliveryDate: tableData[index].deliveryDate,
             note: tableData[index].note,
@@ -38,55 +41,84 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             .catch(error => console.error(error));
     };
 
-    return tableData.map((item, index) => (
-        <tr key={index}>
-            <td>{tableData[index].senderName}</td>
-            <td>{tableData[index].senderEmail}</td>
-            <td>{tableData[index].nodeID}</td>
-            <td>{tableData[index].patientName}</td>
-            <td>{tableData[index].flowerType}</td>
-            <td>{tableData[index].deliveryDate}</td>
-            <td>{tableData[index].note}</td>
-            <td>
-                <select value={tableData[index].status} onChange={(e) => handleStatusChange(index, e.target.value, tableData)}>
-                    <option value="Assigned">Assigned</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Completed">Completed</option>
-                </select>
-            </td>
-            <td>
-                <select
-                    value={tableData[index].employeeUser}
-                    onChange={(e) => handleAssignmentChange(index, e.target.value, tableData)}>
-                    {employeeData.map((employee, employeeIndex) => (
-                        <option key={employeeIndex} value={employeeData[employeeIndex].username}>
-                            {employeeData[employeeIndex].username}
-                        </option>
-                    ))}
-                </select>
-            </td>
-        </tr>
-    ));
+    return tableData
+        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .map((item, index) => (
+            <TableRow key={index}>
+                <TableCell>{tableData[index].senderName}</TableCell>
+                <TableCell>{tableData[index].senderEmail}</TableCell>
+                <TableCell>{tableData[index].nodeID}</TableCell>
+                <TableCell>{tableData[index].patientName}</TableCell>
+                <TableCell>{tableData[index].flowerType}</TableCell>
+                <TableCell>{tableData[index].deliveryDate}</TableCell>
+                <TableCell>{tableData[index].note}</TableCell>
+
+
+                <TableCell>
+                    <Select value={tableData[index].status}
+                            onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="Assigned">Assigned</SelectItem>
+                            <SelectItem value="In Progress">In Progress</SelectItem>
+                            <SelectItem value="Completed">Completed</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    {/*<select value={tableData[index].status}*/}
+                    {/*        onChange={(e) => handleStatusChange(index, e.target.value, tableData)}>*/}
+                    {/*    <option value="Assigned">Assigned</option>*/}
+                    {/*    <option value="In Progress">In Progress</option>*/}
+                    {/*    <option value="Completed">Completed</option>*/}
+                    {/*</select>*/}
+                </TableCell>
+                <TableCell>
+                    <Select value={tableData[index].employeeUser}
+                            onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {employeeData.map((employee, employeeIndex) => (
+                                <SelectItem key={employeeIndex} value={employeeData[employeeIndex].username}>
+                                    {employeeData[employeeIndex].username}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    {/*<select*/}
+                    {/*    value={tableData[index].employeeUser}*/}
+                    {/*    onChange={(e) => handleAssignmentChange(index, e.target.value, tableData)}>*/}
+                    {/*    {employeeData.map((employee, employeeIndex) => (*/}
+                    {/*        <option key={employeeIndex} value={employeeData[employeeIndex].username}>*/}
+                    {/*            {employeeData[employeeIndex].username}*/}
+                    {/*        </option>*/}
+                    {/*    ))}*/}
+                    {/*</select>*/}
+                </TableCell>
+            </TableRow>
+        ));
 }
 
-const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData: employee[] }> = ({tableData, employeeData,}) => {
+const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
     return (
-        <table>
-            <thead>
-            <tr>
-                <th>Sender Name</th>
-                <th>Sender Email</th>
-                <th>Room ID</th>
-                <th>Patient's Name</th>
-                <th>Flower Type</th>
-                <th>Delivery Date</th>
-                <th>Note</th>
-                <th>Status</th>
-                <th>Assignment</th>
-            </tr>
-            </thead>
-            <tbody>{GenerateTableRowsServices(tableData, employeeData)}</tbody>
-        </table>
+        <Table>
+            <TableHeader>
+            <TableRow>
+                <TableHead>Sender Name</TableHead>
+                <TableHead>Sender Email</TableHead>
+                <TableHead>Room ID</TableHead>
+                <TableHead>Patient's Name</TableHead>
+                <TableHead>Flower Type</TableHead>
+                <TableHead>Delivery Date</TableHead>
+                <TableHead>Note</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Assignment</TableHead>
+            </TableRow>
+            </TableHeader>
+            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus)}</TableBody>
+        </Table>
     );
 };
 
@@ -94,6 +126,8 @@ const TableServices: React.FC<{ tableData: flowerServiceRequest[]; employeeData:
 export const ServiceLogComponent = () => {
     const [data, setData] = useState<flowerServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
+    const [selectedStatus, setSelectedStatus] = useState<string>("");
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -130,7 +164,32 @@ export const ServiceLogComponent = () => {
 
     return (
         <div>
-            <TableServices tableData={data} employeeData={employeeData} />
+            <Container>
+                <Row>
+                    <Col>
+                        <p>Filter by Status:</p>
+                        <Select onValueChange={(stat) => setSelectedStatus(stat)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="Assigned">Assigned</SelectItem>
+                                <SelectItem value="In Progress">In Progress</SelectItem>
+                                <SelectItem value="Completed">Completed</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        {/*<Form.Select onChange={(e) => setSelectedStatus(e.target.value)}>*/}
+                        {/*    <option value={""}>All</option>*/}
+                        {/*    <option value={"Assigned"}>Assigned</option>*/}
+                        {/*    <option value={"In Progress"}>In Progress</option>*/}
+                        {/*    <option value={"Completed"}>Completed</option>*/}
+                        {/*</Form.Select>*/}
+                    </Col>
+                </Row>
+            </Container>
+
+            <br/>
+            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus}/>
         </div>
     );
 };
