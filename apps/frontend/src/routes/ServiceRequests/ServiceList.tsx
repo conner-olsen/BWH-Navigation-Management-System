@@ -81,7 +81,7 @@ const ServiceList = () => {
                                     <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/medicineT.png" alt="medicine delivery service"/>
+                                    <img src="public/service-images-transparent/languagesT.png" alt="language translation service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -95,7 +95,7 @@ const ServiceList = () => {
                                     <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/internalT.png" alt="medicine delivery service"/>
+                                    <img src="public/service-images-transparent/internalT.png" alt="internal transport service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -109,7 +109,7 @@ const ServiceList = () => {
                                     <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/ambulanceT.png" alt="medicine delivery service"/>
+                                    <img src="public/service-images-transparent/ambulanceT.png" alt="external transport service"/>
                                 </CardContent>
                             </Card>
                         </Link>
