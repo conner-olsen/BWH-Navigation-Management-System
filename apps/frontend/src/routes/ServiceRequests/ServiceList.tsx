@@ -77,7 +77,7 @@ const ServiceList = () => {
                         <Link to="/flowerService" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
-                                    <CardTitle className="text-xl">Medication Delivery Service Request</CardTitle>
+                                    <CardTitle className="text-xl">Language Translation Service Request</CardTitle>
                                     <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
