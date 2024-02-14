@@ -1,40 +1,49 @@
 import express, {Router, Request, Response} from "express";
-import PrismaClient from "../bin/database-connection.ts";
-import {Prisma} from "database";
-import ServiceRequestUncheckedCreateInput = Prisma.ServiceRequestUncheckedCreateInput;
-
+import PrismaClient from "../bin/database-connection.ts";;
 const router: Router = express.Router();
 
-
 router.post("/", async (req: Request, res: Response) => {
-
-  const religiousRequestAttempt: Prisma.religiousServiceRequestUncheckedCreateInput = req.body;
-
-  const srAttempt: Prisma.ServiceRequestUncheckedCreateInput = req.body as ServiceRequestUncheckedCreateInput;
-
-  console.log(JSON.stringify(srAttempt));
+  const requestData = req.body;
 
   try {
 
     // Create the Service Request
-    const createdServiceRequest = await PrismaClient.serviceRequest.create({ data: srAttempt });
+    await PrismaClient.serviceRequest.create({ data: {
+        node: {
+          connect:{
+            nodeId: requestData.nodeId
+          }
+        },
+        status: requestData.status,
+        employee: {
+          connect: {
+            username: requestData.employeeUser
+          }
+        },
+        priority: requestData.priority,
 
-    // Use the created Service Request's id to set the nodeId in flowerRequestAttempt
-    religiousRequestAttempt.id = createdServiceRequest.id;
-
-    await PrismaClient.religiousServiceRequest.create({data: religiousRequestAttempt});
+        religiousServiceRequest: {
+          create: {
+            patientName: requestData.patientName,
+            religion: requestData.religion,
+            note: requestData.note
+          }
+        }
+      } });
 
     res.sendStatus(200);
   } catch (error) {
-    console.error(`Error populating node data: ${error}`);
+    console.error(`Error creating service request: ${error}`);
     res.sendStatus(500);
   }
 });
 
+
+
 router.get("/", async function (req: Request, res: Response) {
   try{
-    const religiousCSV = await PrismaClient.religiousServiceRequest.findMany();
-    res.send(religiousCSV);
+    const flowerservicerequestCSV = await PrismaClient.flowerServiceRequest.findMany();
+    res.send(flowerservicerequestCSV);
   } catch (error){
     console.error(`Error exporting Service Request data: ${error}`);
     res.sendStatus(500);
@@ -42,6 +51,30 @@ router.get("/", async function (req: Request, res: Response) {
   res.sendStatus(200);
 });
 
+// router.patch("/", async (req: Request, res: Response) => {
+//   const flowerRequestUpdate: FlowerServiceRequest = req.body;
+//
+//   try {
+//
+//     console.log(flowerRequestUpdate);
+//
+//     await PrismaClient.flowerServiceRequest.update({
+//       where: {id: flowerRequestUpdate.id},
+//       data: {status: flowerRequestUpdate.status,
+//       employee:{
+//         connect: {
+//             username: flowerRequestUpdate.employeeUser
+//         }
+//       }
+//       }
+//     });
+//
+//     res.sendStatus(200);
+//   } catch (error) {
+//     console.error(`Error populating node data: ${error}`);
+//     res.sendStatus(500);
+//   }
+// });
 
 
 export default router;

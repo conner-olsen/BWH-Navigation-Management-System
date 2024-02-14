@@ -16,7 +16,7 @@ const FlowerServiceRequest: React.FC = () => {
         id: '',
         senderName: '',
         senderEmail: '',
-        nodeID: '',
+        nodeId: '',
         patientName: '',
         flowerType: '',
         deliveryDate: '',
@@ -26,13 +26,24 @@ const FlowerServiceRequest: React.FC = () => {
         employeeUser: 'none'
     });
 
+    const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+    const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
+    const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setFormData({
             id: '',
             senderName: '',
             senderEmail: '',
-            nodeID: '',
+            nodeId: '',
             patientName: '',
             flowerType: '',
             deliveryDate: '',
@@ -71,13 +82,13 @@ const FlowerServiceRequest: React.FC = () => {
                     <Col>
                         <div>
                             <Label htmlFor="senderName">Sender Name</Label>
-                            <Input type="text" id="senderName" placeholder={"John Doe"}/>
+                            <Input type="text" id="senderName" placeholder={"John Doe"} onChange={handleChangeText}/>
                         </div>
                     </Col>
                     <Col>
                         <div>
                             <Label htmlFor="senderEmail">Sender Email</Label>
-                            <Input type="email" id="senderEmail" placeholder={"johndoe@gmail.com"}/>
+                            <Input type="email" id="senderEmail" placeholder={"johndoe@gmail.com"} onChange={handleChangeText}/>
                         </div>
                     </Col>
                 </Row>
@@ -85,13 +96,13 @@ const FlowerServiceRequest: React.FC = () => {
 
                 <Row>
                     <Col>
-                        <LocationDropdown></LocationDropdown>
+                        <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
                     </Col>
 
                     <Col>
                         <div>
                             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Flower Selection</label>
-                            <Form.Select>
+                            <Form.Select id={"flowerType"} onChange={handleChangeSelect}>
                                 <option value="daffodils">Daffodil</option>
                                 <option value="daisies">Daisies</option>
                                 <option value="hydrangeas">Hydrangeas</option>
@@ -111,24 +122,30 @@ const FlowerServiceRequest: React.FC = () => {
 
                     <Col>
                         <Label htmlFor="patientName">Patient Name</Label>
-                        <Input type="text" id="patientName" placeholder="John Smith"></Input>
+                        <Input type="text" id="patientName" placeholder="John Smith" onChange={handleChangeText}></Input>
                     </Col>
                     <Col>
                         <Label htmlFor="note">Add a note</Label>
-                        <Textarea id="note" placeholder="Get well soon! Miss you loads <3"></Textarea>
+                        <Textarea id="note" placeholder="Get well soon! Miss you loads <3" onChange={handleChangeTextArea}></Textarea>
                     </Col>
                 </Row>
                 <br/>
 
                 <Row>
+                    <Col>
                     <label
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-1">Priority</label>
-                    <Form.Select>
+                    <Form.Select id={"priority"} onChange={handleChangeSelect}>
                         <option value="Low Priority">Low Priority</option>
                         <option value="Medium Priority">Medium Priority</option>
                         <option value="High Priority">High Priority</option>
                         <option value="Emergency">Emergency</option>
                     </Form.Select>
+                    </Col>
+                    <Col>
+                        <Label htmlFor="date">Delivery Date</Label>
+                        <Input type="text" id="Date" placeholder="DD/MM/YY" onChange={handleChangeText}></Input>
+                    </Col>
                 </Row>
                 <br/>
 

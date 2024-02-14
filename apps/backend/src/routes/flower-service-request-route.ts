@@ -1,30 +1,19 @@
 import express, {Router, Request, Response} from "express";
-import PrismaClient from "../bin/database-connection.ts";
-import {ServiceRequest} from "common/interfaces/interfaces.ts";
-import {FlowerServiceRequest, Prisma} from "database";
-import ServiceRequestCreateInput = Prisma.ServiceRequestCreateInput;
+import PrismaClient from "../bin/database-connection.ts";;
 const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
   const requestData = req.body;
 
+  console.log(JSON.stringify(requestData));
+
   try {
 
-    const flowerServiceRequestData: FlowerServiceRequest = {
-      id: '',
-      senderName: requestData.senderName,
-      senderEmail: requestData.senderEmail,
-      patientName: requestData.patientName,
-      flowerType: requestData.flowerType,
-      deliveryDate: requestData.deliveryDate,
-      note: requestData.note
-    };
-
     // Create the Service Request
-    const createdServiceRequest = await PrismaClient.serviceRequest.create({ data: {
+    await PrismaClient.serviceRequest.create({ data: {
       node: {
         connect:{
-          nodeId: requestData.nodeID
+          nodeId: requestData.nodeId
         }
       },
       status: requestData.status,
@@ -33,13 +22,19 @@ router.post("/", async (req: Request, res: Response) => {
           username: requestData.employeeUser
           }
         },
-        priority: requestData.priority
+        priority: requestData.priority,
+
+        flowerServiceRequests: {
+          create: {
+            senderName: requestData.senderName,
+            senderEmail: requestData.senderEmail,
+            patientName: requestData.patientName,
+            flowerType: requestData.flowerType,
+            deliveryDate: requestData.deliveryDate,
+            note: requestData.note
+          }
+        }
     } });
-
-    // Use the created Service Request's id to set the nodeId in flowerRequestAttempt
-    flowerServiceRequestData.id = createdServiceRequest.id;
-
-    await PrismaClient.flowerServiceRequest.create({ data: flowerServiceRequestData });
 
     res.sendStatus(200);
   } catch (error) {
