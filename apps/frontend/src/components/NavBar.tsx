@@ -49,7 +49,7 @@ export default function NavBar() {
 
 return (
 
-    <nav>
+    <nav className="sticky-top top-0">
         <Nav className="navbarStyling relative filter-none z-50 shadow-md bg-blue-950 space-x-12 items-center">
             <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img></Link>
             <Link to="/Home" className="text-lg no-underline p-2 text-white"> <div className={"hover:text-blue-500"}>Home</div></Link>
@@ -115,7 +115,7 @@ return (
             <DarkModeButton/>
         </Nav>
 
-        <div id="bg-blur" className="h-0 w-screen max-w-full max-h-full absolute
+        <div id="bg-blur" className="h-0 w-screen max-w-full absolute
                                         left-0 top-0 backdrop-blur-sm z-40
                                         transition-all duration-500"></div>
     </nav>
