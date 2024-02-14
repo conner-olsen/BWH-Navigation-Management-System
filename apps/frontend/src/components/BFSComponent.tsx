@@ -6,6 +6,7 @@ import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
 import Form from "react-bootstrap/Form";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
@@ -163,10 +164,13 @@ export function BFSComponent() {
         roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
     }
 
-    const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-
-        setMap(event.target.value);
-
+    // const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    //
+    //     setMap(event.target.value);
+    //
+    // };
+    const handlePhotoChange = (map: string) => {
+        setMap(map);
     };
     const [isExpanded, setIsExpanded] = useState(true);
 
@@ -252,15 +256,26 @@ export function BFSComponent() {
                     </div>
                     <div>
                         <p>Select da floor bro</p>
-                        <Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>
+                        <Select defaultValue={"floor1"} onValueChange={handlePhotoChange}>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Theme" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="lowerLevel1">The Lower Level 1</SelectItem>
+                                <SelectItem value="lowerLevel2">The Lower Level 2</SelectItem>
+                                <SelectItem value="floor1">Floor 1</SelectItem>
+                            </SelectContent>
+                        </Select>
 
-                            {/*<option value="groundFloor">The Ground Floor</option>*/}
-                            <option value="lowerLevel1">The Lower Level 1</option>
-                            <option value="lowerLevel2">The Lower Level 2</option>
-                            <option value="floor1">Floor 1</option>
-                            <option value="floor2">Floor 2</option>
-                            <option value="floor3">Floor 3</option>
-                        </Form.Select>
+                        {/*<Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>*/}
+
+                        {/*    /!*<option value="groundFloor">The Ground Floor</option>*!/*/}
+                        {/*    <option value="lowerLevel1">The Lower Level 1</option>*/}
+                        {/*    <option value="lowerLevel2">The Lower Level 2</option>*/}
+                        {/*    <option value="floor1">Floor 1</option>*/}
+                        {/*    <option value="floor2">Floor 2</option>*/}
+                        {/*    <option value="floor3">Floor 3</option>*/}
+                        {/*</Form.Select>*/}
                     </div>
                     <div>
                         <p className="font-bold">Follow me</p>
