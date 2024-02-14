@@ -7,8 +7,7 @@ import Form from "react-bootstrap/Form";
 import {Button} from "../../components/ui/button.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
 
-const InteralTransportation: React.FC = () => {
-
+const InternalTransportation: React.FC = () => {
 
 
     function getRandomInt(max: number) {
@@ -69,27 +68,8 @@ const InteralTransportation: React.FC = () => {
                     <Col>
                         <div>
                             <Label htmlFor="patientName">Patient Name</Label>
-                            <Input type="text" id="patientName" placeholder={"Karish Gupta"}/>
+                            <Input type="text" id="patientName" placeholder={"Will Smith"}/>
                         </div>
-                    </Col>
-                    <Col>
-                        <div>
-                            <label
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Type
-                                of Cleaning</label>
-                            <Form.Select>
-                                <option value="Basic">Basic</option>
-                                <option value="Regular">Regular</option>
-                                <option value="Deep">Deep</option>
-                            </Form.Select>
-                        </div>
-                    </Col>
-                </Row>
-                <br/>
-
-                <Row>
-                    <Col>
-                        <LocationDropdown></LocationDropdown>
                     </Col>
 
                     <Col>
@@ -103,7 +83,29 @@ const InteralTransportation: React.FC = () => {
                             </Form.Select>
                         </div>
                     </Col>
+
                 </Row>
+                <br/>
+
+                <Row>
+                    <Col>
+                        <LocationDropdown></LocationDropdown>
+                    </Col>
+                    <Col>
+                        <LocationDropdown></LocationDropdown>
+                    </Col>
+                </Row>
+                <br/>
+                <Row>
+                    <Col>
+                        <div>
+                            <Label htmlFor="mode">Mode Of Transportation</Label>
+                            <Input type="text" id="mode" placeholder={"Wheelchair"}/>
+                        </div>
+                    </Col>
+
+                </Row>
+
 
                 <br/>
 
@@ -116,4 +118,4 @@ const InteralTransportation: React.FC = () => {
         </div>
     );
 };
-export default InteralTransportation;
+export default InternalTransportation;

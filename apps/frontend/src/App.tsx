@@ -13,6 +13,7 @@ import UserPage from "./routes/UserPage.tsx";
 import EmployeeManager from "./routes/EmployeeManagement.tsx";
 import NavBar from "./components/NavBar.tsx";
 import ExternalTransportation from "./routes/ServiceRequests/ExternalTransportation.tsx";
+import InternalTransportation from "./routes/ServiceRequests/InternalTransportation.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ function App() {
           {
               path: "/ExternalTransportation",
               element: <ExternalTransportation/>
+          },
+          {
+              path: "/InternalTransportation",
+              element: <InternalTransportation/>
           },
           {
               path: "/ServiceList",

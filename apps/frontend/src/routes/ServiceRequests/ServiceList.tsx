@@ -88,7 +88,7 @@ const ServiceList = () => {
                     </Col>
 
                     <Col>
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/InternalTransportation" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Internal Transportation Request</CardTitle>
