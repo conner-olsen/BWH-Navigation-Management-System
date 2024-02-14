@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios from "axios";
-// import axios from "axios";
-
 
 interface MapDisplayProps {
-    floorMap: string
-    floor: string
+    floorMap: string;
+    floor: string;
     startNode?: string;
     endNode?: string;
     sendHoverMapPath: (path: PathfindingRequest) => void;
@@ -17,7 +15,17 @@ interface MapDisplayProps {
     pathFindingType: string;
 }
 
-function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, pathFindingType, doDisplayEdges, doDisplayNodes, doDisplayNames}: MapDisplayProps) {
+function MapDisplay({
+                        floorMap,
+                        floor,
+                        startNode,
+                        endNode,
+                        sendHoverMapPath,
+                        pathFindingType,
+                        doDisplayEdges,
+                        doDisplayNodes,
+                        doDisplayNames
+                    }: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -27,8 +35,8 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
 
     useEffect(() => {
         axios.get("/api/graph").then((res) => {
-            const populatedGraph  = new Graph();
-            populatedGraph.populateGraph(res.data.nodes,res.data.edges);
+            const populatedGraph = new Graph();
+            populatedGraph.populateGraph(res.data.nodes, res.data.edges);
             setGraph(populatedGraph);
         });
     }, []);
@@ -67,16 +75,14 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
     const handleNodeClick = (node: Node) => {
         if (!startNodeId) {
             setStartNodeId(node.id);
-        }
-        else if (node.id == startNodeId) {
+        } else if (node.id == startNodeId) {
             clearSelection();
-        }
-        else if (!endNodeId) {
+        } else if (!endNodeId) {
             setEndNodeId(node.id);
             if (graph && startNodeId) {
                 setStartNodeId(startNodeId);
                 setEndNodeId(node.id);
-                const path: PathfindingRequest = { startid: startNodeId, endid: node.id };
+                const path: PathfindingRequest = {startid: startNodeId, endid: node.id};
                 sendHoverMapPath(path);
             }
         }
@@ -143,10 +149,10 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
     };
 
     const displayNodes = (graph: Graph) => {
-            return (
+        return (
             Array.from(graph.nodes.values()).map((node: Node) => {
-                if (node.floor == floor && doDisplayNodes){
-                    return(
+                if (node.floor == floor && doDisplayNodes) {
+                    return (
                         <g key={node.id} onClick={() => handleNodeClick(node)}
                            onMouseEnter={() => handleNodeHover(node)}
                            onMouseLeave={() => handleNodeHoverLeave()}>
@@ -161,18 +167,35 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
             }));
     };
 
-    const displayNames = (graph: Graph) => {
-        return (
-            Array.from(graph.nodes.values()).map((node: Node) => {
-                if (node.floor == floor && doDisplayNames) {
-                    return (
-                        <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-                            {node.shortName}
-                        </text>
-                    );
-                }
-            }));
-    };
+    const displayNames = () => {
+        // let names: Element = [];
+        // Array.from(graph.nodes.values()).map((node: Node) => {
+        //     if (node.floor == floor && doDisplayNames) {
+        //         names.push(<text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+        //             {node.shortName}
+        //         </text>);
+        //     }
+        // });
+        //
+        // return (
+        //     <div className="-rotate-10">
+        //         {names}
+        //     </div>
+        // )
+
+    return (
+        Array.from(graph.nodes.values()).map((node: Node) => {
+            if (node.floor == floor && doDisplayNames) {
+                return (
+
+                    <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                         {node.shortName}
+                         </text>
+                );
+            }
+        }))
+
+        ;};
 
     const displayEdges = (graph: Graph) => {
         if (doDisplayEdges) {
@@ -205,7 +228,7 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
                        y="0"/>
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
-                {graph && displayNames(graph)}
+                {graph && displayNames()}
                 {graph && displayNodes(graph)}
             </svg>
         </div>

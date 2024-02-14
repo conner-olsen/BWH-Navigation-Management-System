@@ -93,26 +93,6 @@ export function BFSComponent() {
         fetchData().then();
     }, []); //
 
-
-
-
-
-    //parse node CSV into array of CSVRows
-    const CSVRow = parseCSV(nodeCSVData);
-    //make array to be inserted in the html code
-    const roomNames = [];
-
-
-    //for each CSV row, add an option with the value as id and name as longName into array
-    for (let i = 0; i < CSVRow.length; i++) {
-        const row = CSVRow[i];
-        const rowval = Object.values(row);
-        const id = rowval[0];
-        const nodeId = row["nodeId"];
-        const longName = row["longName"];
-        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
-    }
-
     const sendHoverMapPath = (path: PathfindingRequest) => {
         setStartNode(path.startid);
         setEndNode(path.endid);
@@ -142,6 +122,42 @@ export function BFSComponent() {
             ? setFloor3ContentVisible(true) : setFloor3ContentVisible(false);
     }, [map]);
 
+    const nodeFloorToMapFloor = (nodeFloor: string) => {
+        if (nodeFloor == "L1") {
+            return "lowerLevel1";
+        } else if (nodeFloor == "L2") {
+            return "lowerLevel2";
+        } else if (nodeFloor == "1") {
+            return "floor1";
+        } else if (nodeFloor == "2") {
+            return "floor2";
+        } else if (nodeFloor == "3") {
+            return "floor3";
+        }
+        return "lowerLevel1";
+    };
+
+    //parse node CSV into array of CSVRows
+    const CSVRow = parseCSV(nodeCSVData);
+    //make array to be inserted in the html code
+    const roomNames = [];
+    const currentFloorNames = [];
+
+
+    //for each CSV row, add an option with the value as id and name as longName into array
+    for (let i = 0; i < CSVRow.length; i++) {
+        const row = CSVRow[i];
+        const rowval = Object.values(row);
+        const id = rowval[0];
+        const nodeId = row["nodeId"];
+        const longName = row["longName"];
+        const nodeFloor = nodeFloorToMapFloor(row["floor"]);
+
+        if (nodeFloor == map) {
+            currentFloorNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+        }
+        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+    }
 
     const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
 
@@ -202,10 +218,12 @@ export function BFSComponent() {
                     <div className="flex flex-col grow justify-between pl-[2px] pr-2">
                         <Form.Select value={startNode} size={"sm"}
                                      onChange={e => setStartNode(e.target.value)}>
-                            {roomNames}
+                            <option>Select Location</option>
+                            {currentFloorNames}
                         </Form.Select>
                         <Form.Select value={endNode} size={"sm"}
                                      onChange={e => setEndNode(e.target.value)}>
+                            <option>Select Location</option>
                             {roomNames}
                         </Form.Select>
                     </div>
@@ -292,6 +310,5 @@ export function BFSComponent() {
 
         </div>
 
-    );
-}
-
+            );
+        }

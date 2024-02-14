@@ -368,6 +368,10 @@ body.dark .DragDropBox {
     overflow: hidden;
 }
 
+.mapNames {
+    transform: rotate(-1deg);
+}
+
 .idinput {
     max-width: 550px;
     margin: auto;
