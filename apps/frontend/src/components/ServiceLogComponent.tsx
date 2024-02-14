@@ -14,7 +14,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             id:  tableData[index].id,
             senderName: tableData[index].senderName,
             senderEmail: tableData[index].senderEmail,
-            roomLongName: tableData[index].nodeID,
+            roomLongName: tableData[index].nodeId,
             flowerType: tableData[index].flowerType,
             deliveryDate: tableData[index].deliveryDate,
             note: tableData[index].note,
@@ -30,7 +30,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             id:  tableData[index].id,
             senderName: tableData[index].senderName,
             senderEmail: tableData[index].senderEmail,
-            roomLongName: tableData[index].nodeID,
+            roomLongName: tableData[index].nodeId,
             flowerType: tableData[index].flowerType,
             deliveryDate: tableData[index].deliveryDate,
             note: tableData[index].note,
@@ -47,7 +47,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             <TableRow key={index}>
                 <TableCell>{tableData[index].senderName}</TableCell>
                 <TableCell>{tableData[index].senderEmail}</TableCell>
-                <TableCell>{tableData[index].nodeID}</TableCell>
+                <TableCell>{tableData[index].nodeId}</TableCell>
                 <TableCell>{tableData[index].patientName}</TableCell>
                 <TableCell>{tableData[index].flowerType}</TableCell>
                 <TableCell>{tableData[index].deliveryDate}</TableCell>
@@ -173,17 +173,12 @@ export const ServiceLogComponent = () => {
                                 <SelectValue placeholder="Status" />
                             </SelectTrigger>
                             <SelectContent>
+                                <SelectItem value="Unassigned">Assigned</SelectItem>
                                 <SelectItem value="Assigned">Assigned</SelectItem>
                                 <SelectItem value="In Progress">In Progress</SelectItem>
                                 <SelectItem value="Completed">Completed</SelectItem>
                             </SelectContent>
                         </Select>
-                        {/*<Form.Select onChange={(e) => setSelectedStatus(e.target.value)}>*/}
-                        {/*    <option value={""}>All</option>*/}
-                        {/*    <option value={"Assigned"}>Assigned</option>*/}
-                        {/*    <option value={"In Progress"}>In Progress</option>*/}
-                        {/*    <option value={"Completed"}>Completed</option>*/}
-                        {/*</Form.Select>*/}
                     </Col>
                 </Row>
             </Container>
