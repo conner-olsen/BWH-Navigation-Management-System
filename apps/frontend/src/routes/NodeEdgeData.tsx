@@ -89,6 +89,7 @@ export function NodeEdgeData() {
                         <Container>
                             <ExportNodeDataToCSVButton></ExportNodeDataToCSVButton>
                         </Container>
+                        <br/>
                         <DragNDrop onFileDrop={handleNodeFileDrop}></DragNDrop>
                     </Col>
                     <Col>
@@ -96,16 +97,17 @@ export function NodeEdgeData() {
                         <Container>
                             <ExportEdgeDataButton></ExportEdgeDataButton>
                         </Container>
+                        <br/>
                         <DragNDrop onFileDrop={handleEdgeFileDrop}></DragNDrop>
                     </Col>
                 </Row>
             </Container>
 
             <Container className="mt-4">
-                <Tabs defaultValue="node" className="">
+                <Tabs defaultValue="node">
                     <TabsList>
-                        <TabsTrigger value="node">Node Data</TabsTrigger>
-                        <TabsTrigger value="edge">Edge Data</TabsTrigger>
+                        <TabsTrigger value="node" className={"text-center"}>Node Data</TabsTrigger>
+                        <TabsTrigger value="edge" className={"text-center"}>Edge Data</TabsTrigger>
                     </TabsList>
                     <TabsContent value="node">
 
