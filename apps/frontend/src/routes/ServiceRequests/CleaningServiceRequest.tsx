@@ -69,7 +69,7 @@ const CleaningServiceRequest: React.FC = () => {
                     <Col>
                         <div>
                             <Label htmlFor="patientName">Patient Name</Label>
-                            <Input type="text" id="patientName" placeholder={"John Doe"}/>
+                            <Input type="text" id="patientName" placeholder={"Karish Gupta"}/>
                         </div>
                     </Col>
                     <Col>
