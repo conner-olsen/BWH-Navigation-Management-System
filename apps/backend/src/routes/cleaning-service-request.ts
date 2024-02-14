@@ -41,7 +41,13 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async function (req: Request, res: Response) {
   try{
-    const internalCSV = await PrismaClient.cleaningServiceRequest.findMany();
+    const internalCSV = await PrismaClient.serviceRequest.findMany( {
+      include: {
+        cleaningServiceRequest: true,
+      }
+      }
+
+    );
     res.send(internalCSV);
   } catch (error){
     console.error(`Error exporting Service Request data: ${error}`);

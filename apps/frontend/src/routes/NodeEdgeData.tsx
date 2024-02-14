@@ -105,7 +105,7 @@ export function NodeEdgeData() {
 
             <Container className="mt-4">
                 <Tabs defaultValue="node">
-                    <TabsList>
+                    <TabsList className={"w-fit"}>
                         <TabsTrigger value="node" className={"text-center"}>Node Data</TabsTrigger>
                         <TabsTrigger value="edge" className={"text-center"}>Edge Data</TabsTrigger>
                     </TabsList>
