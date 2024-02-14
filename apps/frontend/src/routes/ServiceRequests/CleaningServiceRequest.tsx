@@ -105,7 +105,7 @@ const CleaningServiceRequest: React.FC = () => {
                     </Col>
                 </Row>
 
-                <br/>;
+                <br/>
 
                 <Row>
                     <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>

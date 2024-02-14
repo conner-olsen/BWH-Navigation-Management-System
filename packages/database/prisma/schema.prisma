@@ -116,8 +116,7 @@ model languageInterpreterServiceRequest {
 model religiousServiceRequest {
     ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
     id             String         @id
-    name           String
+    patientName    String
     religion       String
-    type           String
     note           String
 }
