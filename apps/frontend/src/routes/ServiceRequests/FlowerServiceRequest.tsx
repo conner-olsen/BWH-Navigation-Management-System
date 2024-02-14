@@ -11,14 +11,9 @@ import LocationDropdown from "../../components/LocationDropdown.tsx";
 
 const FlowerServiceRequest: React.FC = () => {
 
-    function getRandomInt(max: number) {
-        return Math.floor(Math.random() * max);
-    }
-
-
 
     const [formData, setFormData] = useState({
-        id: 0,
+        id: '',
         senderName: '',
         senderEmail: '',
         nodeID: '',
@@ -26,14 +21,14 @@ const FlowerServiceRequest: React.FC = () => {
         flowerType: '',
         deliveryDate: '',
         note: '',
-        status: 'UnAssigned',
+        status: 'Unassigned',
         employeeUser: 'none'
     });
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setFormData({
-            id: getRandomInt(1000000),
+            id: '',
             senderName: '',
             senderEmail: '',
             nodeID: '',
@@ -64,8 +59,6 @@ const FlowerServiceRequest: React.FC = () => {
 
     return (
         <div>
-
-            <div className="mt-20"> {/* Added mx-4 for left and right margins, mt-6 for top margin */}
 
             <h1>
                 Flower Service Request
