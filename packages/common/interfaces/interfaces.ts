@@ -37,12 +37,9 @@ export interface flowerServiceRequest extends ServiceRequest {
 }
 
 export interface cleaningServiceRequest extends ServiceRequest{
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
   type: string;
   patientName: string;
+
 }
 
 export interface externalTransportationServiceRequest extends ServiceRequest {

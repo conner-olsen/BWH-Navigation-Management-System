@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { cleaningServiceRequest } from 'common/interfaces/interfaces.ts';
+import {cleaningServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
@@ -12,7 +12,6 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
 
     const handleStatusChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
         axios.patch("/api/", {
-            node: tableData[index].node,
             priority: tableData[index].priority,
             status:  value,
             employeeUser: tableData[index].employeeUser,
@@ -25,7 +24,6 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
 
     const handleAssignmentChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
         axios.patch("/api/", {
-            node: tableData[index].node,
             priority: tableData[index].priority,
             status:  tableData[index].status,
             employeeUser: value,
@@ -40,16 +38,12 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].node}</TableCell>
-                <TableCell>{tableData[index].patientName}</TableCell>
-                <TableCell>{tableData[index].priority}</TableCell>
-                <TableCell>{tableData[index].type}</TableCell>
-
-
-
+                <TableCell>{item.nodeId}</TableCell>
+                <TableCell>{item.patientName}</TableCell> {/* Access patientName directly */}
+                <TableCell>{item.priority}</TableCell>
+                <TableCell>{item.type}</TableCell> {/* Access type directly */}
                 <TableCell>
-                    <Select value={tableData[index].status}
-                            onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select value={item.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -60,24 +54,23 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                             <SelectItem value="Completed">Completed</SelectItem>
                         </SelectContent>
                     </Select>
-
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].employeeUser}
-                            onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select value={item.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
                         <SelectContent>
                             {employeeData.map((employee, employeeIndex) => (
-                                <SelectItem key={employeeIndex} value={employeeData[employeeIndex].username}>
-                                    {employeeData[employeeIndex].username}
+                                <SelectItem key={employeeIndex} value={employee.username}>
+                                    {employee.username}
                                 </SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
                 </TableCell>
             </TableRow>
+
         ));
 }
 
