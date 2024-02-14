@@ -58,12 +58,12 @@ return (
         <Nav className="navbarStyling relative filter-none z-50 shadow-md bg-blue-950 space-x-12 items-center">
             <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img></Link>
             <Link to="/Home" className="text-lg no-underline p-2 text-white"> <div className={"hover:text-blue-500"}>Home</div></Link>
-            <Link to="/EmployeeManager" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Employee Manager</div></Link>
-
+            {isAuthenticated && (
+                <Link to="/EmployeeManager" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Employee Manager</div></Link>
+            )}
             {isAuthenticated && (
                 <Link to="/DataUpload" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Data Upload</div></Link>
             )}
-            {isAuthenticated && (
                 <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white"
                       onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <div className={"hover:text-blue-500"}>Service Request</div>
@@ -79,7 +79,6 @@ return (
                         </div>
                     </div>
                 </Link>
-                )}
 
 
             {isAuthenticated && (
