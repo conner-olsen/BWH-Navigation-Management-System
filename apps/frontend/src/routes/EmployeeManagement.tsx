@@ -88,8 +88,10 @@ export const EmployeeManager = () => {
             <>
                 <Outlet/>
                 <div className={"align-content-center"}>
-                    <Tabs defaultValue="node" className="w-screen">
-                        <TabsList>
+                    <br/>
+                    <br/>
+                    <Tabs defaultValue="Create Employee" className="w-screen align-content-center">
+                        <TabsList classname-={"align-content-center"}>
                             {/*<TabsTrigger value="Employee List">Employee List</TabsTrigger>*/}
                             <TabsTrigger value="Create Employee">Create Employee</TabsTrigger>
                             <TabsTrigger value="Update Employee">Update Employee</TabsTrigger>
@@ -97,6 +99,7 @@ export const EmployeeManager = () => {
                         </TabsList>
 
                         {/*<TabsContent value="Employee List">*/}
+
                         <TabsContent value="Create Employee">
                                         <Container>
                                             <Row>
