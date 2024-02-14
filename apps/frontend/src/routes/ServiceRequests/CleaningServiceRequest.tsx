@@ -28,15 +28,6 @@ const CleaningServiceRequest: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        setFormData({
-            id: 'getRandomInt(1000000)',
-            nodeId: '',
-            patientName: '',
-            type: '',
-            priority: '',
-            status: '',
-            employeeUser: ''
-        });
         try {
             const response = await axios.post("/api/cleaning-request", JSON.stringify(formData), {
                 headers: {
@@ -46,6 +37,15 @@ const CleaningServiceRequest: React.FC = () => {
 
             if (response.status === 200) {
                 console.log('Data sent successfully');
+                setFormData({
+                    id: '',
+                    nodeId: '',
+                    patientName: '',
+                    type: '',
+                    priority: '',
+                    status: '',
+                    employeeUser: ''
+                });
             } else {
                 console.error('Error sending data');
             }
