@@ -22,6 +22,7 @@ import internalTransportServiceRequestRoute from "./routes/internal-transportati
 import externalTransportServiceRequest from "./routes/external-transport-service-request.ts";
 import cleaningRoute from "./routes/cleaning-service-request.ts";
 
+import allServiceData from "./routes/all-service-logs.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -60,6 +61,7 @@ app.use("/api/language-service-request", languageInterpreterServiceRequest);
 app.use("/api/internal-transport", internalTransportServiceRequestRoute);
 app.use("/api/external-transport", externalTransportServiceRequest);
 app.use("/api/cleaning-request", cleaningRoute);
+app.use("/api/all-service-data", allServiceData);
 
 
 /**

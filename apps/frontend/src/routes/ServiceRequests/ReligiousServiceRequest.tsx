@@ -7,7 +7,7 @@ import {Button} from "../../components/ui/button.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
 import {Textarea} from "../../components/ui/textarea.tsx";
 
-const CleaningServiceRequest: React.FC = () => {
+const ReligiousServiceRequest: React.FC = () => {
 
     const [formData, setFormData] = useState({
         id: '',
@@ -128,4 +128,4 @@ const CleaningServiceRequest: React.FC = () => {
         </div>
     );
 };
-export default CleaningServiceRequest;
+export default ReligiousServiceRequest;
