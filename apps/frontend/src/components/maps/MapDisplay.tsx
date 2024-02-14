@@ -168,19 +168,34 @@ function MapDisplay({
     };
 
     const displayNames = () => {
+        // let names: Element = [];
+        // Array.from(graph.nodes.values()).map((node: Node) => {
+        //     if (node.floor == floor && doDisplayNames) {
+        //         names.push(<text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+        //             {node.shortName}
+        //         </text>);
+        //     }
+        // });
+        //
+        // return (
+        //     <div className="-rotate-10">
+        //         {names}
+        //     </div>
+        // )
 
     return (
         Array.from(graph.nodes.values()).map((node: Node) => {
             if (node.floor == floor && doDisplayNames) {
                 return (
-                    <g key={node.id} className="-rotate-0">
+
                     <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
                          {node.shortName}
                          </text>
-                    </g>
                 );
             }
-        }));};
+        }))
+
+        ;};
 
     const displayEdges = (graph: Graph) => {
         if (doDisplayEdges) {
