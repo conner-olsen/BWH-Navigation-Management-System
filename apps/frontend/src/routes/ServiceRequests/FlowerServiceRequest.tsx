@@ -87,7 +87,7 @@ const FlowerServiceRequest: React.FC = () => {
                             <h1 className="font-roboto font-bold text-6xl text-dark-blue mb-1 text-left">FLOWER</h1>
                             <h1 className="font-roboto font-bold text-6xl text-dark-blue text-left">DELIVERY</h1>
                         </div>
-                        <img src="/flower_service.jpg" alt="Flower Service" className="mr-2"
+                        <img src="/service-images-transparent/flower_serviceT.png" alt="Flower Service" className="mr-2"
                              style={{width: '150px', height: '150px'}}/>
                     </div>
 
