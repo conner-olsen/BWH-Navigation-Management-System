@@ -24,7 +24,7 @@ router.post("/", async (req: Request, res: Response) => {
 
         externalTransportationServiceRequest: {
           create: {
-            name: requestData.name,
+            name: requestData.patientName,
             destination: requestData.destination,
             transportation: requestData.transportation,
             date: requestData.date,

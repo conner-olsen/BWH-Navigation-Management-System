@@ -4,7 +4,7 @@ const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
   const requestData = req.body;
-
+  console.log(JSON.stringify(requestData));
   try {
 
     // Create the Service Request
@@ -24,11 +24,11 @@ router.post("/", async (req: Request, res: Response) => {
 
         internalTransportServiceRequest: {
           create: {
-            name: requestData.name,
+            name: requestData.patientName,
             mode: requestData.mode,
             node: {
               connect: {
-                  nodeId: requestData.destination
+                  nodeId: requestData.nodeId
                 }
             }
           }

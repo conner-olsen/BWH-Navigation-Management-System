@@ -24,7 +24,7 @@ router.post("/", async (req: Request, res: Response) => {
 
         languageInterpreterServiceRequest: {
           create: {
-            name: requestData.name,
+            name: requestData.patientName,
             languagePref: requestData.languagePref
 
           }
