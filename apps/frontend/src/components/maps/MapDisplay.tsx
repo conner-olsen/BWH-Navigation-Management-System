@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios from "axios";
-// import axios from "axios";
 
 interface MapDisplayProps {
     floorMap: string;

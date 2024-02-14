@@ -6,7 +6,7 @@ import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
 import Form from "react-bootstrap/Form";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
-import {Select, SelectContent, SelectItem, SelectValue} from "./ui/select.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
@@ -21,7 +21,6 @@ export function BFSComponent() {
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
-    // const [floor, setFloor] = useState<string>("L1");
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -253,9 +252,9 @@ export function BFSComponent() {
                     <div>
                         <p>Select Your Floor</p>
                         <Select value={map} defaultValue={"floor1"} onValueChange={handlePhotoChange}>
-                            {/*<SelectTrigger className="w-[180px]">*/}
+                            <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Theme"/>
-                            {/*</SelectTrigger>*/}
+                            </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="lowerLevel1">The Lower Level 1</SelectItem>
                                 <SelectItem value="lowerLevel2">The Lower Level 2</SelectItem>
