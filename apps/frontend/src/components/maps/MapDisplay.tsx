@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios from "axios";
+//import { JSX } from 'react/jsx-runtime';
+
 // import axios from "axios";
 
-
 interface MapDisplayProps {
-    floorMap: string
-    floor: string
+    floorMap: string;
+    floor: string;
     startNode?: string;
     endNode?: string;
     sendHoverMapPath: (path: PathfindingRequest) => void;
@@ -18,7 +19,17 @@ interface MapDisplayProps {
 
 }
 
-function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, pathFindingType, doDisplayEdges, doDisplayNodes, doDisplayNames}: MapDisplayProps) {
+function MapDisplay({
+                        floorMap,
+                        floor,
+                        startNode,
+                        endNode,
+                        sendHoverMapPath,
+                        pathFindingType,
+                        doDisplayEdges,
+                        doDisplayNodes,
+                        doDisplayNames
+                    }: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
@@ -27,8 +38,8 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
 
     useEffect(() => {
         axios.get("/api/graph").then((res) => {
-            const populatedGraph  = new Graph();
-            populatedGraph.populateGraph(res.data.nodes,res.data.edges);
+            const populatedGraph = new Graph();
+            populatedGraph.populateGraph(res.data.nodes, res.data.edges);
             setGraph(populatedGraph);
         });
     }, []);
@@ -65,16 +76,14 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
     const handleNodeClick = (node: Node) => {
         if (!startNodeId) {
             setStartNodeId(node.id);
-        }
-        else if (node.id == startNodeId) {
+        } else if (node.id == startNodeId) {
             clearSelection();
-        }
-        else if (!endNodeId) {
+        } else if (!endNodeId) {
             setEndNodeId(node.id);
             if (graph && startNodeId) {
                 setStartNodeId(startNodeId);
                 setEndNodeId(node.id);
-                const path: PathfindingRequest = { startid: startNodeId, endid: node.id };
+                const path: PathfindingRequest = {startid: startNodeId, endid: node.id};
                 sendHoverMapPath(path);
             }
         }
@@ -97,7 +106,8 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
         return (
             <g>
                 {type === 'hover'}
-                <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>;
+                <rect x={node.xCoord - 415} y={node.yCoord - 130} width="315" height="125" fill="lightgrey"/>
+                ;
                 <text x={node.xCoord - 400} y={node.yCoord - 105} fill="black">
                     Type: {node.nodeType}
                 </text>;
@@ -121,7 +131,7 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
             <g>
-            <rect x={node.xCoord - 100} y={node.yCoord - 50} width="100" height="60" fill="lightgrey"/>
+                <rect x={node.xCoord - 100} y={node.yCoord - 50} width="100" height="60" fill="lightgrey"/>
                 <text x={node.xCoord - 85} y={node.yCoord - 30} fill="black">
                     {type === 'start' ? 'Start Node' : 'End Node'}
                 </text>
@@ -134,10 +144,10 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
     };
 
     const displayNodes = (graph: Graph) => {
-            return (
+        return (
             Array.from(graph.nodes.values()).map((node: Node) => {
-                if (node.floor == floor && doDisplayNodes){
-                    return(
+                if (node.floor == floor && doDisplayNodes) {
+                    return (
                         <g key={node.id} onClick={() => handleNodeClick(node)}
                            onMouseEnter={() => handleNodeHover(node)}
                            onMouseLeave={() => handleNodeHoverLeave()}>
@@ -152,21 +162,35 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
             }));
     };
 
-    const displayNames = (graph: Graph) => {
-        return (
-            Array.from(graph.nodes.values()).map((node: Node) => {
-                if (node.floor == floor && doDisplayNames) {
-                    return (
-                        <text className="mapNames" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-                             {node.shortName}
-                             </text>
-                    );
-                }
-            }));
-    };
+    // const rows: JSX.Element[] = [];
+    // Array.from(graph.nodes.values()).map((node: Node) => {
+    //     if (node.floor == floor && doDisplayNames) {
+    //         rows.push(<text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+    //             {node.shortName}
+    //         </text>);
+    //     }
+    // });
+
+    const displayNames = () => {
+    //     return (
+    //         <text>{rows}</text>
+    //     );
+    // };
+    return (
+        Array.from(graph.nodes.values()).map((node: Node) => {
+            if (node.floor == floor && doDisplayNames) {
+                return (
+                    <g key={node.id} className="-rotate-45">
+                    <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                         {node.shortName}
+                         </text>
+                    </g>
+                );
+            }
+        }));};
 
     const displayEdges = (graph: Graph) => {
-        if(doDisplayEdges) {
+        if (doDisplayEdges) {
             const edges: React.JSX.Element[] = [];
             for (const [nodeId, node] of graph.nodes) {
                 node.edges.forEach(edgeNodeId => {
@@ -192,7 +216,7 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
                        y="0"/>
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
-                {graph && displayNames(graph)}
+                {graph && displayNames()}
                 {graph && displayNodes(graph)}
             </svg>
         </div>

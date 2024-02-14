@@ -20,6 +20,7 @@ export function BFSComponent() {
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+   // const [floor, setFloor] = useState<string>("L1");
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -92,26 +93,6 @@ export function BFSComponent() {
         fetchData().then();
     }, []); //
 
-
-
-
-
-    //parse node CSV into array of CSVRows
-    const CSVRow = parseCSV(nodeCSVData);
-    //make array to be inserted in the html code
-    const roomNames = [];
-
-
-    //for each CSV row, add an option with the value as id and name as longName into array
-    for (let i = 0; i < CSVRow.length; i++) {
-        const row = CSVRow[i];
-        const rowval = Object.values(row);
-        const id = rowval[0];
-        const nodeId = row["nodeId"];
-        const longName = row["longName"];
-        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
-    }
-
     const sendHoverMapPath = (path: PathfindingRequest) => {
         setStartNode(path.startid);
         setEndNode(path.endid);
@@ -130,16 +111,57 @@ export function BFSComponent() {
         // map === "groundFloor"
         //     ? setGroundFloorContentVisible(true) : setGroundFloorContentVisible(false);
         map === "lowerLevel1"
-            ? setLowerLevel1ContentVisible(true) : setLowerLevel1ContentVisible(false);
+            ? (setLowerLevel1ContentVisible(true)): setLowerLevel1ContentVisible(false);
         map === "lowerLevel2"
-            ? setLowerLevel2ContentVisible(true) : setLowerLevel2ContentVisible(false);
+            ? setLowerLevel2ContentVisible(true): setLowerLevel2ContentVisible(false);
         map === "floor1"
-            ? setFloor1ContentVisible(true) : setFloor1ContentVisible(false);
+            ? setFloor1ContentVisible(true): setFloor1ContentVisible(false);
         map === "floor2"
             ? setFloor2ContentVisible(true) : setFloor2ContentVisible(false);
         map === "floor3"
             ? setFloor3ContentVisible(true) : setFloor3ContentVisible(false);
     }, [map]);
+
+    const nodeFloorToMapFloor = (nodeFloor: string) => {
+        if(nodeFloor == "L1") {
+            return "lowerLevel1";
+        }
+        else if(nodeFloor == "L2") {
+            return "lowerLevel2";
+        }
+        else if(nodeFloor == "1") {
+            return "floor1";
+        }
+        else if(nodeFloor == "2") {
+            return "floor2";
+        }
+        else if(nodeFloor == "3") {
+            return "floor3";
+        }
+        return "lowerLevel1";
+    };
+
+    //parse node CSV into array of CSVRows
+    const CSVRow = parseCSV(nodeCSVData);
+    //make array to be inserted in the html code
+    const roomNames = [];
+    const currentFloorNames = [];
+
+
+    //for each CSV row, add an option with the value as id and name as longName into array
+    for (let i = 0; i < CSVRow.length; i++) {
+        const row = CSVRow[i];
+        const rowval = Object.values(row);
+        const id = rowval[0];
+        const nodeId = row["nodeId"];
+        const longName = row["longName"];
+        const nodeFloor = nodeFloorToMapFloor(row["floor"]);
+
+        if(nodeFloor == map) {
+            currentFloorNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+        }
+        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+    }
 
 
     const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -209,13 +231,15 @@ export function BFSComponent() {
                         <p>Starting Location</p>
                         <Form.Select value={startNode} size={"sm"}
                                      onChange={e => setStartNode(e.target.value)}>
-                            {roomNames}
+                            <option></option>
+                            {currentFloorNames}
                         </Form.Select>
                     </div>
                     <div>
                         <p>Destination</p>
                         <Form.Select value={endNode} size={"sm"}
                                      onChange={e => setEndNode(e.target.value)}>
+                            <option></option>
                             {roomNames}
                         </Form.Select>
                     </div>
