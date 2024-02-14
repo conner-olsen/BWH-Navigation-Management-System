@@ -255,8 +255,8 @@ export function BFSComponent() {
                         </Form.Select>
                     </div>
                     <div>
-                        <p>Select da floor bro</p>
-                        <Select defaultValue={"floor1"} onValueChange={handlePhotoChange}>
+                        <p>Select Your Floor</p>
+                        <Select value={map} defaultValue={"floor1"} onValueChange={handlePhotoChange}>
                             <SelectTrigger className="w-[180px]">
                                 <SelectValue placeholder="Theme" />
                             </SelectTrigger>
@@ -264,6 +264,8 @@ export function BFSComponent() {
                                 <SelectItem value="lowerLevel1">The Lower Level 1</SelectItem>
                                 <SelectItem value="lowerLevel2">The Lower Level 2</SelectItem>
                                 <SelectItem value="floor1">Floor 1</SelectItem>
+                                <SelectItem value="floor2">Floor 2</SelectItem>
+                                <SelectItem value="floor3">Floor 3</SelectItem>
                             </SelectContent>
                         </Select>
 
