@@ -4,6 +4,7 @@ import LoginButtonPatient from "../components/LoginButtonPatient.tsx";
 import { Link } from 'react-router-dom';
 import '../index.css'; // Import the CSS file
 
+
 const BwhHomepage: React.FC = () => {
     const [fadeIn, setFadeIn] = useState<boolean>(false);
     const [isHovered, setHovered] = useState(false);
@@ -76,7 +77,7 @@ const BwhHomepage: React.FC = () => {
                             onMouseEnter={handleMouseEnter}
                             onMouseLeave={handleMouseLeave}
                         >
-                            CONTINUE AS GUEST
+                            GUEST
                         </Link>
                     </div>
                 </div>

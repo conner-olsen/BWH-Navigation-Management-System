@@ -25,7 +25,7 @@ const LoginButtonAdmin = () => {
                     transition: 'color 0.5s ease', // Add a smooth color transition effect
                 }}
             >
-                LOGIN AS ADMIN
+                ADMIN
             </button>
         </div>
     );
