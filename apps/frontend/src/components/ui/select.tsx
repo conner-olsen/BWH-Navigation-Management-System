@@ -19,7 +19,7 @@ const SelectTrigger = React.forwardRef(
                 "rounded-full",   // Make the button oval
                 "p-2",            // Reduce padding for height
                 "border",         // Add border
-                "border-black",   // Black border
+                "border-border",   // Black border
                 "bg-transparent", // Transparent background
                 "flex",           // Add flex for alignment adjustments
                 "items-center",   // Center items vertically
@@ -34,7 +34,7 @@ const SelectTrigger = React.forwardRef(
                 "disabled:opacity-50",
                 "[&>span]:line-clamp-1",
                 "pl-[500px]",
-
+                "w-full",
                 "h-16",
                 className
             )}
