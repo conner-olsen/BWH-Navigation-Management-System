@@ -12,7 +12,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             id:  tableData[index].id,
             senderName: tableData[index].senderName,
             senderEmail: tableData[index].senderEmail,
-            roomLongName: tableData[index].nodeID,
+            roomLongName: tableData[index].nodeId,
             flowerType: tableData[index].flowerType,
             deliveryDate: tableData[index].deliveryDate,
             note: tableData[index].note,
@@ -28,7 +28,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             id:  tableData[index].id,
             senderName: tableData[index].senderName,
             senderEmail: tableData[index].senderEmail,
-            roomLongName: tableData[index].nodeID,
+            roomLongName: tableData[index].nodeId,
             flowerType: tableData[index].flowerType,
             deliveryDate: tableData[index].deliveryDate,
             note: tableData[index].note,
@@ -45,7 +45,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
             <tr key={index}>
                 <td>{tableData[index].senderName}</td>
                 <td>{tableData[index].senderEmail}</td>
-                <td>{tableData[index].nodeID}</td>
+                <td>{tableData[index].nodeId}</td>
                 <td>{tableData[index].patientName}</td>
                 <td>{tableData[index].flowerType}</td>
                 <td>{tableData[index].deliveryDate}</td>

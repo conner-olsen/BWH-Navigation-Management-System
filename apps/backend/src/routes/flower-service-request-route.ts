@@ -1,26 +1,35 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
-import {Prisma} from "database";
-import ServiceRequestUncheckedCreateInput = Prisma.ServiceRequestUncheckedCreateInput;
-
+import ServiceRequestCreateInput = Prisma.ServiceRequestUncheckedCreateInput;
+import {Prisma} from "@prisma/client";
 const router: Router = express.Router();
-
 
 router.post("/", async (req: Request, res: Response) => {
   const requestData = req.body;
-  const serviceRequestData: ServiceRequestUncheckedCreateInput = {
-    nodeId: requestData.nodeId,
-    status: requestData.status,
-    employeeUser: requestData.employeeUser,
-    priority: requestData.priority,
-  };
-
-  const flowerServiceRequestData: Prisma.FlowerServiceRequestUncheckedCreateInput = {
-    ...requestData,
-    id: undefined, // Ensure id is not set to prevent conflicts
-  };
 
   try {
+    const employee = await PrismaClient.employee.findUnique({
+      where: { username: requestData.employeeUser }
+    });
+
+    if (!employee) {
+      console.error(`Error: Employee with username ${requestData.employeeUser} not found`);
+      res.sendStatus(400);
+      return;
+    }
+
+    const serviceRequestData: ServiceRequestCreateInput = {
+      nodeId: requestData.nodeId,
+      status: requestData.status,
+      employee: employee,
+      priority: requestData.priority,
+    };
+
+    const flowerServiceRequestData: Prisma.FlowerServiceRequestUncheckedCreateInput = {
+      ...requestData,
+      id: undefined, // Ensure id is not set to prevent conflicts
+    };
+
     // Create the Service Request
     const createdServiceRequest = await PrismaClient.serviceRequest.create({ data: serviceRequestData });
 
@@ -35,6 +44,8 @@ router.post("/", async (req: Request, res: Response) => {
     res.sendStatus(500);
   }
 });
+
+
 
 router.get("/", async function (req: Request, res: Response) {
   try{

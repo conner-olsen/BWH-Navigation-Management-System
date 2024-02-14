@@ -14,7 +14,7 @@ datasource db {
 
 //Node Table
 model Node {
-    nodeId                          String                            @id
+    nodeId                          String  @id
     xcoord                          Int
     ycoord                          Int
     floor                           String
