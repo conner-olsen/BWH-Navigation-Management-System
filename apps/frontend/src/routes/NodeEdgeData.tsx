@@ -1,7 +1,6 @@
 import {Outlet} from "react-router-dom";
 import DragNDrop from "../components/DragNDrop.tsx";
 import {Col, Container, Row} from "react-bootstrap";
-import NavBar from "../components/NavBar.tsx";
 import {GetDataNodes} from "../components/NodesDataBaseTableDisplay.tsx";
 import ExportNodeDataToCSVButton from "../components/ExportNodeDataButton.tsx";
 import {Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/tabs.tsx";
@@ -82,7 +81,6 @@ export function NodeEdgeData() {
 
 
             <Outlet></Outlet>
-            <NavBar></NavBar>
 
             <Container>
                 <Row>

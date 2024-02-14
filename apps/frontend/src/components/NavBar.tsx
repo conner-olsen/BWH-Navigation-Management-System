@@ -12,12 +12,13 @@ import {
 } from "./ui/dropdown-menu.tsx";
 
 import {Nav} from "react-bootstrap";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useLocation} from "react-router-dom";
 import {NavDropdown} from "react-bootstrap";
 import {Button} from "./ui/button.tsx";
 
 
 export default function NavBar() {
+
 
     const {
         user,
@@ -26,6 +27,10 @@ export default function NavBar() {
         logout,
     } = useAuth0();
 
+    const {pathname} = useLocation();
+    if(pathname == "/") {
+        return null;
+    }
     const lohgoutWithRedirect = () =>
         logout( {
             logoutParams: { returnTo: window.location.origin },

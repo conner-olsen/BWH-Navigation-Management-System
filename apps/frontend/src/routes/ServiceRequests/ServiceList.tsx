@@ -1,6 +1,5 @@
 
 import React from 'react';
-import NavBar from "../../components/NavBar.tsx";
 import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from  "../../components/ui/card.tsx";
 import {Col, Container, Row} from "react-bootstrap";
@@ -10,7 +9,7 @@ import Global_Footer from "../../components/Global_Footer.tsx";
 const ServiceList = () => {
     return (
         <>
-            <NavBar/>
+
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: '15%' }}>
             <h1 className="font-roboto font-extrabold italic"
                 style={{marginTop: '5%', marginLeft: '10%', fontSize: '60px'}}>
