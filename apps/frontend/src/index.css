@@ -99,6 +99,11 @@ label {
     display: block;
 }
 
+textarea{
+    color:black;
+    border-radius: 5px;
+    height: 45px;
+}
 
 /* ============== HOMEPAGE =========== */
 @keyframes typing {
@@ -444,6 +449,9 @@ h1 {
     font-family: "Segoe UI", Roboto;
     text-transform: uppercase;
     font-style: italic;
+}
+label{
+
 }
 
 /* ========== CSV Table ========== */
