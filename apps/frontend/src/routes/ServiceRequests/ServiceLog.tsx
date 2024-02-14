@@ -5,12 +5,16 @@ import {TabsContent, TabsList, TabsTrigger, Tabs} from "../../components/ui/tabs
 //import {Button} from "../../components/ui/button.tsx";
 //import {GetDataEmployees} from "../../components/EmployeeManagerComponent.tsx";
 import {ReligiousServiceLogComponent} from "../../components/ReligionServiceLogComponent.tsx";
+import {CleaningServiceLogComponent} from "../../components/CleaningServiceLogComponent.tsx";
+import {InternalTransportServiceLogComponent} from "../../components/InternalServiceLogComponent.tsx";
+import {LanguageServiceLogComponent} from "../../components/LanguageServiceLogComponent.tsx";
+import {ExternalTransportServiceLogComponent} from "../../components/ExternalServiceLogComponent.tsx";
+
 const ServiceLog = () => {
     return (
         <div>
             <Tabs defaultValue="Create Employee" className="w-screen align-content-center">
                 <TabsList classname-={"align-content-center"}>
-                    {/*<TabsTrigger value="Employee List">Employee List</TabsTrigger>*/}
                     <TabsTrigger value="Flower Service Request">Flower Service Request</TabsTrigger>
                     <TabsTrigger value="Religious Service Request">Religious Service Request</TabsTrigger>
                     <TabsTrigger value="Cleaning Service Request">Cleaning Service Request</TabsTrigger>
@@ -24,9 +28,22 @@ const ServiceLog = () => {
                 <TabsContent value="Flower Service Request">
                     <FlowerServiceLogComponent></FlowerServiceLogComponent>
                 </TabsContent>
-                <TabsContent value={"ReligiousServiceLogComponent"}>
+                <TabsContent value={"Religious Service Request"}>
                     <ReligiousServiceLogComponent></ReligiousServiceLogComponent>
                 </TabsContent>
+                <TabsContent value={"Cleaning Service Request"}>
+                    <CleaningServiceLogComponent></CleaningServiceLogComponent>
+                </TabsContent>
+                <TabsContent value={"Internal Transport Service Request"}>
+                    <InternalTransportServiceLogComponent></InternalTransportServiceLogComponent>
+                </TabsContent>
+                <TabsContent value={"Language Service Request"}>
+                    <LanguageServiceLogComponent></LanguageServiceLogComponent>
+                </TabsContent>
+                <TabsContent value={"External Transport Service Request"}>
+                    <ExternalTransportServiceLogComponent></ExternalTransportServiceLogComponent>
+                </TabsContent>
+
                 </Tabs>
             <Global_Footer />
         </div>

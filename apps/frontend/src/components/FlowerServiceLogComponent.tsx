@@ -48,7 +48,7 @@ function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], empl
             <TableRow key={index}>
                 <TableCell>{tableData[index].senderName}</TableCell>
                 <TableCell>{tableData[index].senderEmail}</TableCell>
-                <TableCell>{tableData[index].nodeId}</TableCell>
+                <TableCell>{tableData[index].node}</TableCell>
                 <TableCell>{tableData[index].patientName}</TableCell>
                 <TableCell>{tableData[index].flowerType}</TableCell>
                 <TableCell>{tableData[index].deliveryDate}</TableCell>

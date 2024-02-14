@@ -1,38 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { religiousServiceRequest } from 'common/interfaces/interfaces.ts';
+import { cleaningServiceRequest } from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 // import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
-function GenerateTableRowsServices(tableData: religiousServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
+function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
     //const [status, setStatus] = useState("Assigned");
 
 
-    const handleStatusChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
+    const handleStatusChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
         axios.patch("/api/", {
-            nodeId: tableData[index].node,
+            node: tableData[index].node,
             priority: tableData[index].priority,
-            note:  tableData[index].note,
+            status:  value,
+            employeeUser: tableData[index].employeeUser,
+            type: tableData[index].type,
             patientName: tableData[index].patientName,
-            relgion: tableData[index].religion,
-            status: value,
-            employeeUser: tableData[index].employeeUser
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
-    const handleAssignmentChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
+    const handleAssignmentChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
         axios.patch("/api/", {
-            nodeId: tableData[index].node,
+            node: tableData[index].node,
             priority: tableData[index].priority,
-            note:  tableData[index].note,
-            patientName: tableData[index].patientName,
-            relgion: tableData[index].religion,
-            status: tableData[index].status,
+            status:  tableData[index].status,
             employeeUser: value,
+            type: tableData[index].type,
+            patientName: tableData[index].patientName,
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
@@ -45,8 +43,8 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
                 <TableCell>{tableData[index].node}</TableCell>
                 <TableCell>{tableData[index].patientName}</TableCell>
                 <TableCell>{tableData[index].priority}</TableCell>
-                <TableCell>{tableData[index].religion}</TableCell>
-                <TableCell>{tableData[index].note}</TableCell>
+                <TableCell>{tableData[index].type}</TableCell>
+
 
 
                 <TableCell>
@@ -83,7 +81,7 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
         ));
 }
 
-const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: cleaningServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
     return (
         <Table>
             <TableHeader>
@@ -91,8 +89,7 @@ const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeDa
                     <TableHead>Location</TableHead>
                     <TableHead>Patient Name</TableHead>
                     <TableHead>Priority</TableHead>
-                    <TableHead>Religion</TableHead>
-                    <TableHead>Note</TableHead>
+                    <TableHead>Type</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>
                 </TableRow>
@@ -103,8 +100,8 @@ const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeDa
 };
 
 // GETTING data for service request and
-export const ReligiousServiceLogComponent = () => {
-    const [data, setData] = useState<religiousServiceRequest[]>([]);
+export const CleaningServiceLogComponent = () => {
+    const [data, setData] = useState<cleaningServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
 
@@ -113,9 +110,9 @@ export const ReligiousServiceLogComponent = () => {
         const fetchData = async () => {
             try {
                 // Make a GET request to the API endpoint for flower service requests
-                const response = await fetch('/api/religious-service-request');
+                const response = await fetch('/api/cleaning-request');
                 if (!response.ok) {
-                    throw new Error(`Failed to fetch religion service requests: ${response.status}`);
+                    throw new Error(`Failed to fetch cleaning service requests: ${response.status}`);
                 }
                 const result = await response.json();
                 setData(result);
