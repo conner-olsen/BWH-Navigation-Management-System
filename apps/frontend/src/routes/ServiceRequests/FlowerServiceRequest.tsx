@@ -71,7 +71,7 @@ const FlowerServiceRequest: React.FC = () => {
                     <Col>
                         <div>
                             <Label htmlFor="senderName">Sender Name</Label>
-                            <Input type="text" id="senderName" placeholder={"John Doe"}/>
+                            <Input type="text" id="senderName" placeholder={"Aiden Deady"}/>
                         </div>
                     </Col>
                     <Col>
