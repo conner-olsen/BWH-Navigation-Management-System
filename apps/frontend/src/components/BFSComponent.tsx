@@ -6,7 +6,7 @@ import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
 import Form from "react-bootstrap/Form";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+import {Select, SelectContent, SelectItem, SelectValue} from "./ui/select.tsx";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
@@ -21,7 +21,7 @@ export function BFSComponent() {
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
-   // const [floor, setFloor] = useState<string>("L1");
+    // const [floor, setFloor] = useState<string>("L1");
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -112,11 +112,11 @@ export function BFSComponent() {
         // map === "groundFloor"
         //     ? setGroundFloorContentVisible(true) : setGroundFloorContentVisible(false);
         map === "lowerLevel1"
-            ? (setLowerLevel1ContentVisible(true)): setLowerLevel1ContentVisible(false);
+            ? (setLowerLevel1ContentVisible(true)) : setLowerLevel1ContentVisible(false);
         map === "lowerLevel2"
-            ? setLowerLevel2ContentVisible(true): setLowerLevel2ContentVisible(false);
+            ? setLowerLevel2ContentVisible(true) : setLowerLevel2ContentVisible(false);
         map === "floor1"
-            ? setFloor1ContentVisible(true): setFloor1ContentVisible(false);
+            ? setFloor1ContentVisible(true) : setFloor1ContentVisible(false);
         map === "floor2"
             ? setFloor2ContentVisible(true) : setFloor2ContentVisible(false);
         map === "floor3"
@@ -124,19 +124,15 @@ export function BFSComponent() {
     }, [map]);
 
     const nodeFloorToMapFloor = (nodeFloor: string) => {
-        if(nodeFloor == "L1") {
+        if (nodeFloor == "L1") {
             return "lowerLevel1";
-        }
-        else if(nodeFloor == "L2") {
+        } else if (nodeFloor == "L2") {
             return "lowerLevel2";
-        }
-        else if(nodeFloor == "1") {
+        } else if (nodeFloor == "1") {
             return "floor1";
-        }
-        else if(nodeFloor == "2") {
+        } else if (nodeFloor == "2") {
             return "floor2";
-        }
-        else if(nodeFloor == "3") {
+        } else if (nodeFloor == "3") {
             return "floor3";
         }
         return "lowerLevel1";
@@ -158,7 +154,7 @@ export function BFSComponent() {
         const longName = row["longName"];
         const nodeFloor = nodeFloorToMapFloor(row["floor"]);
 
-        if(nodeFloor == map) {
+        if (nodeFloor == map) {
             currentFloorNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
         }
         roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
@@ -229,7 +225,7 @@ export function BFSComponent() {
                             onChange={() => setDoDisplayNames(!doDisplayNames)}
                         />
 
-                </div>
+                    </div>
                     <div>
                         <p>Starting Location</p>
                         <Form.Select value={startNode} size={"sm"}
@@ -257,9 +253,9 @@ export function BFSComponent() {
                     <div>
                         <p>Select Your Floor</p>
                         <Select value={map} defaultValue={"floor1"} onValueChange={handlePhotoChange}>
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Theme" />
-                            </SelectTrigger>
+                            {/*<SelectTrigger className="w-[180px]">*/}
+                            <SelectValue placeholder="Theme"/>
+                            {/*</SelectTrigger>*/}
                             <SelectContent>
                                 <SelectItem value="lowerLevel1">The Lower Level 1</SelectItem>
                                 <SelectItem value="lowerLevel2">The Lower Level 2</SelectItem>
@@ -268,66 +264,83 @@ export function BFSComponent() {
                                 <SelectItem value="floor3">Floor 3</SelectItem>
                             </SelectContent>
                         </Select>
-
-                        {/*<Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>*/}
-
-                        {/*    /!*<option value="groundFloor">The Ground Floor</option>*!/*/}
-                        {/*    <option value="lowerLevel1">The Lower Level 1</option>*/}
-                        {/*    <option value="lowerLevel2">The Lower Level 2</option>*/}
-                        {/*    <option value="floor1">Floor 1</option>*/}
-                        {/*    <option value="floor2">Floor 2</option>*/}
-                        {/*    <option value="floor3">Floor 3</option>*/}
-                        {/*</Form.Select>*/}
-                    </div>
-                    <div>
-                        <p className="font-bold">Follow me</p>
-                        <ol type="1" className={"overflow-scroll h-96"}>
-                            {collectLongNames().map((longName, index) => (
-                                <li key={index}>{longName}</li>
-                            ))}
-                        </ol>
+                        <div>
+                            <p className="font-bold">Follow me</p>
+                            <ol type="1" className={"overflow-scroll h-96"}>
+                                {collectLongNames().map((longName, index) => (
+                                    <li key={index}>{longName}</li>
+                                ))}
+                            </ol>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="relative w-screen max-w-full m-auto">
-                <TransformWrapper
-                    initialScale={1}
-                    initialPositionX={0}
-                    initialPositionY={0}
-                    wheel={{step: 0.1, smoothStep: 0.01}}
-                >
-                    {({zoomIn, zoomOut, resetTransform}) => (
-                        <React.Fragment>
-                            <div className="tools flex flex-col absolute right-2 top-2 z-10">
-                                <button onClick={() => zoomIn()}
-                                        className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">+</button>
-                                <button onClick={() => zoomOut()}
-                                        className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">-</button>
-                                <button onClick={() => resetTransform()}
-                                        className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">x</button>
-                            </div>
-                            <TransformComponent wrapperClass={"max-h-screen"}>
-                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
-                                {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
-                                {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
-                                {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
-                                {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
-                            </TransformComponent>
-                        </React.Fragment>
-                    )}
-                </TransformWrapper>
-            </div>
+                <div className="relative w-screen max-w-full m-auto">
+                    <TransformWrapper
+                        initialScale={1}
+                        initialPositionX={0}
+                        initialPositionY={0}
+                        wheel={{step: 0.1, smoothStep: 0.01}}
+                    >
+                        {({zoomIn, zoomOut, resetTransform}) => (
+                            <React.Fragment>
+                                <div className="tools flex flex-col absolute right-2 top-2 z-10">
+                                    <button onClick={() => zoomIn()}
+                                            className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+                                        text-2xl shadow-md m-0.5">+
+                                    </button>
+                                    <button onClick={() => zoomOut()}
+                                            className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+                                        text-2xl shadow-md m-0.5">-
+                                    </button>
+                                    <button onClick={() => resetTransform()}
+                                            className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+                                        text-2xl shadow-md m-0.5">x
+                                    </button>
+                                </div>
+                                <TransformComponent wrapperClass={"max-h-screen"}>
+                                    {lowerLevel1ContentVisible &&
+                                        <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"}
+                                                    floor={"L1"} startNode={startNode} endNode={endNode}
+                                                    pathFindingType={pathFindingType}
+                                                    sendHoverMapPath={sendHoverMapPath}
+                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                    doDisplayNodes={doDisplayNodes}/>}
+                                    {lowerLevel2ContentVisible &&
+                                        <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"}
+                                                    floor={"L2"} startNode={startNode} endNode={endNode}
+                                                    pathFindingType={pathFindingType}
+                                                    sendHoverMapPath={sendHoverMapPath}
+                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                    doDisplayNodes={doDisplayNodes}/>}
+                                    {floor1ContentVisible &&
+                                        <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"}
+                                                    floor={"1"} startNode={startNode} endNode={endNode}
+                                                    pathFindingType={pathFindingType}
+                                                    sendHoverMapPath={sendHoverMapPath}
+                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                    doDisplayNodes={doDisplayNodes}/>}
+                                    {floor2ContentVisible &&
+                                        <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"}
+                                                    floor={"2"} startNode={startNode} endNode={endNode}
+                                                    pathFindingType={pathFindingType}
+                                                    sendHoverMapPath={sendHoverMapPath}
+                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                    doDisplayNodes={doDisplayNodes}/>}
+                                    {floor3ContentVisible &&
+                                        <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"}
+                                                    floor={"3"} startNode={startNode} endNode={endNode}
+                                                    pathFindingType={pathFindingType}
+                                                    sendHoverMapPath={sendHoverMapPath}
+                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                    doDisplayNodes={doDisplayNodes}/>}
+                                </TransformComponent>
+                            </React.Fragment>
+                        )}
+                    </TransformWrapper>
+                </div>
 
+            </div>
         </div>
-
     );
 }
 
