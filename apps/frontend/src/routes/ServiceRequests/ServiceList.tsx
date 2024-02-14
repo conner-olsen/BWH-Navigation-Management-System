@@ -74,7 +74,7 @@ const ServiceList = () => {
 
                 <Row>
                     <Col>
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/LanguageService" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Medication Delivery Service Request</CardTitle>
@@ -88,7 +88,7 @@ const ServiceList = () => {
                     </Col>
 
                     <Col>
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/InternalTransportation" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Internal Transportation Request</CardTitle>
@@ -102,7 +102,7 @@ const ServiceList = () => {
                     </Col>
 
                     <Col>
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/ExternalTransportation" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">External Transportation Request</CardTitle>

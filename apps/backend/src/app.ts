@@ -18,6 +18,10 @@ import employeeMod from "./routes/employeeMod.ts";
 import graphRoute from "./routes/GraphRoute.ts";
 import religiousServiceRequest from "./routes/religious-service-request.ts";
 import languageInterpreterServiceRequest from "./routes/language-interpreter-service-request.ts";
+import internalTransportServiceRequestRoute from "./routes/internal-transportation-service-request.ts";
+import externalTransportServiceRequest from "./routes/external-transport-service-request.ts";
+import cleaningRoute from "./routes/cleaning-service-request.ts";
+
 import allServiceData from "./routes/all-service-logs.ts";
 
 
@@ -54,6 +58,9 @@ app.use("/api/populate-autho", authoRouter);
 app.use("/api/employee-mod", employeeMod);
 app.use("/api/religious-service-request", religiousServiceRequest);
 app.use("/api/language-service-request", languageInterpreterServiceRequest);
+app.use("/api/internal-transport", internalTransportServiceRequestRoute);
+app.use("/api/external-transport", externalTransportServiceRequest);
+app.use("/api/cleaning-request", cleaningRoute);
 app.use("/api/all-service-data", allServiceData);
 
 

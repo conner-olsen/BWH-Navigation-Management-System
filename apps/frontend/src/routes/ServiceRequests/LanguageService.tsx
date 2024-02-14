@@ -1,35 +1,28 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import {Input} from "../../components/ui/input.tsx";
-import {Col, Container, Form, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import {Label} from "../../components/ui/label.tsx";
+import Form from "react-bootstrap/Form";
 import {Button} from "../../components/ui/button.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
-import {Textarea} from "../../components/ui/textarea.tsx";
 
-const CleaningServiceRequest: React.FC = () => {
+const LanguageService: React.FC = () => {
 
     const [formData, setFormData] = useState({
         id: '',
         nodeId: '',
         patientName: '',
-        religion: '',
-        note: '',
+        languagePref: '',
         priority: '',
         status: 'Unassigned',
         employeeUser: 'none'
     });
 
-
-
     const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
     const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setFormData({ ...formData, [e.target.id]: e.target.value });
-    };
-
-    const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
@@ -39,14 +32,13 @@ const CleaningServiceRequest: React.FC = () => {
             id: '',
             nodeId: '',
             patientName: '',
-            religion: '',
-            note: '',
+            languagePref: '',
             priority: '',
             status: '',
             employeeUser: ''
         });
         try {
-            const response = await axios.post("/api/religious-service-request", JSON.stringify(formData), {
+            const response = await axios.post("/api/language-service-request", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }
@@ -67,10 +59,8 @@ const CleaningServiceRequest: React.FC = () => {
     return (
         <div>
 
-
-
             <h1>
-                Religious Service Request
+                Language Service Request
             </h1>
 
             <Container>
@@ -78,23 +68,16 @@ const CleaningServiceRequest: React.FC = () => {
                     <Col>
                         <div>
                             <Label htmlFor="patientName">Patient Name</Label>
-                            <Input type="text" id="patientName" placeholder={"John Doe"} onChange={handleChangeText}/>
+                            <Input type="text" id="patientName" placeholder={"Karish Gupta"}/>
                         </div>
                     </Col>
                     <Col>
-                        <div>
-                            <Label htmlFor="religion">Religion</Label>
-                            <Input type="text" id="religion" placeholder={"Christianity"} onChange={handleChangeText}/>
-                        </div>
+                        <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
                     </Col>
                 </Row>
                 <br/>
 
                 <Row>
-                    <Col>
-                        <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
-                    </Col>
-
                     <Col>
                         <div>
                             <label
@@ -106,13 +89,10 @@ const CleaningServiceRequest: React.FC = () => {
                             </Form.Select>
                         </div>
                     </Col>
-
-
-
                     <Col>
                         <div>
-                            <Label htmlFor="note">Request Details</Label>
-                            <Textarea id="note" placeholder="Prayer time breaks" onChange={handleChangeTextArea}></Textarea>
+                            <Label htmlFor="languagePref">Language</Label>
+                            <Input type="text" id="languagePref" placeholder={"French"} onChange={handleChangeText}/>
                         </div>
                     </Col>
                 </Row>
@@ -128,4 +108,4 @@ const CleaningServiceRequest: React.FC = () => {
         </div>
     );
 };
-export default CleaningServiceRequest;
+export default LanguageService;

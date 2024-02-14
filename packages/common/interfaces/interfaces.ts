@@ -76,7 +76,7 @@ export interface languageInterpreterServiceRequest extends ServiceRequest {
   languagePref: string;
 }
 
-export type religiousServiceRequest = {
+export interface religiousServiceRequest extends ServiceRequest {
   node: string;
   priority: string;
   status: string;
@@ -96,5 +96,3 @@ export interface employee {
   lastName: string;
   email: string;
 }
-
-
