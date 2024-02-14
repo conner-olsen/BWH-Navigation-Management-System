@@ -1,5 +1,5 @@
 import express, {Router, Request, Response} from "express";
-import PrismaClient from "../bin/database-connection.ts";;
+import PrismaClient from "../bin/database-connection.ts";
 const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {

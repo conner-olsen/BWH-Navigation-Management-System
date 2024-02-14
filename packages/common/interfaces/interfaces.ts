@@ -56,7 +56,7 @@ export interface languageInterpreterServiceRequest extends ServiceRequest {
   languagePref: string;
 }
 
-export type religiousServiceRequest = {
+export interface religiousServiceRequest extends ServiceRequest {
   patientName: string;
   religion: string;
   note: string;

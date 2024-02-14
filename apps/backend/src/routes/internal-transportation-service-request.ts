@@ -22,11 +22,15 @@ router.post("/", async (req: Request, res: Response) => {
         },
         priority: requestData.priority,
 
-        languageInterpreterServiceRequest: {
+        internalTransportServiceRequest: {
           create: {
             name: requestData.name,
-            languagePref: requestData.languagePref
-
+            mode: requestData.mode,
+            node: {
+              connect: {
+                  nodeId: requestData.destination
+                }
+            }
           }
         }
       } });
@@ -42,7 +46,7 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async function (req: Request, res: Response) {
   try{
-    const internalCSV = await PrismaClient.languageInterpreterServiceRequest.findMany();
+    const internalCSV = await PrismaClient.internalTransportServiceRequest.findMany();
     res.send(internalCSV);
   } catch (error){
     console.error(`Error exporting Service Request data: ${error}`);

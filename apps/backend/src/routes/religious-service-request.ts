@@ -1,12 +1,11 @@
 import express, {Router, Request, Response} from "express";
-import PrismaClient from "../bin/database-connection.ts";;
+import PrismaClient from "../bin/database-connection.ts";
 const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
   const requestData = req.body;
-
+  console.log(JSON.stringify(requestData));
   try {
-
     // Create the Service Request
     await PrismaClient.serviceRequest.create({ data: {
         node: {
@@ -24,8 +23,8 @@ router.post("/", async (req: Request, res: Response) => {
 
         religiousServiceRequest: {
           create: {
-            patientName: requestData.patientName,
             religion: requestData.religion,
+            patientName: requestData.patientName,
             note: requestData.note
           }
         }
@@ -42,39 +41,13 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async function (req: Request, res: Response) {
   try{
-    const flowerservicerequestCSV = await PrismaClient.flowerServiceRequest.findMany();
-    res.send(flowerservicerequestCSV);
+    const religiousCSV = await PrismaClient.religiousServiceRequest.findMany();
+    res.send(religiousCSV);
   } catch (error){
     console.error(`Error exporting Service Request data: ${error}`);
     res.sendStatus(500);
   }
   res.sendStatus(200);
 });
-
-// router.patch("/", async (req: Request, res: Response) => {
-//   const flowerRequestUpdate: FlowerServiceRequest = req.body;
-//
-//   try {
-//
-//     console.log(flowerRequestUpdate);
-//
-//     await PrismaClient.flowerServiceRequest.update({
-//       where: {id: flowerRequestUpdate.id},
-//       data: {status: flowerRequestUpdate.status,
-//       employee:{
-//         connect: {
-//             username: flowerRequestUpdate.employeeUser
-//         }
-//       }
-//       }
-//     });
-//
-//     res.sendStatus(200);
-//   } catch (error) {
-//     console.error(`Error populating node data: ${error}`);
-//     res.sendStatus(500);
-//   }
-// });
-
 
 export default router;
