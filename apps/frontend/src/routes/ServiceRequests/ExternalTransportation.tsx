@@ -69,82 +69,87 @@ const ExternalTransportation: React.FC = () => {
 
 
     return (
-        <div>
+        <Container>
 
             <h1>
                 External Transportation Request
             </h1>
+            <div className={"border-2 border-blue-950 rounded-lg p-4"}>
 
-            <Container>
-                <Row>
-                    <Col>
-                        <div>
-                            <Label htmlFor="patientName">Patient Name</Label>
-                            <Input type="text" id="patientName" placeholder={"Tanya Khan"} onChange={handleChangeText}/>
-                        </div>
-                    </Col>
-                    <Col>
-                        <div>
-                            <Label htmlFor="transportation">Transportation</Label>
-                            <Input type="text" id="transportation" placeholder={"Ambulance"} onChange={handleChangeText}/>
-                        </div>
-                    </Col>
+                <Container>
+                    <Row>
+                        <Col>
+                            <div>
+                                <Label htmlFor="patientName">Patient Name</Label>
+                                <Input type="text" id="patientName" placeholder={"Tanya Khan"}
+                                       onChange={handleChangeText}/>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div>
+                                <Label htmlFor="transportation">Transportation</Label>
+                                <Input type="text" id="transportation" placeholder={"Ambulance"}
+                                       onChange={handleChangeText}/>
+                            </div>
+                        </Col>
 
-                </Row>
-                <br/>
-
-                <Row>
-
-                    <Col>
-                        <div>
-                            <label
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
-                            <Form.Select onChange={handleChangeSelect} id={"priority"}>
-                                <option value="Low Priority">Low Priority</option>
-                                <option value="High Priority">High Priority</option>
-                                <option value="Emergency">Emergency</option>
-                            </Form.Select>
-                        </div>
-                    </Col>
-                    <Col>
-                        <div>
-                            <Label htmlFor="destination">Destination</Label>
-                            <Input type="text" id="destination" placeholder={"Mayo Clinic"} onChange={handleChangeText}/>
-                        </div>
-                    </Col>
-
-                </Row>
-                <br/>
-                <Row>
-                    <Col>
-                        <div>
-                            <Label htmlFor="date">Date</Label>
-                            <Input type="text" id="date" placeholder={"02/14/2024"} onChange={handleChangeText}/>
-                        </div>
-                    </Col>
-                    <Col>
-                        <div>
-                            <Label htmlFor="description">Description</Label>
-                            <Textarea id="description" placeholder={"  Subdural Hematoma"}
-                                      onChange={handleChangeTextArea}/>
-                        </div>
-                    </Col>
-
+                    </Row>
                     <br/>
 
-                </Row>
-                <Row>
-                    <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
-                </Row>
-                <br/>
+                    <Row>
 
-                <Row>
-                    <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
-                </Row>
+                        <Col>
+                            <div>
+                                <label
+                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
+                                <Form.Select onChange={handleChangeSelect} id={"priority"}>
+                                    <option value="Low Priority">Low Priority</option>
+                                    <option value="High Priority">High Priority</option>
+                                    <option value="Emergency">Emergency</option>
+                                </Form.Select>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div>
+                                <Label htmlFor="destination">Destination</Label>
+                                <Input type="text" id="destination" placeholder={"Mayo Clinic"}
+                                       onChange={handleChangeText}/>
+                            </div>
+                        </Col>
 
-            </Container>
+                    </Row>
+                    <br/>
+                    <Row>
+                        <Col>
+                            <div>
+                                <Label htmlFor="date">Date</Label>
+                                <Input type="text" id="date" placeholder={"02/14/2024"} onChange={handleChangeText}/>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div>
+                                <Label htmlFor="description">Description</Label>
+                                <Textarea id="description" placeholder={"  Subdural Hematoma"}
+                                          onChange={handleChangeTextArea}/>
+                            </div>
+                        </Col>
 
-        </div>
-    );
+                        <br/>
+
+                    </Row>
+                    <Row>
+                        <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
+                    </Row>
+                    <br/>
+
+                    <Row>
+                        <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
+                    </Row>
+
+                </Container>
+            </div>
+
+        </Container>
+);
 };
 export default ExternalTransportation;

@@ -1,30 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import {edge} from "common/interfaces/interfaces.ts";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
 
 function GenerateTableRowsEdges(tableData: edge[]): JSX.Element[] {
     return tableData.map((item, index) => (
-        <tr key={index}>
-            <td>{tableData[index].edgeID}</td>
-            <td>{tableData[index].startNodeID}</td>
-            <td>{tableData[index].endNodeID}</td>
-        </tr>
+        <TableRow key={index}>
+            <TableCell>{tableData[index].edgeID}</TableCell>
+            <TableCell>{tableData[index].startNodeID}</TableCell>
+            <TableCell>{tableData[index].endNodeID}</TableCell>
+        </TableRow>
+        // <tr key={index}>
+        //     <td>{tableData[index].edgeID}</td>
+        //     <td>{tableData[index].startNodeID}</td>
+        //     <td>{tableData[index].endNodeID}</td>
+        // </tr>
     ));
 }
 
 const TableEdges: React.FC<{ tableData: edge[] }> = ({tableData}) => {
     return (
-        <table>
-            <thead>
-            <tr>
-                <th>Edge ID</th>
-                <th>Start Node ID</th>
-                <th>End Node ID</th>
-            </tr>
-            </thead>
-            <tbody>
-            {GenerateTableRowsEdges(tableData)}
-            </tbody>
-        </table>
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    <TableHead>Edge ID</TableHead>
+                    <TableHead>Start Node ID</TableHead>
+                    <TableHead>End Node ID</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {GenerateTableRowsEdges(tableData)}
+            </TableBody>
+        </Table>
+        // <table>
+        //     <thead>
+        //     <tr>
+        //         <th>Edge ID</th>
+        //         <th>Start Node ID</th>
+        //         <th>End Node ID</th>
+        //     </tr>
+        //     </thead>
+        //     <tbody>
+        //     {GenerateTableRowsEdges(tableData)}
+        //     </tbody>
+        // </table>
     );
 };
 

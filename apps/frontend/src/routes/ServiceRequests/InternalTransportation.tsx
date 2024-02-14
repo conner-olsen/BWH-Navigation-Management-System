@@ -59,63 +59,65 @@ const InternalTransportation: React.FC = () => {
 
 
     return (
-        <div>
+        <Container>
 
             <h1>
                 Internal Transportation Request
             </h1>
+            <div className={"border-2 border-blue-950 rounded-lg p-4"}>
 
-            <Container>
-                <Row>
-                    <Col>
-                        <div>
-                            <Label htmlFor="patientName">Patient Name</Label>
-                            <Input type="text" id="patientName" placeholder={"Will Smith"} onChange={handleChangeText}/>
-                        </div>
-                    </Col>
+                <Container>
+                    <Row>
+                        <Col>
+                            <div>
+                                <Label htmlFor="patientName">Patient Name</Label>
+                                <Input type="text" id="patientName" placeholder={"Will Smith"}
+                                       onChange={handleChangeText}/>
+                            </div>
+                        </Col>
 
-                    <Col>
-                        <div>
-                            <label
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
-                            <Form.Select id={"priority"} onChange={handleChangeSelect}>
-                                <option value="Low Priority">Low Priority</option>
-                                <option value="High Priority">High Priority</option>
-                                <option value="Emergency">Emergency</option>
-                            </Form.Select>
-                        </div>
-                    </Col>
+                        <Col>
+                            <div>
+                                <label
+                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
+                                <Form.Select id={"priority"} onChange={handleChangeSelect}>
+                                    <option value="Low Priority">Low Priority</option>
+                                    <option value="High Priority">High Priority</option>
+                                    <option value="Emergency">Emergency</option>
+                                </Form.Select>
+                            </div>
+                        </Col>
 
-                </Row>
-                <br/>
+                    </Row>
+                    <br/>
 
-                <Row>
-                    <Col>
-                        <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
-                    </Col>
+                    <Row>
+                        <Col>
+                            <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
+                        </Col>
 
-                </Row>
-                <br/>
-                <Row>
-                    <Col>
-                        <div>
-                            <Label htmlFor="mode">Mode Of Transportation</Label>
-                            <Input type="text" id="mode" placeholder={"Wheelchair"} onChange={handleChangeText}/>
-                        </div>
-                    </Col>
+                    </Row>
+                    <br/>
+                    <Row>
+                        <Col>
+                            <div>
+                                <Label htmlFor="mode">Mode Of Transportation</Label>
+                                <Input type="text" id="mode" placeholder={"Wheelchair"} onChange={handleChangeText}/>
+                            </div>
+                        </Col>
 
-                </Row>
+                    </Row>
 
 
-                <br/>
+                    <br/>
 
-                <Row>
-                    <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
-                </Row>
+                    <Row>
+                        <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
+                    </Row>
 
-            </Container>
-
-        </div>
-    );
+                </Container>
+            </div>
+        </Container>
+);
 };
 export default InternalTransportation;

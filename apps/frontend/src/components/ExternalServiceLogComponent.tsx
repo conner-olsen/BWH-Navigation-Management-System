@@ -23,7 +23,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
             .catch(error => console.error(error));
     };
 
-    const handleAssignmentChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
+    const handleAssignmentChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
         axios.patch("/api/", {
             nodeId: tableData[index].nodeId,
             priority: tableData[index].priority,
@@ -57,10 +57,10 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
                     <Select value={tableData[index].status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Status" />
+                            <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="Unassigned">Assigned</SelectItem>
+                            <SelectItem value="Unassigned">Unassigned</SelectItem>
                             <SelectItem value="Assigned">Assigned</SelectItem>
                             <SelectItem value="In Progress">In Progress</SelectItem>
                             <SelectItem value="Completed">Completed</SelectItem>
@@ -72,7 +72,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
                     <Select value={tableData[index].employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Status" />
+                            <SelectValue placeholder="None" />
                         </SelectTrigger>
                         <SelectContent>
                             {employeeData.map((employee, employeeIndex) => (
@@ -160,7 +160,7 @@ export const ExternalTransportServiceLogComponent = () => {
                                 <SelectValue placeholder="Status" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="Unassigned">Assigned</SelectItem>
+                                <SelectItem value="Unassigned">Unassigned</SelectItem>
                                 <SelectItem value="Assigned">Assigned</SelectItem>
                                 <SelectItem value="In Progress">In Progress</SelectItem>
                                 <SelectItem value="Completed">Completed</SelectItem>

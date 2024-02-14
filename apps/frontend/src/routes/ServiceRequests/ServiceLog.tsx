@@ -12,8 +12,10 @@ import {ExternalTransportServiceLogComponent} from "../../components/ExternalSer
 
 const ServiceLog = () => {
     return (
-        <div>
-            <Tabs defaultValue="Create Employee" className="w-screen align-content-center">
+        <div className={"align-content-center"}>
+            <br/>
+            <br/>
+            <Tabs defaultValue="Flower Service Request" className="w-screen align-content-center">
                 <TabsList classname-={"align-content-center"}>
                     <TabsTrigger value="Flower Service Request">Flower Service Request</TabsTrigger>
                     <TabsTrigger value="Religious Service Request">Religious Service Request</TabsTrigger>
