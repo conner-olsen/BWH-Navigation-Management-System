@@ -1,6 +1,5 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Global_Footer from "./components/Global_Footer.tsx";
 import { NodeEdgeData } from "./routes/NodeEdgeData.tsx";
 import HomePage from "./routes/HomePage.tsx";
 import BFSRoute from "./routes/BFSRoute.tsx";
@@ -79,7 +78,6 @@ function Root() {
   return (
     <main>
       <Outlet />
-      <Global_Footer />
     </main>
   );
 }

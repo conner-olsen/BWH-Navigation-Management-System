@@ -341,7 +341,8 @@ body.dark .DragDropBox {
 .BFSBox {
     align-items: center;
     text-align: center;
-
+    height: 100vh;
+    overflow: hidden;
 }
 
 .idinput {
