@@ -164,6 +164,7 @@ export function BFSComponent() {
     //     setMap(event.target.value);
     //
     // };
+
     const handlePhotoChange = (map: string) => {
         setMap(map);
     };
@@ -263,6 +264,7 @@ export function BFSComponent() {
                                 <SelectItem value="floor3">Floor 3</SelectItem>
                             </SelectContent>
                         </Select>
+                    </div>
                         <div>
                             <p className="font-bold">Follow me</p>
                             <ol type="1" className={"overflow-scroll h-96"}>
@@ -285,61 +287,31 @@ export function BFSComponent() {
                                 <div className="tools flex flex-col absolute right-2 top-2 z-10">
                                     <button onClick={() => zoomIn()}
                                             className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">+
-                                    </button>
+                                        text-2xl shadow-md m-0.5">+</button>
                                     <button onClick={() => zoomOut()}
                                             className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">-
-                                    </button>
+                                        text-2xl shadow-md m-0.5">-</button>
                                     <button onClick={() => resetTransform()}
                                             className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">x
-                                    </button>
+                                        text-2xl shadow-md m-0.5">x</button>
                                 </div>
                                 <TransformComponent wrapperClass={"max-h-screen"}>
-                                    {lowerLevel1ContentVisible &&
-                                        <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"}
-                                                    floor={"L1"} startNode={startNode} endNode={endNode}
-                                                    pathFindingType={pathFindingType}
-                                                    sendHoverMapPath={sendHoverMapPath}
-                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                                                    doDisplayNodes={doDisplayNodes}/>}
-                                    {lowerLevel2ContentVisible &&
-                                        <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"}
-                                                    floor={"L2"} startNode={startNode} endNode={endNode}
-                                                    pathFindingType={pathFindingType}
-                                                    sendHoverMapPath={sendHoverMapPath}
-                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                                                    doDisplayNodes={doDisplayNodes}/>}
-                                    {floor1ContentVisible &&
-                                        <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"}
-                                                    floor={"1"} startNode={startNode} endNode={endNode}
-                                                    pathFindingType={pathFindingType}
-                                                    sendHoverMapPath={sendHoverMapPath}
-                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                                                    doDisplayNodes={doDisplayNodes}/>}
-                                    {floor2ContentVisible &&
-                                        <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"}
-                                                    floor={"2"} startNode={startNode} endNode={endNode}
-                                                    pathFindingType={pathFindingType}
-                                                    sendHoverMapPath={sendHoverMapPath}
-                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                                                    doDisplayNodes={doDisplayNodes}/>}
-                                    {floor3ContentVisible &&
-                                        <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"}
-                                                    floor={"3"} startNode={startNode} endNode={endNode}
-                                                    pathFindingType={pathFindingType}
-                                                    sendHoverMapPath={sendHoverMapPath}
-                                                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                                                    doDisplayNodes={doDisplayNodes}/>}
+                                    {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                              doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                    {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                              doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                    {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                         doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                    {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                         doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                    {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                         doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 </TransformComponent>
                             </React.Fragment>
                         )}
                     </TransformWrapper>
                 </div>
-
             </div>
-        </div>
-    );
-}
 
+            );
+        }
