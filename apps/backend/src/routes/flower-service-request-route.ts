@@ -7,26 +7,31 @@ const router: Router = express.Router();
 
 
 router.post("/", async (req: Request, res: Response) => {
+  const requestData = req.body;
+  const serviceRequestData: ServiceRequestUncheckedCreateInput = {
+    nodeId: requestData.nodeId,
+    status: requestData.status,
+    employeeUser: requestData.employeeUser,
+    priority: requestData.priority,
+  };
 
-  const flowerRequestAttempt: Prisma.FlowerServiceRequestUncheckedCreateInput = req.body;
-
-  const srAttempt: Prisma.ServiceRequestUncheckedCreateInput = req.body as ServiceRequestUncheckedCreateInput;
-
-  console.log(JSON.stringify(srAttempt));
+  const flowerServiceRequestData: Prisma.FlowerServiceRequestUncheckedCreateInput = {
+    ...requestData,
+    id: undefined, // Ensure id is not set to prevent conflicts
+  };
 
   try {
-
     // Create the Service Request
-    const createdServiceRequest = await PrismaClient.serviceRequest.create({ data: srAttempt });
+    const createdServiceRequest = await PrismaClient.serviceRequest.create({ data: serviceRequestData });
 
     // Use the created Service Request's id to set the nodeId in flowerRequestAttempt
-    flowerRequestAttempt.id = createdServiceRequest.id;
+    flowerServiceRequestData.id = createdServiceRequest.id;
 
-    await PrismaClient.flowerServiceRequest.create({data: flowerRequestAttempt});
+    await PrismaClient.flowerServiceRequest.create({ data: flowerServiceRequestData });
 
     res.sendStatus(200);
   } catch (error) {
-    console.error(`Error populating node data: ${error}`);
+    console.error(`Error creating service request: ${error}`);
     res.sendStatus(500);
   }
 });

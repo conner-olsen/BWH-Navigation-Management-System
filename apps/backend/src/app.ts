@@ -15,7 +15,6 @@ import downloadEdgeDataRouter from "./routes/data-to-csv-edge.ts";
 import employeeRouter from "./routes/populate-employee.ts";
 import authoRouter from "./routes/storing-auth0-users.ts";
 import graphRoute from "./routes/GraphRoute.ts";
-import maintenanceServiceRequest from "./routes/maintenance-service-request.ts";
 import religiousServiceRequest from "./routes/religious-service-request.ts";
 import languageInterpreterServiceRequest from "./routes/language-interpreter-service-request.ts";
 
@@ -50,7 +49,6 @@ app.use("/api/download-edge-csv", downloadEdgeDataRouter);
 app.use("/api/populate-employee", employeeRouter);
 app.use("/api/graph",graphRoute);
 app.use("/api/populate-autho", authoRouter);
-app.use("/api/maintenance-service-request", maintenanceServiceRequest);
 app.use("/api/religious-service-request", religiousServiceRequest);
 app.use("/api/language-service-request", languageInterpreterServiceRequest);
 

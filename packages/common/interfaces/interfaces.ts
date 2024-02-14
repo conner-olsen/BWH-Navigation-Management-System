@@ -20,7 +20,7 @@ export interface ServiceRequest {
   nodeId: string;
   status: string;
   employeeUser: string;
-  //priority: string;
+  priority: string;
 }
 
 export interface flowerServiceRequest extends ServiceRequest {
@@ -32,9 +32,8 @@ export interface flowerServiceRequest extends ServiceRequest {
   note: string;
 }
 
-export interface cleaingServiceRequest extends ServiceRequest{
+export interface cleaningServiceRequest extends ServiceRequest{
   type: string;
-  priority: string;
   patientName: string;
 }
 

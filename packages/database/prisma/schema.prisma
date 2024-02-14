@@ -57,11 +57,11 @@ model ServiceRequest {
     node                                 Node                                   @relation(fields: [nodeId], references: [nodeId])
     employee                             Employee                               @relation(fields: [employeeUser], references: [username])
     nodeId                               String
-    //priority         String
+    priority                             String
     status                               String                                 @default("UnAssigned")
     employeeUser                         String
     flowerServiceRequests                FlowerServiceRequest[]
-    maintenanceServiceRequest            maintenanceServiceRequest[]
+    cleaningServiceRequest               cleaningServiceRequest[]
     externalTransportationServiceRequest externalTransportationServiceRequest[]
     internalTransportServiceRequest      internalTransportServiceRequest[]
     languageInterpreterServiceRequest    languageInterpreterServiceRequest[]
@@ -84,7 +84,6 @@ model cleaningServiceRequest {
     ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
     id             String         @id
     type           String
-    priority       String
     patientName    String
 }
 
