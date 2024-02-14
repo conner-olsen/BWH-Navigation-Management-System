@@ -85,7 +85,7 @@ export const EmployeeManager = () => {
 
 
         return (
-            <>
+            <div>
                 <Outlet/>
                 <div className={"align-content-center"}>
                     <br/>
@@ -194,11 +194,6 @@ export const EmployeeManager = () => {
                                             </Row>
                                             </Container>
                         </TabsContent>
-
-
-
-                        {/*</TabsContent>*/}
-
 
 
 
@@ -318,7 +313,7 @@ export const EmployeeManager = () => {
                     </Tabs>
                 </div>
                 <Global_Footer/>
-            </>
+            </div>
         );
 };
 
