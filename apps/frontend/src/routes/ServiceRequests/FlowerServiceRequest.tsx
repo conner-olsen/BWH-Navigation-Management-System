@@ -151,7 +151,7 @@ const FlowerServiceRequest: React.FC = () => {
                         </Col>
                         <Col>
                             <Label htmlFor="date">Delivery Date</Label>
-                            <Input type="text" id="Date" placeholder="DD/MM/YY" onChange={handleChangeText}></Input>
+                            <Input type="text" id="deliveryDate" placeholder="DD/MM/YY" onChange={handleChangeText}></Input>
                         </Col>
                     </Row>
                     <br/>
