@@ -36,7 +36,7 @@
             --popover-foreground: 210 40% 98%;
             --primary: 203, 88%, 53%;
             --primary-foreground: 222.2 47.4% 11.2%;
-            --secondary: 217.2 32.6% 17.5%;
+            --secondary: 142, 46%, 55%;
             --secondary-foreground: 210 40% 98%;
             --muted: 217.2 32.6% 17.5%;
             --muted-foreground: 215 20.2% 65.1%;
@@ -262,8 +262,11 @@ label {
     transition: 0.3s ease-in-out;
 }
 .DragDropBoxOn, .DragDropBox:hover {
-    border-color: var(--light-blue);
+    border-color: var(--light-blue)!important;
     color: var(--light-blue);
+}
+body.dark .DragDropBox {
+    border-color: white;
 }
 .DragDropBox img {
     filter: grayscale(100%);
@@ -476,4 +479,8 @@ input:checked + .slider:before {
 }
 .sidebar-collapsed {
     transform: translateX(-100%);
+}
+
+body.dark .react-transform-wrapper image {
+    filter: invert(1) saturate(2);
 }

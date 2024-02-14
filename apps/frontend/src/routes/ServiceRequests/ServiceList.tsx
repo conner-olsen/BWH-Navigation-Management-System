@@ -16,7 +16,7 @@ const ServiceList = () => {
                 style={{marginTop: '5%', marginLeft: '10%', fontSize: '60px'}}>
                 SERVICE REQUESTS
             </h1>
-            <p className="font-roboto text-neutral-500 italic font-light"
+            <p className="font-roboto text-neutral-500 italic font-light dark:text-neutral-300"
                style={{marginRight: '30%', marginLeft: '0%', marginTop: '5%', textAlign: "right", fontSize: '25px', lineHeight: '30px'}}>
                 At Brigham and Women's we value our patients and want to accommodate to their needs
                 as seamlessly as possible. Below is a list of the services we offer.
@@ -35,7 +35,7 @@ const ServiceList = () => {
                                     <CardDescription className="text-sm">Send a bogue of flowers to send your regards to any patient on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/flower_service.jpg" alt="flower service"/>
+                                    <img src="public/service-images-transparent/flower_serviceT.png" alt="flower service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -49,7 +49,7 @@ const ServiceList = () => {
                                     <CardDescription className="text-sm">Send a cleaning request for quick, deep, or emergency cleaning for patients on long term stay</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/cleaning_request.webp" alt="cleaning service"/>
+                                    <img src="public/service-images-transparent/cleaning_requestT.png" alt="cleaning service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -64,7 +64,7 @@ const ServiceList = () => {
                                     <CardDescription className="text-sm">Send a request for religious sermons and rituals conducted for patients on long terms stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/religous_service.jpg" alt="Religious service"/>
+                                    <img src="public/service-images-transparent/religious_serviceT.png" alt="Religious service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -82,7 +82,7 @@ const ServiceList = () => {
                                     <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/medicine.jpg" alt="medicine delivery service"/>
+                                    <img src="public/service-images-transparent/medicineT.png" alt="medicine delivery service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -96,7 +96,7 @@ const ServiceList = () => {
                                     <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/internal.jpg" alt="medicine delivery service"/>
+                                    <img src="public/service-images-transparent/internalT.png" alt="medicine delivery service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -110,7 +110,7 @@ const ServiceList = () => {
                                     <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/ambulance.jpg" alt="medicine delivery service"/>
+                                    <img src="public/service-images-transparent/ambulanceT.png" alt="medicine delivery service"/>
                                 </CardContent>
                             </Card>
                         </Link>

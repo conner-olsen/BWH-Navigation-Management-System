@@ -87,20 +87,20 @@ const FlowerServiceRequest: React.FC = () => {
                             <h1 className="font-roboto font-bold text-6xl text-dark-blue mb-1 text-left">FLOWER</h1>
                             <h1 className="font-roboto font-bold text-6xl text-dark-blue text-left">DELIVERY</h1>
                         </div>
-                        <img src="/flower_service.jpg" alt="Flower Service" className="mr-2"
+                        <img src="/service-images-transparent/flower_serviceT.png" alt="Flower Service" className="mr-2"
                              style={{width: '150px', height: '150px'}}/>
                     </div>
 
                     {/* Second Row - Sender Name and Patient's Name */}
                     <div className="mb-3">
-                        <label className="block text-black text-xl font-bold mb-2" htmlFor="senderName">SENDER
+                        <label className="block text-foreground text-xl font-bold mb-2" htmlFor="senderName">SENDER
                             NAME</label>
                         <Textarea label="" id="senderName" name="senderName" placeholder="John Doe" required
                                   value={formData.senderName} onChange={handleChange} className="font-roboto text-lg"/>
                     </div>
 
                     <div className="mb-3">
-                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="patientName">PATIENT'S
+                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="patientName">PATIENT'S
                             NAME</label>
                         <Textarea label="" id="patientName" name="patientName" placeholder="Jared Smith" required
                                   value={formData.patientName} onChange={handleChange} className="font-roboto text-lg"/>
@@ -108,17 +108,17 @@ const FlowerServiceRequest: React.FC = () => {
 
                     {/* Third Row - Sender Email and Flower Type */}
                     <div className="mb-3">
-                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="senderEmail">SENDER
+                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="senderEmail">SENDER
                             EMAIL</label>
                         <Textarea label="" id="senderEmail" name="senderEmail" placeholder="John@gmail.com" required
                                   value={formData.senderEmail} onChange={handleChange} className="font-roboto text-lg"/>
                     </div>
 
                     <div className="mb-3 ">
-                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="flowerType">TYPE OF
+                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="flowerType">TYPE OF
                             FLOWERS</label>
                         <Select>
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger>
                                 <SelectValue placeholder="FLOWER TYPE" />
                             </SelectTrigger>
                             <SelectContent>
@@ -130,7 +130,6 @@ const FlowerServiceRequest: React.FC = () => {
                                     <SelectItem value="marigolds">Marigolds</SelectItem>
                                     <SelectItem value="orchids">orchids</SelectItem>
                                     <SelectItem value="roses">Roses</SelectItem>
-
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
@@ -138,7 +137,7 @@ const FlowerServiceRequest: React.FC = () => {
 
                     {/* Fourth Row - Room Name and Delivery Date */}
                     <div className="mb-3">
-                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="roomLongName">ROOM
+                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="roomLongName">ROOM
                             NAME</label>
                         <Textarea label="" id="roomLongName" name="roomLongName"
                                   placeholder="Anesthesia Conf Floor L1 (Node longName)" required
@@ -147,7 +146,7 @@ const FlowerServiceRequest: React.FC = () => {
                     </div>
 
                     <div className="mb-3">
-                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="deliveryDate">DATE
+                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="deliveryDate">DATE
                             OF DELIVERY</label>
                         <Textarea label="" id="deliveryDate" name="deliveryDate" placeholder="01/15/1981" required
                                   value={formData.deliveryDate} onChange={handleChange}
@@ -156,7 +155,7 @@ const FlowerServiceRequest: React.FC = () => {
 
                     {/* Fifth Row - Add a Note */}
                     <div className="col-span-2 mb-3">
-                        <label className="block text-black text-sm font-bold mb-2 text-xl" htmlFor="note">ADD A
+                        <label className="block text-foreground text-sm font-bold mb-2 text-xl" htmlFor="note">ADD A
                             NOTE</label>
                         <Textarea label="" name="note"
                                   placeholder="I heard you're going through tough times. Get well soon!"

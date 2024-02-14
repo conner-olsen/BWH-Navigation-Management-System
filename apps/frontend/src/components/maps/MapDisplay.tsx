@@ -50,12 +50,14 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
         for (let i = 0; i < path.length - 1; i++) {
             const node = graph.getNode(path[i]);
             const nextNode = graph.getNode(path[i + 1]);
-            if (node && nextNode) {
+            if (node && nextNode && node.floor === floor && nextNode.floor === floor) {
                 pathElements.push(
-                    <line key={`${node.id}-${nextNode.id}`}
-                          x1={node.xCoord} y1={node.yCoord}
-                          x2={nextNode.xCoord} y2={nextNode.yCoord}
-                          stroke="red" strokeWidth="8"/>
+                    <line
+                        key={`${node.id}-${nextNode.id}`}
+                        x1={node.xCoord} y1={node.yCoord}
+                        x2={nextNode.xCoord} y2={nextNode.yCoord}
+                        stroke="red" strokeWidth="8"
+                    />
                 );
             }
         }
@@ -173,20 +175,24 @@ function MapDisplay({floorMap, floor, startNode, endNode, sendHoverMapPath, path
     };
 
     const displayEdges = (graph: Graph) => {
-        if(doDisplayEdges) {
+        if (doDisplayEdges) {
             const edges: React.JSX.Element[] = [];
             for (const [nodeId, node] of graph.nodes) {
-                node.edges.forEach(edgeNodeId => {
-                    const targetNode = graph.getNode(edgeNodeId);
-                    if (targetNode && (targetNode.floor == floor && node.floor == floor)) {
-                        edges.push(
-                            <line key={`${nodeId}-${edgeNodeId}`}
-                                  x1={node.xCoord} y1={node.yCoord}
-                                  x2={targetNode.xCoord} y2={targetNode.yCoord}
-                                  stroke="black" strokeWidth="1"/>
-                        );
-                    }
-                });
+                if (node.floor === floor) {
+                    node.edges.forEach(edgeNodeId => {
+                        const targetNode = graph.getNode(edgeNodeId);
+                        if (targetNode && targetNode.floor === floor) {
+                            edges.push(
+                                <line
+                                    key={`${nodeId}-${edgeNodeId}`}
+                                    x1={node.xCoord} y1={node.yCoord}
+                                    x2={targetNode.xCoord} y2={targetNode.yCoord}
+                                    stroke="black" strokeWidth="1"
+                                />
+                            );
+                        }
+                    });
+                }
             }
             return edges;
         }
