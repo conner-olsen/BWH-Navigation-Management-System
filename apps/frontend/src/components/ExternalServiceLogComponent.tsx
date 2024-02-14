@@ -43,9 +43,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].nodeId}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
-                <TableCell>{tableData[index].priority}</TableCell>
                 <TableCell>{tableData[index].transportation}</TableCell>
                 <TableCell>{tableData[index].destination}</TableCell>
                 <TableCell>{tableData[index].description}</TableCell>
@@ -87,14 +85,12 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
         ));
 }
 
-const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
     return (
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Room Location</TableHead>
                     <TableHead>Patient Name</TableHead>
-                    <TableHead>Priority</TableHead>
                     <TableHead>Transportation</TableHead>
                     <TableHead>Destination</TableHead>
                     <TableHead>Description</TableHead>
@@ -110,7 +106,7 @@ const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeDa
 
 // GETTING data for service request and
 export const ExternalTransportServiceLogComponent = () => {
-    const [data, setData] = useState<religiousServiceRequest[]>([]);
+    const [data, setData] = useState<externalTransportationServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
 
