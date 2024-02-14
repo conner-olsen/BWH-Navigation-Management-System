@@ -47,10 +47,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                     "rounded-full",   // Make the button oval
                     "p-2",            // Reduce padding for height
                     "border",         // Add border
-                    "border-black",   // Black border
-                    "bg-transparent", // Transparent background
+                    "border-border",   // Black border
                     "w-60",           // Increase width, adjust the value as needed
                     "h-10",            // Reduce height, adjust the value as needed
+                    "dark:hover:bg-primary transition-all duration-300 hover:bg-blue-950 hover:text-background" +
+                    "dark:hover:text-foreground",
                     className
                 )}
                 ref={ref}
