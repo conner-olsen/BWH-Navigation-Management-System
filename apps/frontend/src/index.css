@@ -163,29 +163,47 @@ textarea{
 
 .LoginButtonAdmin,
 .LoginButtonPatient,
-.LoginButtonGuest{
-    position: absolute;
-    height: 80px;
+.LoginButtonGuest {
     color: #fff;
     font-family: sans-serif;
-    border: none;
+    background-color: rgba(128, 128, 128, 0.85);
     cursor: pointer;
     font-size: 20px;
+    width: 200px; /* Increase width, adjust the value as needed */
+    padding: 10px; /* Reduce padding for height */
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 30px; /* Make the button oval */
+    height: fit-content;
 }
 
-.LoginButtonAdmin {
-    top: 0;
-    right: 20px;
-}
+
+
 
 .LoginButtonPatient {
-    top: 30px;
-    right: 20px;
+    position: absolute;
+    top: 70%; /* Adjust the vertical position */
+    left: calc(35% - 100px);
+    transform: translateY(-50%) translateX(-50%);
 }
-.LoginButtonGuest{
-    top: 85px;
-    right: 20px;
+
+
+.LoginButtonGuest {
+    position: absolute;
+    top: 70%; /* Adjust the vertical position */
+    left: 43%;
+    transform: translateY(-50%);
 }
+
+
+.LoginButtonAdmin {
+    position: absolute;
+    top: 70%; /* Adjust the vertical position */
+    left: calc(64.1% - 100px); /* Adjust the value according to your design */
+    transform: translateY(-50%) translateX(50%);
+}
+
+
 
 .LoginButtonAdmin:hover,
 .LoginButtonPatient:hover{
@@ -460,29 +478,12 @@ label{
 
 /* ========== CSV Table ========== */
 
-input:checked + .slider {
-    background-color: black;
+body.dark .react-transform-wrapper image {
+    filter: invert(1) saturate(2);
 }
 
-input:focus + .slider {
-    box-shadow: 0 0 1px black;
-}
 
-input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
+/* ====== Side Bar ======= */
 .sidebar {
     transition: transform 0.3s ease;
 }
@@ -492,7 +493,6 @@ input:checked + .slider:before {
 .sidebar-collapsed {
     transform: translateX(-100%);
 }
-
-body.dark .react-transform-wrapper image {
-    filter: invert(1) saturate(2);
+input[type="radio"]:checked + label {
+    color: rgb(59 130 246);
 }
