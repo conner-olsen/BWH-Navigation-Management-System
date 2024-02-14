@@ -232,8 +232,8 @@ export function BFSComponent() {
                 <div className="py-4 px-2">
                     <Form.Select value={pathFindingType} size={"sm"}
                                  onChange={e => setPathFindingType(e.target.value)}>
-                        <option value={"/api/bfs-searching"}>BFS searching</option>
-                        <option value={"/api/bfsAstar-searching"}>A-star searching</option>
+                        <option value={"/api/bfs-searching"}>BFS Searching</option>
+                        <option value={"/api/bfsAstar-searching"}>A* Searching</option>
                     </Form.Select>
                 </div>
 
