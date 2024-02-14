@@ -4,11 +4,12 @@ import NavBar from "../../components/NavBar.tsx";
 import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from  "../../components/ui/card.tsx";
 import {Col, Container, Row} from "react-bootstrap";
+import Global_Footer from "../../components/Global_Footer.tsx";
 
 
 const ServiceList = () => {
     return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <>
             <NavBar/>
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: '15%' }}>
             <h1 className="font-roboto font-extrabold italic"
@@ -116,7 +117,8 @@ const ServiceList = () => {
                     </Col>
                 </Row>
             </Container>
-        </div>
+            <Global_Footer />
+        </>
     );
 };
 
