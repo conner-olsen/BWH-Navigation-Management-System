@@ -218,12 +218,12 @@ export function BFSComponent() {
                     <div className="flex flex-col grow justify-between pl-[2px] pr-2">
                         <Form.Select value={startNode} size={"sm"}
                                      onChange={e => setStartNode(e.target.value)}>
-                            <option></option>
+                            <option>Select Location</option>
                             {currentFloorNames}
                         </Form.Select>
                         <Form.Select value={endNode} size={"sm"}
                                      onChange={e => setEndNode(e.target.value)}>
-                            <option></option>
+                            <option>Select Location</option>
                             {roomNames}
                         </Form.Select>
                     </div>
