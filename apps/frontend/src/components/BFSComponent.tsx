@@ -163,7 +163,6 @@ export function BFSComponent() {
         roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
     }
 
-
     const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
 
         setMap(event.target.value);
