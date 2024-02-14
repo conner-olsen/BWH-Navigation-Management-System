@@ -197,12 +197,15 @@ body.darkMode {
 }
 
 
+
+
 .LoginButtonPatient {
     position: absolute;
     top: 70%; /* Adjust the vertical position */
     left: calc(35% - 100px);
     transform: translateY(-50%) translateX(-50%);
 }
+
 
 .LoginButtonGuest {
     position: absolute;
@@ -211,12 +214,14 @@ body.darkMode {
     transform: translateY(-50%);
 }
 
+
 .LoginButtonAdmin {
     position: absolute;
     top: 70%; /* Adjust the vertical position */
     left: calc(64.1% - 100px); /* Adjust the value according to your design */
     transform: translateY(-50%) translateX(50%);
 }
+
 
 
 .LoginButtonAdmin:hover,
