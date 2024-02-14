@@ -6,6 +6,7 @@ import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
 import Form from "react-bootstrap/Form";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
@@ -17,6 +18,9 @@ export function BFSComponent() {
     const [endNode, setEndNode] = useState<string>("End Location");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
+    const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
+    const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
+    const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -139,10 +143,13 @@ export function BFSComponent() {
     }, [map]);
 
 
-    const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-
-        setMap(event.target.value);
-
+    // const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    //
+    //     setMap(event.target.value);
+    //
+    // };
+    const handlePhotoChange = (map: string) => {
+        setMap(map);
     };
     const [isExpanded, setIsExpanded] = useState(true);
 
@@ -175,6 +182,34 @@ export function BFSComponent() {
                 <div className="relative w-full">
                     <h2 className="text-xl font-semibold mb-4">Map Page</h2>
                     <div>
+                        <p>Display Options</p>
+                        <Form.Check
+                            inline
+                            type="switch"
+                            id="display-edges-switch"
+                            label="Display Edges"
+                            checked={doDisplayEdges}
+                            onChange={() => setDoDisplayEdges(!doDisplayEdges)}
+                        />
+                        <Form.Check
+                            inline
+                            type="switch"
+                            id="display-nodes-switch"
+                            label="Display Nodes"
+                            checked={doDisplayNodes}
+                            onChange={() => setDoDisplayNodes(!doDisplayNodes)}
+                        />
+                        <Form.Check
+                            inline
+                            type="switch"
+                            id="display-names-switch"
+                            label="Display Names"
+                            checked={doDisplayNames}
+                            onChange={() => setDoDisplayNames(!doDisplayNames)}
+                        />
+
+                </div>
+                    <div>
                         <p>Starting Location</p>
                         <Form.Select value={startNode} size={"sm"}
                                      onChange={e => setStartNode(e.target.value)}>
@@ -198,15 +233,26 @@ export function BFSComponent() {
                     </div>
                     <div>
                         <p>Select da floor bro</p>
-                        <Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>
+                        <Select defaultValue={"floor1"} onValueChange={handlePhotoChange}>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Theme" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="lowerLevel1">The Lower Level 1</SelectItem>
+                                <SelectItem value="lowerLevel2">The Lower Level 2</SelectItem>
+                                <SelectItem value="floor1">Floor 1</SelectItem>
+                            </SelectContent>
+                        </Select>
 
-                            {/*<option value="groundFloor">The Ground Floor</option>*/}
-                            <option value="lowerLevel1">The Lower Level 1</option>
-                            <option value="lowerLevel2">The Lower Level 2</option>
-                            <option value="floor1">Floor 1</option>
-                            <option value="floor2">Floor 2</option>
-                            <option value="floor3">Floor 3</option>
-                        </Form.Select>
+                        {/*<Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>*/}
+
+                        {/*    /!*<option value="groundFloor">The Ground Floor</option>*!/*/}
+                        {/*    <option value="lowerLevel1">The Lower Level 1</option>*/}
+                        {/*    <option value="lowerLevel2">The Lower Level 2</option>*/}
+                        {/*    <option value="floor1">Floor 1</option>*/}
+                        {/*    <option value="floor2">Floor 2</option>*/}
+                        {/*    <option value="floor3">Floor 3</option>*/}
+                        {/*</Form.Select>*/}
                     </div>
                     <div>
                         <p className="font-bold">Follow me</p>
@@ -238,12 +284,17 @@ export function BFSComponent() {
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">x</button>
                             </div>
-                            <TransformComponent>
-                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
-                                {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
-                                {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
-                                {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
-                                {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}/>}
+                            <TransformComponent wrapperClass={"max-h-screen"}>
+                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                          doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                          doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                             </TransformComponent>
                         </React.Fragment>
                     )}
@@ -254,3 +305,4 @@ export function BFSComponent() {
 
     );
 }
+

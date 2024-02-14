@@ -1,6 +1,5 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Global_Footer from "./components/Global_Footer.tsx";
 import { NodeEdgeData } from "./routes/NodeEdgeData.tsx";
 import HomePage from "./routes/HomePage.tsx";
 import BFSRoute from "./routes/BFSRoute.tsx";
@@ -10,6 +9,8 @@ import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRe
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
 import BwhHomepage from "./routes/BwhHomepage.tsx";
+import UserPage from "./routes/UserPage.tsx";
+import EmployeeManager from "./routes/EmployeeManagement.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -56,6 +57,14 @@ function App() {
           {
               path: "/ServiceLog",
               element: <ServiceLog/>
+          },
+          {
+              path: "/UserPage",
+              element: <UserPage/>
+          },
+          {
+              path: "/EmployeeManager",
+              element: <EmployeeManager/>
           }
 
       ],
@@ -69,7 +78,6 @@ function Root() {
   return (
     <main>
       <Outlet />
-      <Global_Footer />
     </main>
   );
 }

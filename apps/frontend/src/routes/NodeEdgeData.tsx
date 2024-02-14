@@ -7,6 +7,7 @@ import ExportNodeDataToCSVButton from "../components/ExportNodeDataButton.tsx";
 import {Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/tabs.tsx";
 import ExportEdgeDataButton from "../components/ExportEdgeDataButton.tsx";
 import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
+import Global_Footer from "../components/Global_Footer.tsx";
 
 export function NodeEdgeData() {
 
@@ -77,7 +78,7 @@ export function NodeEdgeData() {
 
 
     return (
-        <div>
+        <>
 
 
             <Outlet></Outlet>
@@ -102,8 +103,8 @@ export function NodeEdgeData() {
                 </Row>
             </Container>
 
-            <Container>
-                <Tabs defaultValue="node" className="w-[400px]">
+            <Container className="mt-4">
+                <Tabs defaultValue="node" className="">
                     <TabsList>
                         <TabsTrigger value="node">Node Data</TabsTrigger>
                         <TabsTrigger value="edge">Edge Data</TabsTrigger>
@@ -124,8 +125,8 @@ export function NodeEdgeData() {
             </Container>
 
 
-
-        </div>
+            <Global_Footer />
+        </>
     );
 
 }
