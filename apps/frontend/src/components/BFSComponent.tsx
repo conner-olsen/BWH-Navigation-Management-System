@@ -6,7 +6,7 @@ import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
 import Form from "react-bootstrap/Form";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
@@ -93,26 +93,6 @@ export function BFSComponent() {
         fetchData().then();
     }, []); //
 
-
-
-
-
-    //parse node CSV into array of CSVRows
-    const CSVRow = parseCSV(nodeCSVData);
-    //make array to be inserted in the html code
-    const roomNames = [];
-
-
-    //for each CSV row, add an option with the value as id and name as longName into array
-    for (let i = 0; i < CSVRow.length; i++) {
-        const row = CSVRow[i];
-        const rowval = Object.values(row);
-        const id = rowval[0];
-        const nodeId = row["nodeId"];
-        const longName = row["longName"];
-        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
-    }
-
     const sendHoverMapPath = (path: PathfindingRequest) => {
         setStartNode(path.startid);
         setEndNode(path.endid);
@@ -142,14 +122,47 @@ export function BFSComponent() {
             ? setFloor3ContentVisible(true) : setFloor3ContentVisible(false);
     }, [map]);
 
+    const nodeFloorToMapFloor = (nodeFloor: string) => {
+        if (nodeFloor == "L1") {
+            return "lowerLevel1";
+        } else if (nodeFloor == "L2") {
+            return "lowerLevel2";
+        } else if (nodeFloor == "1") {
+            return "floor1";
+        } else if (nodeFloor == "2") {
+            return "floor2";
+        } else if (nodeFloor == "3") {
+            return "floor3";
+        }
+        return "lowerLevel1";
+    };
 
-    // const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    //
-    //     setMap(event.target.value);
-    //
-    // };
-    const handlePhotoChange = (map: string) => {
-        setMap(map);
+    //parse node CSV into array of CSVRows
+    const CSVRow = parseCSV(nodeCSVData);
+    //make array to be inserted in the html code
+    const roomNames = [];
+    const currentFloorNames = [];
+
+
+    //for each CSV row, add an option with the value as id and name as longName into array
+    for (let i = 0; i < CSVRow.length; i++) {
+        const row = CSVRow[i];
+        const rowval = Object.values(row);
+        const id = rowval[0];
+        const nodeId = row["nodeId"];
+        const longName = row["longName"];
+        const nodeFloor = nodeFloorToMapFloor(row["floor"]);
+
+        if (nodeFloor == map) {
+            currentFloorNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+        }
+        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+    }
+
+    const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+
+        setMap(event.target.value);
+
     };
     const [isExpanded, setIsExpanded] = useState(true);
 
@@ -176,92 +189,83 @@ export function BFSComponent() {
                 </button>
             </div>
             <div
-                className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[96px] pt-[100px] sidebar 
-      ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
+                className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[80px] pt-[90px] sidebar 
+                ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
                 {/* Sidebar content */}
-                <div className="relative w-full">
-                    <h2 className="text-xl font-semibold mb-4">Map Page</h2>
-                    <div>
-                        <p>Display Options</p>
-                        <Form.Check
-                            inline
-                            type="switch"
-                            id="display-edges-switch"
-                            label="Display Edges"
-                            checked={doDisplayEdges}
-                            onChange={() => setDoDisplayEdges(!doDisplayEdges)}
-                        />
-                        <Form.Check
-                            inline
-                            type="switch"
-                            id="display-nodes-switch"
-                            label="Display Nodes"
-                            checked={doDisplayNodes}
-                            onChange={() => setDoDisplayNodes(!doDisplayNodes)}
-                        />
-                        <Form.Check
-                            inline
-                            type="switch"
-                            id="display-names-switch"
-                            label="Display Names"
-                            checked={doDisplayNames}
-                            onChange={() => setDoDisplayNames(!doDisplayNames)}
-                        />
-
+                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                    <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
+                    <label htmlFor="l2" className="font-bold hover:text-blue-500">L2</label>
+                    <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
+                    <label htmlFor="l1" className="font-bold hover:text-blue-500">L1</label>
+                    <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "floor1"}/>
+                    <label htmlFor="f1" className="font-bold hover:text-blue-500">1</label>
+                    <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "floor2"}/>
+                    <label htmlFor="f2" className="font-bold hover:text-blue-500">2</label>
+                    <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "floor3"}/>
+                    <label htmlFor="f3" className="font-bold hover:text-blue-500">3</label>
                 </div>
-                    <div>
-                        <p>Starting Location</p>
+                <div className="flex py-4 border-b-[1px] border-neutral-300">
+                    <div className="flex flex-col items-center">
+                        <img src="../../public/icon/start.svg" alt="circle" className="my-[5px] dark:invert"/>
+                        <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
+                        <img src="../../public/icon/location.svg" alt="pin"/>
+                    </div>
+                    <div className="flex flex-col grow justify-between pl-[2px] pr-2">
                         <Form.Select value={startNode} size={"sm"}
                                      onChange={e => setStartNode(e.target.value)}>
-                            {roomNames}
+                            <option>Select Location</option>
+                            {currentFloorNames}
                         </Form.Select>
-                    </div>
-                    <div>
-                        <p>Destination</p>
                         <Form.Select value={endNode} size={"sm"}
                                      onChange={e => setEndNode(e.target.value)}>
+                            <option>Select Location</option>
                             {roomNames}
                         </Form.Select>
                     </div>
-                    <div>
-                        <p>Select Search Type</p>
-                        <Form.Select value={pathFindingType} size={"sm"}
-                                     onChange={e => setPathFindingType(e.target.value)}>
-                            <option value={"/api/bfs-searching"}>BFS searching</option>
-                            <option value={"/api/bfsAstar-searching"}>A-star searching</option>
-                        </Form.Select>
-                    </div>
-                    <div>
-                        <p>Select da floor bro</p>
-                        <Select defaultValue={"floor1"} onValueChange={handlePhotoChange}>
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Theme" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="lowerLevel1">The Lower Level 1</SelectItem>
-                                <SelectItem value="lowerLevel2">The Lower Level 2</SelectItem>
-                                <SelectItem value="floor1">Floor 1</SelectItem>
-                            </SelectContent>
-                        </Select>
 
-                        {/*<Form.Select value={map} onChange={handlePhotoChange} size={"sm"}>*/}
+                </div>
+                <div className="py-4 px-2">
+                    <Form.Select value={pathFindingType} size={"sm"}
+                                 onChange={e => setPathFindingType(e.target.value)}>
+                        <option value={"/api/bfs-searching"}>BFS searching</option>
+                        <option value={"/api/bfsAstar-searching"}>A-star searching</option>
+                    </Form.Select>
+                </div>
 
-                        {/*    /!*<option value="groundFloor">The Ground Floor</option>*!/*/}
-                        {/*    <option value="lowerLevel1">The Lower Level 1</option>*/}
-                        {/*    <option value="lowerLevel2">The Lower Level 2</option>*/}
-                        {/*    <option value="floor1">Floor 1</option>*/}
-                        {/*    <option value="floor2">Floor 2</option>*/}
-                        {/*    <option value="floor3">Floor 3</option>*/}
-                        {/*</Form.Select>*/}
-                    </div>
-                    <div>
-                        <p className="font-bold">Follow me</p>
-                        <ol type="1" className={"overflow-scroll h-96"}>
-                            {collectLongNames().map((longName, index) => (
-                                <li key={index}>{longName}</li>
-                            ))}
-                        </ol>
-                    </div>
+                <div>
+                    <p className="font-bold">Follow me</p>
+                    <ol type="1" className={"overflow-y-auto h-80"}>
+                        {collectLongNames().map((longName, index) => (
+                            <li key={index}>{longName}</li>
+                        ))}
+                    </ol>
+                </div>
+                <div
+                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-lg
+                                ${isExpanded ? 'right-[-90px]' : 'right-[-170px]'}`}>
+                    <HoverCard openDelay={100}>
+                        <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center
+                                        no-underline text-foreground">Display</HoverCardTrigger>
+                        <HoverCardContent side="right">
+                            <div className="flex flex-col">
+                                <Form.Check type="switch" id="display-edges-switch" label="Display Edges"
+                                            checked={doDisplayEdges}
+                                            onChange={() => setDoDisplayEdges(!doDisplayEdges)}/>
+                                <Form.Check type="switch" id="display-nodes-switch" label="Display Nodes"
+                                            checked={doDisplayNodes}
+                                            onChange={() => setDoDisplayNodes(!doDisplayNodes)}/>
+                                <Form.Check type="switch" id="display-names-switch" label="Display Names"
+                                            checked={doDisplayNames}
+                                            onChange={() => setDoDisplayNames(!doDisplayNames)}/>
+                            </div>
+                        </HoverCardContent>
+                    </HoverCard>
+
                 </div>
             </div>
             <div className="relative w-screen max-w-full m-auto">
@@ -276,13 +280,16 @@ export function BFSComponent() {
                             <div className="tools flex flex-col absolute right-2 top-2 z-10">
                                 <button onClick={() => zoomIn()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">+</button>
+                                        text-2xl shadow-md m-0.5">+
+                                </button>
                                 <button onClick={() => zoomOut()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">-</button>
+                                        text-2xl shadow-md m-0.5">-
+                                </button>
                                 <button onClick={() => resetTransform()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">x</button>
+                                        text-2xl shadow-md m-0.5">x
+                                </button>
                             </div>
                             <TransformComponent wrapperClass={"max-h-screen"}>
                                 {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
@@ -303,6 +310,5 @@ export function BFSComponent() {
 
         </div>
 
-    );
-}
-
+            );
+        }
