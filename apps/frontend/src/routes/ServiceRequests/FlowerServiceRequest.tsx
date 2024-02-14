@@ -60,8 +60,6 @@ const FlowerServiceRequest: React.FC = () => {
     return (
         <div>
 
-            <div className="mt-20"> {/* Added mx-4 for left and right margins, mt-6 for top margin */}
-
             <h1>
                 Flower Service Request
             </h1>

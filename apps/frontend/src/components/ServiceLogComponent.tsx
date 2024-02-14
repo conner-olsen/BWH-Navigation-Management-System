@@ -61,6 +61,7 @@ function GenerateTableRowsServices(tableData: flowerServiceRequest[], employeeDa
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent>
+                            <SelectItem value="Unassigned">Assigned</SelectItem>
                             <SelectItem value="Assigned">Assigned</SelectItem>
                             <SelectItem value="In Progress">In Progress</SelectItem>
                             <SelectItem value="Completed">Completed</SelectItem>
