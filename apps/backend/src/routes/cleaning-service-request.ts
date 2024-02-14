@@ -4,8 +4,9 @@ const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
   const requestData = req.body;
-  console.log(JSON.stringify(requestData));
+
   try {
+
     // Create the Service Request
     await PrismaClient.serviceRequest.create({ data: {
         node: {
@@ -21,11 +22,10 @@ router.post("/", async (req: Request, res: Response) => {
         },
         priority: requestData.priority,
 
-        religiousServiceRequest: {
+        cleaningServiceRequest: {
           create: {
-            religion: requestData.religion,
-            patientName: requestData.patientName,
-            note: requestData.note
+            type: requestData.type,
+            patientName: requestData.patientName
           }
         }
       } });
@@ -41,8 +41,8 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async function (req: Request, res: Response) {
   try{
-    const religiousCSV = await PrismaClient.religiousServiceRequest.findMany();
-    res.send(religiousCSV);
+    const internalCSV = await PrismaClient.cleaningServiceRequest.findMany();
+    res.send(internalCSV);
   } catch (error){
     console.error(`Error exporting Service Request data: ${error}`);
     res.sendStatus(500);

@@ -1,48 +1,40 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
-import {ServiceRequest} from "common/interfaces/interfaces.ts";
-import { FlowerServiceRequest } from "database";
 const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
   const requestData = req.body;
 
+  console.log(JSON.stringify(requestData));
+
   try {
-    const employee = await PrismaClient.employee.findUnique({
-      where: { username: requestData.employeeUser }
-    });
-
-    if (!employee) {
-      console.error(`Error: Employee with username ${requestData.employeeUser} not found`);
-      res.sendStatus(400);
-      return;
-    }
-
-    const serviceRequestData: ServiceRequest = {
-      id: '',
-      nodeId: requestData.nodeId,
-      status: requestData.status,
-      employeeUser: requestData.employeeUser,
-      priority: requestData.priority,
-    };
-
-    const flowerServiceRequestData: FlowerServiceRequest = {
-      id: '',
-      senderName: requestData.senderName,
-      senderEmail: requestData.senderEmail,
-      patientName: requestData.patientName,
-      flowerType: requestData.flowerType,
-      deliveryDate: requestData.deliveryDate,
-      note: requestData.note
-    };
 
     // Create the Service Request
-    const createdServiceRequest = await PrismaClient.serviceRequest.create({ data: serviceRequestData });
+    await PrismaClient.serviceRequest.create({ data: {
+      node: {
+        connect:{
+          nodeId: requestData.nodeId
+        }
+      },
+      status: requestData.status,
+        employee: {
+          connect: {
+          username: requestData.employeeUser
+          }
+        },
+        priority: requestData.priority,
 
-    // Use the created Service Request's id to set the nodeId in flowerRequestAttempt
-    flowerServiceRequestData.id = createdServiceRequest.id;
-
-    await PrismaClient.flowerServiceRequest.create({ data: flowerServiceRequestData });
+        flowerServiceRequests: {
+          create: {
+            senderName: requestData.senderName,
+            senderEmail: requestData.senderEmail,
+            patientName: requestData.patientName,
+            flowerType: requestData.flowerType,
+            deliveryDate: requestData.deliveryDate,
+            note: requestData.note
+          }
+        }
+    } });
 
     res.sendStatus(200);
   } catch (error) {
