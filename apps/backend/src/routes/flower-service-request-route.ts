@@ -1,7 +1,7 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
-import ServiceRequestCreateInput = Prisma.ServiceRequestUncheckedCreateInput;
-import {Prisma} from "@prisma/client";
+import {ServiceRequest} from "common/interfaces/interfaces.ts";
+import { FlowerServiceRequest } from "database";
 const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
@@ -18,16 +18,22 @@ router.post("/", async (req: Request, res: Response) => {
       return;
     }
 
-    const serviceRequestData: ServiceRequestCreateInput = {
+    const serviceRequestData: ServiceRequest = {
+      id: '',
       nodeId: requestData.nodeId,
       status: requestData.status,
-      employee: employee,
+      employeeUser: requestData.employeeUser,
       priority: requestData.priority,
     };
 
-    const flowerServiceRequestData: Prisma.FlowerServiceRequestUncheckedCreateInput = {
-      ...requestData,
-      id: undefined, // Ensure id is not set to prevent conflicts
+    const flowerServiceRequestData: FlowerServiceRequest = {
+      id: '',
+      senderName: requestData.senderName,
+      senderEmail: requestData.senderEmail,
+      patientName: requestData.patientName,
+      flowerType: requestData.flowerType,
+      deliveryDate: requestData.deliveryDate,
+      note: requestData.note
     };
 
     // Create the Service Request

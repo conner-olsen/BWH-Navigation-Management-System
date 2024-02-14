@@ -11,6 +11,7 @@ import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
 import BwhHomepage from "./routes/BwhHomepage.tsx";
 import UserPage from "./routes/UserPage.tsx";
 import EmployeeManager from "./routes/EmployeeManagement.tsx";
+import NavBar from "./components/NavBar.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -77,7 +78,9 @@ function App() {
 function Root() {
   return (
     <main>
-      <Outlet />
+        <NavBar></NavBar>
+
+        <Outlet />
     </main>
   );
 }

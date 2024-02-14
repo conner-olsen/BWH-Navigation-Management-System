@@ -1,4 +1,3 @@
-import NavBar from "../../components/NavBar.tsx";
 import React, { useState } from 'react';
 import axios from "axios";
 import {Input} from "../../components/ui/input.tsx";
@@ -9,6 +8,8 @@ import LocationDropdown from "../../components/LocationDropdown.tsx";
 import {Textarea} from "../../components/ui/textarea.tsx";
 
 const CleaningServiceRequest: React.FC = () => {
+
+
 
     function getRandomInt(max: number) {
         return Math.floor(Math.random() * max);
@@ -58,7 +59,8 @@ const CleaningServiceRequest: React.FC = () => {
 
     return (
         <div>
-            <NavBar></NavBar>
+
+
 
             <h1>
                 Religious Service Request
