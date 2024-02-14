@@ -31,7 +31,7 @@ const ServiceList = () => {
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Flower Service Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a bogue of flowers to send your regards to any patient on long term stay </CardDescription>
+                                    <CardDescription className="text-sm">Send a bouquet of flowers to send your regards to any patient on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <img src="public/service-images-transparent/flower_serviceT.png" alt="flower service"/>
@@ -60,7 +60,7 @@ const ServiceList = () => {
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Religious Service Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a request for religious sermons and rituals conducted for patients on long terms stay </CardDescription>
+                                    <CardDescription className="text-sm">Send a request for religious sermons and rituals conducted for patients on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <img src="public/service-images-transparent/religious_serviceT.png" alt="Religious service"/>
@@ -74,42 +74,42 @@ const ServiceList = () => {
 
                 <Row>
                     <Col>
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/LanguageService" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
-                                    <CardTitle className="text-xl">Medication Delivery Service Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
+                                    <CardTitle className="text-xl">Language Translation Service Request</CardTitle>
+                                    <CardDescription className="text-sm">Send a request for language translation services for patients on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/medicineT.png" alt="medicine delivery service"/>
+                                    <img src="public/service-images-transparent/languagesT.png" alt="language translation service"/>
                                 </CardContent>
                             </Card>
                         </Link>
                     </Col>
 
                     <Col>
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/InternalTransportation" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Internal Transportation Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
+                                    <CardDescription className="text-sm">Send a request for transportation within the hospital for patients on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/internalT.png" alt="medicine delivery service"/>
+                                    <img src="public/service-images-transparent/internalT.png" alt="internal transport service"/>
                                 </CardContent>
                             </Card>
                         </Link>
                     </Col>
 
                     <Col>
-                        <Link to="/flowerService" className={"no-underline"}>
+                        <Link to="/ExternalTransportation" className={"no-underline"}>
                             <Card className="max-w-md border-gray-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">External Transportation Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a request for medication delivery for patients on long terms stay </CardDescription>
+                                    <CardDescription className="text-sm">Send a request for external transportation for patients on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/ambulanceT.png" alt="medicine delivery service"/>
+                                    <img src="public/service-images-transparent/ambulanceT.png" alt="external transport service"/>
                                 </CardContent>
                             </Card>
                         </Link>

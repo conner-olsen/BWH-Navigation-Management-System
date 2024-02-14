@@ -7,13 +7,13 @@ import Form from "react-bootstrap/Form";
 import {Button} from "../../components/ui/button.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
 
-const InternalTransportation: React.FC = () => {
+const LanguageService: React.FC = () => {
 
     const [formData, setFormData] = useState({
         id: '',
         nodeId: '',
         patientName: '',
-        mode: '',
+        languagePref: '',
         priority: '',
         status: 'Unassigned',
         employeeUser: 'none'
@@ -26,21 +26,19 @@ const InternalTransportation: React.FC = () => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
-
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setFormData({
             id: '',
             nodeId: '',
             patientName: '',
-            mode: '',
+            languagePref: '',
             priority: '',
             status: '',
             employeeUser: ''
         });
-
         try {
-            const response = await axios.post("/api/internal-transport", JSON.stringify(formData), {
+            const response = await axios.post("/api/language-service-request", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }
@@ -62,7 +60,7 @@ const InternalTransportation: React.FC = () => {
         <Container>
 
             <h1>
-                Internal Transportation Request
+                Language Service Request
             </h1>
             <div className={"border-2 border-blue-950 rounded-lg p-4"}>
 
@@ -71,43 +69,35 @@ const InternalTransportation: React.FC = () => {
                         <Col>
                             <div>
                                 <Label htmlFor="patientName">Patient Name</Label>
-                                <Input type="text" id="patientName" placeholder={"Will Smith"}
-                                       onChange={handleChangeText}/>
+                                <Input type="text" id="patientName" placeholder={"Aiden Deady"}/>
                             </div>
                         </Col>
+                        <Col>
+                            <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
+                        </Col>
+                    </Row>
+                    <br/>
 
+                    <Row>
                         <Col>
                             <div>
                                 <label
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
-                                <Form.Select id={"priority"} onChange={handleChangeSelect}>
+                                <Form.Select onChange={handleChangeSelect} id={"priority"}>
                                     <option value="Low Priority">Low Priority</option>
                                     <option value="High Priority">High Priority</option>
                                     <option value="Emergency">Emergency</option>
                                 </Form.Select>
                             </div>
                         </Col>
-
-                    </Row>
-                    <br/>
-
-                    <Row>
-                        <Col>
-                            <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
-                        </Col>
-
-                    </Row>
-                    <br/>
-                    <Row>
                         <Col>
                             <div>
-                                <Label htmlFor="mode">Mode Of Transportation</Label>
-                                <Input type="text" id="mode" placeholder={"Wheelchair"} onChange={handleChangeText}/>
+                                <Label htmlFor="languagePref">Language</Label>
+                                <Input type="text" id="languagePref" placeholder={"French"}
+                                       onChange={handleChangeText}/>
                             </div>
                         </Col>
-
                     </Row>
-
 
                     <br/>
 
@@ -120,4 +110,4 @@ const InternalTransportation: React.FC = () => {
         </Container>
 );
 };
-export default InternalTransportation;
+export default LanguageService;

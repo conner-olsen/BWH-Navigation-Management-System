@@ -57,9 +57,10 @@ return (
     <nav className="sticky-top top-0">
         <Nav className="navbarStyling relative filter-none z-50 shadow-md bg-blue-950 space-x-12 items-center">
             <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img></Link>
-            <Link to="/Home" className="text-lg no-underline p-2 text-white"> <div className={"hover:text-blue-500"}>Home</div></Link>
+            <Link to="/Home" className="text-lg no-underline p-2 text-white"> <div className={"hover:text-blue-500"}>Map</div></Link>
+
             {isAuthenticated && (
-                <Link to="/EmployeeManager" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Employee Manager</div></Link>
+            <Link to="/EmployeeManager" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Employee Manager</div></Link>
             )}
             {isAuthenticated && (
                 <Link to="/DataUpload" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>Data Upload</div></Link>
@@ -67,7 +68,7 @@ return (
                 <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white"
                       onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <div className={"hover:text-blue-500"}>Service Request</div>
-                    <div className="mt-2 h-0 w-screen max-w-full group-hover:h-[20vh] absolute
+                    <div className="mt-2 h-0 w-screen max-w-full group-hover:h-[32vh] absolute
                                     bg-blue-950 left-0 overflow-hidden flex justify-center
                                     transition-all duration-500">
                         <div>
@@ -75,6 +76,9 @@ return (
                             <NavDropdown.Item as={Link} to="/FlowerService"><div className={"hover:text-blue-500"}>Flower Request</div></NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/ReligiousService"><div className={"hover:text-blue-500"}>Religious Request</div></NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/CleaningService"><div className={"hover:text-blue-500"}>Cleaning Request</div></NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/InternalTransportation"><div className={"hover:text-blue-500"}>Internal Transportation</div></NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/ExternalTransportation"><div className={"hover:text-blue-500"}>External Transportation</div></NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/LanguageService"><div className={"hover:text-blue-500"}>Language Service</div></NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/ServiceLog"><div className={"hover:text-blue-500"}>Service Log</div></NavDropdown.Item>
                         </div>
                     </div>

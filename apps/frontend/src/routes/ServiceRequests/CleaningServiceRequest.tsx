@@ -9,17 +9,9 @@ import LocationDropdown from "../../components/LocationDropdown.tsx";
 
 const CleaningServiceRequest: React.FC = () => {
 
-
-
-    function getRandomInt(max: number) {
-        return Math.floor(Math.random() * max);
-    }
-
-
-
     const [formData, setFormData] = useState({
-        id: 0,
-        nodeID: '',
+        id: '',
+        nodeId: '',
         patientName: '',
         type: '',
         priority: '',
@@ -27,11 +19,18 @@ const CleaningServiceRequest: React.FC = () => {
         employeeUser: 'none'
     });
 
+    const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+    const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setFormData({
-            id: getRandomInt(1000000),
-            nodeID: '',
+            id: 'getRandomInt(1000000)',
+            nodeId: '',
             patientName: '',
             type: '',
             priority: '',
@@ -39,7 +38,7 @@ const CleaningServiceRequest: React.FC = () => {
             employeeUser: ''
         });
         try {
-            const response = await axios.post("/api/", JSON.stringify(formData), {
+            const response = await axios.post("/api/cleaning-request", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }
@@ -58,62 +57,64 @@ const CleaningServiceRequest: React.FC = () => {
 
 
     return (
-        <div>
+        <Container>
 
             <h1>
                 Cleaning Service Request
             </h1>
+            <div className={"border-2 border-blue-950 rounded-lg p-4"}>
 
-            <Container>
-                <Row>
-                    <Col>
-                        <div>
-                            <Label htmlFor="patientName">Patient Name</Label>
-                            <Input type="text" id="patientName" placeholder={"John Doe"}/>
-                        </div>
-                    </Col>
-                    <Col>
-                        <div>
-                            <label
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Type
-                                of Cleaning</label>
-                            <Form.Select>
-                                <option value="Basic">Basic</option>
-                                <option value="Regular">Regular</option>
-                                <option value="Deep">Deep</option>
-                            </Form.Select>
-                        </div>
-                    </Col>
-                </Row>
-                <br/>
+                <Container>
+                    <Row>
+                        <Col>
+                            <div>
+                                <Label htmlFor="patientName">Patient Name</Label>
+                                <Input type="text" id="patientName" placeholder={"Karish Gupta"}
+                                       onChange={handleChangeText}/>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div>
+                                <label
+                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Type
+                                    of Cleaning</label>
+                                <Form.Select onChange={handleChangeSelect}>
+                                    <option value="Basic">Basic</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Deep">Deep</option>
+                                </Form.Select>
+                            </div>
+                        </Col>
+                    </Row>
+                    <br/>
 
-                <Row>
-                    <Col>
-                        <LocationDropdown></LocationDropdown>
-                    </Col>
+                    <Row>
+                        <Col>
+                            <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
+                        </Col>
 
-                    <Col>
-                        <div>
-                            <label
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
-                            <Form.Select>
-                                <option value="Low Priority">Low Priority</option>
-                                <option value="High Priority">High Priority</option>
-                                <option value="Emergency">Emergency</option>
-                            </Form.Select>
-                        </div>
-                    </Col>
-                </Row>
+                        <Col>
+                            <div>
+                                <label
+                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
+                                <Form.Select onChange={handleChangeSelect}>
+                                    <option value="Low Priority">Low Priority</option>
+                                    <option value="High Priority">High Priority</option>
+                                    <option value="Emergency">Emergency</option>
+                                </Form.Select>
+                            </div>
+                        </Col>
+                    </Row>
 
-                <br/>
+                    <br/>
 
-                <Row>
-                    <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
-                </Row>
+                    <Row>
+                        <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
+                    </Row>
 
                 </Container>
-
             </div>
-    );
+        </Container>
+);
 };
 export default CleaningServiceRequest;

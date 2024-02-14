@@ -1,48 +1,54 @@
 import express, {Router, Request, Response} from "express";
 import PrismaClient from "../bin/database-connection.ts";
-import {Prisma} from "database";
-import ServiceRequestUncheckedCreateInput = Prisma.ServiceRequestUncheckedCreateInput;
-
-
 const router: Router = express.Router();
 
-
 router.post("/", async (req: Request, res: Response) => {
-
-  const languageRequestAttempt: Prisma.languageInterpreterServiceRequestUncheckedCreateInput = req.body;
-
-  const srAttempt: Prisma.ServiceRequestUncheckedCreateInput = req.body as ServiceRequestUncheckedCreateInput;
-
-  console.log(JSON.stringify(srAttempt));
+  const requestData = req.body;
 
   try {
 
     // Create the Service Request
-    const createdServiceRequest = await PrismaClient.serviceRequest.create({ data: srAttempt });
+    await PrismaClient.serviceRequest.create({ data: {
+        node: {
+          connect:{
+            nodeId: requestData.nodeId
+          }
+        },
+        status: requestData.status,
+        employee: {
+          connect: {
+            username: requestData.employeeUser
+          }
+        },
+        priority: requestData.priority,
 
-    // Use the created Service Request's id to set the nodeId in other service request
-    languageRequestAttempt.id = createdServiceRequest.id;
+        languageInterpreterServiceRequest: {
+          create: {
+            name: requestData.patientName,
+            languagePref: requestData.languagePref
 
-    await PrismaClient.languageInterpreterServiceRequest.create({data: languageRequestAttempt});
+          }
+        }
+      } });
 
     res.sendStatus(200);
   } catch (error) {
-    console.error(`Error populating node data: ${error}`);
+    console.error(`Error creating service request: ${error}`);
     res.sendStatus(500);
   }
 });
 
+
+
 router.get("/", async function (req: Request, res: Response) {
   try{
-    const languageCSV = await PrismaClient.languageInterpreterServiceRequest.findMany();
-    res.send(languageCSV);
+    const internalCSV = await PrismaClient.languageInterpreterServiceRequest.findMany();
+    res.send(internalCSV);
   } catch (error){
     console.error(`Error exporting Service Request data: ${error}`);
     res.sendStatus(500);
   }
   res.sendStatus(200);
 });
-
-
 
 export default router;

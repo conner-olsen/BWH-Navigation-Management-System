@@ -1,45 +1,52 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import {Input} from "../../components/ui/input.tsx";
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Form, Row} from "react-bootstrap";
 import {Label} from "../../components/ui/label.tsx";
 import {Button} from "../../components/ui/button.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
 import {Textarea} from "../../components/ui/textarea.tsx";
 
-const CleaningServiceRequest: React.FC = () => {
-
-
-
-    function getRandomInt(max: number) {
-        return Math.floor(Math.random() * max);
-    }
-
-
+const ReligiousServiceRequest: React.FC = () => {
 
     const [formData, setFormData] = useState({
-        id: 0,
-        nodeID: '',
+        id: '',
+        nodeId: '',
         patientName: '',
         religion: '',
         note: '',
-        status: 'UnAssigned',
+        priority: '',
+        status: 'Unassigned',
         employeeUser: 'none'
     });
+
+
+
+    const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+    const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
+
+    const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    };
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setFormData({
-            id: getRandomInt(1000000),
-            nodeID: '',
+            id: '',
+            nodeId: '',
             patientName: '',
             religion: '',
             note: '',
+            priority: '',
             status: '',
             employeeUser: ''
         });
         try {
-            const response = await axios.post("/api/", JSON.stringify(formData), {
+            const response = await axios.post("/api/religious-service-request", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }
@@ -58,53 +65,67 @@ const CleaningServiceRequest: React.FC = () => {
 
 
     return (
-        <div>
-
-
-
+        <Container>
             <h1>
                 Religious Service Request
             </h1>
+            <div className={"border-2 border-blue-950 rounded-lg p-4"}>
 
-            <Container>
-                <Row>
-                    <Col>
-                        <div>
-                            <Label htmlFor="patientName">Patient Name</Label>
-                            <Input type="text" id="patientName" placeholder={"John Doe"}/>
-                        </div>
-                    </Col>
-                    <Col>
-                        <div>
-                            <Label htmlFor="religion">Religion</Label>
-                            <Input type="text" id="religion" placeholder={"Christianity"}/>
-                        </div>
-                    </Col>
-                </Row>
-                <br/>
+                <Container>
+                    <Row>
+                        <Col>
+                            <div>
+                                <Label htmlFor="patientName">Patient Name</Label>
+                                <Input type="text" id="patientName" placeholder={"James Walden"}
+                                       onChange={handleChangeText}/>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div>
+                                <Label htmlFor="religion">Religion</Label>
+                                <Input type="text" id="religion" placeholder={"Christianity"}
+                                       onChange={handleChangeText}/>
+                            </div>
+                        </Col>
+                    </Row>
+                    <br/>
 
-                <Row>
-                    <Col>
-                        <LocationDropdown></LocationDropdown>
-                    </Col>
+                    <Row>
+                        <Col>
+                            <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
+                        </Col>
 
-                    <Col>
-                        <div>
-                            <Label htmlFor="note">Request Details</Label>
-                            <Textarea id="note" placeholder="Prayer time breaks"></Textarea>
-                        </div>
-                    </Col>
-                </Row>
+                        <Col>
+                            <div>
+                                <label
+                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
+                                <Form.Select onChange={handleChangeSelect} id={"priority"}>
+                                    <option value="Low Priority">Low Priority</option>
+                                    <option value="High Priority">High Priority</option>
+                                    <option value="Emergency">Emergency</option>
+                                </Form.Select>
+                            </div>
+                        </Col>
 
-                <br/>
 
-                <Row>
-                    <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
-                </Row>
+                        <Col>
+                            <div>
+                                <Label htmlFor="note">Request Details</Label>
+                                <Textarea id="note" placeholder="Prayer time breaks"
+                                          onChange={handleChangeTextArea}></Textarea>
+                            </div>
+                        </Col>
+                    </Row>
 
-            </Container>
+                    <br/>
 
-        </div>
-    );
+                    <Row>
+                        <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
+                    </Row>
+
+                </Container>
+            </div>
+        </Container>
+);
 };
-export default CleaningServiceRequest;
+export default ReligiousServiceRequest;
