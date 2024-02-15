@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios from "axios";
+//import { JSX } from 'react/jsx-runtime';
 
 interface MapDisplayProps {
     floorMap: string;
@@ -102,7 +103,7 @@ function MapDisplay({
 
     const displayHoverInfo = (node: Node) => {
         return (
-            <foreignObject x={node.xCoord - 225} y={node.yCoord-250} width="450" height="250" z="40">
+            <foreignObject x={node.xCoord - 225} y={node.yCoord - 250} width="450" height="250" z="40">
                 <div
                     className={"h-fit rounded-md border bg-popover p-4 text-2xl text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}>
                     <g>
@@ -138,7 +139,8 @@ function MapDisplay({
                             {type === 'start' ? 'Start Node' : 'End Node'}
                         </div>
                         <div>
-                            <text className="text-blue-500 font-semibold" style={{cursor: 'pointer'}} onClick={() => clearSelection()}>
+                            <text className="text-blue-500 font-semibold" style={{cursor: 'pointer'}}
+                                  onClick={() => clearSelection()}>
                                 Clear
                             </text>
                         </div>
@@ -146,6 +148,30 @@ function MapDisplay({
                 </div>
             </foreignObject>
         );
+    };
+
+    // const displayNames = (graph: Graph) => {
+    //     const names: React.JSX.Element[] = [];
+    //     if (doDisplayNames) {
+    //         Array.from(graph.nodes.values()).map((node: Node) => {
+    //             if (node.floor == floor) {
+    //                 names.push(<text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+    //                     {node.shortName}
+    //                 </text>);
+    //             }
+    //         });
+    //     }
+    //     return names;
+    // };
+
+    const displayName = (node: Node) => {
+        if (doDisplayNames && (node.floor == floor)) {
+            return (
+                <text className="-rotate-1" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                    {node.shortName}
+                </text>
+            );
+        }
     };
 
     const displayNodes = (graph: Graph) => {
@@ -161,41 +187,12 @@ function MapDisplay({
                             {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                             {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                             {hoverNodeId === node.id && displayHoverInfo(node)}
+                            {displayName(node)}
                         </g>
                     );
                 }
             }));
     };
-
-    const displayNames = () => {
-        // let names: Element = [];
-        // Array.from(graph.nodes.values()).map((node: Node) => {
-        //     if (node.floor == floor && doDisplayNames) {
-        //         names.push(<text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-        //             {node.shortName}
-        //         </text>);
-        //     }
-        // });
-        //
-        // return (
-        //     <div className="-rotate-10">
-        //         {names}
-        //     </div>
-        // )
-
-    return (
-        Array.from(graph.nodes.values()).map((node: Node) => {
-            if (node.floor == floor && doDisplayNames) {
-                return (
-
-                    <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-                         {node.shortName}
-                         </text>
-                );
-            }
-        }))
-
-        ;};
 
     const displayEdges = (graph: Graph) => {
         if (doDisplayEdges) {
@@ -228,9 +225,10 @@ function MapDisplay({
                        y="0"/>
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
-                {graph && displayNames()}
                 {graph && displayNodes(graph)}
+                {/*{graph && displayNames(graph)}*/}
             </svg>
+
         </div>
     );
 }

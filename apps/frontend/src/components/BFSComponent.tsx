@@ -149,14 +149,17 @@ export function BFSComponent() {
         const row = CSVRow[i];
         const rowval = Object.values(row);
         const id = rowval[0];
-        const nodeId = row["nodeId"];
+       // const nodeId = row["nodeId"];
         const longName = row["longName"];
+        const nodeType = row["nodeType"];
         const nodeFloor = nodeFloorToMapFloor(row["floor"]);
 
-        if (nodeFloor == map) {
-            currentFloorNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+        if (nodeFloor == map && !(nodeType == "HALL")) {
+            currentFloorNames.push(<option value={id}> {longName} </option>);
         }
-        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+        else if (!(nodeType == "HALL")) {
+            roomNames.push(<option value={id}> {longName} </option>);
+        }
     }
 
     const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -232,8 +235,8 @@ export function BFSComponent() {
                 <div className="py-4 px-2">
                     <Form.Select value={pathFindingType} size={"sm"}
                                  onChange={e => setPathFindingType(e.target.value)}>
-                        <option value={"/api/bfs-searching"}>BFS searching</option>
-                        <option value={"/api/bfsAstar-searching"}>A-star searching</option>
+                        <option value={"/api/bfs-searching"}>BFS Searching</option>
+                        <option value={"/api/bfsAstar-searching"}>A* Searching</option>
                     </Form.Select>
                 </div>
 
