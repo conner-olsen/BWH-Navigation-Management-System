@@ -57,14 +57,14 @@ model ServiceRequest {
     employee                             Employee                               @relation(fields: [employeeUser], references: [username])
     nodeId                               String
     priority                             String
-    status                               String                                 @default("UnAssigned")
+    status                               String                                 @default("Unassigned")
     employeeUser                         String
-    flowerServiceRequests                FlowerServiceRequest[]
-    cleaningServiceRequest               cleaningServiceRequest[]
-    externalTransportationServiceRequest externalTransportationServiceRequest[]
-    internalTransportServiceRequest      internalTransportServiceRequest[]
-    languageInterpreterServiceRequest    languageInterpreterServiceRequest[]
-    religiousServiceRequest              religiousServiceRequest[]
+    flowerServiceRequests                FlowerServiceRequest?
+    cleaningServiceRequest               cleaningServiceRequest?
+    externalTransportationServiceRequest externalTransportationServiceRequest?
+    internalTransportServiceRequest      internalTransportServiceRequest?
+    languageInterpreterServiceRequest    languageInterpreterServiceRequest?
+    religiousServiceRequest              religiousServiceRequest?
 }
 
 //Service Request Table

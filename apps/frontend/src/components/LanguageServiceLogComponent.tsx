@@ -11,21 +11,21 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
 
     const handleStatusChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
         axios.patch("/api/service-request", {
-            id: tableData[index]["ServiceRequest"].id,
-            nodeId: tableData[index]["ServiceRequest"].nodeId,
-            priority: tableData[index]["ServiceRequest"].priority,
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             status: value,
-            employeeUser: tableData[index]["ServiceRequest"].employeeUser
+            employeeUser: tableData[index].ServiceRequest.employeeUser
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
         axios.patch("/api/service-request", {
-            id: tableData[index]["ServiceRequest"].id,
-            nodeId: tableData[index]["ServiceRequest"].nodeId,
-            priority: tableData[index]["ServiceRequest"].priority,
-            status: tableData[index]["ServiceRequest"].status,
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
+            status: tableData[index].ServiceRequest.status,
             employeeUser: value
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
@@ -35,8 +35,8 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index]["ServiceRequest"].nodeId}</TableCell>
-                <TableCell>{tableData[index]["ServiceRequest"].priority}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
                 <TableCell>{tableData[index].languagePref}</TableCell>
 

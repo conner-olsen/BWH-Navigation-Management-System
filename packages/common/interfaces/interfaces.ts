@@ -21,6 +21,12 @@ export interface ServiceRequest {
   status: string;
   employeeUser: string;
   priority: string;
+  flowerServiceRequests?: flowerServiceRequest;
+  cleaningServiceRequest?: cleaningServiceRequest;
+  externalTransportationServiceRequest?: externalTransportationServiceRequest;
+  internalTransportServiceRequest?: internalTransportServiceRequest;
+  languageInterpreterServiceRequest?: languageInterpreterServiceRequest;
+  religiousServiceRequest?: religiousServiceRequest;
 }
 
 export interface flowerServiceRequest extends ServiceRequest {
@@ -30,12 +36,13 @@ export interface flowerServiceRequest extends ServiceRequest {
   flowerType: string;
   deliveryDate: string;
   note: string;
+  ServiceRequest: ServiceRequest;
 }
 
 export interface cleaningServiceRequest extends ServiceRequest{
   type: string;
   patientName: string;
-
+  ServiceRequest: ServiceRequest;
 }
 
 export interface externalTransportationServiceRequest extends ServiceRequest {
@@ -44,23 +51,27 @@ export interface externalTransportationServiceRequest extends ServiceRequest {
   transportation: string;
   date: string;
   description: string;
+  ServiceRequest: ServiceRequest;
 }
 
 export interface internalTransportServiceRequest extends ServiceRequest {
   name: string;
   mode: string;
   destination: string;
+  ServiceRequest: ServiceRequest;
 }
 
 export interface languageInterpreterServiceRequest extends ServiceRequest {
   name: string;
   languagePref: string;
+  ServiceRequest: ServiceRequest;
 }
 
 export interface religiousServiceRequest extends ServiceRequest {
   patientName: string;
   religion: string;
   note: string;
+  ServiceRequest: ServiceRequest;
 }
 
 export interface user{

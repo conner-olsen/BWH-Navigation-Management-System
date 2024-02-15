@@ -9,21 +9,21 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
 
     const handleStatusChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
         axios.patch("/api/service-request", {
-            id: tableData[index]["ServiceRequest"].id,
-            nodeId: tableData[index]["ServiceRequest"].nodeId,
-            priority: tableData[index]["ServiceRequest"].priority,
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             status: value,
-            employeeUser: tableData[index]["ServiceRequest"].employeeUser
+            employeeUser: tableData[index].ServiceRequest.employeeUser
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
         axios.patch("/api/service-request", {
-            id: tableData[index]["ServiceRequest"].id,
-            nodeId: tableData[index]["ServiceRequest"].nodeId,
-            priority: tableData[index]["ServiceRequest"].priority,
-            status: tableData[index]["ServiceRequest"].status,
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
+            status: tableData[index].ServiceRequest.status,
             employeeUser: value
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
@@ -33,9 +33,9 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index]["ServiceRequest"].nodeId}</TableCell>
-                <TableCell>{tableData[index]["ServiceRequest"].priority}</TableCell>
-                <TableCell>{tableData[index]["ServiceRequest"].name}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
+                <TableCell>{tableData[index].name}</TableCell>
                 <TableCell>{tableData[index].transportation}</TableCell>
                 <TableCell>{tableData[index].destination}</TableCell>
                 <TableCell>{tableData[index].description}</TableCell>
@@ -114,6 +114,7 @@ export const ExternalTransportServiceLogComponent = () => {
                     throw new Error(`Failed to fetch religion service requests: ${response.status}`);
                 }
                 const result = await response.json();
+                console.log(result);
                 setData(result);
             } catch (err) {
                 console.error('Error fetching flower service requests:', err);
