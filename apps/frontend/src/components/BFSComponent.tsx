@@ -249,7 +249,7 @@ export function BFSComponent() {
                     </ol>
                 </div>
                 <div
-                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-lg
+                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-lg border-
                                 ${isExpanded ? 'right-[-90px]' : 'right-[-170px]'}`}>
                     <HoverCard openDelay={100}>
                         <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center
@@ -280,7 +280,7 @@ export function BFSComponent() {
                 >
                     {({zoomIn, zoomOut, resetTransform}) => (
                         <React.Fragment>
-                            <div className="tools flex flex-col absolute right-2 top-2 z-10">
+                            <div className="tools flex flex-col absolute right-2 top-2 z-10 dark:bg-blue-300 rounded-lg">
                                 <button onClick={() => zoomIn()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">+

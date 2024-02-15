@@ -50,7 +50,7 @@ const ExportEdgeDataToCSVButton = () => {
     }
 
     return (
-        <Button variant={"ghost"} onClick={handleExportButton}>Export</Button>
+        <Button variant={"default"} onClick={handleExportButton}>Export</Button>
     );
 };
 
