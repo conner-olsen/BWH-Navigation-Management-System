@@ -35,8 +35,8 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].nodeId}</TableCell>
-                <TableCell>{tableData[index].priority}</TableCell>
+                <TableCell>{tableData[index]["ServiceRequest"].nodeId}</TableCell>
+                <TableCell>{tableData[index]["ServiceRequest"].priority}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
                 <TableCell>{tableData[index].languagePref}</TableCell>
 
