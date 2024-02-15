@@ -14,17 +14,16 @@ datasource db {
 
 //Node Table
 model Node {
-    nodeId                          String  @id
-    xcoord                          Int
-    ycoord                          Int
-    floor                           String
-    building                        String
-    nodeType                        String
-    longName                        String
-    shortName                       String
-    Edge                            Edge[]
-    ServiceRequest                  ServiceRequest[]
-    internalTransportServiceRequest internalTransportServiceRequest[]
+    nodeId         String           @id
+    xcoord         Int
+    ycoord         Int
+    floor          String
+    building       String
+    nodeType       String
+    longName       String
+    shortName      String
+    Edge           Edge[]
+    ServiceRequest ServiceRequest[]
 }
 
 //Edge Table
@@ -99,7 +98,6 @@ model externalTransportationServiceRequest {
 
 model internalTransportServiceRequest {
     ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-    node           Node           @relation(fields: [destination], references: [nodeId])
     id             String         @id
     name           String
     mode           String

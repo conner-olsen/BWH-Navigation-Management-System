@@ -14,7 +14,7 @@ const CleaningServiceRequest: React.FC = () => {
         patientName: '',
         type: '',
         priority: '',
-        status: 'UnAssigned',
+        status: 'Unassigned',
         employeeUser: 'none'
     });
 

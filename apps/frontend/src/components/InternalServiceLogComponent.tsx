@@ -46,12 +46,10 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{tableData[index].nodeId}</TableCell>
-                <TableCell>{tableData[index].destination}</TableCell>
                 <TableCell>{tableData[index].priority}</TableCell>
-                <TableCell>{tableData[index].mode}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
-
-
+                <TableCell>{tableData[index].mode}</TableCell>
+                <TableCell>{tableData[index].destination}</TableCell>
 
                 <TableCell>
                     <Select value={tableData[index].status}
@@ -93,10 +91,10 @@ const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; em
             <TableHeader>
                 <TableRow>
                     <TableHead>Node</TableHead>
-                    <TableHead>Destination</TableHead>
                     <TableHead>Priority</TableHead>
-                    <TableHead>Mode of Transport</TableHead>
                     <TableHead>Name</TableHead>
+                    <TableHead>Mode of Transport</TableHead>
+                    <TableHead>Destination</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>
 

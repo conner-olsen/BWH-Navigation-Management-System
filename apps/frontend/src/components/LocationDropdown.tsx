@@ -51,8 +51,7 @@ const LocationDropdown: React.FC<locationSelect> = ({ onChange, id }) => {
 
     return (
     <div>
-        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Select
-            Location</label>
+        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Select Room</label>
         <Form.Select onChange={onChange} id={id}>
             {roomNames}
         </Form.Select>
