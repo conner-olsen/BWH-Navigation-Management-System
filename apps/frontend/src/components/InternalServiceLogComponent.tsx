@@ -14,21 +14,21 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
 
     const handleStatusChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
         axios.patch("/api/service-request", {
-            id: tableData[index]["ServiceRequest"].id,
-            nodeId: tableData[index]["ServiceRequest"].nodeId,
-            priority: tableData[index]["ServiceRequest"].priority,
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             status: value,
-            employeeUser: tableData[index]["ServiceRequest"].employeeUser
+            employeeUser: tableData[index].ServiceRequest.employeeUser
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
         axios.patch("/api/service-request", {
-            id: tableData[index]["ServiceRequest"].id,
-            nodeId: tableData[index]["ServiceRequest"].nodeId,
-            priority: tableData[index]["ServiceRequest"].priority,
-            status: tableData[index]["ServiceRequest"].status,
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
+            status: tableData[index].ServiceRequest.status,
             employeeUser: value
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
@@ -38,8 +38,8 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index]["ServiceRequest"].nodeId}</TableCell>
-                <TableCell>{tableData[index]["ServiceRequest"].priority}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
                 <TableCell>{tableData[index].mode}</TableCell>
                 <TableCell>{tableData[index].destination}</TableCell>
@@ -48,7 +48,7 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
                     <Select value={tableData[index].status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder={tableData[index]["ServiceRequest"].status} />
+                            <SelectValue placeholder={tableData[index].ServiceRequest.status} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="Unassigned">Unassigned</SelectItem>
@@ -60,10 +60,10 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index]["ServiceRequest"].employeeUser}
+                    <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder={tableData[index]["ServiceRequest"].employeeUser} />
+                            <SelectValue placeholder={tableData[index].ServiceRequest.employeeUser} />
                         </SelectTrigger>
                         <SelectContent>
                             {employeeData.map((employee, employeeIndex) => (
