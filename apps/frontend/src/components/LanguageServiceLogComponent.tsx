@@ -32,7 +32,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
@@ -42,7 +42,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
 
 
                 <TableCell>
-                    <Select value={tableData[index].status}
+                    <Select value={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />

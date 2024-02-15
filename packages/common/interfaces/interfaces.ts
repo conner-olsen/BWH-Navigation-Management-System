@@ -29,7 +29,7 @@ export interface ServiceRequest {
   religiousServiceRequest?: religiousServiceRequest;
 }
 
-export interface flowerServiceRequest extends ServiceRequest {
+export interface flowerServiceRequest{
   senderName: string;
   senderEmail: string;
   patientName: string;
@@ -39,13 +39,13 @@ export interface flowerServiceRequest extends ServiceRequest {
   ServiceRequest: ServiceRequest;
 }
 
-export interface cleaningServiceRequest extends ServiceRequest{
+export interface cleaningServiceRequest{
   type: string;
   patientName: string;
   ServiceRequest: ServiceRequest;
 }
 
-export interface externalTransportationServiceRequest extends ServiceRequest {
+export interface externalTransportationServiceRequest{
   name: string;
   destination: string;
   transportation: string;
@@ -54,20 +54,20 @@ export interface externalTransportationServiceRequest extends ServiceRequest {
   ServiceRequest: ServiceRequest;
 }
 
-export interface internalTransportServiceRequest extends ServiceRequest {
+export interface internalTransportServiceRequest{
   name: string;
   mode: string;
   destination: string;
   ServiceRequest: ServiceRequest;
 }
 
-export interface languageInterpreterServiceRequest extends ServiceRequest {
+export interface languageInterpreterServiceRequest{
   name: string;
   languagePref: string;
   ServiceRequest: ServiceRequest;
 }
 
-export interface religiousServiceRequest extends ServiceRequest {
+export interface religiousServiceRequest{
   patientName: string;
   religion: string;
   note: string;
