@@ -62,7 +62,7 @@ const LanguageService: React.FC = () => {
             <h1>
                 Language Service Request
             </h1>
-            <div className={"border-2 border-blue-950 rounded-lg p-4"}>
+            <div className={"border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4"}>
 
                 <Container>
                     <Row>
@@ -102,7 +102,9 @@ const LanguageService: React.FC = () => {
                     <br/>
 
                     <Row>
-                        <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
+                        <Col className={"justify-center flex"}>
+                            <Button variant={"default"} onClick={handleSubmit}>Submit</Button>
+                        </Col>
                     </Row>
 
                 </Container>
