@@ -28,7 +28,7 @@ const ServiceLog = () => {
 
                 {/*<TabsContent value="Employee List">*/}
 
-                <TabsContent value={"External Transport Service Request"}>
+                <TabsContent value={" External Transport Service Request"}>
                     <ExternalTransportServiceLogComponent></ExternalTransportServiceLogComponent>
                 </TabsContent>
                 <TabsContent value="Flower Service Request">

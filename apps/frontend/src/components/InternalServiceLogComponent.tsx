@@ -13,30 +13,23 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
 
 
     const handleStatusChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].nodeId,
-            priority: tableData[index].priority,
-            destination:  tableData[index].destination,
-            name: tableData[index].name,
-            mode: tableData[index].mode,
+        axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             status: value,
-            employeeUser: tableData[index].employeeUser
-
+            employeeUser: tableData[index].ServiceRequest.employeeUser
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].nodeId,
-            priority: tableData[index].priority,
-            destination:  tableData[index].destination,
-            name: tableData[index].name,
-            mode: tableData[index].mode,
-            status: tableData[index].status,
+        axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
+            status: tableData[index].ServiceRequest.status,
             employeeUser: value
-
-
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
@@ -45,8 +38,8 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index]["ServiceRequest"].nodeId}</TableCell>
-                <TableCell>{tableData[index]["ServiceRequest"].priority}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
                 <TableCell>{tableData[index].mode}</TableCell>
                 <TableCell>{tableData[index].destination}</TableCell>
@@ -55,7 +48,7 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
                     <Select value={tableData[index].status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Unassigned" />
+                            <SelectValue placeholder={tableData[index].ServiceRequest.status} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="Unassigned">Unassigned</SelectItem>
@@ -67,10 +60,10 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].employeeUser}
+                    <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="None" />
+                            <SelectValue placeholder={tableData[index].ServiceRequest.employeeUser} />
                         </SelectTrigger>
                         <SelectContent>
                             {employeeData.map((employee, employeeIndex) => (
@@ -97,7 +90,6 @@ const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; em
                     <TableHead>Destination</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>
-
                 </TableRow>
             </TableHeader>
             <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus)}</TableBody>
