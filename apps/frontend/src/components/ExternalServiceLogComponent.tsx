@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { externalTransportationServiceRequest } from 'common/interfaces/interfaces.ts';
+import {externalTransportationServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
@@ -7,34 +7,24 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./u
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 function GenerateTableRowsServices(tableData: externalTransportationServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
 
-
     const handleStatusChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].node,
-            priority: tableData[index].priority,
-            name:  tableData[index].name,
-            date: tableData[index].date,
-            destination: tableData[index].destination,
-            description: tableData[index].description,
+        axios.patch("/api/service-request", {
+            id: tableData[index]["ServiceRequest"].id,
+            nodeId: tableData[index]["ServiceRequest"].nodeId,
+            priority: tableData[index]["ServiceRequest"].priority,
             status: value,
-            employeeUser: tableData[index].employeeUser
-
+            employeeUser: tableData[index]["ServiceRequest"].employeeUser
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].nodeId,
-            priority: tableData[index].priority,
-            name:  tableData[index].name,
-            date: tableData[index].date,
-            transportation: tableData[index].transportation,
-            destination: tableData[index].destination,
-            description: tableData[index].description,
-            status: tableData[index].status,
-            employeeUser: value,
-
+        axios.patch("/api/service-request", {
+            id: tableData[index]["ServiceRequest"].id,
+            nodeId: tableData[index]["ServiceRequest"].nodeId,
+            priority: tableData[index]["ServiceRequest"].priority,
+            status: tableData[index]["ServiceRequest"].status,
+            employeeUser: value
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
@@ -43,7 +33,9 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].name}</TableCell>
+                <TableCell>{tableData[index]["ServiceRequest"].nodeId}</TableCell>
+                <TableCell>{tableData[index]["ServiceRequest"].priority}</TableCell>
+                <TableCell>{tableData[index]["ServiceRequest"].name}</TableCell>
                 <TableCell>{tableData[index].transportation}</TableCell>
                 <TableCell>{tableData[index].destination}</TableCell>
                 <TableCell>{tableData[index].description}</TableCell>
@@ -90,6 +82,8 @@ const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[
         <Table>
             <TableHeader>
                 <TableRow>
+                    <TableHead>Node ID</TableHead>
+                    <TableHead>Priority</TableHead>
                     <TableHead>Patient Name</TableHead>
                     <TableHead>Transportation</TableHead>
                     <TableHead>Destination</TableHead>

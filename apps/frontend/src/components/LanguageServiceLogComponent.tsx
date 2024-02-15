@@ -1,37 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { languageInterpreterServiceRequest } from 'common/interfaces/interfaces.ts';
+import {languageInterpreterServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
-// import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
+
 function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
-    //const [status, setStatus] = useState("Assigned");
 
 
     const handleStatusChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].node,
-            priority: tableData[index].priority,
-            name: tableData[index].name,
-            languagePref: tableData[index].languagePref,
+        axios.patch("/api/service-request", {
+            id: tableData[index]["ServiceRequest"].id,
+            nodeId: tableData[index]["ServiceRequest"].nodeId,
+            priority: tableData[index]["ServiceRequest"].priority,
             status: value,
-            employeeUser: tableData[index].employeeUser
-
+            employeeUser: tableData[index]["ServiceRequest"].employeeUser
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].node,
-            priority: tableData[index].priority,
-            name: tableData[index].name,
-            languagePref: tableData[index].languagePref,
-            status: tableData[index].status,
+        axios.patch("/api/service-request", {
+            id: tableData[index]["ServiceRequest"].id,
+            nodeId: tableData[index]["ServiceRequest"].nodeId,
+            priority: tableData[index]["ServiceRequest"].priority,
+            status: tableData[index]["ServiceRequest"].status,
             employeeUser: value
-
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
@@ -40,9 +35,9 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
         .filter(item => selectedStatus === "" || item.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].node}</TableCell>
-                <TableCell>{tableData[index].name}</TableCell>
+                <TableCell>{tableData[index].nodeId}</TableCell>
                 <TableCell>{tableData[index].priority}</TableCell>
+                <TableCell>{tableData[index].name}</TableCell>
                 <TableCell>{tableData[index].languagePref}</TableCell>
 
 
@@ -85,7 +80,7 @@ const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; 
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Location</TableHead>
+                    <TableHead>Room</TableHead>
                     <TableHead>Patient Name</TableHead>
                     <TableHead>Priority</TableHead>
                     <TableHead>Language Preferance</TableHead>
