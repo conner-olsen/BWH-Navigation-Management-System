@@ -15,7 +15,7 @@ export class bfsPathfinding implements PathfindingMethod  {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
-    console.log("ran bfs");
+   // console.log("ran bfs");
     //add an error catcher for invalid inputs
     if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];
@@ -79,7 +79,7 @@ export class bfsPathfinding implements PathfindingMethod  {
     }
 
     //return empty if endNode not reached (probably should return something else)
-    console.log("not reached");
+   // console.log("not reached");
     return [];
   }
 }
@@ -93,7 +93,7 @@ export class aStarPathfinding implements PathfindingMethod {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
-    console.log("ran astar");
+   // console.log("ran astar");
     // if start or end is undefined, return empty array
     if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];
@@ -126,7 +126,7 @@ export class aStarPathfinding implements PathfindingMethod {
 
       // if current node is the end node, return current path
       if (currentNode.id === endNode) {
-        console.log("Reached end node:", currentNodeIDPath);
+     //   console.log("Reached end node:", currentNodeIDPath);
         return currentNodeIDPath;
       }
 
@@ -163,7 +163,7 @@ export class aStarPathfinding implements PathfindingMethod {
       //put node with current lowest f/"cost" at the front of the queue by sorting
       //if the number in a is less than that in b, keep it in front by giving sort function a positive number
       priorityQueue.sort((a, b)  => a[1] > b[1] ? 1 : -1);
-      console.log("Current priority queue:", priorityQueue);
+    //  console.log("Current priority queue:", priorityQueue);
 
       //add current path to visited
       visited.push(currentNodeIDPath);
