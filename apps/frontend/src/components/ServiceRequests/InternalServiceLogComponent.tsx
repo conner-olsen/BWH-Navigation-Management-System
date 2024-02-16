@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import {externalTransportationServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
-function GenerateTableRowsServices(tableData: externalTransportationServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
+import { internalTransportServiceRequest } from 'common/interfaces/interfaces.ts';
 
-    const handleStatusChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
+
+
+function GenerateTableRowsServices(tableData: internalTransportServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
+    //const [status, setStatus] = useState("Assigned");
+
+
+    const handleStatusChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
         axios.patch("/api/service-request", {
             id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
@@ -18,7 +23,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
             .catch(error => console.error(error));
     };
 
-    const handleAssignmentChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
+    const handleAssignmentChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
         axios.patch("/api/service-request", {
             id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
@@ -36,18 +41,14 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
                 <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
                 <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
-                <TableCell>{tableData[index].transportation}</TableCell>
+                <TableCell>{tableData[index].mode}</TableCell>
                 <TableCell>{tableData[index].destination}</TableCell>
-                <TableCell>{tableData[index].description}</TableCell>
-                <TableCell>{tableData[index].date}</TableCell>
-
-
 
                 <TableCell>
                     <Select value={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Unassigned" />
+                            <SelectValue placeholder={tableData[index].ServiceRequest.status} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="Unassigned">Unassigned</SelectItem>
@@ -62,7 +63,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
                     <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="None" />
+                            <SelectValue placeholder={tableData[index].ServiceRequest.employeeUser} />
                         </SelectTrigger>
                         <SelectContent>
                             {employeeData.map((employee, employeeIndex) => (
@@ -77,18 +78,16 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
         ));
 }
 
-const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
     return (
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Node ID</TableHead>
+                    <TableHead>Node</TableHead>
                     <TableHead>Priority</TableHead>
-                    <TableHead>Patient Name</TableHead>
-                    <TableHead>Transportation</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Mode of Transport</TableHead>
                     <TableHead>Destination</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Date</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>
                 </TableRow>
@@ -99,8 +98,8 @@ const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[
 };
 
 // GETTING data for service request and
-export const ExternalTransportServiceLogComponent = () => {
-    const [data, setData] = useState<externalTransportationServiceRequest[]>([]);
+export const InternalTransportServiceLogComponent = () => {
+    const [data, setData] = useState<internalTransportServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
 
@@ -109,13 +108,13 @@ export const ExternalTransportServiceLogComponent = () => {
         const fetchData = async () => {
             try {
                 // Make a GET request to the API endpoint for flower service requests
-                const response = await fetch('/api/external-transport');
+                const response = await fetch('/api/service-request/internal-transportation');
                 if (!response.ok) {
                     throw new Error(`Failed to fetch religion service requests: ${response.status}`);
                 }
                 const result = await response.json();
-                console.log(result);
                 setData(result);
+                console.log(result);
             } catch (err) {
                 console.error('Error fetching flower service requests:', err);
             }

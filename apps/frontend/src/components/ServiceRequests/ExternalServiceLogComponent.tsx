@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import {languageInterpreterServiceRequest} from 'common/interfaces/interfaces.ts';
+import {externalTransportationServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+function GenerateTableRowsServices(tableData: externalTransportationServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
 
-function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
-
-
-    const handleStatusChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
+    const handleStatusChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
         axios.patch("/api/service-request", {
             id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
@@ -20,7 +18,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
             .catch(error => console.error(error));
     };
 
-    const handleAssignmentChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
+    const handleAssignmentChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
         axios.patch("/api/service-request", {
             id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
@@ -38,7 +36,11 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
                 <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
                 <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
-                <TableCell>{tableData[index].languagePref}</TableCell>
+                <TableCell>{tableData[index].transportation}</TableCell>
+                <TableCell>{tableData[index].destination}</TableCell>
+                <TableCell>{tableData[index].description}</TableCell>
+                <TableCell>{tableData[index].date}</TableCell>
+
 
 
                 <TableCell>
@@ -75,15 +77,18 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
         ));
 }
 
-const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
     return (
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Room</TableHead>
-                    <TableHead>Patient Name</TableHead>
+                    <TableHead>Node ID</TableHead>
                     <TableHead>Priority</TableHead>
-                    <TableHead>Language Preferance</TableHead>
+                    <TableHead>Patient Name</TableHead>
+                    <TableHead>Transportation</TableHead>
+                    <TableHead>Destination</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead>Date</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>
                 </TableRow>
@@ -94,8 +99,8 @@ const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; 
 };
 
 // GETTING data for service request and
-export const LanguageServiceLogComponent = () => {
-    const [data, setData] = useState<languageInterpreterServiceRequest[]>([]);
+export const ExternalTransportServiceLogComponent = () => {
+    const [data, setData] = useState<externalTransportationServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
 
@@ -104,11 +109,12 @@ export const LanguageServiceLogComponent = () => {
         const fetchData = async () => {
             try {
                 // Make a GET request to the API endpoint for flower service requests
-                const response = await fetch('/api/language-service-request');
+                const response = await fetch('/api/service-request/external-transportation');
                 if (!response.ok) {
-                    throw new Error(`Failed to fetch language service requests: ${response.status}`);
+                    throw new Error(`Failed to fetch religion service requests: ${response.status}`);
                 }
                 const result = await response.json();
+                console.log(result);
                 setData(result);
             } catch (err) {
                 console.error('Error fetching flower service requests:', err);

@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import {languageInterpreterServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
-import { internalTransportServiceRequest } from 'common/interfaces/interfaces.ts';
+
+function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
 
 
-
-function GenerateTableRowsServices(tableData: internalTransportServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
-    //const [status, setStatus] = useState("Assigned");
-
-
-    const handleStatusChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
+    const handleStatusChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
         axios.patch("/api/service-request", {
             id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
@@ -23,7 +20,7 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
             .catch(error => console.error(error));
     };
 
-    const handleAssignmentChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
+    const handleAssignmentChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
         axios.patch("/api/service-request", {
             id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
@@ -35,20 +32,20 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
                 <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
-                <TableCell>{tableData[index].mode}</TableCell>
-                <TableCell>{tableData[index].destination}</TableCell>
+                <TableCell>{tableData[index].languagePref}</TableCell>
+
 
                 <TableCell>
-                    <Select value={tableData[index].status}
+                    <Select value={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder={tableData[index].ServiceRequest.status} />
+                            <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="Unassigned">Unassigned</SelectItem>
@@ -63,7 +60,7 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
                     <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder={tableData[index].ServiceRequest.employeeUser} />
+                            <SelectValue placeholder="None" />
                         </SelectTrigger>
                         <SelectContent>
                             {employeeData.map((employee, employeeIndex) => (
@@ -78,16 +75,15 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
         ));
 }
 
-const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
     return (
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Node</TableHead>
+                    <TableHead>Room</TableHead>
+                    <TableHead>Patient Name</TableHead>
                     <TableHead>Priority</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Mode of Transport</TableHead>
-                    <TableHead>Destination</TableHead>
+                    <TableHead>Language Preferance</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>
                 </TableRow>
@@ -98,8 +94,8 @@ const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; em
 };
 
 // GETTING data for service request and
-export const InternalTransportServiceLogComponent = () => {
-    const [data, setData] = useState<internalTransportServiceRequest[]>([]);
+export const LanguageServiceLogComponent = () => {
+    const [data, setData] = useState<languageInterpreterServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
 
@@ -108,13 +104,12 @@ export const InternalTransportServiceLogComponent = () => {
         const fetchData = async () => {
             try {
                 // Make a GET request to the API endpoint for flower service requests
-                const response = await fetch('/api/internal-transport');
+                const response = await fetch('/api/service-request/language');
                 if (!response.ok) {
-                    throw new Error(`Failed to fetch religion service requests: ${response.status}`);
+                    throw new Error(`Failed to fetch language service requests: ${response.status}`);
                 }
                 const result = await response.json();
                 setData(result);
-                console.log(result);
             } catch (err) {
                 console.error('Error fetching flower service requests:', err);
             }
