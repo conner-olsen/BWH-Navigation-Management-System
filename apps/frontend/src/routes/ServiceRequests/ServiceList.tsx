@@ -27,14 +27,15 @@ const ServiceList = () => {
             <Container>
                 <Row>
                     <Col>
-                        <Link to="/FlowerService" className={"no-underline"}>
-                            <Card className="max-w-md border-gray-200">
+                        <Link to="/ReligiousService" className={"no-underline"}>
+                            <Card className="max-w-md border-gray-200 hover:scale-110 hover:bg-neutral-200 dark:hover:bg-neutral-400 transition-all duration-200
+                                            hover:shadow-2xl hover:shadow-blue-400">
                                 <CardHeader>
-                                    <CardTitle className="text-xl">Flower Service Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a bouquet of flowers to send your regards to any patient on long term stay </CardDescription>
+                                    <CardTitle className="text-xl">Religious Service Request</CardTitle>
+                                    <CardDescription className="text-sm dark:text-neutral-300">Send a request for religious sermons and rituals conducted for patients on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/flower_serviceT.png" alt="flower service"/>
+                                    <img src="public/service-images-transparent/religion.png" className="max-w-[180px] m-auto dark:invert" alt="Religious service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -42,28 +43,27 @@ const ServiceList = () => {
                     <Col>
 
                         <Link to="/CleaningService" className={"no-underline"}>
-                            <Card className="max-w-md border-gray-200">
+                            <Card className="max-w-md border-gray-200 hover:scale-110 hover:bg-blue-200 dark:hover:bg-blue-400 transition-all duration-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Cleaning Service Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a cleaning request for quick, deep, or emergency cleaning for patients on long term stay</CardDescription>
+                                    <CardDescription className="text-sm dark:text-neutral-300">Send a cleaning request for quick, deep, or emergency cleaning for patients on long term stay</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/cleaning_requestT.png" alt="cleaning service"/>
+                                    <img src="public/service-images-transparent/cleaning_requestNew.png" className="max-w-[180px] m-auto" alt="cleaning service"/>
                                 </CardContent>
                             </Card>
                         </Link>
                     </Col>
 
                     <Col>
-
-                        <Link to="/ReligiousService" className={"no-underline"}>
-                            <Card className="max-w-md border-gray-200">
+                        <Link to="/FlowerService" className={"no-underline"}>
+                            <Card className="max-w-md border-gray-200 hover:scale-110 hover:bg-red-200 dark:hover:bg-red-400 transition-all duration-200">
                                 <CardHeader>
-                                    <CardTitle className="text-xl">Religious Service Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a request for religious sermons and rituals conducted for patients on long term stay </CardDescription>
+                                    <CardTitle className="text-xl">Flower Service Request</CardTitle>
+                                    <CardDescription className="text-sm dark:text-neutral-300">Send a bouquet of flowers to send your regards to any patient on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/religious_serviceT.png" alt="Religious service"/>
+                                    <img src="public/service-images-transparent/bouquet.png" className="max-w-[180px] m-auto" alt="flower service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -75,13 +75,13 @@ const ServiceList = () => {
                 <Row>
                     <Col>
                         <Link to="/LanguageService" className={"no-underline"}>
-                            <Card className="max-w-md border-gray-200">
+                            <Card className="max-w-md border-gray-200 hover:scale-110 hover:bg-red-200 dark:hover:bg-red-400 transition-all duration-200">
                                 <CardHeader>
-                                    <CardTitle className="text-xl">Language Translation Service Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a request for language translation services for patients on long term stay </CardDescription>
+                                    <CardTitle className="text-xl">Language Translation Request</CardTitle>
+                                    <CardDescription className="text-sm dark:text-neutral-300">Send a request for language translation services for patients on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/languagesT.png" alt="language translation service"/>
+                                    <img src="public/service-images-transparent/languagesNew.png" className="max-w-[180px] m-auto" alt="language translation service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -89,13 +89,13 @@ const ServiceList = () => {
 
                     <Col>
                         <Link to="/InternalTransportation" className={"no-underline"}>
-                            <Card className="max-w-md border-gray-200">
+                            <Card className="max-w-md border-gray-200 hover:scale-110 hover:bg-neutral-200 dark:hover:bg-neutral-400 transition-all duration-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Internal Transportation Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a request for transportation within the hospital for patients on long term stay </CardDescription>
+                                    <CardDescription className="text-sm dark:text-neutral-300">Send a request for transportation within the hospital for patients on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/internalT.png" alt="internal transport service"/>
+                                    <img src="public/service-images-transparent/wheelchair_new.png" className="max-w-[180px] m-auto dark:invert" alt="internal transport service"/>
                                 </CardContent>
                             </Card>
                         </Link>
@@ -103,13 +103,13 @@ const ServiceList = () => {
 
                     <Col>
                         <Link to="/ExternalTransportation" className={"no-underline"}>
-                            <Card className="max-w-md border-gray-200">
+                            <Card className="max-w-md border-gray-200 hover:scale-110 hover:bg-blue-200 dark:hover:bg-blue-400 transition-all duration-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">External Transportation Request</CardTitle>
-                                    <CardDescription className="text-sm">Send a request for external transportation for patients on long term stay </CardDescription>
+                                    <CardDescription className="text-sm dark:text-neutral-300">Send a request for external transportation for patients on long term stay </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <img src="public/service-images-transparent/ambulanceT.png" alt="external transport service"/>
+                                    <img src="public/service-images-transparent/ambulance_blue.png" className="max-w-[180px] m-auto" alt="external transport service"/>
                                 </CardContent>
                             </Card>
                         </Link>
