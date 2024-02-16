@@ -27,7 +27,7 @@ const LanguageService: React.FC = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post("/api/language-service-request", JSON.stringify(formData), {
+            const response = await axios.post("/api/service-request/language", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }

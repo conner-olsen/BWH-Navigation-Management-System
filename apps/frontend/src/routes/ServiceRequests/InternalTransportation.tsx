@@ -12,7 +12,7 @@ const InternalTransportation: React.FC = () => {
     const [formData, setFormData] = useState({
         id: '',
         nodeId: '',
-        patientName: '',
+        name: '',
         mode: '',
         destination: '',
         priority: '',
@@ -29,7 +29,7 @@ const InternalTransportation: React.FC = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post("/api/internal-transport", JSON.stringify(formData), {
+            const response = await axios.post("/api/service-request/internal-transportation", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }
@@ -46,7 +46,7 @@ const InternalTransportation: React.FC = () => {
         setFormData({
             id: '',
             nodeId: '',
-            patientName: '',
+            name: '',
             mode: '',
             destination: '',
             priority: '',

@@ -25,7 +25,7 @@ const CleaningServiceRequest: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            const response = await axios.post('/api/cleaning-request', JSON.stringify(formData), {
+            const response = await axios.post('/api/service-request/cleaning', JSON.stringify(formData), {
                 headers: {
                     'Content-Type': 'application/json'
                 }

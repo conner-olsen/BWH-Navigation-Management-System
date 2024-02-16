@@ -38,7 +38,7 @@ const FlowerServiceRequest: React.FC = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post("/api/populate-flower-service-request", JSON.stringify(formData), {
+            const response = await axios.post("/api/service-request/flower", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }

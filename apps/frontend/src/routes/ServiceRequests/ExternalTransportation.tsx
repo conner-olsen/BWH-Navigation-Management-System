@@ -36,7 +36,7 @@ const ExternalTransportation: React.FC = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post("/api/external-transport", JSON.stringify(formData), {
+            const response = await axios.post("/api/service-request/external-transportation", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }
