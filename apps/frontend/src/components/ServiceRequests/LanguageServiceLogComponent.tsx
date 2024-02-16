@@ -42,7 +42,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
 
 
                 <TableCell>
-                    <Select value={tableData[index].ServiceRequest.status}
+                    <Select defaultValue={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
@@ -57,7 +57,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].ServiceRequest.employeeUser}
+                    <Select defaultValue={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />

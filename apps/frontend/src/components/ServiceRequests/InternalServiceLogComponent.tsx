@@ -43,7 +43,7 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
                 <TableCell>{tableData[index].destination}</TableCell>
 
                 <TableCell>
-                    <Select value={tableData[index].ServiceRequest.status}
+                    <Select defaultValue={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder={tableData[index].ServiceRequest.status} />
@@ -58,7 +58,7 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].ServiceRequest.employeeUser}
+                    <Select defaultValue={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder={tableData[index].ServiceRequest.employeeUser} />

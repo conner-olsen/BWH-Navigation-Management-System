@@ -18,12 +18,12 @@ const ServiceLog = () => {
             <br/>
             <Tabs defaultValue="Flower Service Request" className="align-content-center">
                 <TabsList classname-={"align-content-center"}>
-                    <TabsTrigger value="Flower Service Request">Flower Service Request</TabsTrigger>
-                    <TabsTrigger value="Religious Service Request">Religious Service Request</TabsTrigger>
-                    <TabsTrigger value="Cleaning Service Request">Cleaning Service Request</TabsTrigger>
-                    <TabsTrigger value="Language Service Request">Language Service Request</TabsTrigger>
-                    <TabsTrigger value="Internal Transport Service Request">Internal Transport Service Request</TabsTrigger>
-                    <TabsTrigger value="External Transport Service Request">External Transport Service Request</TabsTrigger>
+                    <TabsTrigger value="Flower Service Request">Flower</TabsTrigger>
+                    <TabsTrigger value="Religious Service Request">Religious</TabsTrigger>
+                    <TabsTrigger value="Cleaning Service Request">Cleaning</TabsTrigger>
+                    <TabsTrigger value="Language Service Request">Language</TabsTrigger>
+                    <TabsTrigger value="Internal Transport Service Request">Internal Transport</TabsTrigger>
+                    <TabsTrigger value="External Transport Service Request">External Transport</TabsTrigger>
 
                 </TabsList>
 
