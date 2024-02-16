@@ -33,18 +33,18 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
         .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
-                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
-                <TableCell>{tableData[index].name}</TableCell>
-                <TableCell>{tableData[index].transportation}</TableCell>
-                <TableCell>{tableData[index].destination}</TableCell>
-                <TableCell>{tableData[index].description}</TableCell>
-                <TableCell>{tableData[index].date}</TableCell>
+                <TableCell>{item.ServiceRequest.nodeId}</TableCell>
+                <TableCell>{item.ServiceRequest.priority}</TableCell>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.transportation}</TableCell>
+                <TableCell>{item.destination}</TableCell>
+                <TableCell>{item.description}</TableCell>
+                <TableCell>{item.date}</TableCell>
 
 
 
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.status}
+                    <Select value={item.ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
@@ -59,7 +59,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
 
                 </TableCell>
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.employeeUser}
+                    <Select value={item.ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />

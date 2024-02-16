@@ -36,17 +36,17 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
         .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
-                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
-                <TableCell>{tableData[index].name}</TableCell>
-                <TableCell>{tableData[index].mode}</TableCell>
-                <TableCell>{tableData[index].destination}</TableCell>
+                <TableCell>{item.ServiceRequest.nodeId}</TableCell>
+                <TableCell>{item.ServiceRequest.priority}</TableCell>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.mode}</TableCell>
+                <TableCell>{item.destination}</TableCell>
 
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.status}
+                    <Select value={item.ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder={tableData[index].ServiceRequest.status} />
+                            <SelectValue placeholder={item.ServiceRequest.status} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="Unassigned">Unassigned</SelectItem>
@@ -58,10 +58,10 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
 
                 </TableCell>
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.employeeUser}
+                    <Select value={item.ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder={tableData[index].ServiceRequest.employeeUser} />
+                            <SelectValue placeholder={item.ServiceRequest.employeeUser} />
                         </SelectTrigger>
                         <SelectContent>
                             {employeeData.map((employee, employeeIndex) => (
