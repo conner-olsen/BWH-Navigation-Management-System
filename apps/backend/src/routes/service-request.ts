@@ -16,7 +16,7 @@ router.post("/:serviceType", async (req: Request, res: Response) => {
         requestType = {internalTransportServiceRequest: {create: specificData}};
         break;
       case "external-transportation":
-        requestType = {externalTransportServiceRequest: {create: specificData}};
+        requestType = {externalTransportationServiceRequest: {create: specificData}};
         break;
       case "language":
         requestType = {languageInterpreterServiceRequest: {create: specificData}};

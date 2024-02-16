@@ -12,7 +12,7 @@ const LanguageService: React.FC = () => {
     const [formData, setFormData] = useState({
         id: '',
         nodeId: '',
-        patientName: '',
+        name: '',
         languagePref: '',
         priority: '',
         status: 'Unassigned',
@@ -44,7 +44,7 @@ const LanguageService: React.FC = () => {
         setFormData({
             id: '',
             nodeId: '',
-            patientName: '',
+            name: '',
             languagePref: '',
             priority: '',
             status: 'Unassigned',
@@ -66,8 +66,8 @@ const LanguageService: React.FC = () => {
                     <Row>
                         <Col>
                             <div>
-                                <Label htmlFor="patientName">Patient Name</Label>
-                                <Input type="text" id="patientName" placeholder={"Aiden Deady"}/>
+                                <Label htmlFor="name">Patient Name</Label>
+                                <Input type="text" id="name" placeholder={"Aiden Deady"}/>
                             </div>
                         </Col>
                         <Col>

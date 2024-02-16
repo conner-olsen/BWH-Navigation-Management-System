@@ -69,8 +69,8 @@ const InternalTransportation: React.FC = () => {
                     <Row>
                         <Col>
                             <div>
-                                <Label htmlFor="patientName">Patient Name</Label>
-                                <Input type="text" id="patientName" placeholder={"Will Smith"}
+                                <Label htmlFor="name">Patient Name</Label>
+                                <Input type="text" id="name" placeholder={"Will Smith"}
                                        onChange={handleChangeText}/>
                             </div>
                         </Col>
