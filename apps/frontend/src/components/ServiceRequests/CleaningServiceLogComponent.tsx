@@ -45,7 +45,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                 <TableCell>{tableData[index].patientName}</TableCell> {/* Access patientName directly */}
                 <TableCell>{tableData[index].type}</TableCell> {/* Access type directly */}
                 <TableCell>
-                    <Select value={tableData[index].ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select defaultValue={tableData[index].ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -58,7 +58,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                     </Select>
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select defaultValue={tableData[index].ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
