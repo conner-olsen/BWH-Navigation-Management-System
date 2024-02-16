@@ -50,8 +50,8 @@ const LanguageService: React.FC = () => {
             patientName: '',
             languagePref: '',
             priority: '',
-            status: '',
-            employeeUser: ''
+            status: 'Unassigned',
+            employeeUser: 'none'
         });
     };
 

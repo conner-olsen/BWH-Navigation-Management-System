@@ -62,8 +62,8 @@ const ExternalTransportation: React.FC = () => {
             date: '',
             destination: '',
             priority: '',
-            status: '',
-            employeeUser: ''
+            status: 'Unassigned',
+            employeeUser: 'none'
         });
     };
 

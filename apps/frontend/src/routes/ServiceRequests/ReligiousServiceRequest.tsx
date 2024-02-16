@@ -58,8 +58,8 @@ const ReligiousServiceRequest: React.FC = () => {
             religion: '',
             note: '',
             priority: '',
-            status: '',
-            employeeUser: ''
+            status: 'Unassigned',
+            employeeUser: 'none'
         });
     };
 

@@ -53,8 +53,8 @@ const InternalTransportation: React.FC = () => {
             mode: '',
             destination: '',
             priority: '',
-            status: '',
-            employeeUser: ''
+            status: 'Unassigned',
+            employeeUser: 'none'
         });
     };
 

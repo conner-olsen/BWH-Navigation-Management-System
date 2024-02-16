@@ -65,8 +65,8 @@ const FlowerServiceRequest: React.FC = () => {
             deliveryDate: '',
             note: '',
             priority: '',
-            status: '',
-            employeeUser: ''
+            status: 'Unassigned',
+            employeeUser: 'none'
         });
     };
 
