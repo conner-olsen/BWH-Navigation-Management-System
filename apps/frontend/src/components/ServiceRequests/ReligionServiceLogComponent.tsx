@@ -3,22 +3,22 @@ import { religiousServiceRequest } from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 // import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
 function GenerateTableRowsServices(tableData: religiousServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
     //const [status, setStatus] = useState("Assigned");
 
 
     const handleStatusChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].node,
-            priority: tableData[index].priority,
+        axios.patch("/api/service-request", {
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             note:  tableData[index].note,
             patientName: tableData[index].patientName,
             relgion: tableData[index].religion,
             status: value,
-            employeeUser: tableData[index].employeeUser
+            employeeUser: tableData[index].ServiceRequest.employeeUser
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
@@ -26,12 +26,12 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
     const handleAssignmentChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
         axios.patch("/api/", {
-            nodeId: tableData[index].node,
-            priority: tableData[index].priority,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             note:  tableData[index].note,
             patientName: tableData[index].patientName,
             relgion: tableData[index].religion,
-            status: tableData[index].status,
+            status: tableData[index].ServiceRequest.status,
             employeeUser: value,
 
         }).then(response => console.log(response.data))
@@ -39,18 +39,18 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].node}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
                 <TableCell>{tableData[index].patientName}</TableCell>
-                <TableCell>{tableData[index].priority}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
                 <TableCell>{tableData[index].religion}</TableCell>
                 <TableCell>{tableData[index].note}</TableCell>
 
 
                 <TableCell>
-                    <Select value={tableData[index].status}
+                    <Select value={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
@@ -65,7 +65,7 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].employeeUser}
+                    <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
@@ -113,7 +113,7 @@ export const ReligiousServiceLogComponent = () => {
         const fetchData = async () => {
             try {
                 // Make a GET request to the API endpoint for flower service requests
-                const response = await fetch('/api/religious-service-request');
+                const response = await fetch('/api/service-request/religious');
                 if (!response.ok) {
                     throw new Error(`Failed to fetch religion service requests: ${response.status}`);
                 }

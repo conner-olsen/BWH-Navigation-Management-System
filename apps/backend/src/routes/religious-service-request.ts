@@ -37,17 +37,4 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-
-
-router.get("/", async function (req: Request, res: Response) {
-  try{
-    const religiousCSV = await PrismaClient.religiousServiceRequest.findMany();
-    res.send(religiousCSV);
-  } catch (error){
-    console.error(`Error exporting Service Request data: ${error}`);
-    res.sendStatus(500);
-  }
-  res.sendStatus(200);
-});
-
 export default router;

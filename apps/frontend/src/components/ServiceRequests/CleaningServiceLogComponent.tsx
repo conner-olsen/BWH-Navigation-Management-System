@@ -3,18 +3,18 @@ import {cleaningServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 // import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
 function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
     //const [status, setStatus] = useState("Assigned");
 
 
     const handleStatusChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
-        axios.patch("/api/", {
-            priority: tableData[index].priority,
+        axios.patch("/api/service-request", {
+            priority: tableData[index].ServiceRequest.priority,
             status:  value,
-            employeeUser: tableData[index].employeeUser,
+            employeeUser: tableData[index].ServiceRequest.employeeUser,
             type: tableData[index].type,
             patientName: tableData[index].patientName,
 
@@ -23,9 +23,9 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
-        axios.patch("/api/", {
-            priority: tableData[index].priority,
-            status:  tableData[index].status,
+        axios.patch("/api/service-request", {
+            priority: tableData[index].ServiceRequest.priority,
+            status:  tableData[index].ServiceRequest.status,
             employeeUser: value,
             type: tableData[index].type,
             patientName: tableData[index].patientName,
@@ -35,15 +35,15 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{item.nodeId}</TableCell>
-                <TableCell>{item.patientName}</TableCell> {/* Access patientName directly */}
-                <TableCell>{item.priority}</TableCell>
-                <TableCell>{item.type}</TableCell> {/* Access type directly */}
+                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
+                <TableCell>{tableData[index].patientName}</TableCell> {/* Access patientName directly */}
+                <TableCell>{tableData[index].type}</TableCell> {/* Access type directly */}
                 <TableCell>
-                    <Select value={item.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select value={tableData[index].ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -56,7 +56,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                     </Select>
                 </TableCell>
                 <TableCell>
-                    <Select value={item.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select value={tableData[index].ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
@@ -103,7 +103,7 @@ export const CleaningServiceLogComponent = () => {
         const fetchData = async () => {
             try {
                 // Make a GET request to the API endpoint for flower service requests
-                const response = await fetch('/api/cleaning-request');
+                const response = await fetch('/api/service-request/cleaning');
                 if (!response.ok) {
                     throw new Error(`Failed to fetch cleaning service requests: ${response.status}`);
                 }

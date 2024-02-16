@@ -1,14 +1,14 @@
 
-import {FlowerServiceLogComponent} from "../../components/FlowerServiceLogComponent.tsx";
+import {FlowerServiceLogComponent} from "../../components/ServiceRequests/FlowerServiceLogComponent.tsx";
 import Global_Footer from "../../components/Global_Footer.tsx";
 import {TabsContent, TabsList, TabsTrigger, Tabs} from "../../components/ui/tabs.tsx";
 //import {Button} from "../../components/ui/button.tsx";
 //import {GetDataEmployees} from "../../components/EmployeeManagerComponent.tsx";
-import {ReligiousServiceLogComponent} from "../../components/ReligionServiceLogComponent.tsx";
-import {CleaningServiceLogComponent} from "../../components/CleaningServiceLogComponent.tsx";
-import {InternalTransportServiceLogComponent} from "../../components/InternalServiceLogComponent.tsx";
-import {LanguageServiceLogComponent} from "../../components/LanguageServiceLogComponent.tsx";
-import {ExternalTransportServiceLogComponent} from "../../components/ExternalServiceLogComponent.tsx";
+import {ReligiousServiceLogComponent} from "../../components/ServiceRequests/ReligionServiceLogComponent.tsx";
+import {CleaningServiceLogComponent} from "../../components/ServiceRequests/CleaningServiceLogComponent.tsx";
+import {InternalTransportServiceLogComponent} from "../../components/ServiceRequests/InternalServiceLogComponent.tsx";
+import {LanguageServiceLogComponent} from "../../components/ServiceRequests/LanguageServiceLogComponent.tsx";
+import {ExternalTransportServiceLogComponent} from "../../components/ServiceRequests/ExternalServiceLogComponent.tsx";
 
 const ServiceLog = () => {
     return (

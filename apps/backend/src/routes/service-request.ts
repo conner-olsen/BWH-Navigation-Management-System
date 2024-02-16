@@ -3,6 +3,7 @@ import PrismaClient from "../bin/database-connection.ts";
 import {ServiceRequest} from "common/interfaces/interfaces.ts";
 const router: Router = express.Router();
 
+
 router.get("/:serviceType", async (req: Request, res: Response) => {
 
   let requestType;
@@ -57,9 +58,7 @@ router.patch("/", async (req: Request, res: Response) => {
       }
     });
 
-    res.send(updatedRequest);
-
-    res.sendStatus(200);
+    res.status(200).send(updatedRequest);
   } catch (error) {
     console.error(`Error updating ServiceRequest fields: ${error}`);
     res.sendStatus(500);

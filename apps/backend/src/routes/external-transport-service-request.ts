@@ -40,17 +40,4 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-
-
-router.get("/", async function (req: Request, res: Response) {
-  try{
-    const internalCSV = await PrismaClient.externalTransportationServiceRequest.findMany();
-    res.send(internalCSV);
-  } catch (error){
-    console.error(`Error exporting Service Request data: ${error}`);
-    res.sendStatus(500);
-  }
-  res.sendStatus(200);
-});
-
 export default router;

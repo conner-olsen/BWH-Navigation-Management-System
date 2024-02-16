@@ -3,8 +3,8 @@ import {externalTransportationServiceRequest} from 'common/interfaces/interfaces
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 function GenerateTableRowsServices(tableData: externalTransportationServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
 
     const handleStatusChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
