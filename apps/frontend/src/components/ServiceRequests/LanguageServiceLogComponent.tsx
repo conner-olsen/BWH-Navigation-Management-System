@@ -80,10 +80,10 @@ const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; 
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Room</TableHead>
-                    <TableHead>Patient Name</TableHead>
+                    <TableHead>Room ID</TableHead>
                     <TableHead>Priority</TableHead>
-                    <TableHead>Language Preferance</TableHead>
+                    <TableHead>Patient Name</TableHead>
+                    <TableHead>Language Preference</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>
                 </TableRow>

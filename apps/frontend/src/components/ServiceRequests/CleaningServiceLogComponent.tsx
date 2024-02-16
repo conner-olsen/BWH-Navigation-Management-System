@@ -79,9 +79,9 @@ const TableServices: React.FC<{ tableData: cleaningServiceRequest[]; employeeDat
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Patient Name</TableHead>
+                    <TableHead>Room ID</TableHead>
                     <TableHead>Priority</TableHead>
+                    <TableHead>Patient Name</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>

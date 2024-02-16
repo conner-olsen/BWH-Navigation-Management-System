@@ -17,20 +17,18 @@ const ServiceLog = () => {
             <br/>
             <Tabs defaultValue="External Transport Service Request" className="w-screen align-content-center">
                 <TabsList classname-={"align-content-center"}>
-                    <TabsTrigger value="External Transport Service Request">External Transport Service Request</TabsTrigger>
                     <TabsTrigger value="Flower Service Request">Flower Service Request</TabsTrigger>
                     <TabsTrigger value="Religious Service Request">Religious Service Request</TabsTrigger>
                     <TabsTrigger value="Cleaning Service Request">Cleaning Service Request</TabsTrigger>
                     <TabsTrigger value="Language Service Request">Language Service Request</TabsTrigger>
                     <TabsTrigger value="Internal Transport Service Request">Internal Transport Service Request</TabsTrigger>
+                    <TabsTrigger value="External Transport Service Request">External Transport Service Request</TabsTrigger>
 
                 </TabsList>
 
                 {/*<TabsContent value="Employee List">*/}
 
-                <TabsContent value={"External Transport Service Request"}>
-                    <ExternalTransportServiceLogComponent></ExternalTransportServiceLogComponent>
-                </TabsContent>
+
                 <TabsContent value="Flower Service Request">
                     <FlowerServiceLogComponent></FlowerServiceLogComponent>
                 </TabsContent>
@@ -42,6 +40,9 @@ const ServiceLog = () => {
                 </TabsContent>
                 <TabsContent value={"Internal Transport Service Request"}>
                     <InternalTransportServiceLogComponent></InternalTransportServiceLogComponent>
+                </TabsContent>
+                <TabsContent value={"External Transport Service Request"}>
+                    <ExternalTransportServiceLogComponent></ExternalTransportServiceLogComponent>
                 </TabsContent>
                 <TabsContent value={"Language Service Request"}>
                     <LanguageServiceLogComponent></LanguageServiceLogComponent>

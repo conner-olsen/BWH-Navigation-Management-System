@@ -9,8 +9,6 @@ import { internalTransportServiceRequest } from 'common/interfaces/interfaces.ts
 
 
 function GenerateTableRowsServices(tableData: internalTransportServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
-    //const [status, setStatus] = useState("Assigned");
-
 
     const handleStatusChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
         axios.patch("/api/service-request", {
@@ -83,7 +81,7 @@ const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; em
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Node</TableHead>
+                    <TableHead>Room ID</TableHead>
                     <TableHead>Priority</TableHead>
                     <TableHead>Name</TableHead>
                     <TableHead>Mode of Transport</TableHead>

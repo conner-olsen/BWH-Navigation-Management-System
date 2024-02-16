@@ -43,8 +43,8 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
-                <TableCell>{tableData[index].patientName}</TableCell>
                 <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
+                <TableCell>{tableData[index].patientName}</TableCell>
                 <TableCell>{tableData[index].religion}</TableCell>
                 <TableCell>{tableData[index].note}</TableCell>
 
@@ -88,9 +88,9 @@ const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeDa
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Patient Name</TableHead>
+                    <TableHead>Room ID</TableHead>
                     <TableHead>Priority</TableHead>
+                    <TableHead>Patient Name</TableHead>
                     <TableHead>Religion</TableHead>
                     <TableHead>Note</TableHead>
                     <TableHead>Status</TableHead>
