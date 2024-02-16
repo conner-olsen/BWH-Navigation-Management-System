@@ -3,9 +3,9 @@ import axios from "axios";
 import {Input} from "../../components/ui/input.tsx";
 import {Col, Container, Row} from "react-bootstrap";
 import {Label} from "../../components/ui/label.tsx";
-import Form from "react-bootstrap/Form";
 import {Button} from "../../components/ui/button.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../../components/ui/select.tsx";
 
 const LanguageService: React.FC = () => {
 
@@ -20,9 +20,6 @@ const LanguageService: React.FC = () => {
     });
 
     const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.id]: e.target.value });
-    };
-    const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
@@ -63,7 +60,7 @@ const LanguageService: React.FC = () => {
             <h1>
                 Language Service Request
             </h1>
-            <div className={"border-2 border-blue-950 rounded-lg p-4"}>
+            <div className={"border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4"}>
 
                 <Container>
                     <Row>
@@ -74,7 +71,8 @@ const LanguageService: React.FC = () => {
                             </div>
                         </Col>
                         <Col>
-                            <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
+                            <LocationDropdown onChange={(value) => setFormData({
+                                ...formData, "nodeId": value})}></LocationDropdown>
                         </Col>
                     </Row>
                     <br/>
@@ -82,13 +80,18 @@ const LanguageService: React.FC = () => {
                     <Row>
                         <Col>
                             <div>
-                                <label
-                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
-                                <Form.Select onChange={handleChangeSelect} id={"priority"}>
-                                    <option value="Low Priority">Low Priority</option>
-                                    <option value="High Priority">High Priority</option>
-                                    <option value="Emergency">Emergency</option>
-                                </Form.Select>
+                                <Label>Priority</Label>
+                                <Select required onValueChange={
+                                    (value) => setFormData({ ...formData, "priority": value })}>
+                                    <SelectTrigger>
+                                        <SelectValue/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Low Priority">Low Priority</SelectItem>
+                                        <SelectItem value="High Priority">High Priority</SelectItem>
+                                        <SelectItem value="Emergency">Emergency</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </Col>
                         <Col>
@@ -103,7 +106,9 @@ const LanguageService: React.FC = () => {
                     <br/>
 
                     <Row>
-                        <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
+                        <Col className={"justify-center flex"}>
+                            <Button variant={"default"} onClick={handleSubmit}>Submit</Button>
+                        </Col>
                     </Row>
 
                 </Container>

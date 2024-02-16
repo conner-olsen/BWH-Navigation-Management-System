@@ -3,10 +3,10 @@ import axios from "axios";
 import {Input} from "../../components/ui/input.tsx";
 import {Col, Container, Row} from "react-bootstrap";
 import {Label} from "../../components/ui/label.tsx";
-import Form from "react-bootstrap/Form";
 import {Button} from "../../components/ui/button.tsx";
 import {Textarea} from "../../components/ui/textarea.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../../components/ui/select.tsx";
 
 const ExternalTransportation: React.FC = () => {
 
@@ -25,9 +25,6 @@ const ExternalTransportation: React.FC = () => {
     });
 
     const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.id]: e.target.value });
-    };
-    const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
@@ -75,7 +72,7 @@ const ExternalTransportation: React.FC = () => {
             <h1>
                 External Transportation Request
             </h1>
-            <div className={"border-2 border-blue-950 rounded-lg p-4"}>
+            <div className={"border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4"}>
 
                 <Container>
                     <Row>
@@ -101,13 +98,18 @@ const ExternalTransportation: React.FC = () => {
 
                         <Col>
                             <div>
-                                <label
-                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Priority</label>
-                                <Form.Select onChange={handleChangeSelect} id={"priority"}>
-                                    <option value="Low Priority">Low Priority</option>
-                                    <option value="High Priority">High Priority</option>
-                                    <option value="Emergency">Emergency</option>
-                                </Form.Select>
+                                <Label>Priority</Label>
+                                <Select required onValueChange={
+                                    (value) => setFormData({ ...formData, "priority": value })}>
+                                    <SelectTrigger>
+                                        <SelectValue/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Low Priority">Low Priority</SelectItem>
+                                        <SelectItem value="High Priority">High Priority</SelectItem>
+                                        <SelectItem value="Emergency">Emergency</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </Col>
                         <Col>
@@ -130,7 +132,7 @@ const ExternalTransportation: React.FC = () => {
                         <Col>
                             <div>
                                 <Label htmlFor="description">Description</Label>
-                                <Textarea id="description" placeholder={"  Subdural Hematoma"}
+                                <Textarea id="description" placeholder={"Subdural Hematoma"}
                                           onChange={handleChangeTextArea}/>
                             </div>
                         </Col>
@@ -138,13 +140,17 @@ const ExternalTransportation: React.FC = () => {
                         <br/>
 
                     </Row>
+                    <br/>
                     <Row>
-                        <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
+                        <LocationDropdown onChange={(value) => setFormData({
+                            ...formData, "nodeId": value})}></LocationDropdown>
                     </Row>
                     <br/>
 
                     <Row>
-                        <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
+                        <Col className={"justify-center flex"}>
+                            <Button variant={"default"} onClick={handleSubmit}>Submit</Button>
+                        </Col>
                     </Row>
 
                 </Container>

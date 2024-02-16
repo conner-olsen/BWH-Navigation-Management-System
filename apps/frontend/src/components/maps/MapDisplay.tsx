@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios from "axios";
+//import { JSX } from 'react/jsx-runtime';
 
 interface MapDisplayProps {
     floorMap: string;
@@ -9,6 +10,7 @@ interface MapDisplayProps {
     startNode?: string;
     endNode?: string;
     sendHoverMapPath: (path: PathfindingRequest) => void;
+    pathSent: Node[];
     doDisplayEdges: boolean;
     doDisplayNodes: boolean;
     doDisplayNames: boolean;
@@ -24,7 +26,8 @@ function MapDisplay({
                         pathFindingType,
                         doDisplayEdges,
                         doDisplayNodes,
-                        doDisplayNames
+                        doDisplayNames,
+                        pathSent
                     }: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
@@ -46,12 +49,13 @@ function MapDisplay({
             //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
             graph.setPathfindingMethodStringRoute(pathFindingType);
 
-            const path = graph.runPathfinding(startNode, endNode);
-            setPath(path);
+            const pathString = graph.nodesToString(pathSent);
+                //graph.runPathfinding(startNode, endNode);
+            setPath(pathString);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
         }
-    }, [startNode, endNode, sendHoverMapPath, pathFindingType, graph]);
+    }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
 
     const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
@@ -102,7 +106,7 @@ function MapDisplay({
 
     const displayHoverInfo = (node: Node) => {
         return (
-            <foreignObject x={node.xCoord - 225} y={node.yCoord-250} width="450" height="250" z="40">
+            <foreignObject x={node.xCoord - 225} y={node.yCoord - 250} width="450" height="250" z="40">
                 <div
                     className={"h-fit rounded-md border bg-popover p-4 text-2xl text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}>
                     <g>
@@ -130,22 +134,51 @@ function MapDisplay({
     };
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
-            <foreignObject x={node.xCoord - 70} y={node.yCoord + 20} width="200" height="200" className="z-50">
+            <foreignObject x={node.xCoord - 5} y={node.yCoord + 20} width="250" height="250" className="z-50">
                 <div
-                    className={"w-fit rounded-3xl border bg-popover p-4 text-md text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}>
+                    className={"w-50 h-50 rounded-3xl border bg-popover p-4 text-md text-popover-foreground shadow-md " +
+                        "outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 " +
+                        "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}
+                    style={{backgroundColor: 'rgba(122,154,255,0.7)'}}>
                     <g>
                         <div className="font-bold">
-                            {type === 'start' ? 'Start Node' : 'End Node'}
+                            {type === 'start' ? 'START NODE' : 'END NODE'}
                         </div>
                         <div>
-                            <text className="text-blue-500 font-semibold" style={{cursor: 'pointer'}} onClick={() => clearSelection()}>
+                            <text className="text-neutral-700 font-semibold" style={{cursor: 'pointer'}}
+                                  onClick={() => clearSelection()}>
                                 Clear
                             </text>
                         </div>
                     </g>
                 </div>
             </foreignObject>
+
         );
+    };
+
+    // const displayNames = (graph: Graph) => {
+    //     const names: React.JSX.Element[] = [];
+    //     if (doDisplayNames) {
+    //         Array.from(graph.nodes.values()).map((node: Node) => {
+    //             if (node.floor == floor) {
+    //                 names.push(<text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+    //                     {node.shortName}
+    //                 </text>);
+    //             }
+    //         });
+    //     }
+    //     return names;
+    // };
+
+    const displayName = (node: Node) => {
+        if (doDisplayNames && (node.floor == floor)) {
+            return (
+                <text className="-rotate-1" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                    {node.shortName}
+                </text>
+            );
+        }
     };
 
     const displayNodes = (graph: Graph) => {
@@ -161,41 +194,12 @@ function MapDisplay({
                             {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                             {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                             {hoverNodeId === node.id && displayHoverInfo(node)}
+                            {displayName(node)}
                         </g>
                     );
                 }
             }));
     };
-
-    const displayNames = () => {
-        // let names: Element = [];
-        // Array.from(graph.nodes.values()).map((node: Node) => {
-        //     if (node.floor == floor && doDisplayNames) {
-        //         names.push(<text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-        //             {node.shortName}
-        //         </text>);
-        //     }
-        // });
-        //
-        // return (
-        //     <div className="-rotate-10">
-        //         {names}
-        //     </div>
-        // )
-
-    return (
-        Array.from(graph.nodes.values()).map((node: Node) => {
-            if (node.floor == floor && doDisplayNames) {
-                return (
-
-                    <text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-                         {node.shortName}
-                         </text>
-                );
-            }
-        }))
-
-        ;};
 
     const displayEdges = (graph: Graph) => {
         if (doDisplayEdges) {
@@ -228,9 +232,10 @@ function MapDisplay({
                        y="0"/>
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
-                {graph && displayNames()}
                 {graph && displayNodes(graph)}
+                {/*{graph && displayNames(graph)}*/}
             </svg>
+
         </div>
     );
 }

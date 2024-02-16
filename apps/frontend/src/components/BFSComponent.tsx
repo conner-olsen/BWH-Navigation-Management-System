@@ -149,14 +149,18 @@ export function BFSComponent() {
         const row = CSVRow[i];
         const rowval = Object.values(row);
         const id = rowval[0];
-        const nodeId = row["nodeId"];
+       // const nodeId = row["nodeId"];
         const longName = row["longName"];
+        const nodeType = row["nodeType"];
         const nodeFloor = nodeFloorToMapFloor(row["floor"]);
 
-        if (nodeFloor == map) {
-            currentFloorNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+        if (nodeFloor == map && !(nodeType == "HALL")) {
+            currentFloorNames.push(<option value={id}> {longName} </option>);
+            roomNames.push(<option value={id}> {longName} </option>);
         }
-        roomNames.push(<option value={id}> {nodeId + " " + "(" + longName + ")"} </option>);
+        else if (!(nodeType == "HALL")) {
+            roomNames.push(<option value={id}> {longName} </option>);
+        }
     }
 
     const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -232,8 +236,8 @@ export function BFSComponent() {
                 <div className="py-4 px-2">
                     <Form.Select value={pathFindingType} size={"sm"}
                                  onChange={e => setPathFindingType(e.target.value)}>
-                        <option value={"/api/bfs-searching"}>BFS searching</option>
-                        <option value={"/api/bfsAstar-searching"}>A-star searching</option>
+                        <option value={"/api/bfs-searching"}>BFS Searching</option>
+                        <option value={"/api/bfsAstar-searching"}>A* Searching</option>
                     </Form.Select>
                 </div>
 
@@ -246,7 +250,7 @@ export function BFSComponent() {
                     </ol>
                 </div>
                 <div
-                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-lg
+                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-lg border-
                                 ${isExpanded ? 'right-[-90px]' : 'right-[-170px]'}`}>
                     <HoverCard openDelay={100}>
                         <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center
@@ -277,7 +281,7 @@ export function BFSComponent() {
                 >
                     {({zoomIn, zoomOut, resetTransform}) => (
                         <React.Fragment>
-                            <div className="tools flex flex-col absolute right-2 top-2 z-10">
+                            <div className="tools flex flex-col absolute right-2 top-2 z-10 dark:bg-blue-300 rounded-lg">
                                 <button onClick={() => zoomIn()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">+
@@ -293,15 +297,15 @@ export function BFSComponent() {
                             </div>
                             <TransformComponent wrapperClass={"max-h-screen"}>
                                 {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                          pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                          pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                     pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                     pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                     pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                             </TransformComponent>
                         </React.Fragment>
                     )}

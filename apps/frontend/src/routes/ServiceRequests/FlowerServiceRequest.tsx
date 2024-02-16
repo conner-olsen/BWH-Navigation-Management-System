@@ -5,9 +5,9 @@ import {Input} from "../../components/ui/input.tsx";
 import {Col, Container, Row} from "react-bootstrap";
 import {Label} from "../../components/ui/label.tsx";
 import {Textarea} from "../../components/ui/textarea.tsx";
-import Form from "react-bootstrap/Form";
 import {Button} from "../../components/ui/button.tsx";
 import LocationDropdown from "../../components/LocationDropdown.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../../components/ui/select.tsx";
 
 const FlowerServiceRequest: React.FC = () => {
 
@@ -27,9 +27,6 @@ const FlowerServiceRequest: React.FC = () => {
     });
 
     const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.id]: e.target.value });
-    };
-    const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
@@ -77,7 +74,7 @@ const FlowerServiceRequest: React.FC = () => {
             <h1>
                 Flower Service Request
             </h1>
-            <div className={"border-2 border-blue-950 rounded-lg p-4"}>
+            <div className={"border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4"}>
 
                 <Container>
                     <Row>
@@ -100,23 +97,28 @@ const FlowerServiceRequest: React.FC = () => {
 
                     <Row>
                         <Col>
-                            <LocationDropdown onChange={handleChangeSelect} id={"nodeId"}></LocationDropdown>
+                            <LocationDropdown onChange={(value) => setFormData({
+                                ...formData, "nodeId": value})}></LocationDropdown>
                         </Col>
 
                         <Col>
                             <div>
-                                <label
-                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Flower
-                                    Selection</label>
-                                <Form.Select id={"flowerType"} onChange={handleChangeSelect}>
-                                    <option value="daffodils">Daffodil</option>
-                                    <option value="daisies">Daisies</option>
-                                    <option value="hydrangeas">Hydrangeas</option>
-                                    <option value="lilies">Lilies</option>
-                                    <option value="marigolds">Marigolds</option>
-                                    <option value="orchids">orchids</option>
-                                    <option value="roses">Roses</option>
-                                </Form.Select>
+                                <Label>Flower Type</Label>
+                                <Select required onValueChange={
+                                    (value) => setFormData({ ...formData, "flowerType": value })}>
+                                    <SelectTrigger>
+                                        <SelectValue/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="daffodils">Daffodil</SelectItem>
+                                        <SelectItem value="daisies">Daisies</SelectItem>
+                                        <SelectItem value="hydrangeas">Hydrangeas</SelectItem>
+                                        <SelectItem value="lilies">Lilies</SelectItem>
+                                        <SelectItem value="marigolds">Marigolds</SelectItem>
+                                        <SelectItem value="orchids">Orchids</SelectItem>
+                                        <SelectItem value="roses">Roses</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </Col>
                     </Row>
@@ -141,14 +143,18 @@ const FlowerServiceRequest: React.FC = () => {
 
                     <Row>
                         <Col>
-                            <label
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-1">Priority</label>
-                            <Form.Select id={"priority"} onChange={handleChangeSelect}>
-                                <option value="Low Priority">Low Priority</option>
-                                <option value="Medium Priority">Medium Priority</option>
-                                <option value="High Priority">High Priority</option>
-                                <option value="Emergency">Emergency</option>
-                            </Form.Select>
+                            <Label>Priority</Label>
+                            <Select required onValueChange={
+                                (value) => setFormData({ ...formData, "priority": value })}>
+                                <SelectTrigger>
+                                    <SelectValue/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Low Priority">Low Priority</SelectItem>
+                                    <SelectItem value="High Priority">High Priority</SelectItem>
+                                    <SelectItem value="Emergency">Emergency</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </Col>
                         <Col>
                             <Label htmlFor="date">Delivery Date</Label>
@@ -158,7 +164,9 @@ const FlowerServiceRequest: React.FC = () => {
                     <br/>
 
                     <Row>
-                        <Button variant={"ghost"} onClick={handleSubmit}>Submit</Button>
+                        <Col className={"justify-center flex"}>
+                            <Button variant={"default"} onClick={handleSubmit}>Submit</Button>
+                        </Col>
                     </Row>
 
 

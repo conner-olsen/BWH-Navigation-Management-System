@@ -12,10 +12,11 @@ import {ExternalTransportServiceLogComponent} from "../../components/ServiceRequ
 
 const ServiceLog = () => {
     return (
-        <div className={"align-content-center"}>
+        <>
+        <div className={"align-content-center container"}>
             <br/>
             <br/>
-            <Tabs defaultValue="External Transport Service Request" className="w-screen align-content-center">
+            <Tabs defaultValue="Flower Service Request" className="align-content-center">
                 <TabsList classname-={"align-content-center"}>
                     <TabsTrigger value="Flower Service Request">Flower Service Request</TabsTrigger>
                     <TabsTrigger value="Religious Service Request">Religious Service Request</TabsTrigger>
@@ -50,8 +51,10 @@ const ServiceLog = () => {
 
 
                 </Tabs>
-            <Global_Footer />
+
         </div>
+        <Global_Footer />
+        </>
     );
 
 };

@@ -1,12 +1,12 @@
-import {useState, useEffect, ChangeEvent} from "react";
+import {useState, useEffect } from "react";
 import {parseCSV} from "common/src/parser.ts";
-import Form from "react-bootstrap/Form";
+import {Label} from "./ui/label.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 
 interface locationSelect {
-    onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-    id: string;
+    onChange: (value: string) => void;
 }
-const LocationDropdown: React.FC<locationSelect> = ({ onChange, id }) => {
+const LocationDropdown: React.FC<locationSelect> = ({ onChange }) => {
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
 
     useEffect(() => {
@@ -46,15 +46,26 @@ const LocationDropdown: React.FC<locationSelect> = ({ onChange, id }) => {
         const rowval = Object.values(row);
         const id = rowval[0];
         const nodeId = row["nodeId"];
-        roomNames.push(<option value={id}> {nodeId} </option>);
+        roomNames.push(<SelectItem value={id}>{nodeId}</SelectItem>);
+        //roomNames.push(<option value={id}> {nodeId} </option>);
     }
 
     return (
     <div>
-        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Select Room</label>
-        <Form.Select onChange={onChange} id={id}>
-            {roomNames}
-        </Form.Select>
+        <Label>Location</Label>
+        <Select required onValueChange={onChange}>
+            <SelectTrigger>
+                <SelectValue/>
+            </SelectTrigger>
+            <SelectContent>
+                {roomNames}
+            </SelectContent>
+        </Select>
+        {/*<label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Select*/}
+        {/*    Location</label>*/}
+        {/*<Form.Select onChange={onChange} id={id}>*/}
+        {/*    {roomNames}*/}
+        {/*</Form.Select>*/}
     </div>
     );
 };
