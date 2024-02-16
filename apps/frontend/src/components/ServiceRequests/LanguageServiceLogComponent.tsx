@@ -35,14 +35,14 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
         .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
-                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
-                <TableCell>{tableData[index].name}</TableCell>
-                <TableCell>{tableData[index].languagePref}</TableCell>
+                <TableCell>{item.ServiceRequest.nodeId}</TableCell>
+                <TableCell>{item.ServiceRequest.priority}</TableCell>
+                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.languagePref}</TableCell>
 
 
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.status}
+                    <Select value={item.ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
@@ -57,7 +57,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
 
                 </TableCell>
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.employeeUser}
+                    <Select value={item.ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
