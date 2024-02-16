@@ -30,7 +30,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
@@ -44,7 +44,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
 
 
                 <TableCell>
-                    <Select value={tableData[index].status}
+                    <Select value={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
@@ -59,7 +59,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].employeeUser}
+                    <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />

@@ -28,15 +28,7 @@ const LanguageService: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        setFormData({
-            id: '',
-            nodeId: '',
-            patientName: '',
-            languagePref: '',
-            priority: '',
-            status: '',
-            employeeUser: ''
-        });
+
         try {
             const response = await axios.post("/api/language-service-request", JSON.stringify(formData), {
                 headers: {
@@ -52,6 +44,15 @@ const LanguageService: React.FC = () => {
         } catch (error) {
             console.error('Error sending data:', error);
         }
+        setFormData({
+            id: '',
+            nodeId: '',
+            patientName: '',
+            languagePref: '',
+            priority: '',
+            status: '',
+            employeeUser: ''
+        });
     };
 
 

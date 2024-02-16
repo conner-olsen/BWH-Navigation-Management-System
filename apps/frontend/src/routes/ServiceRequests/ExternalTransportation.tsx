@@ -37,18 +37,7 @@ const ExternalTransportation: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        setFormData({
-            id: '',
-            nodeId: '',
-            patientName: '',
-            description: '',
-            transportation: '',
-            date: '',
-            destination: '',
-            priority: '',
-            status: '',
-            employeeUser: ''
-        });
+
         try {
             const response = await axios.post("/api/external-transport", JSON.stringify(formData), {
                 headers: {
@@ -64,6 +53,18 @@ const ExternalTransportation: React.FC = () => {
         } catch (error) {
             console.error('Error sending data:', error);
         }
+        setFormData({
+            id: '',
+            nodeId: '',
+            patientName: '',
+            description: '',
+            transportation: '',
+            date: '',
+            destination: '',
+            priority: '',
+            status: '',
+            employeeUser: ''
+        });
     };
 
 
