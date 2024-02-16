@@ -33,16 +33,7 @@ const ReligiousServiceRequest: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        setFormData({
-            id: '',
-            nodeId: '',
-            patientName: '',
-            religion: '',
-            note: '',
-            priority: '',
-            status: '',
-            employeeUser: ''
-        });
+
         try {
             const response = await axios.post("/api/religious-service-request", JSON.stringify(formData), {
                 headers: {
@@ -58,6 +49,16 @@ const ReligiousServiceRequest: React.FC = () => {
         } catch (error) {
             console.error('Error sending data:', error);
         }
+        setFormData({
+            id: '',
+            nodeId: '',
+            patientName: '',
+            religion: '',
+            note: '',
+            priority: '',
+            status: 'Unassigned',
+            employeeUser: 'none'
+        });
     };
 
 

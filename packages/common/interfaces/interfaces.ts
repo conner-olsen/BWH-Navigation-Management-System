@@ -21,66 +21,57 @@ export interface ServiceRequest {
   status: string;
   employeeUser: string;
   priority: string;
+  flowerServiceRequests?: flowerServiceRequest;
+  cleaningServiceRequest?: cleaningServiceRequest;
+  externalTransportationServiceRequest?: externalTransportationServiceRequest;
+  internalTransportServiceRequest?: internalTransportServiceRequest;
+  languageInterpreterServiceRequest?: languageInterpreterServiceRequest;
+  religiousServiceRequest?: religiousServiceRequest;
 }
 
-export interface flowerServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
+export interface flowerServiceRequest{
   senderName: string;
   senderEmail: string;
   patientName: string;
   flowerType: string;
   deliveryDate: string;
   note: string;
+  ServiceRequest: ServiceRequest;
 }
 
-export interface cleaningServiceRequest extends ServiceRequest{
+export interface cleaningServiceRequest{
   type: string;
   patientName: string;
-
+  ServiceRequest: ServiceRequest;
 }
 
-export interface externalTransportationServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
+export interface externalTransportationServiceRequest{
   name: string;
   destination: string;
   transportation: string;
   date: string;
   description: string;
+  ServiceRequest: ServiceRequest;
 }
 
-export interface internalTransportServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
+export interface internalTransportServiceRequest{
   name: string;
   mode: string;
   destination: string;
+  ServiceRequest: ServiceRequest;
 }
 
-export interface languageInterpreterServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
+export interface languageInterpreterServiceRequest{
   name: string;
   languagePref: string;
+  ServiceRequest: ServiceRequest;
 }
 
-export interface religiousServiceRequest extends ServiceRequest {
-  node: string;
-  priority: string;
-  status: string;
-  employeeUser: string;
+export interface religiousServiceRequest{
   patientName: string;
   religion: string;
   note: string;
+  ServiceRequest: ServiceRequest;
 }
 
 export interface user{

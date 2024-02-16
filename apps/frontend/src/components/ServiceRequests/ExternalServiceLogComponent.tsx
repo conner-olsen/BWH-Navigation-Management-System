@@ -1,56 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { religiousServiceRequest } from 'common/interfaces/interfaces.ts';
+import {externalTransportationServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
-// import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
-function GenerateTableRowsServices(tableData: religiousServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
-    //const [status, setStatus] = useState("Assigned");
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
+function GenerateTableRowsServices(tableData: externalTransportationServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
 
-
-    const handleStatusChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].node,
-            priority: tableData[index].priority,
-            note:  tableData[index].note,
-            patientName: tableData[index].patientName,
-            relgion: tableData[index].religion,
+    const handleStatusChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
+        axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             status: value,
-            employeeUser: tableData[index].employeeUser
-
+            employeeUser: tableData[index].ServiceRequest.employeeUser
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
-    const handleAssignmentChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].node,
-            priority: tableData[index].priority,
-            note:  tableData[index].note,
-            patientName: tableData[index].patientName,
-            relgion: tableData[index].religion,
-            status: tableData[index].status,
-            employeeUser: value,
-
+    const handleAssignmentChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
+        axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
+            status: tableData[index].ServiceRequest.status,
+            employeeUser: value
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].node}</TableCell>
-                <TableCell>{tableData[index].patientName}</TableCell>
-                <TableCell>{tableData[index].priority}</TableCell>
-                <TableCell>{tableData[index].religion}</TableCell>
-                <TableCell>{tableData[index].note}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
+                <TableCell>{tableData[index].name}</TableCell>
+                <TableCell>{tableData[index].transportation}</TableCell>
+                <TableCell>{tableData[index].destination}</TableCell>
+                <TableCell>{tableData[index].description}</TableCell>
+                <TableCell>{tableData[index].date}</TableCell>
+
 
 
                 <TableCell>
-                    <Select value={tableData[index].status}
+                    <Select value={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
@@ -65,7 +59,7 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].employeeUser}
+                    <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
@@ -83,16 +77,18 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
         ));
 }
 
-const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
     return (
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Patient Name</TableHead>
+                    <TableHead>Node ID</TableHead>
                     <TableHead>Priority</TableHead>
-                    <TableHead>Religion</TableHead>
-                    <TableHead>Note</TableHead>
+                    <TableHead>Patient Name</TableHead>
+                    <TableHead>Transportation</TableHead>
+                    <TableHead>Destination</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead>Date</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>
                 </TableRow>
@@ -103,8 +99,8 @@ const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeDa
 };
 
 // GETTING data for service request and
-export const ReligiousServiceLogComponent = () => {
-    const [data, setData] = useState<religiousServiceRequest[]>([]);
+export const ExternalTransportServiceLogComponent = () => {
+    const [data, setData] = useState<externalTransportationServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
 
@@ -113,11 +109,12 @@ export const ReligiousServiceLogComponent = () => {
         const fetchData = async () => {
             try {
                 // Make a GET request to the API endpoint for flower service requests
-                const response = await fetch('/api/religious-service-request');
+                const response = await fetch('/api/service-request/external-transportation');
                 if (!response.ok) {
                     throw new Error(`Failed to fetch religion service requests: ${response.status}`);
                 }
                 const result = await response.json();
+                console.log(result);
                 setData(result);
             } catch (err) {
                 console.error('Error fetching flower service requests:', err);

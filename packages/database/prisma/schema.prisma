@@ -14,17 +14,16 @@ datasource db {
 
 //Node Table
 model Node {
-    nodeId                          String  @id
-    xcoord                          Int
-    ycoord                          Int
-    floor                           String
-    building                        String
-    nodeType                        String
-    longName                        String
-    shortName                       String
-    Edge                            Edge[]
-    ServiceRequest                  ServiceRequest[]
-    internalTransportServiceRequest internalTransportServiceRequest[]
+    nodeId         String           @id
+    xcoord         Int
+    ycoord         Int
+    floor          String
+    building       String
+    nodeType       String
+    longName       String
+    shortName      String
+    Edge           Edge[]
+    ServiceRequest ServiceRequest[]
 }
 
 //Edge Table
@@ -58,14 +57,14 @@ model ServiceRequest {
     employee                             Employee                               @relation(fields: [employeeUser], references: [username])
     nodeId                               String
     priority                             String
-    status                               String                                 @default("UnAssigned")
+    status                               String                                 @default("Unassigned")
     employeeUser                         String
-    flowerServiceRequests                FlowerServiceRequest[]
-    cleaningServiceRequest               cleaningServiceRequest[]
-    externalTransportationServiceRequest externalTransportationServiceRequest[]
-    internalTransportServiceRequest      internalTransportServiceRequest[]
-    languageInterpreterServiceRequest    languageInterpreterServiceRequest[]
-    religiousServiceRequest              religiousServiceRequest[]
+    flowerServiceRequests                FlowerServiceRequest?
+    cleaningServiceRequest               cleaningServiceRequest?
+    externalTransportationServiceRequest externalTransportationServiceRequest?
+    internalTransportServiceRequest      internalTransportServiceRequest?
+    languageInterpreterServiceRequest    languageInterpreterServiceRequest?
+    religiousServiceRequest              religiousServiceRequest?
 }
 
 //Service Request Table
@@ -99,7 +98,6 @@ model externalTransportationServiceRequest {
 
 model internalTransportServiceRequest {
     ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-    node           Node           @relation(fields: [destination], references: [nodeId])
     id             String         @id
     name           String
     mode           String

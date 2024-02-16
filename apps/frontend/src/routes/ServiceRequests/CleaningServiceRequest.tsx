@@ -14,7 +14,7 @@ const CleaningServiceRequest: React.FC = () => {
         patientName: '',
         type: '',
         priority: '',
-        status: 'UnAssigned',
+        status: 'Unassigned',
         employeeUser: 'none'
     });
 
@@ -33,22 +33,23 @@ const CleaningServiceRequest: React.FC = () => {
 
             if (response.status === 200) {
                 console.log('Data sent successfully');
-                // Clear form data upon successful submission
-                setFormData({
-                    id: '',
-                    nodeId: '',
-                    patientName: '',
-                    type: '',
-                    priority: '',
-                    status: 'UnAssigned',
-                    employeeUser: 'none'
-                });
+
             } else {
                 console.error('Error sending data');
             }
         } catch (error) {
             console.error('Error sending data:', error);
         }
+
+        setFormData({
+            id: '',
+            nodeId: '',
+            patientName: '',
+            type: '',
+            priority: '',
+            status: 'Unassigned',
+            employeeUser: 'none'
+        });
     };
 
     return (

@@ -1,64 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import { religiousServiceRequest } from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 import { internalTransportServiceRequest } from 'common/interfaces/interfaces.ts';
 
 
 
 function GenerateTableRowsServices(tableData: internalTransportServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
-    //const [status, setStatus] = useState("Assigned");
-
 
     const handleStatusChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].nodeId,
-            priority: tableData[index].priority,
-            destination:  tableData[index].destination,
-            name: tableData[index].name,
-            mode: tableData[index].mode,
+        axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             status: value,
-            employeeUser: tableData[index].employeeUser
-
+            employeeUser: tableData[index].ServiceRequest.employeeUser
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
-        axios.patch("/api/", {
-            nodeId: tableData[index].nodeId,
-            priority: tableData[index].priority,
-            destination:  tableData[index].destination,
-            name: tableData[index].name,
-            mode: tableData[index].mode,
-            status: tableData[index].status,
+        axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
+            status: tableData[index].ServiceRequest.status,
             employeeUser: value
-
-
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].node}</TableCell>
-                <TableCell>{tableData[index].destination}</TableCell>
-                <TableCell>{tableData[index].priority}</TableCell>
-                <TableCell>{tableData[index].mode}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
+                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
                 <TableCell>{tableData[index].name}</TableCell>
-
-
+                <TableCell>{tableData[index].mode}</TableCell>
+                <TableCell>{tableData[index].destination}</TableCell>
 
                 <TableCell>
-                    <Select value={tableData[index].status}
+                    <Select value={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Unassigned" />
+                            <SelectValue placeholder={tableData[index].ServiceRequest.status} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="Unassigned">Unassigned</SelectItem>
@@ -70,10 +58,10 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].employeeUser}
+                    <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
-                            <SelectValue placeholder="None" />
+                            <SelectValue placeholder={tableData[index].ServiceRequest.employeeUser} />
                         </SelectTrigger>
                         <SelectContent>
                             {employeeData.map((employee, employeeIndex) => (
@@ -93,14 +81,13 @@ const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; em
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Node</TableHead>
-                    <TableHead>Destination</TableHead>
+                    <TableHead>Room ID</TableHead>
                     <TableHead>Priority</TableHead>
-                    <TableHead>Mode of Transport</TableHead>
                     <TableHead>Name</TableHead>
+                    <TableHead>Mode of Transport</TableHead>
+                    <TableHead>Destination</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Assignment</TableHead>
-
                 </TableRow>
             </TableHeader>
             <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus)}</TableBody>
@@ -110,7 +97,7 @@ const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; em
 
 // GETTING data for service request and
 export const InternalTransportServiceLogComponent = () => {
-    const [data, setData] = useState<religiousServiceRequest[]>([]);
+    const [data, setData] = useState<internalTransportServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
 
@@ -119,12 +106,13 @@ export const InternalTransportServiceLogComponent = () => {
         const fetchData = async () => {
             try {
                 // Make a GET request to the API endpoint for flower service requests
-                const response = await fetch('/api/internal-transport');
+                const response = await fetch('/api/service-request/internal-transportation');
                 if (!response.ok) {
                     throw new Error(`Failed to fetch religion service requests: ${response.status}`);
                 }
                 const result = await response.json();
                 setData(result);
+                console.log(result);
             } catch (err) {
                 console.error('Error fetching flower service requests:', err);
             }

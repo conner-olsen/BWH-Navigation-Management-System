@@ -14,6 +14,7 @@ const InternalTransportation: React.FC = () => {
         nodeId: '',
         patientName: '',
         mode: '',
+        destination: '',
         priority: '',
         status: 'Unassigned',
         employeeUser: 'none'
@@ -26,15 +27,6 @@ const InternalTransportation: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        setFormData({
-            id: '',
-            nodeId: '',
-            patientName: '',
-            mode: '',
-            priority: '',
-            status: '',
-            employeeUser: ''
-        });
 
         try {
             const response = await axios.post("/api/internal-transport", JSON.stringify(formData), {
@@ -51,6 +43,16 @@ const InternalTransportation: React.FC = () => {
         } catch (error) {
             console.error('Error sending data:', error);
         }
+        setFormData({
+            id: '',
+            nodeId: '',
+            patientName: '',
+            mode: '',
+            destination: '',
+            priority: '',
+            status: 'Unassigned',
+            employeeUser: 'none'
+        });
     };
 
 
@@ -104,6 +106,12 @@ const InternalTransportation: React.FC = () => {
                     <Row>
                         <Col>
                             <div>
+                                <Label htmlFor="destination">Destination</Label>
+                                <Input type="text" id="destination" placeholder={"X-ray Labs"} onChange={handleChangeText}/>
+                            </div>
+                        </Col>
+                        <Col>
+                            <div>
                                 <Label htmlFor="mode">Mode Of Transportation</Label>
                                 <Input type="text" id="mode" placeholder={"Wheelchair"} onChange={handleChangeText}/>
                             </div>
@@ -123,6 +131,6 @@ const InternalTransportation: React.FC = () => {
                 </Container>
             </div>
         </Container>
-);
+    );
 };
 export default InternalTransportation;

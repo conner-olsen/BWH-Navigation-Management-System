@@ -21,8 +21,8 @@ import languageInterpreterServiceRequest from "./routes/language-interpreter-ser
 import internalTransportServiceRequestRoute from "./routes/internal-transportation-service-request.ts";
 import externalTransportServiceRequest from "./routes/external-transport-service-request.ts";
 import cleaningRoute from "./routes/cleaning-service-request.ts";
-
 import allServiceData from "./routes/all-service-logs.ts";
+import serviceRequest from "./routes/service-request.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -62,7 +62,7 @@ app.use("/api/internal-transport", internalTransportServiceRequestRoute);
 app.use("/api/external-transport", externalTransportServiceRequest);
 app.use("/api/cleaning-request", cleaningRoute);
 app.use("/api/all-service-data", allServiceData);
-
+app.use("/api/service-request", serviceRequest);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

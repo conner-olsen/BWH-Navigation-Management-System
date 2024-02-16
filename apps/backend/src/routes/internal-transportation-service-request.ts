@@ -26,11 +26,7 @@ router.post("/", async (req: Request, res: Response) => {
           create: {
             name: requestData.patientName,
             mode: requestData.mode,
-            node: {
-              connect: {
-                  nodeId: requestData.nodeId
-                }
-            }
+            destination: requestData.destination
           }
         }
       } });
@@ -40,19 +36,6 @@ router.post("/", async (req: Request, res: Response) => {
     console.error(`Error creating service request: ${error}`);
     res.sendStatus(500);
   }
-});
-
-
-
-router.get("/", async function (req: Request, res: Response) {
-  try{
-    const internalCSV = await PrismaClient.internalTransportServiceRequest.findMany();
-    res.send(internalCSV);
-  } catch (error){
-    console.error(`Error exporting Service Request data: ${error}`);
-    res.sendStatus(500);
-  }
-  res.sendStatus(200);
 });
 
 export default router;
