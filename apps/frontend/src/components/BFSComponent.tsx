@@ -7,6 +7,7 @@ import { parseCSV } from "common/src/parser.ts";
 import Form from "react-bootstrap/Form";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
@@ -155,11 +156,11 @@ export function BFSComponent() {
         const nodeFloor = nodeFloorToMapFloor(row["floor"]);
 
         if (nodeFloor == map && !(nodeType == "HALL")) {
-            currentFloorNames.push(<option value={id}> {longName} </option>);
-            roomNames.push(<option value={id}> {longName} </option>);
+            currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
+            roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
         }
         else if (!(nodeType == "HALL")) {
-            roomNames.push(<option value={id}> {longName} </option>);
+            roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
         }
     }
 
@@ -199,46 +200,59 @@ export function BFSComponent() {
                 <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
                     <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
                            onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
-                    <label htmlFor="l2" className="font-bold hover:text-blue-500">L2</label>
+                    <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
                     <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
                            onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
-                    <label htmlFor="l1" className="font-bold hover:text-blue-500">L1</label>
+                    <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
                     <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
                            onChange={handlePhotoChange} checked={map == "floor1"}/>
-                    <label htmlFor="f1" className="font-bold hover:text-blue-500">1</label>
+                    <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
                     <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
                            onChange={handlePhotoChange} checked={map == "floor2"}/>
-                    <label htmlFor="f2" className="font-bold hover:text-blue-500">2</label>
+                    <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
                     <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
                            onChange={handlePhotoChange} checked={map == "floor3"}/>
-                    <label htmlFor="f3" className="font-bold hover:text-blue-500">3</label>
+                    <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
                 </div>
                 <div className="flex py-4 border-b-[1px] border-neutral-300">
                     <div className="flex flex-col items-center">
-                        <img src="../../public/icon/start.svg" alt="circle" className="my-[5px] dark:invert"/>
+                        <img src="../../public/icon/start.svg" alt="circle" className="mb-[5px] mt-[11px] dark:invert"/>
                         <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
                         <img src="../../public/icon/location.svg" alt="pin"/>
                     </div>
                     <div className="flex flex-col grow justify-between pl-[2px] pr-2">
-                        <Form.Select value={startNode} size={"sm"}
-                                     onChange={e => setStartNode(e.target.value)}>
-                            <option>Select Location</option>
-                            {currentFloorNames}
-                        </Form.Select>
-                        <Form.Select value={endNode} size={"sm"}
-                                     onChange={e => setEndNode(e.target.value)}>
-                            <option>Select Location</option>
-                            {roomNames}
-                        </Form.Select>
+                        <Select value={startNode}
+                                onValueChange={(location: string) => setStartNode(location)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Location" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {currentFloorNames}
+                            </SelectContent>
+                        </Select>
+                        <Select value={endNode}
+                                onValueChange={(location: string) => setEndNode(location)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Location" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {roomNames}
+                            </SelectContent>
+                        </Select>
                     </div>
 
                 </div>
                 <div className="py-4 px-2">
-                    <Form.Select value={pathFindingType} size={"sm"}
-                                 onChange={e => setPathFindingType(e.target.value)}>
-                        <option value={"/api/bfs-searching"}>BFS Searching</option>
-                        <option value={"/api/bfsAstar-searching"}>A* Searching</option>
-                    </Form.Select>
+                    <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
+                            onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
+                        <SelectTrigger>
+                            <SelectValue/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
+                            <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div>

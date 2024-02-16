@@ -88,9 +88,9 @@ return (
             {isAuthenticated && (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant={"outline"} className={"mt-0.5"}>
+
                             <img src={user.picture} alt={"Profile"} className={"UserProfile rounded-full w-8 h-8"}/>
-                        </Button>
+
                     </DropdownMenuTrigger>
 
                     <DropdownMenuContent className="w-56">
@@ -98,7 +98,7 @@ return (
                         <DropdownMenuSeparator/>
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
-                                <NavLink to="/UserPage" className={"no-underline text-black"}>
+                                <NavLink to="/UserPage" className={"no-underline text-foreground"}>
                                 {user.name}
                                 </NavLink>
                             </DropdownMenuItem>

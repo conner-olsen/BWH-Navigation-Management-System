@@ -5,6 +5,8 @@ import {Outlet} from "react-router-dom";
 import {useState} from "react";
 import {Button} from "../components/ui/button.tsx";
 import Global_Footer from "../components/Global_Footer.tsx";
+import {Label} from "../components/ui/label.tsx";
+import {Input} from "../components/ui/input.tsx";
 export const EmployeeManager = () => {
 
     const [formData, setFormData] = useState({
@@ -108,16 +110,8 @@ export const EmployeeManager = () => {
                                             <div className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
                                                 <form onSubmit={handleCreateEmployee}>
                                                     <div className="mb-4">
-                                                        <label className="block text-foreground text-sm font-bold mb-2"
-                                                               htmlFor="username">
-                                                            Username
-                                                        </label>
-                                                        <input
-                                                            className="appearance-none border rounded w-full py-2 px-3 text-foreground leading-tight focus:outline-none focus:border-blue-500"
-                                                            id="username"
-                                                            type="text"
-                                                            placeholder="Username"
-                                                            name="username"
+                                                        <Label htmlFor="username">Username</Label>
+                                                        <Input id="username" type="text" placeholder="Username" name="username"
                                                             value={formData.username}
                                                             onChange={(e) => setFormData({
                                                                 ...formData,
@@ -126,16 +120,8 @@ export const EmployeeManager = () => {
                                                         />
                                                     </div>
                                                     <div className="mb-4">
-                                                        <label className="block text-foreground text-sm font-bold mb-2"
-                                                               htmlFor="firstName">
-                                                            First Name
-                                                        </label>
-                                                        <input
-                                                            className="appearance-none border rounded w-full py-2 px-3 text-foreground leading-tight focus:outline-none focus:border-blue-500"
-                                                            id="firstName"
-                                                            type="text"
-                                                            placeholder="First Name"
-                                                            name="firstName"
+                                                        <Label htmlFor="firstName">First Name</Label>
+                                                        <Input id="firstName" type="text" placeholder="First Name" name="firstName"
                                                             value={formData.firstName}
                                                             onChange={(e) => setFormData({
                                                                 ...formData,
@@ -144,16 +130,8 @@ export const EmployeeManager = () => {
                                                         />
                                                     </div>
                                                     <div className="mb-4">
-                                                        <label className="block text-foreground text-sm font-bold mb-2"
-                                                               htmlFor="lastName">
-                                                            Last Name
-                                                        </label>
-                                                        <input
-                                                            className="appearance-none border rounded w-full py-2 px-3 text-foreground leading-tight focus:outline-none focus:border-blue-500"
-                                                            id="lastName"
-                                                            type="text"
-                                                            placeholder="Last Name"
-                                                            name="lastName"
+                                                        <Label htmlFor="lastName">Last Name</Label>
+                                                        <Input id="lastName" type="text" placeholder="Last Name" name="lastName"
                                                             value={formData.lastName}
                                                             onChange={(e) => setFormData({
                                                                 ...formData,
@@ -162,16 +140,10 @@ export const EmployeeManager = () => {
                                                         />
                                                     </div>
                                                     <div className="mb-6">
-                                                        <label className="block text-foreground text-sm font-bold mb-2"
-                                                               htmlFor="email">
+                                                        <Label htmlFor="email">
                                                             Email
-                                                        </label>
-                                                        <input
-                                                            className="appearance-none border rounded w-full py-2 px-3 text-foreground leading-tight focus:outline-none focus:border-blue-500"
-                                                            id="email"
-                                                            type="email"
-                                                            placeholder="Email"
-                                                            name="email"
+                                                        </Label>
+                                                        <Input id="email" type="email" placeholder="Email" name="email"
                                                             value={formData.email}
                                                             onChange={(e) => setFormData({
                                                                 ...formData,
@@ -206,12 +178,8 @@ export const EmployeeManager = () => {
                                 <div className="bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
                                     <form onSubmit={handleUpdateEmployee}>
                                         <div className="mb-4">
-                                            <label className="block text-foreground text-sm font-bold mb-2"
-                                                   htmlFor="username">
-                                                Username
-                                            </label>
-                                            <input
-                                                className="appearance-none border rounded w-full py-2 px-3 text-foreground leading-tight focus:outline-none focus:border-blue-500"
+                                            <Label htmlFor="username">Username</Label>
+                                            <Input
                                                 id="username"
                                                 type="text"
                                                 placeholder="Username"
@@ -221,12 +189,11 @@ export const EmployeeManager = () => {
                                             />
                                         </div>
                                         <div className="mb-4">
-                                            <label className="block text-foreground text-sm font-bold mb-2"
+                                            <Label
                                                    htmlFor="firstName">
                                                 First Name
-                                            </label>
-                                            <input
-                                                className="appearance-none border rounded w-full py-2 px-3 text-foreground leading-tight focus:outline-none focus:border-blue-500"
+                                            </Label>
+                                            <Input
                                                 id="firstName"
                                                 type="text"
                                                 placeholder="First Name"
@@ -236,12 +203,10 @@ export const EmployeeManager = () => {
                                             />
                                         </div>
                                         <div className="mb-4">
-                                            <label className="block text-foreground text-sm font-bold mb-2"
-                                                   htmlFor="lastName">
+                                            <Label htmlFor="lastName">
                                                 Last Name
-                                            </label>
-                                            <input
-                                                className="appearance-none border rounded w-full py-2 px-3 text-foreground leading-tight focus:outline-none focus:border-blue-500"
+                                            </Label>
+                                            <Input
                                                 id="lastName"
                                                 type="text"
                                                 placeholder="Last Name"
@@ -251,12 +216,11 @@ export const EmployeeManager = () => {
                                             />
                                         </div>
                                         <div className="mb-6">
-                                            <label className="block text-foreground text-sm font-bold mb-2"
+                                            <Label
                                                    htmlFor="email">
                                                 Email
-                                            </label>
-                                            <input
-                                                className="appearance-none border rounded w-full py-2 px-3 text-foreground leading-tight focus:outline-none focus:border-blue-500"
+                                            </Label>
+                                            <Input
                                                 id="email"
                                                 type="email"
                                                 placeholder="Email"
@@ -283,12 +247,11 @@ export const EmployeeManager = () => {
                                 <div className=" border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
                                     <form onSubmit={handleDeleteEmployee}>
                                         <div className="mb-4">
-                                            <label className="block text-foreground text-sm font-bold mb-2"
+                                            <Label
                                                    htmlFor="username">
                                                 Delete User by Entering Username
-                                            </label>
-                                            <input
-                                                className="appearance-none border rounded w-full py-2 px-3 text-foreground leading-tight focus:outline-none focus:border-blue-500"
+                                            </Label>
+                                            <Input
                                                 id="username"
                                                 type="text"
                                                 placeholder="Username"
