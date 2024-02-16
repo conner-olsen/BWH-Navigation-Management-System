@@ -5,9 +5,7 @@ import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
-// import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
 function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
-    //const [status, setStatus] = useState("Assigned");
 
 
     const handleStatusChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
@@ -46,18 +44,19 @@ function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], empl
         .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
-                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
-                <TableCell>{tableData[index].senderName}</TableCell>
-                <TableCell>{tableData[index].senderEmail}</TableCell>
-                <TableCell>{tableData[index].patientName}</TableCell>
-                <TableCell>{tableData[index].flowerType}</TableCell>
-                <TableCell>{tableData[index].deliveryDate}</TableCell>
-                <TableCell>{tableData[index].note}</TableCell>
+                <TableCell>{item.ServiceRequest.status}</TableCell>
+                <TableCell>{item.ServiceRequest.nodeId}</TableCell>
+                <TableCell>{item.ServiceRequest.priority}</TableCell>
+                <TableCell>{item.senderName}</TableCell>
+                <TableCell>{item.senderEmail}</TableCell>
+                <TableCell>{item.patientName}</TableCell>
+                <TableCell>{item.flowerType}</TableCell>
+                <TableCell>{item.deliveryDate}</TableCell>
+                <TableCell>{item.note}</TableCell>
 
 
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.status}
+                    <Select value={item.ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
@@ -72,7 +71,7 @@ function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], empl
 
                 </TableCell>
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.employeeUser}
+                    <Select value={item.ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
@@ -95,6 +94,8 @@ const TableServicesFlower: React.FC<{ tableData: flowerServiceRequest[]; employe
         <Table>
             <TableHeader>
             <TableRow>
+                <TableHead>debug</TableHead>
+
                 <TableHead>Room ID</TableHead>
                 <TableHead>Priority</TableHead>
                 <TableHead>Sender Name</TableHead>
@@ -164,6 +165,7 @@ export const FlowerServiceLogComponent = () => {
                                     <SelectValue placeholder="Status" />
                                 </SelectTrigger>
                                 <SelectContent>
+                                    {/*<SelectItem value="">Any</SelectItem>*/}
                                     <SelectItem value="Unassigned">Unassigned</SelectItem>
                                     <SelectItem value="Assigned">Assigned</SelectItem>
                                     <SelectItem value="In Progress">In Progress</SelectItem>

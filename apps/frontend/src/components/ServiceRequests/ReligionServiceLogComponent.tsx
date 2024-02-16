@@ -44,15 +44,15 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
         .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
-                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
-                <TableCell>{tableData[index].patientName}</TableCell>
-                <TableCell>{tableData[index].religion}</TableCell>
-                <TableCell>{tableData[index].note}</TableCell>
+                <TableCell>{item.ServiceRequest.nodeId}</TableCell>
+                <TableCell>{item.ServiceRequest.priority}</TableCell>
+                <TableCell>{item.patientName}</TableCell>
+                <TableCell>{item.religion}</TableCell>
+                <TableCell>{item.note}</TableCell>
 
 
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.status}
+                    <Select value={item.ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
@@ -67,7 +67,7 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
                 </TableCell>
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.employeeUser}
+                    <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />

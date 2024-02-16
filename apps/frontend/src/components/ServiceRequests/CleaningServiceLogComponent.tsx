@@ -40,12 +40,12 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
         .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
-                <TableCell>{tableData[index].ServiceRequest.nodeId}</TableCell>
-                <TableCell>{tableData[index].ServiceRequest.priority}</TableCell>
-                <TableCell>{tableData[index].patientName}</TableCell> {/* Access patientName directly */}
-                <TableCell>{tableData[index].type}</TableCell> {/* Access type directly */}
+                <TableCell>{item.ServiceRequest.nodeId}</TableCell>
+                <TableCell>{item.ServiceRequest.priority}</TableCell>
+                <TableCell>{item.patientName}</TableCell> {/* Access patientName directly */}
+                <TableCell>{item.type}</TableCell> {/* Access type directly */}
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select value={item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -58,7 +58,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                     </Select>
                 </TableCell>
                 <TableCell>
-                    <Select defaultValue={tableData[index].ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select value={item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
