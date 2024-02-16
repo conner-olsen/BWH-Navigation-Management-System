@@ -264,7 +264,7 @@ export function BFSComponent() {
                     </ol>
                 </div>
                 <div
-                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-lg border-
+                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-lg
                                 ${isExpanded ? 'right-[-90px]' : 'right-[-170px]'}`}>
                     <HoverCard openDelay={100}>
                         <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center

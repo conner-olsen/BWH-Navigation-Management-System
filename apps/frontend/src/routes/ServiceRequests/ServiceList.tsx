@@ -28,8 +28,8 @@ const ServiceList = () => {
                 <Row>
                     <Col>
                         <Link to="/ReligiousService" className={"no-underline"}>
-                            <Card className="max-w-md border-gray-200 hover:scale-110 hover:bg-neutral-200 dark:hover:bg-neutral-400 transition-all duration-200
-                                            hover:shadow-2xl hover:shadow-blue-400">
+                            <Card className="max-w-md border-gray-200 hover:scale-110 hover:bg-neutral-200
+                             transition-all duration-200">
                                 <CardHeader>
                                     <CardTitle className="text-xl">Religious Service Request</CardTitle>
                                     <CardDescription className="text-sm dark:text-neutral-300">Send a request for religious sermons and rituals conducted for patients on long term stay </CardDescription>
