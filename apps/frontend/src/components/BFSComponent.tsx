@@ -156,6 +156,7 @@ export function BFSComponent() {
 
         if (nodeFloor == map && !(nodeType == "HALL")) {
             currentFloorNames.push(<option value={id}> {longName} </option>);
+            roomNames.push(<option value={id}> {longName} </option>);
         }
         else if (!(nodeType == "HALL")) {
             roomNames.push(<option value={id}> {longName} </option>);
