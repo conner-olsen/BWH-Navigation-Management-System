@@ -497,6 +497,6 @@ input[type="radio"]:checked + label {
     color: rgb(59 130 246);
 }
 
-g circle {
+body.dark g circle {
     fill: white;
 }
