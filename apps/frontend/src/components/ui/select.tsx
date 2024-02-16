@@ -16,8 +16,8 @@ const SelectTrigger = React.forwardRef(
         <SelectPrimitive.Trigger
             ref={ref}
             className={cn(
-                "rounded-full",   // Make the button oval
-                "p-2",            // Reduce padding for height
+                "rounded-md",   // Make the button oval
+                "py-2 px-3",            // Reduce padding for height
                 "border",         // Add border
                 "border-border",   // Black border
                 "bg-transparent", // Transparent background
@@ -35,7 +35,7 @@ const SelectTrigger = React.forwardRef(
                 "[&>span]:line-clamp-1",
                 "pl-[500px]",
                 "w-full",
-                "h-16",
+                "h-10 text-sm",
                 className
             )}
             {...props}
