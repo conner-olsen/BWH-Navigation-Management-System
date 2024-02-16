@@ -12,6 +12,7 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
     const handleStatusChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
         axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
             priority: tableData[index].ServiceRequest.priority,
             note:  tableData[index].note,
@@ -26,6 +27,7 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
     const handleAssignmentChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
         axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
             priority: tableData[index].ServiceRequest.priority,
             note:  tableData[index].note,

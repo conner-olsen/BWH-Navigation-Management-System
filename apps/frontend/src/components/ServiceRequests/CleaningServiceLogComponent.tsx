@@ -12,6 +12,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
 
     const handleStatusChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
         axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
             priority: tableData[index].ServiceRequest.priority,
             status:  value,
             employeeUser: tableData[index].ServiceRequest.employeeUser,
@@ -24,6 +25,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
 
     const handleAssignmentChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
         axios.patch("/api/service-request", {
+            id: tableData[index].ServiceRequest.id,
             priority: tableData[index].ServiceRequest.priority,
             status:  tableData[index].ServiceRequest.status,
             employeeUser: value,
