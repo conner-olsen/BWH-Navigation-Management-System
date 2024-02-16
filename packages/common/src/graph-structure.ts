@@ -354,4 +354,13 @@ export class Graph {
     
     return nodeArray;
   }
+
+  nodesToString(arrayOfNodes: Node[]): string[] {
+    const stringArray: string[] = [];
+    for(const item of arrayOfNodes) {
+      stringArray.push((item.id));
+    }
+
+    return stringArray;
+  }
 }
