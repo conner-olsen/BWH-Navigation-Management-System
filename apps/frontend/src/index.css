@@ -364,8 +364,6 @@ body.dark .DragDropBox {
 .BFSBox {
     align-items: center;
     text-align: center;
-    height: 100vh;
-    overflow: hidden;
 }
 
 .mapNames {
@@ -484,6 +482,12 @@ body.dark .react-transform-wrapper image {
 
 
 /* ====== Side Bar ======= */
+.transform-component-module_wrapper__SPB86 {
+    height: 100vh!important;
+}
+body.dark .tools {
+    background-color: rgba(161, 161, 161, 0.3);
+}
 .sidebar {
     transition: transform 0.3s ease;
 }
@@ -494,6 +498,14 @@ body.dark .react-transform-wrapper image {
     transform: translateX(-100%);
 }
 input[type="radio"]:checked + label {
+    color: rgb(59 130 246);
+}
+input[type="checkbox"]:checked + label > img, input[type="checkbox"]:hover + label > img {
+    border: 2px solid rgb(59 130 246);
+    border-radius: 10px;
+    transform: scale(0.9);
+}
+input[type="checkbox"]:checked + label, input[type="checkbox"]:hover + label {
     color: rgb(59 130 246);
 }
 
