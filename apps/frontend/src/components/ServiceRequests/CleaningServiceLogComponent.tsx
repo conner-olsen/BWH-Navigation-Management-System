@@ -7,7 +7,8 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 // import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
 function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
-    //const [status, setStatus] = useState("Assigned");
+    const [statusMap, setStatusMap] = useState<{ [key: number]: string }>({});
+    const [employeeMap, setEmployeeMap] = useState<{ [key: number]: string }>({});
 
 
     const handleStatusChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
@@ -15,25 +16,27 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
             id: tableData[index].ServiceRequest.id,
             priority: tableData[index].ServiceRequest.priority,
             status:  value,
-            employeeUser: tableData[index].ServiceRequest.employeeUser,
+            employeeUser: employeeMap[index] || tableData[index].ServiceRequest.employeeUser,
             type: tableData[index].type,
             patientName: tableData[index].patientName,
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
+        setStatusMap({ ...statusMap, [index]: value });
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
         axios.patch("/api/service-request", {
             id: tableData[index].ServiceRequest.id,
             priority: tableData[index].ServiceRequest.priority,
-            status:  tableData[index].ServiceRequest.status,
+            status:   statusMap[index] || tableData[index].ServiceRequest.status,
             employeeUser: value,
             type: tableData[index].type,
             patientName: tableData[index].patientName,
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
+        setEmployeeMap({ ...employeeMap, [index]: value });
     };
 
     return tableData
@@ -46,7 +49,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                 <TableCell>{item.patientName}</TableCell> {/* Access patientName directly */}
                 <TableCell>{item.type}</TableCell> {/* Access type directly */}
                 <TableCell>
-                    <Select defaultValue={item.ServiceRequest.status} value={item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select defaultValue={statusMap[index] || item.ServiceRequest.status} value={statusMap[index] || item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -59,7 +62,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                     </Select>
                 </TableCell>
                 <TableCell>
-                    <Select value={item.ServiceRequest.employeeUser} defaultValue={item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select defaultValue={employeeMap[index] || item.ServiceRequest.employeeUser} value={employeeMap[index] || item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
