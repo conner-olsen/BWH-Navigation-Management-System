@@ -10,6 +10,7 @@ interface MapDisplayProps {
     startNode?: string;
     endNode?: string;
     sendHoverMapPath: (path: PathfindingRequest) => void;
+    sendClear: () => void;
     pathSent: Node[];
     doDisplayEdges: boolean;
     doDisplayNodes: boolean;
@@ -23,6 +24,7 @@ function MapDisplay({
                         startNode,
                         endNode,
                         sendHoverMapPath,
+                        sendClear,
                         pathFindingType,
                         doDisplayEdges,
                         doDisplayNodes,
@@ -79,6 +81,8 @@ function MapDisplay({
     const handleNodeClick = (node: Node) => {
         if (!startNodeId) {
             setStartNodeId(node.id);
+            const path: PathfindingRequest = {startid: node.id, endid: ""};
+            sendHoverMapPath(path);
         } else if (node.id == startNodeId) {
             clearSelection();
         } else if (!endNodeId) {
@@ -131,6 +135,7 @@ function MapDisplay({
         setStartNodeId(null);
         setEndNodeId(null);
         setPath([]);
+        sendClear();
     };
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
@@ -156,20 +161,6 @@ function MapDisplay({
 
         );
     };
-
-    // const displayNames = (graph: Graph) => {
-    //     const names: React.JSX.Element[] = [];
-    //     if (doDisplayNames) {
-    //         Array.from(graph.nodes.values()).map((node: Node) => {
-    //             if (node.floor == floor) {
-    //                 names.push(<text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-    //                     {node.shortName}
-    //                 </text>);
-    //             }
-    //         });
-    //     }
-    //     return names;
-    // };
 
     const displayName = (node: Node) => {
         if (doDisplayNames && (node.floor == floor)) {
