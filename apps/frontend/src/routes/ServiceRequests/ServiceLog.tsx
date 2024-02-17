@@ -13,7 +13,7 @@ import {ExternalTransportServiceLogComponent} from "../../components/ServiceRequ
 const ServiceLog = () => {
     return (
         <>
-        <div className={"align-content-center container"}>
+        <div className={"align-content-center container" }>
             <br/>
             <br/>
             <Tabs defaultValue="Flower Service Request" className="align-content-center">
