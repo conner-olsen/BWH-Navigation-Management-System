@@ -8,7 +8,7 @@ const router: Router = express.Router();
 router.post("/", async (req: Request, res: Response) => {
   try {
     const requestData: PathFindingRequest = req.body;
-    console.log(requestData);
+   // console.log(requestData);
     // set up objects needed to call bfs
     // language=file-reference - Node csv file path
     const graphCSV = new Graph();

@@ -14,8 +14,8 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./u
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
-    const [startNode, setStartNode] = useState<string>("Select Start Location");
-    const [endNode, setEndNode] = useState<string>("End Location");
+    const [startNode, setStartNode] = useState<string>("");
+    const [endNode, setEndNode] = useState<string>("");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
@@ -47,11 +47,7 @@ export function BFSComponent() {
 
     useEffect(() => {
         fetchData()
-            .then(response => {
-                // Handle success
-                console.log(response.data);
-            })
-            .catch(error => {
+            .then().catch(error => {
                 // Handle error
                 console.error("Error:", error.message);
                 // Optionally set state or show error message to the user
@@ -96,6 +92,11 @@ export function BFSComponent() {
     const sendHoverMapPath = (path: PathfindingRequest) => {
         setStartNode(path.startid);
         setEndNode(path.endid);
+    };
+
+    const sendClear = () => {
+        setStartNode("");
+        setEndNode("");
     };
 
     const [map, setMap] = useState("lowerLevel1");
@@ -156,6 +157,12 @@ export function BFSComponent() {
 
         if (nodeFloor == map && !(nodeType == "HALL")) {
             currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
+            roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
+        }
+        else if (id == startNode) {
+            currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
+        }
+        else if (id == endNode) {
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
         }
         else if (!(nodeType == "HALL")) {
@@ -346,17 +353,17 @@ export function BFSComponent() {
                                          className="w-[40%] dark:invert"></img>
                                 </button>
                             </div>
-                            <TransformComponent wrapperClass={"max-h-screen h-screen"}>
-                            {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                            <TransformComponent wrapperClass={"max-h-screen"}>
+                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                             </TransformComponent>
                         </React.Fragment>
                     )}
@@ -366,4 +373,4 @@ export function BFSComponent() {
         </div>
 
             );
-        }
+}
