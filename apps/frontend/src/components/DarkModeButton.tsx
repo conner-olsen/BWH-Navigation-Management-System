@@ -27,7 +27,7 @@ const DarkModeButton = () => {
     };
 
     return (
-        <Switch onCheckedChange={handleToggle} defaultChecked={document.body.classList.contains('dark')} className="mt-2.5">
+        <Switch onCheckedChange={handleToggle} defaultChecked={document.body.classList.contains('dark')}>
             Dark Mode
         </Switch>
     );
