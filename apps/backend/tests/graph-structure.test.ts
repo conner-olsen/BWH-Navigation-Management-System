@@ -1,9 +1,7 @@
 import { test, expect, describe } from "vitest";
 import { Graph } from "common/src/graph-structure.ts";
 import { Node } from "common/src/graph-structure.ts";
-import fs from "fs";
-import {parseCSV} from "common/src/parser.ts";
-import path from "path";
+import client from "../src/bin/database-connection.ts";
 
 describe("Graph Class", () => {
   const node1 = new Node(
@@ -63,29 +61,27 @@ describe("Graph Class", () => {
     expect(graph.getNode("fakeid")).toBe(undefined);
   });
 
-  test("should populate graph from CSV files", () => {
+  test("should populate graph from database", async () => {
     const graph = new Graph();
-    // language=file-reference - Node csv file path
-    const nodePath = path.join(__dirname, "../data/csv/L1Nodes.csv");
-    // language=file-reference - Edge csv file path
-    const edgePath = path.join(__dirname, "../data/csv/L1Edges.csv");
 
-    graph.fromCSV(nodePath, edgePath);
+    // Fetch nodes from the database
+    const nodes = await client.node.findMany();
+
+    // Fetch edges from the database
+    const edges = await client.edge.findMany();
+
+    // Populate the graph with nodes and edges
+    graph.populateGraph(nodes, edges);
 
     // Check if nodes are added to the graph
-    const nodeData = fs.readFileSync(nodePath, "utf-8");
-    const nodeRows = parseCSV(nodeData);
-    for (const row of nodeRows) {
-      const nodeID = row["nodeID"];
-      expect(graph.getNode(nodeID)).not.toBe(undefined);
+    for (const node of nodes) {
+      expect(graph.getNode(node.nodeId)).not.toBe(undefined);
     }
 
     // Check if edges are added to the graph
-    const edgeData = fs.readFileSync(edgePath, "utf-8");
-    const edgeRows = parseCSV(edgeData);
-    for (const row of edgeRows) {
-      const startNode = row["startNode"];
-      const endNode = row["endNode"];
+    for (const edge of edges) {
+      const startNode = edge.startNodeID;
+      const endNode = edge.endNodeID;
       expect(graph.getNode(startNode)?.edges.has(endNode)).toBe(true);
       expect(graph.getNode(endNode)?.edges.has(startNode)).toBe(true);
     }
