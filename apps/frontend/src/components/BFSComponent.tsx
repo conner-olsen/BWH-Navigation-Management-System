@@ -4,7 +4,6 @@ import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
-import Form from "react-bootstrap/Form";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
@@ -264,23 +263,54 @@ export function BFSComponent() {
                     </ol>
                 </div>
                 <div
-                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-lg
+                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-xl
                                 ${isExpanded ? 'right-[-90px]' : 'right-[-170px]'}`}>
                     <HoverCard openDelay={100}>
                         <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center
-                                        no-underline text-foreground">Display</HoverCardTrigger>
+                                        no-underline text-foreground relative cursor-pointer group">
+                            <img src="../../public/icon/gmap-icon-bg.png" alt="map-bg"
+                                 className="dark:brightness-50 group-hover:scale-[0.9] transition-all duration-200"></img>
+                            <p className="absolute bottom-[5px] text-[12px] font-bold m-0">Display</p>
+                        </HoverCardTrigger>
                         <HoverCardContent side="right">
-                            <div className="flex flex-col">
-                                <Form.Check type="switch" id="display-edges-switch" label="Display Edges"
-                                            checked={doDisplayEdges}
-                                            onChange={() => setDoDisplayEdges(!doDisplayEdges)}/>
-                                <Form.Check type="switch" id="display-nodes-switch" label="Display Nodes"
-                                            checked={doDisplayNodes}
-                                            onChange={() => setDoDisplayNodes(!doDisplayNodes)}/>
-                                <Form.Check type="switch" id="display-names-switch" label="Display Names"
-                                            checked={doDisplayNames}
-                                            onChange={() => setDoDisplayNames(!doDisplayNames)}/>
-                            </div>
+                            <form className="flex flex-row">
+                                <div className="px-1">
+                                    <input type="checkbox" id="display-edges-switch" name="display-edges-switch"
+                                           className="hidden"
+                                           onChange={() => setDoDisplayEdges(!doDisplayEdges)}
+                                           checked={doDisplayEdges}/>
+                                    <label htmlFor="display-edges-switch"
+                                           className="cursor-pointer flex flex-col justify-center">
+                                        <img src="../../public/icon/gmap-icon-bg.png" alt="edge-bg"
+                                             className="w-[50px] m-auto dark:brightness-50"></img>
+                                        <p className="m-0 text-center text-xs">Edges</p>
+                                    </label>
+                                </div>
+                                <div className="px-1">
+                                    <input type="checkbox" id="display-nodes-switch" name="display-nodes-switch"
+                                           className="hidden"
+                                           onChange={() => setDoDisplayNodes(!doDisplayNodes)}
+                                           checked={doDisplayNodes}/>
+                                    <label htmlFor="display-nodes-switch"
+                                           className="cursor-pointer flex flex-col justify-center">
+                                        <img src="../../public/icon/gmap-icon-bg.png" alt="edge-bg"
+                                             className="w-[50px] m-auto dark:brightness-50"></img>
+                                        <p className="m-0 text-center text-xs">Nodes</p>
+                                    </label>
+                                </div>
+                                <div className="px-1">
+                                    <input type="checkbox" id="display-names-switch" name="display-names-switch"
+                                           className="hidden"
+                                           onChange={() => setDoDisplayNames(!doDisplayNames)}
+                                           checked={doDisplayNames}/>
+                                    <label htmlFor="display-names-switch"
+                                           className="cursor-pointer flex flex-col justify-center">
+                                        <img src="../../public/icon/gmap-icon-bg.png" alt="edge-bg"
+                                             className="w-[50px] m-auto dark:brightness-50"></img>
+                                        <p className="m-0 text-center text-xs">Names</p>
+                                    </label>
+                                </div>
+                            </form>
                         </HoverCardContent>
                     </HoverCard>
 
@@ -295,7 +325,8 @@ export function BFSComponent() {
                 >
                     {({zoomIn, zoomOut, resetTransform}) => (
                         <React.Fragment>
-                            <div className="tools flex flex-col absolute right-2 top-2 z-10 dark:bg-blue-300 rounded-lg">
+                            <div
+                                className="tools flex flex-col absolute right-2 top-2 z-10 dark:bg-blue-300 rounded-lg">
                                 <button onClick={() => zoomIn()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">+
