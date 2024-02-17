@@ -48,11 +48,7 @@ export function BFSComponent() {
 
     useEffect(() => {
         fetchData()
-            .then(response => {
-                // Handle success
-                console.log(response.data);
-            })
-            .catch(error => {
+            .then().catch(error => {
                 // Handle error
                 console.error("Error:", error.message);
                 // Optionally set state or show error message to the user
