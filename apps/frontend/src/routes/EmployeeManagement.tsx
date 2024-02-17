@@ -7,6 +7,7 @@ import {Button} from "../components/ui/button.tsx";
 import Global_Footer from "../components/Global_Footer.tsx";
 import {Label} from "../components/ui/label.tsx";
 import {Input} from "../components/ui/input.tsx";
+import ExportEmployeeCSVButton from "../components/ExportEmployeeCSVButton.tsx";
 export const EmployeeManager = () => {
 
     const [formData, setFormData] = useState({
@@ -159,6 +160,7 @@ export const EmployeeManager = () => {
                                 {/*This is the delete employee thing*/}
 
                                                 <Col>
+                                                    <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
                                             <GetDataEmployees></GetDataEmployees>
                                                 </Col>
 
