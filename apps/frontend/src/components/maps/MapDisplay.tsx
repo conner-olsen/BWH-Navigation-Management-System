@@ -81,6 +81,8 @@ function MapDisplay({
     const handleNodeClick = (node: Node) => {
         if (!startNodeId) {
             setStartNodeId(node.id);
+            const path: PathfindingRequest = {startid: node.id, endid: ""};
+            sendHoverMapPath(path);
         } else if (node.id == startNodeId) {
             clearSelection();
         } else if (!endNodeId) {
