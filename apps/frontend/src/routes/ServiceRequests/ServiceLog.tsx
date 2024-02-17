@@ -37,7 +37,8 @@ const ServiceLog = () => {
             ],
             hoverOffset: 4
         }]
-    };
+    };\
+
 
     return (
         <>
