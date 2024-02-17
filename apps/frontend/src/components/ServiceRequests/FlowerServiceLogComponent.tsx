@@ -5,7 +5,7 @@ import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
-function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
+function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
 
 
     const handleStatusChange = (index: number, value: string, tableData: flowerServiceRequest[]) => {
@@ -41,7 +41,8 @@ function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], empl
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
+        .filter(item => (selectedStatus === "" || item.ServiceRequest.status === selectedStatus) &&
+            (selectedEmployeeUser === "" || item.ServiceRequest.employeeUser === selectedEmployeeUser))
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{item.ServiceRequest.status}</TableCell>
@@ -89,7 +90,7 @@ function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], empl
         ));
 }
 
-const TableServicesFlower: React.FC<{ tableData: flowerServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServicesFlower: React.FC<{ tableData: flowerServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string; }> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser}) => {
     return (
         <Table>
             <TableHeader>
@@ -108,7 +109,7 @@ const TableServicesFlower: React.FC<{ tableData: flowerServiceRequest[]; employe
                 <TableHead>Assignment</TableHead>
             </TableRow>
             </TableHeader>
-            <TableBody>{GenerateTableRowsServicesFlower(tableData, employeeData, selectedStatus)}</TableBody>
+            <TableBody>{GenerateTableRowsServicesFlower(tableData, employeeData, selectedStatus, selectedEmployeeUser)}</TableBody>
         </Table>
     );
 };
@@ -118,6 +119,7 @@ export const FlowerServiceLogComponent = () => {
     const [data, setData] = useState<flowerServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
+    const [selectedEmployeeUser, setSelectedEmployeeUser] = useState<string>("");
 
 
     useEffect(() => {
@@ -173,12 +175,27 @@ export const FlowerServiceLogComponent = () => {
                                 </SelectContent>
                             </Select>
                         </Col>
+                        <Col>
+                            <p>Filter by Employee:</p>
+                            <Select onValueChange={(user) => setSelectedEmployeeUser(user)}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Employee" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {employeeData.map((employee, employeeIndex) => (
+                                        <SelectItem key={employeeIndex} value={employee.username}>
+                                            {employee.username}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </Col>
                     </Row>
                 </Container>
 
                 <br/>
 
-                <TableServicesFlower tableData={data} employeeData={employeeData} selectedStatus={selectedStatus}/>
+                <TableServicesFlower tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser}/>
 
         </div>
     );

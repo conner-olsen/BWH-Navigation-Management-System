@@ -5,7 +5,7 @@ import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
-function GenerateTableRowsServices(tableData: externalTransportationServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
+function GenerateTableRowsServices(tableData: externalTransportationServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
 
     const handleStatusChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
         axios.patch("/api/service-request", {
@@ -30,8 +30,9 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
-        .map((item, index) => (
+        .filter(item => (selectedStatus === "" || item.ServiceRequest.status === selectedStatus) &&
+            (selectedEmployeeUser === "" || item.ServiceRequest.employeeUser === selectedEmployeeUser))
+            .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{item.ServiceRequest.nodeId}</TableCell>
                 <TableCell>{item.ServiceRequest.priority}</TableCell>
@@ -77,7 +78,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
         ));
 }
 
-const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string;}> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser}) => {
     return (
         <Table>
             <TableHeader>
@@ -93,7 +94,7 @@ const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[
                     <TableHead>Assignment</TableHead>
                 </TableRow>
             </TableHeader>
-            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus)}</TableBody>
+            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus, selectedEmployeeUser)}</TableBody>
         </Table>
     );
 };
@@ -103,6 +104,7 @@ export const ExternalTransportServiceLogComponent = () => {
     const [data, setData] = useState<externalTransportationServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
+    const [selectedEmployeeUser, setSelectedEmployeeUser] = useState<string>("");
 
 
     useEffect(() => {
@@ -158,12 +160,27 @@ export const ExternalTransportServiceLogComponent = () => {
                             </SelectContent>
                         </Select>
                     </Col>
+                    <Col>
+                        <p>Filter by Employee:</p>
+                        <Select onValueChange={(user) => setSelectedEmployeeUser(user)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Employee" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {employeeData.map((employee, employeeIndex) => (
+                                    <SelectItem key={employeeIndex} value={employee.username}>
+                                        {employee.username}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </Col>
                 </Row>
             </Container>
 
             <br/>
 
-            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus}/>
+            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser}/>
 
         </div>
     );

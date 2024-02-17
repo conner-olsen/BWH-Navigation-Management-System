@@ -8,7 +8,7 @@ import { internalTransportServiceRequest } from 'common/interfaces/interfaces.ts
 
 
 
-function GenerateTableRowsServices(tableData: internalTransportServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
+function GenerateTableRowsServices(tableData: internalTransportServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
 
     const handleStatusChange = (index: number, value: string, tableData: internalTransportServiceRequest[]) => {
         axios.patch("/api/service-request", {
@@ -33,7 +33,8 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
+        .filter(item => (selectedStatus === "" || item.ServiceRequest.status === selectedStatus) &&
+            (selectedEmployeeUser === "" || item.ServiceRequest.employeeUser === selectedEmployeeUser))
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{item.ServiceRequest.nodeId}</TableCell>
@@ -76,7 +77,7 @@ function GenerateTableRowsServices(tableData: internalTransportServiceRequest[],
         ));
 }
 
-const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string}> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser}) => {
     return (
         <Table>
             <TableHeader>
@@ -90,7 +91,7 @@ const TableServices: React.FC<{ tableData: internalTransportServiceRequest[]; em
                     <TableHead>Assignment</TableHead>
                 </TableRow>
             </TableHeader>
-            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus)}</TableBody>
+            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus,selectedEmployeeUser)}</TableBody>
         </Table>
     );
 };
@@ -100,6 +101,8 @@ export const InternalTransportServiceLogComponent = () => {
     const [data, setData] = useState<internalTransportServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
+    const [selectedEmployeeUser, setSelectedEmployeeUser] = useState<string>("");
+
 
 
     useEffect(() => {
@@ -155,12 +158,27 @@ export const InternalTransportServiceLogComponent = () => {
                             </SelectContent>
                         </Select>
                     </Col>
+                    <Col>
+                        <p>Filter by Employee:</p>
+                        <Select onValueChange={(user) => setSelectedEmployeeUser(user)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Employee" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {employeeData.map((employee, employeeIndex) => (
+                                    <SelectItem key={employeeIndex} value={employee.username}>
+                                        {employee.username}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </Col>
                 </Row>
             </Container>
 
             <br/>
 
-            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus}/>
+            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser}/>
 
         </div>
     );

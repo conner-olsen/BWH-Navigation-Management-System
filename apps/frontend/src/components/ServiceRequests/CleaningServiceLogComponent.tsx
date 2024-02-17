@@ -6,7 +6,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 // import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
-function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
+function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
     //const [status, setStatus] = useState("Assigned");
 
 
@@ -37,7 +37,8 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
+        .filter(item => (selectedStatus === "" || item.ServiceRequest.status === selectedStatus) &&
+            (selectedEmployeeUser === "" || item.ServiceRequest.employeeUser === selectedEmployeeUser))
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{item.ServiceRequest.nodeId}</TableCell>
@@ -45,7 +46,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                 <TableCell>{item.patientName}</TableCell> {/* Access patientName directly */}
                 <TableCell>{item.type}</TableCell> {/* Access type directly */}
                 <TableCell>
-                    <Select value={item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select defaultValue={item.ServiceRequest.status} value={item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -58,7 +59,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                     </Select>
                 </TableCell>
                 <TableCell>
-                    <Select value={item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select value={item.ServiceRequest.employeeUser} defaultValue={item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
@@ -76,7 +77,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
         ));
 }
 
-const TableServices: React.FC<{ tableData: cleaningServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: cleaningServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string;}> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser}) => {
     return (
         <Table>
             <TableHeader>
@@ -89,7 +90,7 @@ const TableServices: React.FC<{ tableData: cleaningServiceRequest[]; employeeDat
                     <TableHead>Assignment</TableHead>
                 </TableRow>
             </TableHeader>
-            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus)}</TableBody>
+            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus, selectedEmployeeUser)}</TableBody>
         </Table>
     );
 };
@@ -99,6 +100,7 @@ export const CleaningServiceLogComponent = () => {
     const [data, setData] = useState<cleaningServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
+    const [selectedEmployeeUser, setSelectedEmployeeUser] = useState<string>("");
 
 
     useEffect(() => {
@@ -153,12 +155,27 @@ export const CleaningServiceLogComponent = () => {
                             </SelectContent>
                         </Select>
                     </Col>
+                    <Col>
+                        <p>Filter by Employee:</p>
+                        <Select onValueChange={(user) => setSelectedEmployeeUser(user)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Employee" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {employeeData.map((employee, employeeIndex) => (
+                                    <SelectItem key={employeeIndex} value={employee.username}>
+                                        {employee.username}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </Col>
                 </Row>
             </Container>
 
             <br/>
 
-            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus}/>
+            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser}/>
 
         </div>
     );
