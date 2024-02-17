@@ -85,7 +85,7 @@ export function NodeEdgeData() {
             <Container>
                 <Row>
                     <Col>
-                        <h1 className="m-0 text-left">Node Data</h1>
+                        <h1 className="text-left">Node Data</h1>
                         <Container>
                             <ExportNodeDataToCSVButton></ExportNodeDataToCSVButton>
                         </Container>
@@ -93,7 +93,7 @@ export function NodeEdgeData() {
                         <DragNDrop onFileDrop={handleNodeFileDrop}></DragNDrop>
                     </Col>
                     <Col>
-                        <h1 className="m-0 text-left">Edge Data</h1>
+                        <h1 className="text-left">Edge Data</h1>
                         <Container>
                             <ExportEdgeDataButton></ExportEdgeDataButton>
                         </Container>
