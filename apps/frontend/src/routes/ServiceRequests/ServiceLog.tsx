@@ -15,36 +15,100 @@ import {
     SheetTrigger
 } from "../../components/ui/sheet.tsx";
 import {Button} from "../../components/ui/button.tsx";
+import {Pie} from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import axios from "axios";
 
 
 
 
 const ServiceLog = () => {
 
-    const data = {
-        labels: [
-            'Red',
-            'Blue',
-            'Yellow'
-        ],
-        datasets: [{
-            label: 'My First Dataset',
-            data: [300, 50, 100],
-            backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
-            ],
-            hoverOffset: 4
-        }]
-    };
+    let countFlower = 0;
+    let countReligious = 0;
+    let countCleaning = 0;
+    let countInternal = 0;
+    let countExternal = 0;
+    let countLanguage = 0;
 
+    const getCounts = async () => {
+        try {
+            countFlower = await axios.get("/api/get-stats/flower", {
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            });
+            countReligious = await axios.get("/api/get-stats/religious", {
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            });
+
+            countCleaning = await axios.get("/api/get-stats/cleaning", {
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            });
+
+            countInternal = await axios.get("/api/get-stats/internal-transportation", {
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            });
+
+            countExternal = await axios.get("/api/get-stats/external-transportation", {
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            });
+
+            countLanguage = await axios.get("/api/get-stats/language", {
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            });
+
+        } catch (error) {
+            console.error('Error getting data:', error);
+        }
+    };
+    getCounts().then();
+
+
+    ChartJS.register(ArcElement, Tooltip, Legend);
+    const statusData = {
+        labels: ['Flower', 'Religious', 'Cleaning', 'Internal Transport', 'External Transport', 'Language'],
+        datasets: [
+            {
+                label: '# of Requests per Service',
+                data: [countFlower, countReligious, countCleaning, countInternal, countExternal, countLanguage],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                ],
+                borderWidth: 1,
+            },
+        ],
+    };
 
     return (
         <>
         <div className={"align-content-center container"}>
             <br/>
             <br/>
+
 
             <Tabs defaultValue="Flower Service Request" className="align-content-center">
                 <TabsList classname-={"align-content-center"}>
@@ -66,6 +130,7 @@ const ServiceLog = () => {
                                 </SheetDescription>
                             </SheetHeader>
 
+                            <Pie className="w-[1000px]" data={statusData} />
 
                         </SheetContent>
                     </Sheet>
