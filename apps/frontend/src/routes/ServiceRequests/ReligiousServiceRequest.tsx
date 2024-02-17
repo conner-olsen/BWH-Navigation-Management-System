@@ -35,7 +35,7 @@ const ReligiousServiceRequest: React.FC = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post("/api/religious-service-request", JSON.stringify(formData), {
+            const response = await axios.post("/api/service-request/religious", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }

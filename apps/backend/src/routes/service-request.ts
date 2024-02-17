@@ -4,6 +4,62 @@ import {ServiceRequest} from "common/interfaces/interfaces.ts";
 const router: Router = express.Router();
 
 
+router.post("/:serviceType", async (req: Request, res: Response) => {
+
+  let requestType;
+  const { nodeId,employeeUser, status, priority,id, ...specificData } = req.body;
+
+  try {
+
+    switch(req.params.serviceType){
+      case "internal-transportation":
+        requestType = {internalTransportServiceRequest: {create: specificData}};
+        break;
+      case "external-transportation":
+        requestType = {externalTransportationServiceRequest: {create: specificData}};
+        break;
+      case "language":
+        requestType = {languageInterpreterServiceRequest: {create: specificData}};
+        break;
+      case "cleaning":
+        requestType = {cleaningServiceRequest: {create: specificData}};
+        break;
+      case "religious":
+        requestType = {religiousServiceRequest: {create: specificData}};
+        break;
+      case "flower":
+        requestType = {flowerServiceRequests: {create: specificData}};
+        break;
+      default:
+        res.sendStatus(501);
+    }
+
+    // Create the Service Request
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    await PrismaClient.serviceRequest.create({ data: {
+        node: {
+          connect:{
+            nodeId: nodeId
+          }
+        },
+        status: status,
+        employee: {
+          connect: {
+            username: employeeUser
+          }
+        },
+        priority: priority,
+        ...requestType
+      } });
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(`Error creating service request: ${error}`);
+    res.sendStatus(500);
+  }
+});
+
 router.get("/:serviceType", async (req: Request, res: Response) => {
 
   let requestType;

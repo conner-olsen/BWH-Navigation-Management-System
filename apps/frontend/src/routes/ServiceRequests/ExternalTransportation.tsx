@@ -14,7 +14,7 @@ const ExternalTransportation: React.FC = () => {
     const [formData, setFormData] = useState({
         id: '',
         nodeId: '',
-        patientName: '',
+        name: '',
         destination: '',
         transportation: '',
         date: '',
@@ -36,7 +36,7 @@ const ExternalTransportation: React.FC = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post("/api/external-transport", JSON.stringify(formData), {
+            const response = await axios.post("/api/service-request/external-transportation", JSON.stringify(formData), {
                 headers: {
                     "Content-Type": 'application/json'
                 }
@@ -53,7 +53,7 @@ const ExternalTransportation: React.FC = () => {
         setFormData({
             id: '',
             nodeId: '',
-            patientName: '',
+            name: '',
             description: '',
             transportation: '',
             date: '',
@@ -78,8 +78,8 @@ const ExternalTransportation: React.FC = () => {
                     <Row>
                         <Col>
                             <div>
-                                <Label htmlFor="patientName">Patient Name</Label>
-                                <Input type="text" id="patientName" placeholder={"Tanya Khan"}
+                                <Label htmlFor="name">Patient Name</Label>
+                                <Input type="text" id="name" placeholder={"Tanya Khan"}
                                        onChange={handleChangeText}/>
                             </div>
                         </Col>
