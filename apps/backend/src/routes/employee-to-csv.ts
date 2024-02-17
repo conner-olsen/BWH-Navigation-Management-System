@@ -6,14 +6,9 @@ import {employee} from "common/interfaces/interfaces.ts";
 
 const router: Router = express.Router();
 
-interface employeeData {
-  username: string,
-  firstName: string,
-  lastName: string,
-  email: string,
-}
 
-function convertToCSV(data: employeeData[]): string {
+
+function convertToCSV(data: employee[]): string {
   const headers = Object.keys(data[0]).join(',');
   const rows = data.map((node) => Object.values(node).join(','));
   return `${headers}\n${rows.join('\n')}`;
@@ -22,6 +17,7 @@ router.post("/", async function(req: Request, res: Response){
   try {
     // Get the JSON body from the JSON object
     const employeeCSVData = req.body;
+    console.log(employeeCSVData);
     const parsedCSVData = parseCSV(employeeCSVData);
     const transformedEmp: employee[] = parsedCSVData.map((row) => {
       const rowval = Object.values(row);
@@ -31,22 +27,36 @@ router.post("/", async function(req: Request, res: Response){
         lastName: rowval[2],
         email: rowval[3],
       };
+    });
 
-    });
-    await PrismaClient.employee.createMany({data:transformedEmp.map((self) => {
+    // Create records in 'user' table
+    await PrismaClient.user.createMany({
+      data: transformedEmp.map((self)  => {
         return {
-          username:self.username,
-          firstName:self.firstName,
-          lastName:self.lastName,
-          email:self.email,
-        };}
-      )
+          Username: self.username,
+        };
+      })
     });
+
+    // Create records in 'employee' table
+    await PrismaClient.employee.createMany({
+      data: transformedEmp.map((self) => {
+        return {
+          username: self.username,
+          firstName: self.firstName,
+          lastName: self.lastName,
+          email: self.email,
+        };
+      })
+    });
+
+    // Send success response
+    res.sendStatus(200);
   } catch (error) {
     console.error(`Error storing data: ${error}`);
-    res.send(500);
+    // Send error response
+    res.sendStatus(500);
   }
-  res.send(200);
 });
 
 router.get("/", async function (req: Request, res: Response) {
