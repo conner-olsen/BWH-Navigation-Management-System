@@ -7,7 +7,8 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 // import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
 function GenerateTableRowsServices(tableData: religiousServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
-    //const [status, setStatus] = useState("Assigned");
+    const [statusMap, setStatusMap] = useState<{ [key: number]: string }>({});
+    const [employeeMap, setEmployeeMap] = useState<{ [key: number]: string }>({});;
 
 
     const handleStatusChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
@@ -19,10 +20,11 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
             patientName: tableData[index].patientName,
             relgion: tableData[index].religion,
             status: value,
-            employeeUser: tableData[index].ServiceRequest.employeeUser
+            employeeUser: employeeMap[index] || tableData[index].ServiceRequest.employeeUser
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
+        setStatusMap({ ...statusMap, [index]: value });
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
@@ -33,11 +35,12 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
             note:  tableData[index].note,
             patientName: tableData[index].patientName,
             relgion: tableData[index].religion,
-            status: tableData[index].ServiceRequest.status,
+            status: statusMap[index] || tableData[index].ServiceRequest.status,
             employeeUser: value,
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
+        setEmployeeMap({ ...employeeMap, [index]: value });
     };
 
     return tableData
@@ -53,9 +56,8 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
 
                 <TableCell>
-                    <Select value={item.ServiceRequest.status}
-                            onValueChange={(status) => handleStatusChange(index, status, tableData)}>
-                        <SelectTrigger>
+                    <Select defaultValue={statusMap[index] || item.ServiceRequest.status} value={statusMap[index] || item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
                         <SelectContent>
@@ -68,9 +70,8 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].ServiceRequest.employeeUser}
-                            onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
-                        <SelectTrigger>
+                    <Select defaultValue={employeeMap[index] || item.ServiceRequest.employeeUser} value={employeeMap[index] || item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
                         <SelectContent>
