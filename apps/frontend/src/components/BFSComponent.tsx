@@ -176,7 +176,7 @@ export function BFSComponent() {
 
     return (
         <div>
-            <div className="fixed top-0 left-0 h-screen w-[80px] bg-neutral-500 text-white z-20 px-4 pt-[100px]
+            <div className="fixed top-0 left-0 h-screen w-[80px] bg-neutral-500 bg-opacity-30 text-white z-20 px-4 pt-[100px]
                       flex flex-col">
                 <button onClick={toggleSidebar} className="text-xl text-white focus:outline-none">
                     {isExpanded ? (
@@ -269,10 +269,10 @@ export function BFSComponent() {
                         <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center
                                         no-underline text-foreground relative cursor-pointer group">
                             <img src="../../public/icon/gmap-icon-bg.png" alt="map-bg"
-                                 className="dark:brightness-50 group-hover:scale-[0.9] transition-all duration-200"></img>
+                                 className="dark:brightness-75 group-hover:scale-[0.9] transition-all duration-200"></img>
                             <p className="absolute bottom-[5px] text-[12px] font-bold m-0">Display</p>
                         </HoverCardTrigger>
-                        <HoverCardContent side="right">
+                        <HoverCardContent side="right" className="pb-2">
                             <form className="flex flex-row">
                                 <div className="px-1">
                                     <input type="checkbox" id="display-edges-switch" name="display-edges-switch"
@@ -281,8 +281,8 @@ export function BFSComponent() {
                                            checked={doDisplayEdges}/>
                                     <label htmlFor="display-edges-switch"
                                            className="cursor-pointer flex flex-col justify-center">
-                                        <img src="../../public/icon/gmap-icon-bg.png" alt="edge-bg"
-                                             className="w-[50px] m-auto dark:brightness-50"></img>
+                                        <img src="../../public/icon/map-edges-icon.png" alt="edge-bg"
+                                             className="w-[50px] m-auto dark:brightness-75"></img>
                                         <p className="m-0 text-center text-xs">Edges</p>
                                     </label>
                                 </div>
@@ -293,8 +293,8 @@ export function BFSComponent() {
                                            checked={doDisplayNodes}/>
                                     <label htmlFor="display-nodes-switch"
                                            className="cursor-pointer flex flex-col justify-center">
-                                        <img src="../../public/icon/gmap-icon-bg.png" alt="edge-bg"
-                                             className="w-[50px] m-auto dark:brightness-50"></img>
+                                        <img src="../../public/icon/map-nodes-icon.png" alt="edge-bg"
+                                             className="w-[50px] m-auto dark:brightness-75"></img>
                                         <p className="m-0 text-center text-xs">Nodes</p>
                                     </label>
                                 </div>
@@ -305,8 +305,8 @@ export function BFSComponent() {
                                            checked={doDisplayNames}/>
                                     <label htmlFor="display-names-switch"
                                            className="cursor-pointer flex flex-col justify-center">
-                                        <img src="../../public/icon/gmap-icon-bg.png" alt="edge-bg"
-                                             className="w-[50px] m-auto dark:brightness-50"></img>
+                                        <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                                             className="w-[50px] m-auto dark:brightness-75"></img>
                                         <p className="m-0 text-center text-xs">Names</p>
                                     </label>
                                 </div>
@@ -316,32 +316,38 @@ export function BFSComponent() {
 
                 </div>
             </div>
-            <div className="relative w-screen max-w-full m-auto">
+            <div className="fixed w-screen max-w-full m-auto">
                 <TransformWrapper
                     initialScale={1}
                     initialPositionX={0}
                     initialPositionY={0}
                     wheel={{step: 0.1, smoothStep: 0.01}}
+                    centerZoomedOut={true}
                 >
                     {({zoomIn, zoomOut, resetTransform}) => (
                         <React.Fragment>
                             <div
-                                className="tools flex flex-col absolute right-2 top-2 z-10 dark:bg-blue-300 rounded-lg">
+                                className="tools flex flex-col absolute right-2 top-2 z-10 rounded-lg">
                                 <button onClick={() => zoomIn()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">+
+                                        text-2xl shadow-md m-0.5">
+                                    <img src="../../public/icon/zoom-in-icon.png" alt="zoom-in" className="w-[30%] dark:invert"></img>
                                 </button>
                                 <button onClick={() => zoomOut()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">-
+                                        text-2xl shadow-md m-0.5">
+                                    <img src="../../public/icon/zoom-out-icon.png" alt="zoom-out"
+                                         className="w-[30%] dark:invert"></img>
                                 </button>
                                 <button onClick={() => resetTransform()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
-                                        text-2xl shadow-md m-0.5">x
+                                        text-2xl shadow-md m-0.5">
+                                    <img src="../../public/icon/reset-icon.png" alt="zoom-in"
+                                         className="w-[40%] dark:invert"></img>
                                 </button>
                             </div>
-                            <TransformComponent wrapperClass={"max-h-screen"}>
-                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                            <TransformComponent wrapperClass={"max-h-screen h-screen"}>
+                            {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                                           pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
                                 {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                                           pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
