@@ -159,6 +159,12 @@ export function BFSComponent() {
             currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
         }
+        else if (id == startNode) {
+            currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
+        }
+        else if (id == endNode) {
+            roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
+        }
         else if (!(nodeType == "HALL")) {
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
         }
@@ -329,4 +335,4 @@ export function BFSComponent() {
         </div>
 
             );
-        }
+}
