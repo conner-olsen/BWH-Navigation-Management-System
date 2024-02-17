@@ -33,6 +33,7 @@
     "autoprefixer": "^10.4.17",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
+    "chart.js": "^4.4.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "common": "workspace:*",
