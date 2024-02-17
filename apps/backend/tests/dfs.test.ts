@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { Graph } from 'common/src/graph-structure.ts';
 import { Node } from 'common/src/graph-structure.ts';
-import {bfsPathfinding} from "common/src/PathfindingMethod.ts";
+import {dfsPathfinding} from "common/src/PathfindingMethod.ts";
 
 /////////////////manual bfs testing:
 const graph = new Graph();
@@ -28,7 +28,7 @@ const startNode = '1';
 const endNode = '3';
 const answer: string[] = ["1", "3"];
 
-graph.setPathfindingMethod(new bfsPathfinding());
+graph.setPathfindingMethod(new dfsPathfinding());
 
 //test full graph
 test("find path 1 4", () => {
