@@ -4,15 +4,11 @@
   "version": "1.0.0",
   "module": "true",
   "devDependencies": {
-    "@testing-library/react": "^14.2.0",
     "@types/node": "^20.11.10",
-    "eslint": "latest",
     "eslint-config-custom": "workspace:*",
     "prettier": "latest",
     "prettier-config-custom": "workspace:*",
-    "tsconfig-custom": "workspace:*",
-    "typescript": "^5.0.4",
-    "vitest": "^1.3.0"
+    "tsconfig-custom": "workspace:*"
   },
   "scripts": {
     "lint": "yarn shared:prettierlint && yarn shared:eslint && yarn shared:tslint",

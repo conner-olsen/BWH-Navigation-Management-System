@@ -1115,21 +1115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:4.15.0":
-  version: 4.15.0
-  resolution: "@prisma/client@npm:4.15.0"
-  dependencies:
-    "@prisma/engines-version": "npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944"
-  peerDependencies:
-    prisma: "*"
-  peerDependenciesMeta:
-    prisma:
-      optional: true
-  checksum: 14d6609dbb41c9689731d5da06237138bc51da07aa8506bdfb3789324964f68c70ef451590a1d4c041acb1eca6227c332c3791a7f55f3ea86e16e8431a307518
-  languageName: node
-  linkType: hard
-
-"@prisma/client@npm:^5.9.0":
+"@prisma/client@npm:^5.9.1":
   version: 5.9.1
   resolution: "@prisma/client@npm:5.9.1"
   peerDependencies:
@@ -1148,24 +1134,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/engines-version@npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944":
-  version: 4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944
-  resolution: "@prisma/engines-version@npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944"
-  checksum: 693ebe6c19b44a829c60adb2b461ac6799150aff1b8e0446bbbbf9888021f3890880d640c2320afd81afda2af8caf4ca3937ef5ad43325e6863730c16bf510f0
-  languageName: node
-  linkType: hard
-
 "@prisma/engines-version@npm:5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64":
   version: 5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64
   resolution: "@prisma/engines-version@npm:5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64"
   checksum: 7ed88a87f64b1cd55fe5ade37020dafb47e8b2f0735cd0e1941953012c3097a6c10800fd7e6d683e8f74bffa66c3b5442e343cada383b3ec2e15c6d4c4b4074f
-  languageName: node
-  linkType: hard
-
-"@prisma/engines@npm:4.15.0":
-  version: 4.15.0
-  resolution: "@prisma/engines@npm:4.15.0"
-  checksum: 06e9756ae0c8566e754d5ddf0b3fd2bdc7723c76e07e432ebb4968d16703a0a355da6c1dc98e832b84211c7fe32ed705a7ac2b35d5c0d2ef0143f48ed082dd36
   languageName: node
   linkType: hard
 
@@ -2471,7 +2443,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:*, @types/express@npm:^4.17.17":
+"@types/express@npm:*, @types/express@npm:^4.17.21":
   version: 4.17.21
   resolution: "@types/express@npm:4.17.21"
   dependencies:
@@ -2557,7 +2529,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.2.3, @types/node@npm:^20.2.5":
+"@types/node@npm:*, @types/node@npm:^20.2.5":
   version: 20.11.5
   resolution: "@types/node@npm:20.11.5"
   dependencies:
@@ -2581,6 +2553,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 41ca9c7e7c95bf070ad747ab266f267f41950e01f5ddda739d0665c2ed39acc45cce46f78e33ffa2bf2dacd74a8493044b967c86358017dacce12958e49db664
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.11.19":
+  version: 20.11.19
+  resolution: "@types/node@npm:20.11.19"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: c7f4705d6c84aa21679ad180c33c13ca9567f650e66e14bcee77c7c43d14619c7cd3b4d7b2458947143030b7b1930180efa6d12d999b45366abff9fed7a17472
   languageName: node
   linkType: hard
 
@@ -3551,10 +3532,10 @@ __metadata:
     "@swc/core": "npm:^1.3.60"
     "@swc/helpers": "npm:^0.5.1"
     "@types/cookie-parser": "npm:^1.4.3"
-    "@types/express": "npm:^4.17.17"
+    "@types/express": "npm:^4.17.21"
     "@types/http-errors": "npm:^2.0.1"
     "@types/morgan": "npm:^1.9.4"
-    "@types/node": "npm:^20.2.3"
+    "@types/node": "npm:^20.11.19"
     "@types/pg": "npm:^8.10.1"
     "@types/supertest": "npm:^2.0.12"
     axios: "npm:^1.6.7"
@@ -3562,7 +3543,7 @@ __metadata:
     cookie-parser: "npm:~1.4.4"
     database: "workspace:*"
     eslint: "npm:latest"
-    eslint-config-custom: "workspace:*"
+    eslint-config-custom: "workspace:^"
     express: "npm:5.0.0-beta.1"
     express-oauth2-jwt-bearer: "npm:^1.5.0"
     http-errors: "npm:~1.6.3"
@@ -4147,15 +4128,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "common@workspace:packages/common"
   dependencies:
-    "@testing-library/react": "npm:^14.2.0"
     "@types/node": "npm:^20.11.10"
-    eslint: "npm:latest"
     eslint-config-custom: "workspace:*"
     prettier: "npm:latest"
     prettier-config-custom: "workspace:*"
     tsconfig-custom: "workspace:*"
-    typescript: "npm:^5.0.4"
-    vitest: "npm:^1.3.0"
   languageName: unknown
   linkType: soft
 
@@ -4347,12 +4324,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "database@workspace:packages/database"
   dependencies:
-    "@prisma/client": "npm:4.15.0"
+    "@prisma/client": "npm:^5.9.1"
     eslint: "npm:latest"
     eslint-config-custom: "workspace:*"
     prettier: "npm:latest"
     prettier-config-custom: "workspace:*"
-    prisma: "npm:4.15.0"
+    prisma: "npm:^5.9.1"
     tsconfig-custom: "workspace:*"
     typescript: "npm:^5.0.4"
     vitest: "npm:^1.3.0"
@@ -4960,7 +4937,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-custom@workspace:*, eslint-config-custom@workspace:configs/eslint-config-custom":
+"eslint-config-custom@workspace:*, eslint-config-custom@workspace:^, eslint-config-custom@workspace:configs/eslint-config-custom":
   version: 0.0.0-use.local
   resolution: "eslint-config-custom@workspace:configs/eslint-config-custom"
   dependencies:
@@ -8194,19 +8171,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:4.15.0":
-  version: 4.15.0
-  resolution: "prisma@npm:4.15.0"
-  dependencies:
-    "@prisma/engines": "npm:4.15.0"
-  bin:
-    prisma: build/index.js
-    prisma2: build/index.js
-  checksum: e450f5cbca8f7af7fe5474a3560091c8733d1ee4b647d3fb70a0ff1ad24ab39a91fb02f2227a9f171315abe12b802a55c1b69c08292a11862b4f5d1a08c42ad2
-  languageName: node
-  linkType: hard
-
-"prisma@npm:^5.9.0":
+"prisma@npm:^5.9.1":
   version: 5.9.1
   resolution: "prisma@npm:5.9.1"
   dependencies:
@@ -9251,47 +9216,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"softeng-starter-code@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "softeng-starter-code@workspace:."
-  dependencies:
-    "@auth0/auth0-react": "npm:^2.2.4"
-    "@popperjs/core": "npm:^2.11.8"
-    "@prisma/client": "npm:^5.9.0"
-    "@radix-ui/react-dropdown-menu": "npm:^2.0.6"
-    "@radix-ui/react-hover-card": "npm:^1.0.7"
-    "@testing-library/react": "npm:^14.2.0"
-    "@types/bootstrap": "npm:^5"
-    "@types/react": "npm:^18.0.37"
-    "@types/react-dom": "npm:^18.0.11"
-    "@vitest/ui": "npm:^1.3.0"
-    "@yarnpkg/pnpify": "npm:^4.0.0-rc.45"
-    bootstrap: "npm:^5.3.2"
-    class-variance-authority: "npm:^0.7.0"
-    clsx: "npm:^2.1.0"
-    depcheck: "npm:^1.4.7"
-    eslint: "npm:^8.56.0"
-    eslint-config-custom: "workspace:*"
-    happy-dom: "npm:^10.6.3"
-    husky: "npm:^8.0.0"
-    lucide-react: "npm:^0.323.0"
-    postcss: "npm:^8.4.35"
-    prettier: "npm:2.8.8"
-    prettier-config-custom: "workspace:*"
-    prisma: "npm:^5.9.0"
-    react: "npm:^18.2.0"
-    react-bootstrap: "npm:^2.10.0"
-    react-dom: "npm:^18.2.0"
-    react-select: "npm:^5.8.0"
-    tailwind-merge: "npm:^2.2.1"
-    tailwindcss-animate: "npm:^1.0.7"
-    tsconfig-custom: "workspace:*"
-    turbo: "npm:latest"
-    typescript: "npm:^5.0.4"
-    vitest: "npm:^1.3.0"
-  languageName: unknown
-  linkType: soft
-
 "sort-by@npm:^1.2.0":
   version: 1.2.0
   resolution: "sort-by@npm:1.2.0"
@@ -9619,6 +9543,45 @@ __metadata:
   checksum: 2042bbb14830b5cd0d584007db0eb0a7e933e66d1397e72a4293768d2332449bc3e312c266a0887ec20156dea388d8965e53b4fc5097f42d78593549016da089
   languageName: node
   linkType: hard
+
+"team-d-production@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "team-d-production@workspace:."
+  dependencies:
+    "@auth0/auth0-react": "npm:^2.2.4"
+    "@popperjs/core": "npm:^2.11.8"
+    "@prisma/client": "npm:^5.9.1"
+    "@radix-ui/react-dropdown-menu": "npm:^2.0.6"
+    "@radix-ui/react-hover-card": "npm:^1.0.7"
+    "@testing-library/react": "npm:^14.2.0"
+    "@types/bootstrap": "npm:^5"
+    "@types/react": "npm:^18.0.37"
+    "@types/react-dom": "npm:^18.0.11"
+    "@vitest/ui": "npm:^1.3.0"
+    "@yarnpkg/pnpify": "npm:^4.0.0-rc.45"
+    bootstrap: "npm:^5.3.2"
+    class-variance-authority: "npm:^0.7.0"
+    clsx: "npm:^2.1.0"
+    depcheck: "npm:^1.4.7"
+    eslint: "npm:^8.56.0"
+    eslint-config-custom: "workspace:*"
+    happy-dom: "npm:^10.6.3"
+    husky: "npm:^8.0.0"
+    lucide-react: "npm:^0.323.0"
+    postcss: "npm:^8.4.35"
+    prettier: "npm:2.8.8"
+    prettier-config-custom: "workspace:*"
+    prisma: "npm:^5.9.1"
+    react: "npm:^18.2.0"
+    react-bootstrap: "npm:^2.10.0"
+    react-dom: "npm:^18.2.0"
+    react-select: "npm:^5.8.0"
+    tsconfig-custom: "workspace:*"
+    turbo: "npm:latest"
+    typescript: "npm:^5.0.4"
+    vitest: "npm:^1.3.0"
+  languageName: unknown
+  linkType: soft
 
 "text-table@npm:^0.2.0":
   version: 0.2.0
