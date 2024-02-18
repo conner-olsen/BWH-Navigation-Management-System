@@ -18,7 +18,7 @@ import graphRoute from "./routes/GraphRoute.ts";
 import allServiceData from "./routes/all-service-logs.ts";
 import serviceRequest from "./routes/service-request.ts";
 import employeeCSVRouter from "./routes/employee-to-csv.ts";
-import getStats from "./routes/count-service requests.ts";
+import getStats from "./routes/count-service-requests.ts";
 
 
 const app: Express = express(); // Setup the backend
