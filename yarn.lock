@@ -3280,6 +3280,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"alert@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "alert@npm:6.0.1"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 049917dd0e07b4fd32268d128ad1468848ed5678f3ae47ab823d4aa8497e20eecb77aedc9ad78d18d9908c34ea155ed5b81711302592ffdb83a79bfae94af25c
+  languageName: node
+  linkType: hard
+
 "ansi-align@npm:^3.0.1":
   version: 3.0.1
   resolution: "ansi-align@npm:3.0.1"
@@ -5478,6 +5488,7 @@ __metadata:
     "@types/react-router-dom": "npm:^5.3.3"
     "@vitejs/plugin-react-swc": "npm:^3.0.0"
     add: "npm:^2.0.6"
+    alert: "npm:^6.0.1"
     autoprefixer: "npm:^10.4.17"
     axios: "npm:^1.4.0"
     bootstrap: "npm:^5.2.3"
