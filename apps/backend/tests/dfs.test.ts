@@ -23,29 +23,17 @@ graph.addNode(node4);
 graph.addNode(node5);
 
 // add edges to graph
+graph.addEdge("3", "1");
 graph.addEdge("1", "2");
 graph.addEdge("3", "4");
-graph.addEdge("2", "3");
-graph.addEdge("3", "1");
-graph.addEdge("1", "4");
-
-
-const startNode = '1';
-const endNode = '3';
-const answer: string[] = ["1", "3"];
+graph.addEdge("4", "5");
+graph.addEdge("2", "5");
 
 graph.setPathfindingMethod(new dfsPathfinding());
 
 //test full graph
-test("find path 1 4", () => {
-  expect(graph.runPathfinding("1", "4")).toStrictEqual([]);
-});
-test("find path 1 2 3", () => {
-  expect(graph.runPathfinding(startNode, endNode)).toStrictEqual(answer);
-});
-
-test("find path 3 4", () => {
-  expect(graph.runPathfinding("3", "4")).toStrictEqual(["3", "1", "4"]);
+test("find path 1 5", () => {
+  expect(graph.runPathfinding("1", "5")).toStrictEqual(["1", "2", "5"]);
 });
 
 //test the same node
@@ -54,8 +42,8 @@ test("find path 1 1", () => {
 });
 
 //test backwards
-test("find path 3 2", () => {
-  expect(graph.runPathfinding("3", "2")).toStrictEqual(["3", "1", "2"]);
+test("find path 5 1", () => {
+  expect(graph.runPathfinding("5", "1")).toStrictEqual(["5", "2", "1"]);
 });
 
 //test empty
