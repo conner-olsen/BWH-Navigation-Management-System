@@ -6,8 +6,9 @@ import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 
-function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[], employeeData: employee[], selectedStatus: string): JSX.Element[] {
-
+function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
+    const [statusMap, setStatusMap] = useState<{ [key: number]: string }>({});
+    const [employeeMap, setEmployeeMap] = useState<{ [key: number]: string }>({});
 
     const handleStatusChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
         axios.patch("/api/service-request", {
@@ -15,9 +16,10 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
             nodeId: tableData[index].ServiceRequest.nodeId,
             priority: tableData[index].ServiceRequest.priority,
             status: value,
-            employeeUser: tableData[index].ServiceRequest.employeeUser
+            employeeUser: employeeMap[index] || tableData[index].ServiceRequest.employeeUser
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
+        setStatusMap({ ...statusMap, [index]: value });
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
@@ -25,14 +27,16 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
             id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
             priority: tableData[index].ServiceRequest.priority,
-            status: tableData[index].ServiceRequest.status,
+            status: statusMap[index] || tableData[index].ServiceRequest.status,
             employeeUser: value
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
+        setEmployeeMap({ ...employeeMap, [index]: value });
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
+        .filter(item => (selectedStatus === "" || item.ServiceRequest.status === selectedStatus) &&
+            (selectedEmployeeUser === "" || item.ServiceRequest.employeeUser === selectedEmployeeUser))
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{item.ServiceRequest.nodeId}</TableCell>
@@ -42,8 +46,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
 
 
                 <TableCell>
-                    <Select value={item.ServiceRequest.status}
-                            onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select defaultValue={statusMap[index] || item.ServiceRequest.status} value={statusMap[index] || item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -57,8 +60,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
 
                 </TableCell>
                 <TableCell>
-                    <Select value={item.ServiceRequest.employeeUser}
-                            onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select defaultValue={employeeMap[index] || item.ServiceRequest.employeeUser} value={employeeMap[index] || item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
@@ -75,7 +77,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
         ));
 }
 
-const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; employeeData: employee[]; selectedStatus: string }> = ({tableData, employeeData, selectedStatus}) => {
+const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string; }> = ({tableData, employeeData, selectedStatus,selectedEmployeeUser}) => {
     return (
         <Table>
             <TableHeader>
@@ -88,7 +90,7 @@ const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; 
                     <TableHead>Assignment</TableHead>
                 </TableRow>
             </TableHeader>
-            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus)}</TableBody>
+            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus, selectedEmployeeUser)}</TableBody>
         </Table>
     );
 };
@@ -98,6 +100,7 @@ export const LanguageServiceLogComponent = () => {
     const [data, setData] = useState<languageInterpreterServiceRequest[]>([]);
     const [employeeData, setEmployeeData] = useState<employee[]>([]);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
+    const [selectedEmployeeUser, setSelectedEmployeeUser] = useState<string>("");
 
 
     useEffect(() => {
@@ -152,12 +155,27 @@ export const LanguageServiceLogComponent = () => {
                             </SelectContent>
                         </Select>
                     </Col>
+                    <Col>
+                        <p>Filter by Employee:</p>
+                        <Select onValueChange={(user) => setSelectedEmployeeUser(user)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Employee" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {employeeData.map((employee, employeeIndex) => (
+                                    <SelectItem key={employeeIndex} value={employee.username}>
+                                        {employee.username}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </Col>
                 </Row>
             </Container>
 
             <br/>
 
-            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus}/>
+            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser}/>
 
         </div>
     );
