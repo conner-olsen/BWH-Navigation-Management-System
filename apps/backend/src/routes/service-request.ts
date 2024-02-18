@@ -36,7 +36,6 @@ router.post("/:serviceType", async (req: Request, res: Response) => {
 
     // Create the Service Request
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     await PrismaClient.serviceRequest.create({ data: {
         node: {
           connect:{

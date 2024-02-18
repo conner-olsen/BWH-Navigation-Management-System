@@ -324,7 +324,7 @@ export class Graph {
       }
 
       //put node with current lowest f/"cost" at the front of the queue by sorting
-      //if the number in a is less than that in b, keep it in front by giving sort function a positive number
+      //if the number in a is less than that in b, keep it in front of giving sort function a positive number
       priorityQueue.sort((a, b)  => a[1] > b[1] ? 1 : -1);
      // console.log("Current priority queue:", priorityQueue);
 

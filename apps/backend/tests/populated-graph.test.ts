@@ -9,18 +9,15 @@ const nodePath = path.join(__dirname, "../data/csv/L1Nodes.csv");
 const edgePath = path.join(__dirname, "../data/csv/L1Edges.csv");
 
 //test stringsToNodes
-test("string to nodes", () => {
-  const graphCSV = new Graph();
-  const startNodeCSV = "CCONF002L1";
-  const endNodeCSV = "CHALL004L1";
+test("string to nodes", async () => {
+  const graph = new Graph();
+  const startNode = "CCONF002L1";
+  const endNode = "CHALL004L1";
 
-  graphCSV.fromCSV(
-    nodePath,
-    edgePath,
-  );
+  await graph.fromDB();
 
-  expect(graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV))).toStrictEqual
-  ([graphCSV.getNode("CCONF002L1"), graphCSV.getNode("WELEV00HL1"), graphCSV.getNode("CHALL004L1") ]);
+  expect(graph.stringsToNodes(graph.bfs(startNode, endNode))).toStrictEqual
+  ([graph.getNode("CCONF002L1"), graph.getNode("WELEV00HL1"), graph.getNode("CHALL004L1") ]);
 });
 
 //If this fails, then the csv files are not being found
@@ -31,44 +28,36 @@ test("check if path exists", () => {
 
 
 //test full graph
-test("find path csv", () => {
-  const graphCSV = new Graph();
-  const startNodeCSV = "CCONF002L1";
-  const endNodeCSV = "CHALL004L1";
+test("find path", async () => {
+  const graph = new Graph();
+  const startNode = "CCONF002L1";
+  const endNode = "CHALL004L1";
   const correctPath: string[] = ["CCONF002L1", "WELEV00HL1", "CHALL004L1"];
 
-  graphCSV.fromCSV(
-    nodePath,
-    edgePath,
-  );
+  await graph.fromDB();
 
-  expect(graphCSV.bfs(startNodeCSV, endNodeCSV)).toStrictEqual(correctPath);
+  const path = graph.bfs(startNode, endNode);
+  expect(path).toStrictEqual(correctPath);
 });
 
-test("invalid input", () => {
-  const graphCSV = new Graph();
-  const startNodeCSV = "CCON02L1";
-  const endNodeCSV = "CHALL004L1";
+test("invalid input", async () => {
+  const graph = new Graph();
+  const startNode = "CCON02L1";
+  const endNode = "CHALL004L1";
 
-  graphCSV.fromCSV(
-    nodePath,
-    edgePath,
-  );
+  await graph.fromDB();
 
-  expect(graphCSV.bfs(startNodeCSV, endNodeCSV)).toStrictEqual([]);
+  expect(graph.bfs(startNode, endNode)).toStrictEqual([]);
 });
 
-test("format bfs", () => {
-  const graphCSV = new Graph();
-  const startNodeCSV = "CCONF002L1";
-  const endNodeCSV = "CHALL004L1";
+test("format bfs", async () => {
+  const graph = new Graph();
+  const startNode = "CCONF002L1";
+  const endNode = "CHALL004L1";
 
-  graphCSV.fromCSV(
-    nodePath,
-    edgePath,
-  );
+  await graph.fromDB();
 
-  expect(graphCSV.formatBFS(graphCSV.bfs(startNodeCSV, endNodeCSV))).toStrictEqual
+  expect(graph.formatBFS(graph.bfs(startNode, endNode))).toStrictEqual
   (" CCONF002L1 -->  WELEV00HL1 -->  CHALL004L1");
 });
 
