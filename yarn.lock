@@ -1115,7 +1115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:^5.9.1":
+"@prisma/client@npm:5.9.1, @prisma/client@npm:^5.9.1":
   version: 5.9.1
   resolution: "@prisma/client@npm:5.9.1"
   peerDependencies:
@@ -4325,7 +4325,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "database@workspace:packages/database"
   dependencies:
-    "@prisma/client": "npm:^5.9.1"
+    "@prisma/client": "npm:5.9.1"
     eslint: "npm:latest"
     eslint-config-custom: "workspace:*"
     prettier: "npm:latest"
