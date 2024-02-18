@@ -22,9 +22,9 @@ const LoginButtonAdmin = () => {
                 onMouseLeave={handleMouseLeave}
                 style={{
                     color: 'white',
-                    backgroundColor: isHovered ? 'lightblue' : 'gray', // Change background color to gray by default
+                    backgroundColor: isHovered ? '#83B5D1'  : 'gray', // Change background color to gray by default
                     transition: 'background-color 0.5s ease', // Add a smooth transition effect
-                }}y
+                }}
             >
                 ADMIN
             </button>

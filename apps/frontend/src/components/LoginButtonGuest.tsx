@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LoginButtonGuest: React.FC = () => {
     const [isHovered, setHovered] = useState(false);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleMouseEnter = () => {
         setHovered(true);
@@ -14,7 +14,7 @@ const LoginButtonGuest: React.FC = () => {
     };
 
     const handleButtonClick = () => {
-        history.push("/Home");
+        navigate("/Home");
     };
 
     return (
@@ -26,7 +26,7 @@ const LoginButtonGuest: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
                 style={{
                     color: 'white',
-                    backgroundColor: isHovered ? 'lightblue' : 'gray', // Change background color to gray by default
+                    backgroundColor: isHovered ? '#83B5D1' : 'gray', // Change background color to gray by default
                     transition: 'background-color 0.5s ease', // Add a smooth transition effect
                 }}
             >
