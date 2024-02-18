@@ -183,7 +183,70 @@ export class dfsPathfinding implements PathfindingMethod {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
-    //dummy outputs
-    return [startNode, endNode, graph.formatBFS([""])];
+    //add an error catcher for invalid inputs
+    if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
+      return [];
+    }
+
+    //define needed objects
+    //store lists of nodeID paths
+    const stack: string[][] = [];
+    const visited: string[][] = [];
+
+    //used for iterating through the loop
+    let currentNode: Node | undefined;
+    let currentNodeIDPath: string[];
+    let newPath: string[];
+    let neighbors: Set<string>;
+
+    //put startNode path in the stack
+    stack.unshift([startNode]);
+
+    //start loop
+    while (stack.length > 0) {
+      //get first path from stack
+      currentNodeIDPath = stack[0];
+
+      //get last node
+      if(currentNodeIDPath.length > 1) {
+        currentNode = graph.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
+      }
+      else {
+        currentNode = graph.getNode(currentNodeIDPath[0]);
+      }
+
+      //if currentNode is undefined, pop path from stack
+      if (currentNode == undefined) {
+        stack.shift();
+        visited.push(currentNodeIDPath);
+      }
+
+      //elif it is the end node, return current path
+      else if (currentNode.id == endNode) {
+        return currentNodeIDPath;
+      }
+
+      //else, cast as currentNode as Node (determined above) and add neighbor to path for each
+      else {
+        neighbors = (currentNode as Node).edges;
+        neighbors.forEach(function (item) {
+          newPath = [...currentNodeIDPath];
+          newPath.push(item);
+
+          //if path hasn't been visited and nodes aren't repeated, add to stack
+          if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
+            stack.unshift(newPath);
+          }
+        });
+
+        //pop current node ID path from stack
+        stack.pop();
+        visited.push(currentNodeIDPath);
+      }
+    }
+
+    //return empty if endNode not reached (probably should return something else)
+    // console.log("not reached");
+    return [];
   }
 }
