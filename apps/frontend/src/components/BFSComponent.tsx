@@ -7,8 +7,8 @@ import { parseCSV } from "common/src/parser.ts";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
-import {Terminal} from "lucide-react";
+// import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+// import {Terminal} from "lucide-react";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
@@ -263,19 +263,19 @@ export function BFSComponent() {
                     </Select>
                 </div>
 
+                {/*<Alert>*/}
+                {/*    <Terminal className="h-4 w-4"/>*/}
+                {/*    <AlertTitle>Heads up!</AlertTitle>*/}
+                {/*    <AlertDescription>*/}
+                {/*        You can add components and dependencies to your app using the cli.*/}
+                {/*    </AlertDescription>*/}
+                {/*</Alert>*/}
+
                 <div>
                     <p className="font-bold">Follow Me</p>
                     <ol type="1" className="overflow-y-auto h-80 text-left">
                         {collectLongNames().map((longName, index) => (
-                            <li key={index} className={longName.includes("Elevator") ? "text-red-500" : ""}>
-                                <Alert>
-                                    <Terminal className="h-4 w-4" />
-                                    <AlertTitle>Heads up!</AlertTitle>
-                                    <AlertDescription>
-                                        You can add components and dependencies to your app using the cli.
-                                    </AlertDescription>
-                                </Alert>
-
+                            <li key={index} className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
                                 {longName}
                             </li>
                         ))}
