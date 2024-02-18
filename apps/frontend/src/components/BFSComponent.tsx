@@ -230,7 +230,7 @@ export function BFSComponent() {
                         <Select value={startNode}
                                 onValueChange={(location: string) => setStartNode(location)}>
                             <SelectTrigger>
-                                <SelectValue placeholder="Select Location" />
+                                <SelectValue placeholder="Select Location"/>
                             </SelectTrigger>
                             <SelectContent>
                                 {currentFloorNames}
@@ -239,7 +239,7 @@ export function BFSComponent() {
                         <Select value={endNode}
                                 onValueChange={(location: string) => setEndNode(location)}>
                             <SelectTrigger>
-                                <SelectValue placeholder="Select Location" />
+                                <SelectValue placeholder="Select Location"/>
                             </SelectTrigger>
                             <SelectContent>
                                 {roomNames}
@@ -262,10 +262,12 @@ export function BFSComponent() {
                 </div>
 
                 <div>
-                    <p className="font-bold">Follow me</p>
-                    <ol type="1" className={"overflow-y-auto h-80"}>
+                    <p className="font-bold">Follow Me</p>
+                    <ol type="1" className="overflow-y-auto h-80 text-left">
                         {collectLongNames().map((longName, index) => (
-                            <li key={index}>{longName}</li>
+                            <li key={index} className={longName.includes("Elevator") ? "text-red-500" : ""}>
+                                {longName}
+                            </li>
                         ))}
                     </ol>
                 </div>
