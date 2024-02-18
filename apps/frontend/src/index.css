@@ -205,10 +205,7 @@ textarea{
 
 
 
-.LoginButtonAdmin:hover,
-.LoginButtonPatient:hover{
-    color: #d9f99d;
-}
+
 
 .stack {
   font-size: 60px;
