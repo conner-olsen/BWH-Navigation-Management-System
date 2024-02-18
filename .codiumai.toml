@@ -104,7 +104,7 @@ describe('TestSomething', () => {
 ## It's helpful to clear the output (right-click -> clear) and then run the tests again.
 ##
 # overrideTestRunScript = "npx jest --runTestsByPath TEST_FILEPATH"
-overrideTestRunScript = "yarn vitest TEST_FILEPATH"
+overrideTestRunScript = "node vitest-wrapper.js TEST_FILEPATH"
 
 ## A multiline string, delimited with triple-quotes ("""),
 ## containing import declaration to use in each test file. 
