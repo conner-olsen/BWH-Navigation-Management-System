@@ -23,7 +23,7 @@ const ServiceLog = () => {
 
     return (
         <>
-        <div className={"align-content-center container"}>
+        <div className={"align-content-center container" }>
             <br/>
             <br/>
 

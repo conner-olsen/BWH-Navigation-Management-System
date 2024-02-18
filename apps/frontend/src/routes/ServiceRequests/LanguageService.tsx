@@ -57,10 +57,10 @@ const LanguageService: React.FC = () => {
     return (
         <Container>
 
-            <h1>
+            <h1 className=" bg-gradient-to-r from-red-200 to-red-900 bg-clip-text text-transparent">
                 Language Service Request
             </h1>
-            <div className={"border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4"}>
+            <div className={"border-2 border-red-200 dark:border-blue-400 rounded-lg p-4"}>
 
                 <Container>
                     <Row>
@@ -72,7 +72,8 @@ const LanguageService: React.FC = () => {
                         </Col>
                         <Col>
                             <LocationDropdown onChange={(value) => setFormData({
-                                ...formData, "nodeId": value})}></LocationDropdown>
+                                ...formData, "nodeId": value
+                            })}></LocationDropdown>
                         </Col>
                     </Row>
                     <br/>
@@ -82,7 +83,7 @@ const LanguageService: React.FC = () => {
                             <div>
                                 <Label>Priority</Label>
                                 <Select required onValueChange={
-                                    (value) => setFormData({ ...formData, "priority": value })}>
+                                    (value) => setFormData({...formData, "priority": value})}>
                                     <SelectTrigger>
                                         <SelectValue/>
                                     </SelectTrigger>
@@ -114,6 +115,6 @@ const LanguageService: React.FC = () => {
                 </Container>
             </div>
         </Container>
-);
+    );
 };
 export default LanguageService;
