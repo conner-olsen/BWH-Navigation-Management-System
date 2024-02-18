@@ -16,7 +16,7 @@ import {
 } from "../../components/ui/sheet.tsx";
 import {Button} from "../../components/ui/button.tsx";
 import CreateSRChart from "../../components/ServiceRequests/SRCountData.tsx";
-
+import CreateEmployeeChart from "../../components/ServiceRequests/EmployeeStats.tsx";
 
 
 const ServiceLog = () => {
@@ -47,7 +47,9 @@ const ServiceLog = () => {
                                     View graphs of the service request statistics
                                 </SheetDescription>
                             </SheetHeader>
-                                <CreateSRChart></CreateSRChart>
+
+                            <CreateSRChart></CreateSRChart>
+                            <CreateEmployeeChart></CreateEmployeeChart>
 
                         </SheetContent>
                     </Sheet>

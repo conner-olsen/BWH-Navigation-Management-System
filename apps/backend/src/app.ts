@@ -19,6 +19,7 @@ import allServiceData from "./routes/all-service-logs.ts";
 import serviceRequest from "./routes/service-request.ts";
 import employeeCSVRouter from "./routes/employee-to-csv.ts";
 import getStats from "./routes/count-service-requests.ts";
+import getEmployeeStats from "./routes/count-employee-service-requests.ts";
 
 
 const app: Express = express(); // Setup the backend
@@ -55,6 +56,8 @@ app.use("/api/all-service-data", allServiceData);
 app.use("/api/service-request", serviceRequest);
 app.use("/api/employee-csv", employeeCSVRouter);
 app.use("/api/get-stats", getStats);
+app.use("/api/get-employee-stats", getEmployeeStats);
+
 /**
  * Catch all 404 errors, and forward them to the error handler
  */
