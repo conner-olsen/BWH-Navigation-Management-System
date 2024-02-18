@@ -13,6 +13,7 @@ type Status = {
         borderWidth: number;
     }[];
 };
+
 const CreateSRChart = () => {
     const [chartData, setChartData] = useState<Status>();
 
