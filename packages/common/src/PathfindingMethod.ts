@@ -104,30 +104,30 @@ export class aStarPathfinding implements PathfindingMethod {
 
 
     //gets number value of floor
-   // const getFloor = (floor: string): number => {
-   //    if(floor == "L2") {
-   //      return 1;
-   //    }
-   //    if(floor == "L1") {
-   //      return 2;
-   //    }
-   //    if(floor == "1") {
-   //      return 3;
-   //    }
-   //    if(floor == "2") {
-   //      return 4;
-   //    }
-   //    if(floor == "3") {
-   //      return 5;
-   //    }
-   //    return 0;
-   //  };
+   const getFloor = (floor: string): number => {
+      if(floor == "L2") {
+        return 1;
+      }
+      if(floor == "L1") {
+        return 2;
+      }
+      if(floor == "1") {
+        return 3;
+      }
+      if(floor == "2") {
+        return 4;
+      }
+      if(floor == "3") {
+        return 5;
+      }
+      return 0;
+    };
 
     // calculate the Manhattan distance (not hypotenuse) from one node to another
     const calculateManhattanDistance = (node1: Node, node2: Node): number => {
-      //if both nodes are stairs, add weight of ten
+      //if both nodes are stairs, add weight of difference between floors
       if((node1.nodeType == "STAI") && (node2.nodeType == "STAI")) {
-        return 10;
+        return Math.abs(getFloor(node1.floor) - getFloor(node2.floor));
       }
 
       //else, simply calculate the manhattan distance (elevators add no weight)
