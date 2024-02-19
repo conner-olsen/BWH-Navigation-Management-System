@@ -60,10 +60,10 @@ const InternalTransportation: React.FC = () => {
     return (
         <Container>
 
-            <h1>
+            <h1 className=" bg-gradient-to-r from-gray-500 to-black bg-clip-text text-transparent">
                 Internal Transportation Request
             </h1>
-            <div className={"border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4"}>
+            <div className={"border-2 border-black dark:border-blue-400 rounded-lg p-4"}>
 
                 <Container>
                     <Row>
@@ -79,7 +79,7 @@ const InternalTransportation: React.FC = () => {
                             <div>
                                 <Label>Priority</Label>
                                 <Select required onValueChange={
-                                    (value) => setFormData({ ...formData, "priority": value })}>
+                                    (value) => setFormData({...formData, "priority": value})}>
                                     <SelectTrigger>
                                         <SelectValue/>
                                     </SelectTrigger>
@@ -98,7 +98,8 @@ const InternalTransportation: React.FC = () => {
                     <Row>
                         <Col>
                             <LocationDropdown onChange={(value) => setFormData({
-                                ...formData, "nodeId": value})}></LocationDropdown>
+                                ...formData, "nodeId": value
+                            })}></LocationDropdown>
                         </Col>
 
                     </Row>
@@ -107,7 +108,8 @@ const InternalTransportation: React.FC = () => {
                         <Col>
                             <div>
                                 <Label htmlFor="destination">Destination</Label>
-                                <Input type="text" id="destination" placeholder={"X-ray Labs"} onChange={handleChangeText}/>
+                                <Input type="text" id="destination" placeholder={"X-ray Labs"}
+                                       onChange={handleChangeText}/>
                             </div>
                         </Col>
                         <Col>

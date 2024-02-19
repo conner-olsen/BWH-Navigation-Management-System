@@ -1,4 +1,4 @@
-import { expect, test } from "vitest";
+import { expect, test, describe } from "vitest";
 import { Graph } from "common/src/graph-structure.ts";
 import path from "path";
 import fs from "fs";
@@ -7,6 +7,12 @@ import fs from "fs";
 const nodePath = path.join(__dirname, "../data/csv/L1Nodes.csv");
 // language=file-reference - Edge csv file path
 const edgePath = path.join(__dirname, "../data/csv/L1Edges.csv");
+
+describe("stub", () => {
+  test("stub", () => {
+    expect(1).toBe(1);
+  });
+});
 
 //test stringsToNodes
 test("string to nodes", async () => {
