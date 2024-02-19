@@ -210,12 +210,13 @@ export function BFSComponent() {
                     )}
                 </button>
                 <div>
-                    <button className="mt-4" onClick={() => {
+                    <button className={`mt-4 transition-all duration-200 ${(activeTab===1 && isExpanded)? 'bg-blue-400' : ''}`} onClick={() => {
                         toggleActiveTab(1);
                         setIsExpanded(true);}}>
                         <img src="../../public/icon/search-icon.png" alt="search-icon" className="invert"></img>
                     </button>
-                    <button className="mt-4 text-foreground relative" onClick={() => {
+                    <button className={`mt-4 text-foreground relative transition-all duration-200 
+                    ${(activeTab===2 && isExpanded)? 'bg-blue-400' : ''}`} onClick={() => {
                         setHasSeen(true);
                         toggleActiveTab(2);
                         setIsExpanded(true);}}>
