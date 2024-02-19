@@ -12,8 +12,11 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_USER: dev
-          POSTGRES_PASSWORD: dev
+          POSTGRES_USER: teamd
+          POSTGRES_PASSWORD: teamd50
+          POSTGRES_DB: teamddb
+          POSTGRES_PORT: 5432
+          POSTGRES_URL: "postgresql://teamd:teamd50@database.cs.wpi.edu:5432/teamddb?schema=teamdschema"
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -38,4 +41,3 @@ jobs:
         run: yarn run migrate:dev
       - name: test
         run: yarn run vitest --run
-
