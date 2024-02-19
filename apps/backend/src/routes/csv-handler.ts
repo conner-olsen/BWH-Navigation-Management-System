@@ -14,7 +14,7 @@ const router: Router = express.Router();
 router.post("/", async (req: Request, res: Response) => {
   try {
     // language=file-reference - Read the CSV string from the request body
-    const relativeNodePath = "../../data/csv/L1Nodes.csv";
+    const relativeNodePath = "../../../../packages/common/dev/data/csv/L1Nodes.csv";
     const absoluteNodePath = path.join(__dirname, relativeNodePath);
     const csvFileNode = fs.readFileSync(absoluteNodePath, "utf-8");
 
@@ -49,8 +49,8 @@ router.post("/", async (req: Request, res: Response) => {
       )
     });
 
-    // Read the CSV string from the request body
-    const absolutePath = path.join(__dirname, "../../data/csv/L1Edges.csv");
+    // language=file-reference Read the CSV string from the request body
+    const absolutePath = path.join(__dirname, "../../../../packages/common/dev/data/csv/L1Edges.csv");
     const csvFile = fs.readFileSync(absolutePath, "utf-8");
 
     // Parse the CSV string to an array of CSVRow objects

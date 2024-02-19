@@ -175,6 +175,7 @@ export class Graph {
       this.addEdge(edge.startNodeID, edge.endNodeID);
     }
   }
+
   /**
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.
