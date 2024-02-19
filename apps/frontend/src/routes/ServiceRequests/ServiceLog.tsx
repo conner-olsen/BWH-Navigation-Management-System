@@ -17,6 +17,7 @@ import {
 import {Button} from "../../components/ui/button.tsx";
 import CreateSRChart from "../../components/ServiceRequests/SRCountData.tsx";
 import CreateEmployeeChart from "../../components/ServiceRequests/EmployeeStats.tsx";
+import CompletionStats from "../../components/ServiceRequests/CompletionStats.tsx";
 
 
 const ServiceLog = () => {
@@ -49,6 +50,7 @@ const ServiceLog = () => {
                             </SheetHeader>
 
                             <CreateSRChart></CreateSRChart>
+                            <CompletionStats></CompletionStats>
                             <CreateEmployeeChart></CreateEmployeeChart>
 
                         </SheetContent>

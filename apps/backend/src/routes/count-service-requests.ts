@@ -4,7 +4,7 @@ import PrismaClient from "../bin/database-connection.ts";
 
 const router: Router = express.Router();
 
-router.get("/:serviceType", async function (req: Request, res: Response) {
+router.get("/type/:serviceType", async function (req: Request, res: Response) {
 
   let requestType;
 
@@ -39,6 +39,58 @@ router.get("/:serviceType", async function (req: Request, res: Response) {
       const internalCSV = await requestType;
 
       res.status(200).send(internalCSV);
+    }
+  }
+  catch (error){
+    console.error(`Error exporting Service Request data: ${error}`);
+    res.sendStatus(500);
+  }
+});
+
+
+router.get("/status/:status", async function (req: Request, res: Response) {
+
+  let requestType;
+
+  switch(req.params.status){
+    case "completed":
+      requestType = PrismaClient.serviceRequest.count({
+        where: {
+          status: 'Completed'
+        }
+      });
+      break;
+    case "in-progress":
+      requestType = PrismaClient.serviceRequest.count({
+        where: {
+          status: 'In-Progress'
+        }
+      });
+      break;
+    case "unassigned":
+      requestType = PrismaClient.serviceRequest.count({
+        where: {
+          status: 'Unassigned'
+        }
+      });
+      break;
+    case "assigned":
+      requestType = PrismaClient.serviceRequest.count({
+        where: {
+          status: 'Assigned'
+        }
+      });
+      break;
+
+    default:
+      res.sendStatus(501);
+  }
+
+  try{
+    if(requestType){
+      const statusStats = await requestType;
+
+      res.status(200).send(statusStats);
     }
   }
   catch (error){
