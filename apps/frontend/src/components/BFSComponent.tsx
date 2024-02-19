@@ -23,7 +23,10 @@ export function BFSComponent() {
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
 
-    console.log(currentNode);
+    const updateCurrentNode = (currentNode: Node) => {
+        if (activeTab!==2) setHasSeen(false);
+        setCurrentNode(currentNode);
+    };
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -178,11 +181,13 @@ export function BFSComponent() {
     };
     const [isExpanded, setIsExpanded] = useState(true);
     const [activeTab, setActiveTab] = useState(1);
+    const [hasSeen, setHasSeen] = useState(false);
 
     const toggleSidebar = () => {
         setIsExpanded(!isExpanded);
     };
     const toggleActiveTab = (tabNumber: number) => {
+        if (tabNumber === 2) setHasSeen(true);
         setActiveTab(tabNumber);
     };
 
@@ -204,8 +209,18 @@ export function BFSComponent() {
                     )}
                 </button>
                 <div>
-                    <button onClick={() => toggleActiveTab(1)}>Icon 1</button>
-                    <button onClick={() => toggleActiveTab(2)}>Icon 2</button>
+                    <button className="mt-4" onClick={() => toggleActiveTab(1)}>
+                        <img src="../../public/icon/search-icon.png" alt="search-icon" className="invert"></img>
+                    </button>
+                    <button className="mt-4 text-foreground relative" onClick={() => toggleActiveTab(2)}>
+                        {/*<img src="../../public/icon/search-icon.png" alt="search-icon" className="dark:invert"></img>*/}
+                        Info
+                        {(currentNode && !hasSeen && activeTab !== 2) ?
+                            <span className="absolute flex h-3 w-3 top-[-5px] right-[-10px]">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                            </span> : ''}
+                    </button>
                 </div>
             </div>
             <div
@@ -231,7 +246,7 @@ export function BFSComponent() {
                                    onChange={handlePhotoChange} checked={map == "floor3"}/>
                             <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
                         </div>
-                        <div className="flex py-4 border-b-[1px] border-neutral-300">
+                        <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
                             <div className="flex flex-col items-center">
                                 <img src="../../public/icon/start.svg" alt="circle"
                                      className="mb-[5px] mt-[11px] dark:invert"/>
@@ -275,7 +290,7 @@ export function BFSComponent() {
 
                         <div>
                             <p className="font-bold">Follow me</p>
-                            <ol type="1" className={"overflow-y-auto h-80"}>
+                            <ol type="1" className={"overflow-y-auto h-[260px] px-2"}>
                                 {collectLongNames().map((longName, index) => (
                                     <li key={index}>{longName}</li>
                                 ))}
@@ -284,11 +299,15 @@ export function BFSComponent() {
                     </div>
                 )}
                 {activeTab === 2 && currentNode && (
-                    <div>
-                        <p>{currentNode.floor}</p>
-                        <p>{currentNode.id}</p>
-                        <p>{currentNode.longName}</p>
-                        <p>{currentNode.building}</p>
+                    <div className="px-2 text-left">
+                        <img src="../../public/room-types/hospital-room.jpeg" alt="patient-room"
+                             className="rounded-md pb-3"></img>
+                        <p className="text-xl font-bold mb-1">{currentNode.longName + " (" + currentNode.shortName + ")"}</p>
+                        <p className="text-sm text-muted-foreground">{currentNode.nodeType + " #" + currentNode.id}</p>
+                        <div className="flex">
+                            <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
+                            <p className="mb-0">{"Floor " + currentNode.floor + ", " + currentNode.building}</p>
+                        </div>
                     </div>
                 )}
 
@@ -379,15 +398,15 @@ export function BFSComponent() {
                             </div>
                             <TransformComponent wrapperClass={"max-h-screen"}>
                                 {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={setCurrentNode} />}
+                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={setCurrentNode} />}
+                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={setCurrentNode} />}
+                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={setCurrentNode} />}
+                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={setCurrentNode} />}
+                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                             </TransformComponent>
                         </React.Fragment>
                     )}
