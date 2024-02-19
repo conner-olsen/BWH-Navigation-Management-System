@@ -203,72 +203,78 @@ export function BFSComponent() {
                 className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[80px] pt-[90px] sidebar 
                 ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
                 {/* Sidebar content */}
-                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
-                    <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
-                    <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
-                    <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
-                    <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
-                    <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "floor1"}/>
-                    <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
-                    <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "floor2"}/>
-                    <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
-                    <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "floor3"}/>
-                    <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
-                </div>
-                <div className="flex py-4 border-b-[1px] border-neutral-300">
-                    <div className="flex flex-col items-center">
-                        <img src="../../public/icon/start.svg" alt="circle" className="mb-[5px] mt-[11px] dark:invert"/>
-                        <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
-                        <img src="../../public/icon/location.svg" alt="pin"/>
-                    </div>
-                    <div className="flex flex-col grow justify-between pl-[2px] pr-2">
-                        <Select value={startNode}
-                                onValueChange={(location: string) => setStartNode(location)}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select Location" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {currentFloorNames}
-                            </SelectContent>
-                        </Select>
-                        <Select value={endNode}
-                                onValueChange={(location: string) => setEndNode(location)}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select Location" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {roomNames}
-                            </SelectContent>
-                        </Select>
-                    </div>
-
-                </div>
-                <div className="py-4 px-2">
-                    <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
-                            onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
-                        <SelectTrigger>
-                            <SelectValue/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
-                            <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-
                 <div>
-                    <p className="font-bold">Follow me</p>
-                    <ol type="1" className={"overflow-y-auto h-80"}>
-                        {collectLongNames().map((longName, index) => (
-                            <li key={index}>{longName}</li>
-                        ))}
-                    </ol>
+                    <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                        <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+                               onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
+                        <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
+                        <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
+                               onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
+                        <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
+                        <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
+                               onChange={handlePhotoChange} checked={map == "floor1"}/>
+                        <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
+                        <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
+                               onChange={handlePhotoChange} checked={map == "floor2"}/>
+                        <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
+                        <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
+                               onChange={handlePhotoChange} checked={map == "floor3"}/>
+                        <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
+                    </div>
+                    <div className="flex py-4 border-b-[1px] border-neutral-300">
+                        <div className="flex flex-col items-center">
+                            <img src="../../public/icon/start.svg" alt="circle"
+                                 className="mb-[5px] mt-[11px] dark:invert"/>
+                            <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
+                            <img src="../../public/icon/location.svg" alt="pin"/>
+                        </div>
+                        <div className="flex flex-col grow justify-between pl-[2px] pr-2">
+                            <Select value={startNode}
+                                    onValueChange={(location: string) => setStartNode(location)}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select Location"/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {currentFloorNames}
+                                </SelectContent>
+                            </Select>
+                            <Select value={endNode}
+                                    onValueChange={(location: string) => setEndNode(location)}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select Location"/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {roomNames}
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                    </div>
+                    <div className="py-4 px-2">
+                        <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
+                                onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
+                            <SelectTrigger>
+                                <SelectValue/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
+                                <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    <div>
+                        <p className="font-bold">Follow me</p>
+                        <ol type="1" className={"overflow-y-auto h-80"}>
+                            {collectLongNames().map((longName, index) => (
+                                <li key={index}>{longName}</li>
+                            ))}
+                        </ol>
+                    </div>
                 </div>
+
+
+
                 <div
                     className={`absolute bottom-[10px] flex flex-col bg-background rounded-xl
                                 ${isExpanded ? 'right-[-90px]' : 'right-[-170px]'}`}>
@@ -333,7 +339,7 @@ export function BFSComponent() {
                 >
                     {({zoomIn, zoomOut, resetTransform}) => (
                         <React.Fragment>
-                            <div
+                        <div
                                 className="tools flex flex-col absolute right-2 top-2 z-10 rounded-lg">
                                 <button onClick={() => zoomIn()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
