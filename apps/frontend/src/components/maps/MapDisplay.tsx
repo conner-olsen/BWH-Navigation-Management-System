@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios from "axios";
-//import { JSX } from 'react/jsx-runtime';
 
 interface MapDisplayProps {
     floorMap: string;
@@ -10,6 +9,7 @@ interface MapDisplayProps {
     startNode?: string;
     endNode?: string;
     sendHoverMapPath: (path: PathfindingRequest) => void;
+    sendClear: () => void;
     pathSent: Node[];
     doDisplayEdges: boolean;
     doDisplayNodes: boolean;
@@ -23,6 +23,7 @@ function MapDisplay({
                         startNode,
                         endNode,
                         sendHoverMapPath,
+                        sendClear,
                         pathFindingType,
                         doDisplayEdges,
                         doDisplayNodes,
@@ -64,7 +65,7 @@ function MapDisplay({
             const nextNode = graph.getNode(path[i + 1]);
             if (node && nextNode && node.floor === floor && nextNode.floor === floor) {
                 pathElements.push(
-                    <line
+                    <line className="dark:stroke-fuchsia-500"
                         key={`${node.id}-${nextNode.id}`}
                         x1={node.xCoord} y1={node.yCoord}
                         x2={nextNode.xCoord} y2={nextNode.yCoord}
@@ -79,6 +80,8 @@ function MapDisplay({
     const handleNodeClick = (node: Node) => {
         if (!startNodeId) {
             setStartNodeId(node.id);
+            const path: PathfindingRequest = {startid: node.id, endid: ""};
+            sendHoverMapPath(path);
         } else if (node.id == startNodeId) {
             clearSelection();
         } else if (!endNodeId) {
@@ -131,6 +134,7 @@ function MapDisplay({
         setStartNodeId(null);
         setEndNodeId(null);
         setPath([]);
+        sendClear();
     };
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
@@ -153,28 +157,13 @@ function MapDisplay({
                     </g>
                 </div>
             </foreignObject>
-
         );
     };
-
-    // const displayNames = (graph: Graph) => {
-    //     const names: React.JSX.Element[] = [];
-    //     if (doDisplayNames) {
-    //         Array.from(graph.nodes.values()).map((node: Node) => {
-    //             if (node.floor == floor) {
-    //                 names.push(<text x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-    //                     {node.shortName}
-    //                 </text>);
-    //             }
-    //         });
-    //     }
-    //     return names;
-    // };
 
     const displayName = (node: Node) => {
         if (doDisplayNames && (node.floor == floor)) {
             return (
-                <text className="-rotate-1" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                <text className="-rotate-1 font-bold dark:invert" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
                     {node.shortName}
                 </text>
             );
@@ -189,7 +178,7 @@ function MapDisplay({
                         <g key={node.id} onClick={() => handleNodeClick(node)}
                            onMouseEnter={() => handleNodeHover(node)}
                            onMouseLeave={() => handleNodeHoverLeave()}>
-                            <circle cx={node.xCoord} cy={node.yCoord} r="11" fill="blue"
+                            <circle className="dark:fill-white" cx={node.xCoord} cy={node.yCoord} r="11" fill="blue"
                                     style={{cursor: 'pointer'}}/>
                             {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                             {endNodeId === node.id && displaySelectedNodes(node, 'end')}
@@ -210,11 +199,11 @@ function MapDisplay({
                         const targetNode = graph.getNode(edgeNodeId);
                         if (targetNode && targetNode.floor === floor) {
                             edges.push(
-                                <line
+                                <line className="dark:stroke-blue-300"
                                     key={`${nodeId}-${edgeNodeId}`}
                                     x1={node.xCoord} y1={node.yCoord}
                                     x2={targetNode.xCoord} y2={targetNode.yCoord}
-                                    stroke="black" strokeWidth="1"
+                                    stroke="black" strokeWidth="2"
                                 />
                             );
                         }
@@ -233,7 +222,6 @@ function MapDisplay({
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && displayNodes(graph)}
-                {/*{graph && displayNames(graph)}*/}
             </svg>
 
         </div>

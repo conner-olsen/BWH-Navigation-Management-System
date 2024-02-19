@@ -1,21 +1,34 @@
-
 import {FlowerServiceLogComponent} from "../../components/ServiceRequests/FlowerServiceLogComponent.tsx";
 import Global_Footer from "../../components/Global_Footer.tsx";
 import {TabsContent, TabsList, TabsTrigger, Tabs} from "../../components/ui/tabs.tsx";
-//import {Button} from "../../components/ui/button.tsx";
-//import {GetDataEmployees} from "../../components/EmployeeManagerComponent.tsx";
 import {ReligiousServiceLogComponent} from "../../components/ServiceRequests/ReligionServiceLogComponent.tsx";
 import {CleaningServiceLogComponent} from "../../components/ServiceRequests/CleaningServiceLogComponent.tsx";
 import {InternalTransportServiceLogComponent} from "../../components/ServiceRequests/InternalServiceLogComponent.tsx";
 import {LanguageServiceLogComponent} from "../../components/ServiceRequests/LanguageServiceLogComponent.tsx";
 import {ExternalTransportServiceLogComponent} from "../../components/ServiceRequests/ExternalServiceLogComponent.tsx";
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger
+} from "../../components/ui/sheet.tsx";
+import {Button} from "../../components/ui/button.tsx";
+import CreateSRChart from "../../components/ServiceRequests/SRCountData.tsx";
+import CreateEmployeeChart from "../../components/ServiceRequests/EmployeeStats.tsx";
+import CompletionStats from "../../components/ServiceRequests/CompletionStats.tsx";
+
 
 const ServiceLog = () => {
+
     return (
         <>
-        <div className={"align-content-center container"}>
+        <div className={"align-content-center container" }>
             <br/>
             <br/>
+
+
             <Tabs defaultValue="Flower Service Request" className="align-content-center">
                 <TabsList classname-={"align-content-center"}>
                     <TabsTrigger value="Flower Service Request">Flower</TabsTrigger>
@@ -24,7 +37,24 @@ const ServiceLog = () => {
                     <TabsTrigger value="Language Service Request">Language</TabsTrigger>
                     <TabsTrigger value="Internal Transport Service Request">Internal Transport</TabsTrigger>
                     <TabsTrigger value="External Transport Service Request">External Transport</TabsTrigger>
+                    <Sheet key={"right"}>
+                        <SheetTrigger asChild>
+                            <Button variant="ghost">Stats</Button>
+                        </SheetTrigger>
+                        <SheetContent side={"right"}>
+                            <SheetHeader>
+                                <SheetTitle>Service Request Statistics</SheetTitle>
+                                <SheetDescription>
+                                    View graphs of the service request statistics
+                                </SheetDescription>
+                            </SheetHeader>
 
+                            <CreateSRChart></CreateSRChart>
+                            <CompletionStats></CompletionStats>
+                            <CreateEmployeeChart></CreateEmployeeChart>
+
+                        </SheetContent>
+                    </Sheet>
                 </TabsList>
 
                 {/*<TabsContent value="Employee List">*/}

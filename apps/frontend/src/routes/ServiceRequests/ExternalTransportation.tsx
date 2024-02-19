@@ -69,7 +69,7 @@ const ExternalTransportation: React.FC = () => {
     return (
         <Container>
 
-            <h1>
+            <h1 className=" bg-gradient-to-r from-blue-600 to-black bg-clip-text text-transparent">
                 External Transportation Request
             </h1>
             <div className={"border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4"}>
