@@ -161,7 +161,7 @@ function MapDisplay({
     };
 
     const displayName = (node: Node) => {
-        if (doDisplayNames && (node.floor == floor)) {
+        if ((doDisplayNames && (node.floor == floor)) && !(node.nodeType == "HALL")) {
             return (
                 <text className="font-bold dark:invert" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
                     {node.shortName}
