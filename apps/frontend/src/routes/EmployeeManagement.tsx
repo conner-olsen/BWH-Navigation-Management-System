@@ -8,6 +8,7 @@ import Global_Footer from "../components/Global_Footer.tsx";
 import {Label} from "../components/ui/label.tsx";
 import {Input} from "../components/ui/input.tsx";
 import ExportEmployeeCSVButton from "../components/ExportEmployeeCSVButton.tsx";
+import DragNDrop from "../components/DragNDrop.tsx";
 export const EmployeeManager = () => {
 
     const [formData, setFormData] = useState({
@@ -86,6 +87,38 @@ export const EmployeeManager = () => {
         }
     };
 
+    const handleFileDrop = async(file: File) => {
+        // Create a FileReader
+        const reader = new FileReader();
+
+        // Set up a callback for when the file is loaded
+        reader.onload = async (event) => {
+            if (event.target) {
+                // Extract the CSV content as a string
+                const csvString = event.target.result as string;
+
+                console.log(csvString);
+
+                try {
+                    const res = await fetch("/api/employee-csv", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json", // Set the appropriate content type
+                        },
+                        body: JSON.stringify({csvString}), // Send the CSV string as JSON
+                    });
+
+
+                    console.log(res);
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            }
+
+        };
+        reader.readAsText(file);
+    };
+
 
         return (
             <>
@@ -161,7 +194,9 @@ export const EmployeeManager = () => {
 
                                                 <Col>
                                                     <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
+                                                    <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
                                             <GetDataEmployees></GetDataEmployees>
+
                                                 </Col>
 
 
