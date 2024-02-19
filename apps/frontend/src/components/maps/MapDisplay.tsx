@@ -15,7 +15,10 @@ interface MapDisplayProps {
     doDisplayNodes: boolean;
     doDisplayNames: boolean;
     pathFindingType: string;
+    setChosenNode: (currentNode: Node) => void;
 }
+
+
 
 function MapDisplay({
                         floorMap,
@@ -28,7 +31,8 @@ function MapDisplay({
                         doDisplayEdges,
                         doDisplayNodes,
                         doDisplayNames,
-                        pathSent
+                        pathSent,
+                        setChosenNode
                     }: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
@@ -78,6 +82,8 @@ function MapDisplay({
     };
 
     const handleNodeClick = (node: Node) => {
+        setChosenNode(node);
+
         if (!startNodeId) {
             setStartNodeId(node.id);
             const path: PathfindingRequest = {startid: node.id, endid: ""};
@@ -143,31 +149,32 @@ function MapDisplay({
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
             <>
-                <foreignObject x={node.xCoord - 50} y={node.yCoord - 80} width="200" height="200" className="z-50 flex items-end">
-                    <g className={""}>
-                        <img src="../../public/icon/red-pin.png" className="bouncy-boi w-[100px] h-[100px]"></img>
-                        <p>{node.longName}</p>
+                <foreignObject x={node.xCoord - 50} y={node.yCoord - 80} width="100" height="100" className="z-50 flex items-end">
+                    <g onClick={() => clearSelection()} className="cursor-no-drop">
+                        {type === 'start' ?
+                            <img src="../../public/icon/red-pin.png" className="scaly-boi w-[100px] h-[100px]"></img> :
+                            <img src="../../public/icon/red-pin.png" className="scaly-boi w-[100px] h-[100px]"></img>}
                     </g>
                 </foreignObject>
-                <foreignObject x={node.xCoord - 5} y={node.yCoord + 20} width="250" height="250" className="z-50">
-                    <div
-                        className={"w-50 h-50 rounded-3xl border bg-popover p-4 text-md text-popover-foreground shadow-md " +
-                            "outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 " +
-                            "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}
-                        style={{backgroundColor: 'rgba(122,154,255,0.7)'}}>
-                        <g>
-                            <div className="font-bold">
-                                {type === 'start' ? 'START NODE' : 'END NODE'}
-                            </div>
-                            <div>
-                                <text className="text-neutral-700 font-semibold" style={{cursor: 'pointer'}}
-                                      onClick={() => clearSelection()}>
-                                    Clear
-                                </text>
-                            </div>
-                        </g>
-                    </div>
-                </foreignObject>
+                {/*<foreignObject x={node.xCoord - 5} y={node.yCoord + 20} width="250" height="250" className="z-50">*/}
+                {/*    <div*/}
+                {/*        className={"w-50 h-50 rounded-3xl border bg-popover p-4 text-md text-popover-foreground shadow-md " +*/}
+                {/*            "outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 " +*/}
+                {/*            "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}*/}
+                {/*        style={{backgroundColor: 'rgba(122,154,255,0.7)'}}>*/}
+                {/*        <g>*/}
+                {/*            <div className="font-bold">*/}
+                {/*                {type === 'start' ? 'START NODE' : 'END NODE'}*/}
+                {/*            </div>*/}
+                {/*            <div>*/}
+                {/*                <text className="text-neutral-700 font-semibold" style={{cursor: 'pointer'}}*/}
+                {/*                      onClick={() => clearSelection()}>*/}
+                {/*                    Clear*/}
+                {/*                </text>*/}
+                {/*            </div>*/}
+                {/*        </g>*/}
+                {/*    </div>*/}
+                {/*</foreignObject>*/}
             </>
 
         );
@@ -209,7 +216,7 @@ function MapDisplay({
             Array.from(graph.nodes.values()).map((node: Node) => {
                 return (
                     <g>
-                        {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                        {startNodeId === node.id && displaySelectedNodes(node, 'start') }
                         {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                         {hoverNodeId === node.id && displayHoverInfo(node)}
                     </g>
@@ -252,7 +259,6 @@ function MapDisplay({
                 {graph && displayNodes(graph)}
                 {graph && displayHoverCards(graph)}
             </svg>
-
         </div>
     );
 }
