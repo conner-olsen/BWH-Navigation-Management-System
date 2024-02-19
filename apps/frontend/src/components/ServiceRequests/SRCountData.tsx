@@ -15,53 +15,53 @@ const CreateSRChart = () => {
     useEffect(() => {
         const getCounts = async () => {
             try {
-                const responseFlower = await axios.get("/api/get-stats/flower", {
+                const responseFlower = await axios.get("/api/get-stats/type/flower", {
                     headers: {
                         "Content-Type": 'application/json'
                     }
                 });
-                console.log(responseFlower.data);
+                //console.log(responseFlower.data);
                 countFlower = responseFlower.data;
 
-                const responseReligious = await axios.get("/api/get-stats/religious", {
+                const responseReligious = await axios.get("/api/get-stats/type/religious", {
                     headers: {
                         "Content-Type": 'application/json'
                     }
                 });
-                console.log(responseReligious.data);
+                //console.log(responseReligious.data);
                 countReligious = responseReligious.data;
 
 
-                const responseCleaning = await axios.get("/api/get-stats/cleaning", {
+                const responseCleaning = await axios.get("/api/get-stats/type/cleaning", {
                     headers: {
                         "Content-Type": 'application/json'
                     }
                 });
-                console.log(responseCleaning.data);
+                //console.log(responseCleaning.data);
                 countCleaning = responseCleaning.data;
 
-                const responseInternal = await axios.get("/api/get-stats/internal-transportation", {
+                const responseInternal = await axios.get("/api/get-stats/type/internal-transportation", {
                     headers: {
                         "Content-Type": 'application/json'
                     }
                 });
-                console.log(responseInternal.data);
+                //console.log(responseInternal.data);
                 countInternal = responseInternal.data;
 
-                const responseExternal = await axios.get("/api/get-stats/external-transportation", {
+                const responseExternal = await axios.get("/api/get-stats/type/external-transportation", {
                     headers: {
                         "Content-Type": 'application/json'
                     }
                 });
-                console.log(responseExternal.data);
+                //console.log(responseExternal.data);
                 countExternal = responseExternal.data;
 
-                const responseLanguage = await axios.get("/api/get-stats/language", {
+                const responseLanguage = await axios.get("/api/get-stats/type/language", {
                     headers: {
                         "Content-Type": 'application/json'
                     }
                 });
-                console.log(responseLanguage.data);
+                //console.log(responseLanguage.data);
                 countLanguage = responseLanguage.data;
 
             } catch (error) {
@@ -71,6 +71,7 @@ const CreateSRChart = () => {
 
         getCounts().then();
     }, []); // Empty dependency array to ensure the effect runs only once
+
 
     // Create the chart data
     const statusData = {
