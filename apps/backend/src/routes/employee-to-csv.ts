@@ -16,9 +16,9 @@ function convertToCSV(data: employee[]): string {
 router.post("/", async function(req: Request, res: Response){
   try {
     // Get the JSON body from the JSON object
-    const employeeCSVData = req.body;
-    console.log(employeeCSVData);
+    const employeeCSVData = req.body["csvString"];
     const parsedCSVData = parseCSV(employeeCSVData);
+
     const transformedEmp: employee[] = parsedCSVData.map((row) => {
       const rowval = Object.values(row);
       return {
@@ -29,7 +29,6 @@ router.post("/", async function(req: Request, res: Response){
       };
     });
 
-    console.log("Made it here");
 
     // Create records in 'user' table
     await PrismaClient.user.createMany({
