@@ -88,7 +88,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.2.0"],\
           ["react-bootstrap", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:2.10.0"],\
           ["react-dom", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:18.2.0"],\
-          ["react-icons", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:5.0.1"],\
+          ["react-icons", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.0.1"],\
           ["react-select", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.8.0"],\
           ["tsconfig-custom", "workspace:configs/tsconfig-custom"],\
           ["turbo", "npm:1.11.3"],\
@@ -10249,10 +10249,10 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:5.0.1", {\
-        "packageLocation": "./.yarn/__virtual__/react-icons-virtual-94181b3645/0/cache/react-icons-npm-5.0.1-5e01385cf2-c4458c643a.zip/node_modules/react-icons/",\
+      ["virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.0.1", {\
+        "packageLocation": "./.yarn/__virtual__/react-icons-virtual-4c9879a846/0/cache/react-icons-npm-5.0.1-5e01385cf2-c4458c643a.zip/node_modules/react-icons/",\
         "packageDependencies": [\
-          ["react-icons", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:5.0.1"],\
+          ["react-icons", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.0.1"],\
           ["@types/react", "npm:18.2.48"],\
           ["react", "npm:18.2.0"]\
         ],\
@@ -11190,48 +11190,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["softeng-starter-code", [\
-      ["workspace:.", {\
-        "packageLocation": "./",\
-        "packageDependencies": [\
-          ["softeng-starter-code", "workspace:."],\
-          ["@auth0/auth0-react", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:2.2.4"],\
-          ["@popperjs/core", "npm:2.11.8"],\
-          ["@prisma/client", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:5.9.1"],\
-          ["@radix-ui/react-dropdown-menu", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:2.0.6"],\
-          ["@radix-ui/react-hover-card", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:1.0.7"],\
-          ["@testing-library/react", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:14.2.0"],\
-          ["@types/bootstrap", "npm:5.2.10"],\
-          ["@types/react", "npm:18.2.48"],\
-          ["@types/react-dom", "npm:18.2.18"],\
-          ["@vitest/ui", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:0.33.0"],\
-          ["@yarnpkg/pnpify", "npm:4.0.1"],\
-          ["bootstrap", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:5.3.2"],\
-          ["class-variance-authority", "npm:0.7.0"],\
-          ["clsx", "npm:2.1.0"],\
-          ["eslint", "npm:8.56.0"],\
-          ["eslint-config-custom", "workspace:configs/eslint-config-custom"],\
-          ["happy-dom", "npm:10.11.2"],\
-          ["husky", "npm:8.0.3"],\
-          ["lucide-react", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:0.323.0"],\
-          ["postcss", "npm:8.4.35"],\
-          ["prettier", "npm:2.8.8"],\
-          ["prettier-config-custom", "workspace:configs/prettier-config-custom"],\
-          ["prisma", "npm:5.9.1"],\
-          ["react", "npm:18.2.0"],\
-          ["react-bootstrap", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:2.10.0"],\
-          ["react-dom", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:18.2.0"],\
-          ["react-select", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:5.8.0"],\
-          ["tailwind-merge", "npm:2.2.1"],\
-          ["tailwindcss-animate", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:1.0.7"],\
-          ["tsconfig-custom", "workspace:configs/tsconfig-custom"],\
-          ["turbo", "npm:1.11.3"],\
-          ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
-          ["vitest", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:1.2.2"]\
-        ],\
-        "linkType": "SOFT"\
-      }]\
-    ]],\
     ["sort-by", [\
       ["npm:1.2.0", {\
         "packageLocation": "./.yarn/cache/sort-by-npm-1.2.0-fd3c273add-82c9812aa3.zip/node_modules/sort-by/",\
@@ -11635,6 +11593,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.2.0"],\
           ["react-bootstrap", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:2.10.0"],\
           ["react-dom", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:18.2.0"],\
+          ["react-icons", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.0.1"],\
           ["react-select", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.8.0"],\
           ["tsconfig-custom", "workspace:configs/tsconfig-custom"],\
           ["turbo", "npm:1.11.3"],\
