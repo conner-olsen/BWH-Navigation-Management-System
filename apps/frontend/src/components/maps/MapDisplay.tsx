@@ -163,7 +163,7 @@ function MapDisplay({
     const displayName = (node: Node) => {
         if (doDisplayNames && (node.floor == floor)) {
             return (
-                <text className="-rotate-1 font-bold dark:invert" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                <text className="font-bold dark:invert" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
                     {node.shortName}
                 </text>
             );
