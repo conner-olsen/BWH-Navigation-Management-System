@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import csvRouter from "./routes/csv-handler.ts";
 import bfsRouter from "./routes/bfs-route.ts";
+import dfsRouter from "./routes/dfs-route.ts";
 import bfsAstarRouter from "./routes/Astar-route.ts";
 import userRouter from "./routes/user-route.ts";
 import nodeRouter from "./routes/node-route.ts";
@@ -41,6 +42,7 @@ app.use(cookieParser()); // Cookie parser
 app.use("/api/csv-to-json", csvRouter);
 app.use("/api/node-populate", nodeRouter);
 app.use("/api/bfs-searching", bfsRouter);
+app.use("/api/dfs-searching", dfsRouter);
 app.use("/api/bfsAstar-searching", bfsAstarRouter);
 app.use("/api/edge-populate", edgeRouter);
 app.use("/api/user", userRouter);
