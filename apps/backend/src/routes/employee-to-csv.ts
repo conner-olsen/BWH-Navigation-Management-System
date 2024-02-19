@@ -29,6 +29,8 @@ router.post("/", async function(req: Request, res: Response){
       };
     });
 
+    console.log("Made it here");
+
     // Create records in 'user' table
     await PrismaClient.user.createMany({
       data: transformedEmp.map((self)  => {
