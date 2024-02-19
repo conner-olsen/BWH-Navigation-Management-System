@@ -150,13 +150,14 @@ function MapDisplay({
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
             <>
-                <foreignObject x={node.xCoord - 50} y={node.yCoord - 80} width="100" height="100" className="z-50 flex items-end">
+                <foreignObject x={node.xCoord - 50} y={node.yCoord - 80} width="100" height="100" className="z-50">
                     <g onClick={() => clearSelection()} className="cursor-no-drop">
                         {type === 'start' ?
                             <img src="../../public/icon/red-pin.png" className="scaly-boi w-[100px] h-[100px]"></img> :
                             <img src="../../public/icon/red-pin.png" className="scaly-boi w-[100px] h-[100px]"></img>}
                     </g>
                 </foreignObject>
+
                 {/*<foreignObject x={node.xCoord - 5} y={node.yCoord + 20} width="250" height="250" className="z-50">*/}
                 {/*    <div*/}
                 {/*        className={"w-50 h-50 rounded-3xl border bg-popover p-4 text-md text-popover-foreground shadow-md " +*/}
@@ -198,6 +199,7 @@ function MapDisplay({
                 if (node.floor == floor && doDisplayNodes) {
                     return (
                         <g key={node.id} >
+
                             <circle className="dark:fill-white z-20" cx={node.xCoord} cy={node.yCoord} r="11" fill="blue"
                                     style={{cursor: 'pointer'}}
                                     // Moved events here so hovering on other components don't affect displayed nodes
@@ -217,9 +219,21 @@ function MapDisplay({
             Array.from(graph.nodes.values()).map((node: Node) => {
                 return (
                     <g>
-                        {startNodeId === node.id && displaySelectedNodes(node, 'start') }
-                        {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                         {hoverNodeId === node.id && displayHoverInfo(node)}
+                    </g>
+                );
+            })
+        );
+    };
+
+    const displayNodePins = (graph: Graph) => {
+        return (
+            Array.from(graph.nodes.values()).map((node: Node) => {
+                if (node.floor === floor)
+                return (
+                    <g>
+                        {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                        {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                     </g>
                 );
             })
@@ -258,6 +272,7 @@ function MapDisplay({
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && displayNodes(graph)}
+                {graph && displayNodePins(graph)}
                 {graph && displayHoverCards(graph)}
             </svg>
         </div>

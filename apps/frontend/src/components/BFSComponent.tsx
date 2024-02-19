@@ -4,7 +4,7 @@ import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
-import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import { TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
