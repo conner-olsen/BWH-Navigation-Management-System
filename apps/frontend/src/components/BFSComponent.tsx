@@ -24,7 +24,8 @@ export function BFSComponent() {
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
 
     const updateCurrentNode = (currentNode: Node) => {
-        if (activeTab!==2) setHasSeen(false);
+        setHasSeen(true);
+        if (activeTab!==2 || !isExpanded) setHasSeen(false);
         setCurrentNode(currentNode);
     };
 
@@ -187,7 +188,7 @@ export function BFSComponent() {
         setIsExpanded(!isExpanded);
     };
     const toggleActiveTab = (tabNumber: number) => {
-        if (tabNumber === 2) setHasSeen(true);
+        if (tabNumber === 2 && isExpanded) setHasSeen(true);
         setActiveTab(tabNumber);
     };
 
@@ -209,13 +210,18 @@ export function BFSComponent() {
                     )}
                 </button>
                 <div>
-                    <button className="mt-4" onClick={() => toggleActiveTab(1)}>
+                    <button className="mt-4" onClick={() => {
+                        toggleActiveTab(1);
+                        setIsExpanded(true);}}>
                         <img src="../../public/icon/search-icon.png" alt="search-icon" className="invert"></img>
                     </button>
-                    <button className="mt-4 text-foreground relative" onClick={() => toggleActiveTab(2)}>
+                    <button className="mt-4 text-foreground relative" onClick={() => {
+                        setHasSeen(true);
+                        toggleActiveTab(2);
+                        setIsExpanded(true);}}>
                         {/*<img src="../../public/icon/search-icon.png" alt="search-icon" className="dark:invert"></img>*/}
                         Info
-                        {(currentNode && !hasSeen && activeTab !== 2) ?
+                        {(currentNode && !hasSeen && (!isExpanded || (isExpanded && activeTab !== 2))) ?
                             <span className="absolute flex h-3 w-3 top-[-5px] right-[-10px]">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
@@ -296,6 +302,13 @@ export function BFSComponent() {
                                 ))}
                             </ol>
                         </div>
+                    </div>
+                )}
+                {activeTab === 2 && !currentNode && (
+                    <div>
+                        <p className="font-bold mb-0">Select a location</p>
+                        <p className="font-bold">to display its information</p>
+                        <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
                     </div>
                 )}
                 {activeTab === 2 && currentNode && (
