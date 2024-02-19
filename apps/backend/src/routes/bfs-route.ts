@@ -3,6 +3,7 @@ import { Graph } from "common/src/graph-structure.ts";
 import * as path from "path";
 import PathFindingRequest from "common/src/PathfindingRequest.ts";
 import client from "../bin/database-connection.ts";
+import {bfsPathfinding} from "common/src/PathfindingMethod.ts";
 
 const router: Router = express.Router();
 router.post("/", async (req: Request, res: Response) => {
@@ -28,12 +29,13 @@ router.post("/", async (req: Request, res: Response) => {
 
       // Populate the graph with nodes and edges
       graphCSV.populateGraph(nodes, edges);
+      graphCSV.setPathfindingMethod(new bfsPathfinding());
     } catch (error) {
       console.error('Error fetching data from the database:', error);
     }
 
     //run bfs, convert to an array of nodes
-    res.status(200).json(graphCSV.stringsToNodes(graphCSV.bfs(startNodeCSV, endNodeCSV)));
+    res.status(200).json(graphCSV.stringsToNodes(graphCSV.runPathfinding(startNodeCSV, endNodeCSV)));
 
   }
   catch (error) {
