@@ -4301,6 +4301,32 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["alert", [\
+      ["npm:6.0.1", {\
+        "packageLocation": "./.yarn/cache/alert-npm-6.0.1-9b1deec99e-049917dd0e.zip/node_modules/alert/",\
+        "packageDependencies": [\
+          ["alert", "npm:6.0.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:6.0.1", {\
+        "packageLocation": "./.yarn/__virtual__/alert-virtual-1bdce1e01c/0/cache/alert-npm-6.0.1-9b1deec99e-049917dd0e.zip/node_modules/alert/",\
+        "packageDependencies": [\
+          ["alert", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:6.0.1"],\
+          ["@types/react", "npm:18.2.48"],\
+          ["@types/react-dom", "npm:18.2.18"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["ansi-align", [\
       ["npm:3.0.1", {\
         "packageLocation": "./.yarn/cache/ansi-align-npm-3.0.1-8e6288d20a-4c7e8b6a10.zip/node_modules/ansi-align/",\
@@ -6933,6 +6959,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react-router-dom", "npm:5.3.3"],\
           ["@vitejs/plugin-react-swc", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:3.5.0"],\
           ["add", "npm:2.0.6"],\
+          ["alert", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:6.0.1"],\
           ["autoprefixer", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:10.4.17"],\
           ["axios", "npm:1.6.5"],\
           ["bootstrap", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.3.2"],\
