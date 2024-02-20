@@ -1,6 +1,6 @@
-import {employee} from "common/interfaces/interfaces.ts";
+// import {employee} from "common/interfaces/interfaces.ts";
 import {useEffect, useState} from "react";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
+// import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 import {Bar} from "react-chartjs-2";
 import 'chart.js/auto';
 import axios from "axios";
@@ -37,43 +37,43 @@ const CreateEmployeeChart = () => {
         ]
     };
 
-    const [selectedEmployee, setSelectedEmployee] = useState<string>("");
-    const [data, setData] = useState<employee[]>([]);
-    const [loading, setLoading] = useState(true);
+    // const [selectedEmployee, setSelectedEmployee] = useState<string>("");
+    // const [data, setData] = useState<employee[]>([]);
+    // const [loading, setLoading] = useState(true);
     const [barGraphData, setBarGraphData] = useState<BarGraphData>(initialBarGraphData);
 
-    const handleChange = (event: string) => {
-        setSelectedEmployee(event);
-    };
-
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Make a GET request to the API endpoint
-                const response = await fetch("/api/employee-mod");
-
-                // Check if the request was successful (status code 2xx)
-                if (!response.ok) {
-                    throw new Error(`Please load node data ${response.status}`);
-                }
-
-                // Parse the JSON response
-                const result = await response.json();
-
-                // Set the data in the state
-                setData(result);
-            } catch (err) {
-                // Handle errors
-                console.log(err);
-            } finally {
-                // Set loading to false, indicating that the request has completed
-                setLoading(false);
-            }
-        };
-
-        fetchData().then();
-    }, []); //
+    // const handleChange = (event: string) => {
+    //     setSelectedEmployee(event);
+    // };
+    //
+    //
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             // Make a GET request to the API endpoint
+    //             const response = await fetch("/api/employee-mod");
+    //
+    //             // Check if the request was successful (status code 2xx)
+    //             if (!response.ok) {
+    //                 throw new Error(`Please load node data ${response.status}`);
+    //             }
+    //
+    //             // Parse the JSON response
+    //             const result = await response.json();
+    //
+    //             // Set the data in the state
+    //             setData(result);
+    //         } catch (err) {
+    //             // Handle errors
+    //             console.log(err);
+    //         } finally {
+    //             // Set loading to false, indicating that the request has completed
+    //             setLoading(false);
+    //         }
+    //     };
+    //
+    //     fetchData().then();
+    // }, []); //
 
 
     interface employeeSR {
@@ -122,24 +122,24 @@ const CreateEmployeeChart = () => {
     }, [getEmployeeServiceCounts]);
 
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
 
     return (
         <div>
-            <Select onValueChange={handleChange} value={selectedEmployee}>
-                <SelectTrigger>
-                    <SelectValue placeholder="Employee"/>
-                </SelectTrigger>
-                <SelectContent>
+            {/*<Select onValueChange={handleChange} value={selectedEmployee}>*/}
+            {/*    <SelectTrigger>*/}
+            {/*        <SelectValue placeholder="Employee"/>*/}
+            {/*    </SelectTrigger>*/}
+            {/*    <SelectContent>*/}
 
-                    {data.map((employee, index) => (
-                        <SelectItem value={data[index].username}>{data[index].username}</SelectItem>
-                    ))}
+            {/*        {data.map((employee, index) => (*/}
+            {/*            <SelectItem value={data[index].username}>{data[index].username}</SelectItem>*/}
+            {/*        ))}*/}
 
-                </SelectContent>
-            </Select>
+            {/*    </SelectContent>*/}
+            {/*</Select>*/}
 
 
             <Bar data={barGraphData}/>
