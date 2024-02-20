@@ -221,18 +221,18 @@ export function BFSComponent() {
                     )}
                 </button>
                 <div>
-                    <button className={`mt-4 transition-all duration-200 ${(activeTab===1 && isExpanded)? 'bg-blue-400' : ''}`} onClick={() => {
+                    <button className={`mt-4 transition-all duration-200 ${(activeTab===1 && isExpanded)? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
                         toggleActiveTab(1);
                         setIsExpanded(true);}}>
-                        <img src="../../public/icon/search-icon.png" alt="search-icon" className="invert"></img>
+                        <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon" className="invert"></img>
                     </button>
                     <button className={`mt-4 text-foreground relative transition-all duration-200 
-                    ${(activeTab===2 && isExpanded)? 'bg-blue-400' : ''}`} onClick={() => {
+                    ${(activeTab===2 && isExpanded)? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
                         setHasSeen(true);
                         toggleActiveTab(2);
                         setIsExpanded(true);}}>
-                        {/*<img src="../../public/icon/search-icon.png" alt="search-icon" className="dark:invert"></img>*/}
-                        Info
+                        <img src="../../public/icon/info-icon.png" alt="info-icon"></img>
+
                         {(currentNode && !hasSeen && (!isExpanded || (isExpanded && activeTab !== 2))) ?
                             <span className="absolute flex h-3 w-3 top-[-5px] right-[-10px]">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>

@@ -200,7 +200,7 @@ function MapDisplay({
                     return (
                         <g key={node.id} >
 
-                            <circle className="dark:fill-white z-20" cx={node.xCoord} cy={node.yCoord} r="11" fill="blue"
+                            <circle className="dark:fill-white z-20 fill-blue-600" cx={node.xCoord} cy={node.yCoord} r="11" stroke="black" stroke-width="4"
                                     style={{cursor: 'pointer'}}
                                     // Moved events here so hovering on other components don't affect displayed nodes
                                     onClick={() => handleNodeClick(node)}
