@@ -7,6 +7,8 @@ import { parseCSV } from "common/src/parser.ts";
 import { TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+// import {Terminal} from "lucide-react";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
@@ -55,10 +57,10 @@ export function BFSComponent() {
     useEffect(() => {
         fetchData()
             .then().catch(error => {
-                // Handle error
-                console.error("Error:", error.message);
-                // Optionally set state or show error message to the user
-            });
+            // Handle error
+            console.error("Error:", error.message);
+            // Optionally set state or show error message to the user
+        });
     }, [fetchData]);
 
     useEffect(() => {
@@ -66,9 +68,10 @@ export function BFSComponent() {
         setMapKey(prevKey => prevKey + 1);
     }, [pathFindingType]);
 
-    const collectLongNames = () => {
+    const collectLongNames = useCallback(() => {
         return bfsResult.map(node => node.longName);
-    };
+    }, [bfsResult]);
+
 
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
 
@@ -157,7 +160,7 @@ export function BFSComponent() {
         const row = CSVRow[i];
         const rowval = Object.values(row);
         const id = rowval[0];
-       // const nodeId = row["nodeId"];
+        // const nodeId = row["nodeId"];
         const longName = row["longName"];
         const nodeType = row["nodeType"];
         const nodeFloor = nodeFloorToMapFloor(row["floor"]);
@@ -191,6 +194,18 @@ export function BFSComponent() {
         if (tabNumber === 2 && isExpanded) setHasSeen(true);
         setActiveTab(tabNumber);
     };
+    const [showAlert, setShowAlert] = useState(false);
+
+    // Assuming collectLongNames is a function that returns an array of long names
+
+    useEffect(() => {
+        const hasStaircase = collectLongNames().some(longName =>
+            longName.includes("Staircase")
+        );
+
+        setShowAlert(hasStaircase);
+    }, [collectLongNames]);
+
 
     return (
         <div>
@@ -297,10 +312,14 @@ export function BFSComponent() {
                         </div>
 
                         <div>
-                            <p className="font-bold">Follow me</p>
-                            <ol type="1" className={"overflow-y-auto h-[260px] px-2"}>
+                            <p className="font-bold">Follow Me</p>
+                            <ol type="1" className="overflow-y-auto h-80 text-left">
+                                {/* Render the list of long names */}
                                 {collectLongNames().map((longName, index) => (
-                                    <li key={index}>{longName}</li>
+                                    <li key={index}
+                                        className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
+                                        {longName}
+                                    </li>
                                 ))}
                             </ol>
                         </div>
@@ -381,6 +400,20 @@ export function BFSComponent() {
 
                 </div>
             </div>
+            <div className={`absolute bottom-[10px] z-50 right-[10px]`}>
+                {showAlert && (
+                    <Alert>
+                        {/* Replace the Terminal component with an img tag */}
+                        <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon" className="h-7 w-7"/>
+                        <AlertTitle>Accessibility Alert!</AlertTitle>
+                        <AlertDescription>
+                            This path contains stairs. If this is difficult, please request an accessible route.
+                        </AlertDescription>
+                    </Alert>
+                )}
+            </div>
+
+
             <div className="fixed w-screen max-w-full m-auto">
                 <TransformWrapper
                     initialScale={1}
