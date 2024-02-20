@@ -55,7 +55,7 @@ function MapDisplay({
             graph.setPathfindingMethodStringRoute(pathFindingType);
 
             const pathString = graph.nodesToString(pathSent);
-                //graph.runPathfinding(startNode, endNode);
+            //graph.runPathfinding(startNode, endNode);
             setPath(pathString);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
@@ -70,16 +70,17 @@ function MapDisplay({
             if (node && nextNode && node.floor === floor && nextNode.floor === floor) {
                 pathElements.push(
                     <line className="dark:stroke-fuchsia-500"
-                        key={`${node.id}-${nextNode.id}`}
-                        x1={node.xCoord} y1={node.yCoord}
-                        x2={nextNode.xCoord} y2={nextNode.yCoord}
-                        stroke="red" strokeWidth="8"
+                          key={`${node.id}-${nextNode.id}`}
+                          x1={node.xCoord} y1={node.yCoord}
+                          x2={nextNode.xCoord} y2={nextNode.yCoord}
+                          stroke="red" strokeWidth="8"
                     />
                 );
             }
         }
         return pathElements;
     };
+
 
     const handleNodeClick = (node: Node) => {
         setChosenNode(node);
@@ -249,10 +250,10 @@ function MapDisplay({
                         if (targetNode && targetNode.floor === floor) {
                             edges.push(
                                 <line className="dark:stroke-blue-300"
-                                    key={`${nodeId}-${edgeNodeId}`}
-                                    x1={node.xCoord} y1={node.yCoord}
-                                    x2={targetNode.xCoord} y2={targetNode.yCoord}
-                                    stroke="black" strokeWidth="2"
+                                      key={`${nodeId}-${edgeNodeId}`}
+                                      x1={node.xCoord} y1={node.yCoord}
+                                      x2={targetNode.xCoord} y2={targetNode.yCoord}
+                                      stroke="black" strokeWidth="2"
                                 />
                             );
                         }
@@ -266,8 +267,7 @@ function MapDisplay({
     return (
         <div className={"relative"}>
             <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
-                <image href={floorMap} width="5000" height="3400" x="0"
-                       y="0"/>
+                <image href={floorMap} width="5000" height="3400" x="0" y="0"/>
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && displayNodes(graph)}

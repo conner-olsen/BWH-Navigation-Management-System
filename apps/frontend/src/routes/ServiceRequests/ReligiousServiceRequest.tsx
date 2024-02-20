@@ -65,7 +65,7 @@ const ReligiousServiceRequest: React.FC = () => {
 
     return (
         <Container>
-            <h1 className=" bg-gradient-to-r from-gray-500 to-black bg-clip-text text-transparent">
+            <h1 className=" bg-gradient-to-r from-gray-500 to-black bg-clip-text text-transparent dark:text-white">
                 Religious Service Request
             </h1>
             <div className={"border-2 border-black dark:border-blue-400 rounded-lg p-4"}>
