@@ -314,7 +314,7 @@ export function BFSComponent() {
                 )}
                 {activeTab === 2 && currentNode && (
                     <div className="px-2 text-left">
-                        <img src="../../public/room-types/hospital-room.jpeg" alt="patient-room"
+                        <img src={'../../public/room-types/nodeType-' + currentNode.nodeType + ".png"} alt="patient-room"
                              className="rounded-md pb-3"></img>
                         <p className="text-xl font-bold mb-1">{currentNode.longName + " (" + currentNode.shortName + ")"}</p>
                         <p className="text-sm text-muted-foreground">{currentNode.nodeType + " #" + currentNode.id}</p>
