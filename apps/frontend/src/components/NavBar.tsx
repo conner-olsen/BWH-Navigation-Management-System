@@ -72,7 +72,7 @@ return (
                 <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white"
                       onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <div className={"hover:text-blue-500"}>Service Request</div>
-                    <div className="mt-2 h-0 w-screen max-w-full group-hover:h-[32vh] absolute
+                    <div className="mt-2 h-0 w-screen max-w-full group-hover:h-[29vh] absolute
                                     bg-blue-950 left-0 overflow-hidden flex justify-center
                                     transition-all duration-500">
                         <div>

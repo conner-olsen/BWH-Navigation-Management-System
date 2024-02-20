@@ -61,8 +61,9 @@ const ServiceLog = () => {
                                     <Col>
                                         <CompletionStats></CompletionStats>
                                     </Col>
-
                                 </Row>
+
+
 
                             </div>
 

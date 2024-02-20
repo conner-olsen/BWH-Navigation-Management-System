@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LoginButtonAdmin from "../components/LoginButtonAdmin.tsx";
-import LoginButtonPatient from "../components/LoginButtonPatient.tsx";
+import LoginButtonEmployee from "../components/LoginButtonEmployee.tsx";
 import '../index.css';
 import LoginButtonGuest from "../components/LoginButtonGuest.tsx"; // Import the CSS file
 
@@ -58,7 +58,7 @@ const BwhHomepage: React.FC = () => {
                 </div>
 
                 <div>
-                    <LoginButtonPatient />
+                    <LoginButtonEmployee />
                 </div>
 
                 <div>
