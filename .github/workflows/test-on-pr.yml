@@ -5,6 +5,24 @@ jobs:
   tests:
     name: Run Tests
     runs-on: ubuntu-latest
+    services:
+      #setsup postgres with the password postgres
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: dev
+          POSTGRES_PASSWORD: dev
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
     steps:
       #checks out repository
       - uses: actions/checkout@v4
@@ -16,5 +34,8 @@ jobs:
         run: yarn install --immutable
       - name: build project
         run: yarn run build
+      - name: sync db
+        run: yarn run migrate:dev
       - name: test
         run: yarn run vitest --run
+

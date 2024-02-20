@@ -1,5 +1,6 @@
 import express, {Router, Request, Response} from "express";
 import { Graph } from "common/src/graph-structure.ts";
+import * as path from "path";
 import PathFindingRequest from "common/src/PathfindingRequest.ts";
 import client from "../bin/database-connection.ts";
 import {bfsPathfinding} from "common/src/PathfindingMethod.ts";
@@ -10,6 +11,10 @@ router.post("/", async (req: Request, res: Response) => {
     const requestData: PathFindingRequest = req.body;
     console.log(requestData);
     // // set up objects needed to call bfs
+    // // language=file-reference - Node csv file path
+    // const nodePath = path.join(__dirname, "../../data/csv/L1Nodes.csv");
+    // // language=file-reference - Edge csv file path
+    // const edgePath = path.join(__dirname, "../../data/csv/L1Edges.csv");
     const graphCSV = new Graph();
     const startNodeCSV =  requestData.startid;
     const endNodeCSV = requestData.endid;

@@ -7,10 +7,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "apps/frontend/*", "apps/backend/*", "packages/common/*", "packages/database/*"]
-    }
+    "skipLibCheck": true
   }
 }
