@@ -9,6 +9,7 @@ import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 import {NodeServiceRequestComponent} from "./NodeServiceRequestComponent.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+import { Col, Row } from "react-bootstrap";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -21,6 +22,12 @@ export function BFSComponent() {
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
 
+    const handleSpeakButtonClick = () => {
+        const longNames = collectLongNames();
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = longNames.join(', ');
+        window.speechSynthesis.speak(speech);
+    };
     const updateCurrentNode = (currentNode: Node) => {
         setHasSeen(true);
         if (activeTab!==2 || !isExpanded) setHasSeen(false);
@@ -308,16 +315,32 @@ export function BFSComponent() {
                         </div>
 
                         <div>
-                            <p className="font-bold">Follow Me</p>
-                            <ol type="1" className="overflow-y-auto h-80 text-left">
-                                {/* Render the list of long names */}
-                                {collectLongNames().map((longName, index) => (
-                                    <li key={index}
-                                        className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
-                                        {longName}
-                                    </li>
-                                ))}
-                            </ol>
+                            <div>
+                                <Row>
+                                    <Col>
+                                        <p className="font-bold">Follow Me</p>
+                                    </Col>
+                                    <Col>
+                                        <button onClick={handleSpeakButtonClick}>
+                                            <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
+                                                 className="h-6 w-6 inline mr-5"></img>
+                                        </button>
+                                    </Col>
+
+
+                                    <Row>
+                                        <ol type="1" className="overflow-y-auto h-80 text-left ml-7">
+                                            {/* Render the list of long names */}
+                                            {collectLongNames().map((longName, index) => (
+                                                <li key={index}
+                                                    className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
+                                                    {longName}
+                                                </li>
+                                            ))}
+                                        </ol>
+                                    </Row>
+                                </Row>
+                            </div>
                         </div>
                     </div>
                 )}
