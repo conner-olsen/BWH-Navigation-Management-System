@@ -245,25 +245,25 @@ export function BFSComponent() {
                 className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[80px] pt-[90px] sidebar 
                 ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
                 {/* Sidebar content */}
+                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                    <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
+                    <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
+                    <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
+                    <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
+                    <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "floor1"}/>
+                    <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
+                    <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "floor2"}/>
+                    <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
+                    <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "floor3"}/>
+                    <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
+                </div>
                 {activeTab === 1 && (
                     <div>
-                        <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
-                            <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
-                            <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
-                            <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
-                            <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
-                            <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "floor1"}/>
-                            <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
-                            <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "floor2"}/>
-                            <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
-                            <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "floor3"}/>
-                            <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
-                        </div>
                         <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
                             <div className="flex flex-col items-center">
                                 <img src="../../public/icon/start.svg" alt="circle"
@@ -426,7 +426,8 @@ export function BFSComponent() {
                                 <button onClick={() => zoomIn()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">
-                                    <img src="../../public/icon/zoom-in-icon.png" alt="zoom-in" className="w-[30%] dark:invert"></img>
+                                    <img src="../../public/icon/zoom-in-icon.png" alt="zoom-in"
+                                         className="w-[30%] dark:invert"></img>
                                 </button>
                                 <button onClick={() => zoomOut()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
