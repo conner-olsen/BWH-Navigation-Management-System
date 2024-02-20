@@ -51,7 +51,7 @@ function MapDisplay({
             graph.setPathfindingMethodStringRoute(pathFindingType);
 
             const pathString = graph.nodesToString(pathSent);
-                //graph.runPathfinding(startNode, endNode);
+            //graph.runPathfinding(startNode, endNode);
             setPath(pathString);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
@@ -201,10 +201,10 @@ function MapDisplay({
                         if (targetNode && targetNode.floor === floor) {
                             edges.push(
                                 <line className="dark:stroke-blue-300"
-                                    key={`${nodeId}-${edgeNodeId}`}
-                                    x1={node.xCoord} y1={node.yCoord}
-                                    x2={targetNode.xCoord} y2={targetNode.yCoord}
-                                    stroke="black" strokeWidth="2"
+                                      key={`${nodeId}-${edgeNodeId}`}
+                                      x1={node.xCoord} y1={node.yCoord}
+                                      x2={targetNode.xCoord} y2={targetNode.yCoord}
+                                      stroke="black" strokeWidth="2"
                                 />
                             );
                         }

@@ -8,7 +8,7 @@ import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
-import {Terminal} from "lucide-react";
+// import {Terminal} from "lucide-react";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
 // import MapFloor1 from "../components/maps/MapFloor1.tsx";
 // import MapFloor2 from "../components/maps/MapFloor2.tsx";
@@ -50,10 +50,10 @@ export function BFSComponent() {
     useEffect(() => {
         fetchData()
             .then().catch(error => {
-                // Handle error
-                console.error("Error:", error.message);
-                // Optionally set state or show error message to the user
-            });
+            // Handle error
+            console.error("Error:", error.message);
+            // Optionally set state or show error message to the user
+        });
     }, [fetchData]);
 
     useEffect(() => {
@@ -153,7 +153,7 @@ export function BFSComponent() {
         const row = CSVRow[i];
         const rowval = Object.values(row);
         const id = rowval[0];
-       // const nodeId = row["nodeId"];
+        // const nodeId = row["nodeId"];
         const longName = row["longName"];
         const nodeType = row["nodeType"];
         const nodeFloor = nodeFloorToMapFloor(row["floor"]);
@@ -188,11 +188,11 @@ export function BFSComponent() {
     // Assuming collectLongNames is a function that returns an array of long names
 
     useEffect(() => {
-        const hasElevatorOrStaircase = collectLongNames().some(longName =>
-            longName.includes("Elevator") || longName.includes("Staircase")
+        const hasStaircase = collectLongNames().some(longName =>
+            longName.includes("Staircase")
         );
 
-        setShowAlert(hasElevatorOrStaircase);
+        setShowAlert(hasStaircase);
     }, [collectLongNames]);
 
 
@@ -278,15 +278,6 @@ export function BFSComponent() {
 
                 <div>
                     {/* Conditionally render the Alert component */}
-                    {showAlert && (
-                        <Alert>
-                            <Terminal className="h-4 w-4"/>
-                            <AlertTitle>Heads Up!</AlertTitle>
-                            <AlertDescription>
-                                This path contains stairs. If this is difficult, please request an accessible route.
-                            </AlertDescription>
-                        </Alert>
-                    )}
 
                     <div>
                         <p className="font-bold">Follow Me</p>
@@ -355,6 +346,20 @@ export function BFSComponent() {
 
                 </div>
             </div>
+            <div className={`absolute bottom-[10px] z-50 right-[10px]`}>
+                {showAlert && (
+                    <Alert>
+                        {/* Replace the Terminal component with an img tag */}
+                        <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon" className="h-7 w-7"/>
+                        <AlertTitle>Accessibility Alert!</AlertTitle>
+                        <AlertDescription>
+                            This path contains stairs. If this is difficult, please request an accessible route.
+                        </AlertDescription>
+                    </Alert>
+                )}
+            </div>
+
+
             <div className="fixed w-screen max-w-full m-auto">
                 <TransformWrapper
                     initialScale={1}
@@ -387,16 +392,41 @@ export function BFSComponent() {
                                 </button>
                             </div>
                             <TransformComponent wrapperClass={"max-h-screen"}>
-                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
-                                {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
-                                {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
-                                {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
-                                {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                {lowerLevel1ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes}/>}
+                                {lowerLevel2ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes}/>}
+                                {floor1ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes}/>}
+                                {floor2ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes}/>}
+                                {floor3ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes}/>}
                             </TransformComponent>
                         </React.Fragment>
                     )}
@@ -405,5 +435,5 @@ export function BFSComponent() {
 
         </div>
 
-            );
+    );
 }
