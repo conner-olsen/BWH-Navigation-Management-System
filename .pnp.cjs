@@ -1403,6 +1403,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@kurkle/color", [\
+      ["npm:0.3.2", {\
+        "packageLocation": "./.yarn/cache/@kurkle-color-npm-0.3.2-98f2086013-079c4b7688.zip/node_modules/@kurkle/color/",\
+        "packageDependencies": [\
+          ["@kurkle/color", "npm:0.3.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@nodelib/fs.scandir", [\
       ["npm:2.1.5", {\
         "packageLocation": "./.yarn/cache/@nodelib-fs.scandir-npm-2.1.5-89c67370dd-6ab2a9b8a1.zip/node_modules/@nodelib/fs.scandir/",\
@@ -4342,32 +4351,6 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
-    ["alert", [\
-      ["npm:6.0.1", {\
-        "packageLocation": "./.yarn/cache/alert-npm-6.0.1-9b1deec99e-049917dd0e.zip/node_modules/alert/",\
-        "packageDependencies": [\
-          ["alert", "npm:6.0.1"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:6.0.1", {\
-        "packageLocation": "./.yarn/__virtual__/alert-virtual-1bdce1e01c/0/cache/alert-npm-6.0.1-9b1deec99e-049917dd0e.zip/node_modules/alert/",\
-        "packageDependencies": [\
-          ["alert", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:6.0.1"],\
-          ["@types/react", "npm:18.2.48"],\
-          ["@types/react-dom", "npm:18.2.18"],\
-          ["react", "npm:18.2.0"],\
-          ["react-dom", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:18.2.0"]\
-        ],\
-        "packagePeers": [\
-          "@types/react-dom",\
-          "@types/react",\
-          "react-dom",\
-          "react"\
-        ],\
-        "linkType": "HARD"\
-      }]\
-    ]],\
     ["ansi-align", [\
       ["npm:3.0.1", {\
         "packageLocation": "./.yarn/cache/ansi-align-npm-3.0.1-8e6288d20a-4c7e8b6a10.zip/node_modules/ansi-align/",\
@@ -5091,6 +5074,16 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["chalk-template", "npm:0.4.0"],\
           ["chalk", "npm:4.1.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["chart.js", [\
+      ["npm:4.4.1", {\
+        "packageLocation": "./.yarn/cache/chart.js-npm-4.4.1-bea8f3ff67-bb58247349.zip/node_modules/chart.js/",\
+        "packageDependencies": [\
+          ["chart.js", "npm:4.4.1"],\
+          ["@kurkle/color", "npm:0.3.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -6875,10 +6868,10 @@ const RAW_RUNTIME_STATE =
           ["@types/react-router-dom", "npm:5.3.3"],\
           ["@vitejs/plugin-react-swc", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:3.5.0"],\
           ["add", "npm:2.0.6"],\
-          ["alert", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:6.0.1"],\
           ["autoprefixer", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:10.4.17"],\
           ["axios", "npm:1.6.5"],\
           ["bootstrap", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:5.3.2"],\
+          ["chart.js", "npm:4.4.1"],\
           ["class-variance-authority", "npm:0.7.0"],\
           ["clsx", "npm:2.1.0"],\
           ["common", "workspace:packages/common"],\
@@ -6896,6 +6889,7 @@ const RAW_RUNTIME_STATE =
           ["prettier-config-custom", "workspace:configs/prettier-config-custom"],\
           ["react", "npm:18.2.0"],\
           ["react-bootstrap", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:2.10.0"],\
+          ["react-chartjs-2", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:5.2.0"],\
           ["react-dom", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:18.2.0"],\
           ["react-hook-form", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:7.50.1"],\
           ["react-router-bootstrap", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.26.2"],\
@@ -10042,6 +10036,32 @@ const RAW_RUNTIME_STATE =
           "@types/react-dom",\
           "@types/react",\
           "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-chartjs-2", [\
+      ["npm:5.2.0", {\
+        "packageLocation": "./.yarn/cache/react-chartjs-2-npm-5.2.0-03632f5179-0a70b60e1a.zip/node_modules/react-chartjs-2/",\
+        "packageDependencies": [\
+          ["react-chartjs-2", "npm:5.2.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:5.2.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-chartjs-2-virtual-46d20964e0/0/cache/react-chartjs-2-npm-5.2.0-03632f5179-0a70b60e1a.zip/node_modules/react-chartjs-2/",\
+        "packageDependencies": [\
+          ["react-chartjs-2", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:5.2.0"],\
+          ["@types/chart.js", null],\
+          ["@types/react", "npm:18.2.48"],\
+          ["chart.js", "npm:4.4.1"],\
+          ["react", "npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/chart.js",\
+          "@types/react",\
+          "chart.js",\
           "react"\
         ],\
         "linkType": "HARD"\

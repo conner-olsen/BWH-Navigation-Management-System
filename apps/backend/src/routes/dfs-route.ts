@@ -1,9 +1,8 @@
 import express, {Router, Request, Response} from "express";
 import { Graph } from "common/src/graph-structure.ts";
-import * as path from "path";
 import PathFindingRequest from "common/src/PathfindingRequest.ts";
 import client from "../bin/database-connection.ts";
-import {bfsPathfinding} from "common/src/PathfindingMethod.ts";
+import {dfsPathfinding} from "common/src/PathfindingMethod.ts";
 
 const router: Router = express.Router();
 router.post("/", async (req: Request, res: Response) => {
@@ -29,7 +28,8 @@ router.post("/", async (req: Request, res: Response) => {
 
       // Populate the graph with nodes and edges
       graphCSV.populateGraph(nodes, edges);
-      graphCSV.setPathfindingMethod(new bfsPathfinding());
+      graphCSV.setPathfindingMethod(new dfsPathfinding());
+
     } catch (error) {
       console.error('Error fetching data from the database:', error);
     }

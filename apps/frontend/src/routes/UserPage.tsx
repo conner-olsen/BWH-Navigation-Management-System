@@ -1,6 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "../components/ui/card.tsx";
+import {Card, CardContent, CardHeader, CardTitle} from "../components/ui/card.tsx";
+
 export const Profile = () => {
     const { user } = useAuth0();
 
@@ -8,6 +9,7 @@ export const Profile = () => {
         <div>
 
         <Container className="mb-5">
+            <br/>
             <Row className="align-items-center profile-header mb-5 text-center text-md-left">
                 <Col md={2}>
                     <img
@@ -17,18 +19,20 @@ export const Profile = () => {
                     />
                 </Col>
                 <Col md>
-                    <h2>{user.name}</h2>
-                    <p className="lead text-muted">{user.email}</p>
+                    <h2>{user.nickname}</h2>
                 </Col>
             </Row>
             <Row>
                 <Card className="max-w-md border-gray-200">
                     <CardHeader>
                         <CardTitle className="text-xl">User data</CardTitle>
-                        <CardDescription className="text-sm">Here is all the information we have on this user:</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {JSON.stringify(user, null, 2)}
+                        {/*{JSON.stringify(user, null, 2)}*/}
+
+                        <p>Username: {user.nickname}</p>
+                        <p>Email: {user.email}</p>
+
                     </CardContent>
                 </Card>
             </Row>

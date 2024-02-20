@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
-const LoginButtonAdmin = () => {
-    const { loginWithRedirect } = useAuth0();
-    const [isHovered, setHovered] = useState<boolean>(false);
+const LoginButtonGuest: React.FC = () => {
+    const [isHovered, setHovered] = useState(false);
+    const navigate = useNavigate();
 
     const handleMouseEnter = () => {
         setHovered(true);
@@ -13,23 +13,27 @@ const LoginButtonAdmin = () => {
         setHovered(false);
     };
 
+    const handleButtonClick = () => {
+        navigate("/Home");
+    };
+
     return (
         <div className="container">
             <button
-                className="LoginButtonAdmin"
-                onClick={() => loginWithRedirect()}
+                className = "LoginButtonGuest"
+                onClick={handleButtonClick}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 style={{
                     color: 'white',
-                    backgroundColor: isHovered ? '#83B5D1'  : 'gray', // Change background color to gray by default
+                    backgroundColor: isHovered ? '#83B5D1' : 'gray', // Change background color to gray by default
                     transition: 'background-color 0.5s ease', // Add a smooth transition effect
                 }}
             >
-                ADMIN
+                GUEST
             </button>
         </div>
     );
 };
 
-export default LoginButtonAdmin;
+export default LoginButtonGuest;
