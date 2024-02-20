@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import { Ref, ReactNode } from 'react';
 
 import cn from "../../lib/utils.ts";
 
@@ -11,7 +12,13 @@ const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 //added a comment for git
 
-const SelectTrigger = React.forwardRef(
+type SelectTriggerProps = {
+    className?: string;
+    children?: ReactNode;
+    ref?: Ref<HTMLButtonElement>;
+};
+
+const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
     ({ className, children, ...props }, ref) => (
         <SelectPrimitive.Trigger
             ref={ref}

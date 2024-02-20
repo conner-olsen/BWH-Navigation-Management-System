@@ -92,7 +92,6 @@ export class aStarPathfinding implements PathfindingMethod {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
-   // console.log("ran astar");
     // if start or end is undefined, return empty array
     if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];

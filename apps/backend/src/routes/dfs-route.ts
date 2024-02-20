@@ -29,6 +29,7 @@ router.post("/", async (req: Request, res: Response) => {
       // Populate the graph with nodes and edges
       graphCSV.populateGraph(nodes, edges);
       graphCSV.setPathfindingMethod(new dfsPathfinding());
+
     } catch (error) {
       console.error('Error fetching data from the database:', error);
     }

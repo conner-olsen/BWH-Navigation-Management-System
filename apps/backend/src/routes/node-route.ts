@@ -2,6 +2,7 @@ import express, {Router, Request, Response} from "express";
 import { parseCSV} from "common/src/parser.ts";
 import PrismaClient from "../bin/database-connection.ts";
 import {node} from "common/interfaces/interfaces.ts";
+//import serviceRequest from "./service-request.ts";
 
 const router: Router = express.Router();
 
@@ -56,6 +57,27 @@ router.get("/", async function (req: Request, res: Response) {
     res.sendStatus(500);
   }
   res.sendStatus(200);
+});
+
+router.patch("/", async function (req: Request, res: Response) {
+  const nodeID = req.body.id;
+  try{
+    const data = await PrismaClient.serviceRequest.findMany({
+      where: {
+        nodeId: nodeID},
+    include: {
+      flowerServiceRequests: true,
+      cleaningServiceRequest: true,
+      externalTransportationServiceRequest: true,
+      internalTransportServiceRequest: true,
+      languageInterpreterServiceRequest: true,
+      religiousServiceRequest: true
+    }});
+    res.status(200).send(data);
+  } catch (error){
+    console.error(`Error finding associated service requests: ${error}`);
+    res.sendStatus(500);
+  }
 });
 
 export default router;

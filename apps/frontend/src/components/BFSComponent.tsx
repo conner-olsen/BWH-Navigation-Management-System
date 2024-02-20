@@ -7,10 +7,8 @@ import { parseCSV } from "common/src/parser.ts";
 import { TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
-// import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
-// import MapFloor1 from "../components/maps/MapFloor1.tsx";
-// import MapFloor2 from "../components/maps/MapFloor2.tsx";
-// import MapFloor3 from "../components/maps/MapFloor3.tsx";
+import {NodeServiceRequestComponent} from "./NodeServiceRequestComponent.tsx";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -55,10 +53,10 @@ export function BFSComponent() {
     useEffect(() => {
         fetchData()
             .then().catch(error => {
-                // Handle error
-                console.error("Error:", error.message);
-                // Optionally set state or show error message to the user
-            });
+            // Handle error
+            console.error("Error:", error.message);
+            // Optionally set state or show error message to the user
+        });
     }, [fetchData]);
 
     useEffect(() => {
@@ -66,9 +64,10 @@ export function BFSComponent() {
         setMapKey(prevKey => prevKey + 1);
     }, [pathFindingType]);
 
-    const collectLongNames = () => {
+    const collectLongNames = useCallback(() => {
         return bfsResult.map(node => node.longName);
-    };
+    }, [bfsResult]);
+
 
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
 
@@ -157,7 +156,7 @@ export function BFSComponent() {
         const row = CSVRow[i];
         const rowval = Object.values(row);
         const id = rowval[0];
-       // const nodeId = row["nodeId"];
+        // const nodeId = row["nodeId"];
         const longName = row["longName"];
         const nodeType = row["nodeType"];
         const nodeFloor = nodeFloorToMapFloor(row["floor"]);
@@ -191,6 +190,18 @@ export function BFSComponent() {
         if (tabNumber === 2 && isExpanded) setHasSeen(true);
         setActiveTab(tabNumber);
     };
+    const [showAlert, setShowAlert] = useState(false);
+
+    // Assuming collectLongNames is a function that returns an array of long names
+
+    useEffect(() => {
+        const hasStaircase = collectLongNames().some(longName =>
+            longName.includes("Staircase")
+        );
+
+        setShowAlert(hasStaircase);
+    }, [collectLongNames]);
+
 
     return (
         <div>
@@ -291,15 +302,20 @@ export function BFSComponent() {
                                 <SelectContent>
                                     <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
                                     <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
+                                    <SelectItem value={"/api/dfs-searching"}>DFS Searching</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
 
                         <div>
-                            <p className="font-bold">Follow me</p>
-                            <ol type="1" className={"overflow-y-auto h-[260px] px-2"}>
+                            <p className="font-bold">Follow Me</p>
+                            <ol type="1" className="overflow-y-auto h-80 text-left">
+                                {/* Render the list of long names */}
                                 {collectLongNames().map((longName, index) => (
-                                    <li key={index}>{longName}</li>
+                                    <li key={index}
+                                        className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
+                                        {longName}
+                                    </li>
                                 ))}
                             </ol>
                         </div>
@@ -312,18 +328,19 @@ export function BFSComponent() {
                         <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
                     </div>
                 )}
-                {activeTab === 2 && currentNode && (
-                    <div className="px-2 text-left">
-                        <img src={'../../public/room-types/nodeType-' + currentNode.nodeType + ".png"} alt="patient-room"
-                             className="rounded-md pb-3"></img>
-                        <p className="text-xl font-bold mb-1">{currentNode.longName + " (" + currentNode.shortName + ")"}</p>
-                        <p className="text-sm text-muted-foreground">{currentNode.nodeType + " #" + currentNode.id}</p>
-                        <div className="flex">
-                            <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
-                            <p className="mb-0">{"Floor " + currentNode.floor + ", " + currentNode.building}</p>
-                        </div>
+                <div className="px-2 text-left" style={{display: activeTab !== 2 || !currentNode ? 'none' : 'block'}}>
+                    <img src={'../../public/room-types/nodeType-' + currentNode.nodeType + ".png"} alt="patient-room"
+                         className="rounded-md pb-3"></img>
+                    <p className="text-xl font-bold mb-1">{currentNode?.longName + " (" + currentNode?.shortName + ")"}</p>
+                    <p className="text-sm text-muted-foreground">{currentNode?.nodeType + " #" + currentNode?.id}</p>
+                    <div className="flex">
+                        <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
+                        <p className="mb-0">{"Floor " + currentNode?.floor + ", " + currentNode?.building}</p>
                     </div>
-                )}
+                    <div>
+                        {NodeServiceRequestComponent(currentNode)}
+                    </div>
+                </div>
 
 
                 <div
@@ -380,6 +397,20 @@ export function BFSComponent() {
 
                 </div>
             </div>
+            <div className={`absolute bottom-[10px] z-50 right-[10px]`}>
+                {showAlert && (
+                    <Alert>
+                        {/* Replace the Terminal component with an img tag */}
+                        <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon" className="h-7 w-7"/>
+                        <AlertTitle>Accessibility Alert!</AlertTitle>
+                        <AlertDescription>
+                            This path contains stairs. If this is difficult, please request an accessible route.
+                        </AlertDescription>
+                    </Alert>
+                )}
+            </div>
+
+
             <div className="fixed w-screen max-w-full m-auto">
                 <TransformWrapper
                     initialScale={1}

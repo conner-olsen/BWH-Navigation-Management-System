@@ -16,9 +16,6 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
             id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
             priority: tableData[index].ServiceRequest.priority,
-            note:  tableData[index].note,
-            patientName: tableData[index].patientName,
-            relgion: tableData[index].religion,
             status: value,
             employeeUser: employeeMap[index] || tableData[index].ServiceRequest.employeeUser
 
@@ -32,9 +29,6 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
             id: tableData[index].ServiceRequest.id,
             nodeId: tableData[index].ServiceRequest.nodeId,
             priority: tableData[index].ServiceRequest.priority,
-            note:  tableData[index].note,
-            patientName: tableData[index].patientName,
-            relgion: tableData[index].religion,
             status: statusMap[index] || tableData[index].ServiceRequest.status,
             employeeUser: value,
 

@@ -1,6 +1,6 @@
 import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
-import {node} from "common/interfaces/interfaces.ts";
-import {edge} from "common/interfaces/interfaces.ts";
+import {node} from "../interfaces/interfaces.ts";
+import {edge} from "../interfaces/interfaces.ts";
 
 
 /**
@@ -175,6 +175,7 @@ export class Graph {
       this.addEdge(edge.startNodeID, edge.endNodeID);
     }
   }
+
   /**
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.
@@ -324,7 +325,7 @@ export class Graph {
       }
 
       //put node with current lowest f/"cost" at the front of the queue by sorting
-      //if the number in a is less than that in b, keep it in front by giving sort function a positive number
+      //if the number in a is less than that in b, keep it in front of giving sort function a positive number
       priorityQueue.sort((a, b)  => a[1] > b[1] ? 1 : -1);
      // console.log("Current priority queue:", priorityQueue);
 
