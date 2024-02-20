@@ -1,6 +1,6 @@
 import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
-import {node} from "common/interfaces/interfaces.ts";
-import {edge} from "common/interfaces/interfaces.ts";
+import {node} from "../interfaces/interfaces.ts";
+import {edge} from "../interfaces/interfaces.ts";
 
 
 /**

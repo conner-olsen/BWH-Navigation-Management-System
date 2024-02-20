@@ -7,12 +7,8 @@ import { parseCSV } from "common/src/parser.ts";
 import { TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
+import {NodeServiceRequestComponent} from "./NodeServiceRequestComponent.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
-// import {Terminal} from "lucide-react";
-// import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
-// import MapFloor1 from "../components/maps/MapFloor1.tsx";
-// import MapFloor2 from "../components/maps/MapFloor2.tsx";
-// import MapFloor3 from "../components/maps/MapFloor3.tsx";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -332,18 +328,19 @@ export function BFSComponent() {
                         <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
                     </div>
                 )}
-                {activeTab === 2 && currentNode && (
-                    <div className="px-2 text-left">
-                        <img src="../../public/room-types/hospital-room.jpeg" alt="patient-room"
-                             className="rounded-md pb-3"></img>
-                        <p className="text-xl font-bold mb-1">{currentNode.longName + " (" + currentNode.shortName + ")"}</p>
-                        <p className="text-sm text-muted-foreground">{currentNode.nodeType + " #" + currentNode.id}</p>
-                        <div className="flex">
-                            <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
-                            <p className="mb-0">{"Floor " + currentNode.floor + ", " + currentNode.building}</p>
-                        </div>
+                <div className="px-2 text-left" style={{display: activeTab !== 2 || !currentNode ? 'none' : 'block'}}>
+                    <img src="../../public/room-types/hospital-room.jpeg" alt="patient-room"
+                         className="rounded-md pb-3"></img>
+                    <p className="text-xl font-bold mb-1">{currentNode?.longName + " (" + currentNode?.shortName + ")"}</p>
+                    <p className="text-sm text-muted-foreground">{currentNode?.nodeType + " #" + currentNode?.id}</p>
+                    <div className="flex">
+                        <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
+                        <p className="mb-0">{"Floor " + currentNode?.floor + ", " + currentNode?.building}</p>
                     </div>
-                )}
+                    <div>
+                        {NodeServiceRequestComponent(currentNode)}
+                    </div>
+                </div>
 
 
                 <div
