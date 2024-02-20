@@ -57,7 +57,17 @@ function MapDisplay({
             setEndNodeId(endNode);
         }
     }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
-
+    const AnimatedPath = ({ x1, y1, x2, y2 }: any) => (
+        <line
+            className="line-animation"
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke="red"
+            strokeWidth="3"
+        />
+    );
     const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
         for (let i = 0; i < path.length - 1; i++) {
@@ -65,11 +75,12 @@ function MapDisplay({
             const nextNode = graph.getNode(path[i + 1]);
             if (node && nextNode && node.floor === floor && nextNode.floor === floor) {
                 pathElements.push(
-                    <line className="dark:stroke-fuchsia-500"
+                    <AnimatedPath
                         key={`${node.id}-${nextNode.id}`}
-                        x1={node.xCoord} y1={node.yCoord}
-                        x2={nextNode.xCoord} y2={nextNode.yCoord}
-                        stroke="red" strokeWidth="8"
+                        x1={node.xCoord}
+                        y1={node.yCoord}
+                        x2={nextNode.xCoord}
+                        y2={nextNode.yCoord}
                     />
                 );
             }
