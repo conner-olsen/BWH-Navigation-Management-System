@@ -49,7 +49,6 @@ function processServiceRequest(serviceRequest: ServiceRequest) {
     }
 }
 
-
 function GenerateTableRowsServices(tableData: ServiceRequest[]): JSX.Element[] {
     return tableData
         .map((item, index) => (
