@@ -19,6 +19,12 @@ interface UseMapLogicReturn {
   displaySelectedNodes: (node: Node, type: string) => JSX.Element;
   displayPath: (graph: Graph, path: string[]) => JSX.Element[];
 }
+interface AnimatedPathProps {
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+}
 
 export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicReturn => {
   const [graph, setGraph] = useState<Graph | null>(null);
@@ -37,7 +43,7 @@ export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicRe
         }
     }, [startNode, endNode, graph]);
 
-    const AnimatedPath = ({ x1, y1, x2, y2 }: any) => (
+    const AnimatedPath: React.FC<AnimatedPathProps> = ({ x1, y1, x2, y2 }) => (
         <line
             className="line-animation"
             x1={x1}

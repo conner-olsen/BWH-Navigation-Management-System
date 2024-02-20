@@ -17,6 +17,12 @@ interface MapDisplayProps {
     pathFindingType: string;
 }
 
+interface AnimatedPathProps {
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+}
 function MapDisplay({
                         floorMap,
                         floor,
@@ -57,7 +63,7 @@ function MapDisplay({
             setEndNodeId(endNode);
         }
     }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
-    const AnimatedPath = ({ x1, y1, x2, y2 }: any) => (
+    const AnimatedPath: React.FC<AnimatedPathProps> = ({ x1, y1, x2, y2 }) => (
         <line
             className="line-animation"
             x1={x1}
