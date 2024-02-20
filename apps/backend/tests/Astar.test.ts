@@ -1,6 +1,6 @@
-import { expect, test } from "vitest";
-import { Graph } from 'common/src/graph-structure.ts';
-import { Node } from 'common/src/graph-structure.ts';
+import {expect, test} from "vitest";
+import {Graph} from 'common/src/graph-structure.ts';
+import {Node} from 'common/src/graph-structure.ts';
 
 /////////////////manual bfs testing:
 const graph = new Graph();
@@ -47,8 +47,6 @@ test("find path 2 to 4", () => {
 test("find path 2 to 5", () => {
   expect(graph.bfsAstar("2", "5")).toStrictEqual(["2", "3", "4", "5"]);
 });
-
-
 
 
 //test the same node
