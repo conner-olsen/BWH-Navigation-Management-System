@@ -24,11 +24,12 @@ function executePostFix () {
          If the issue persists, try the following: 
              - Rerun \`yarn install\` and restart WebStorm, or if the issue persists,
              - Navigate to \`File -> Invalidate Caches...\`, then select \`Invalidate Caches and Restart\`.
-         These steps are optional; the issue typically resolves on its own.`
+         These steps are optional; the issue typically resolves on its own.
+         
+         Also, this stopped all docker containers. If you need them running, run \`New Start Dev\` again.`
       );
     }
   };
-
   next();
 }
 
