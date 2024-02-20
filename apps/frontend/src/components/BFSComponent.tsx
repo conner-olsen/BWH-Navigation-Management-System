@@ -309,21 +309,19 @@ export function BFSComponent() {
                         <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
                     </div>
                 )}
-                {activeTab === 2 && currentNode && (
-                    <div className="px-2 text-left">
-                        <img src="../../public/room-types/hospital-room.jpeg" alt="patient-room"
-                             className="rounded-md pb-3"></img>
-                        <p className="text-xl font-bold mb-1">{currentNode.longName + " (" + currentNode.shortName + ")"}</p>
-                        <p className="text-sm text-muted-foreground">{currentNode.nodeType + " #" + currentNode.id}</p>
-                        <div className="flex">
-                            <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
-                            <p className="mb-0">{"Floor " + currentNode.floor + ", " + currentNode.building}</p>
-                        </div>
-                        <div hidden={activeTab != 2}>
-                            {NodeServiceRequestComponent(currentNode)}
-                        </div>
+                <div className="px-2 text-left" style={{display: activeTab !== 2 || !currentNode ? 'none' : 'block'}}>
+                    <img src="../../public/room-types/hospital-room.jpeg" alt="patient-room"
+                         className="rounded-md pb-3"></img>
+                    <p className="text-xl font-bold mb-1">{currentNode?.longName + " (" + currentNode?.shortName + ")"}</p>
+                    <p className="text-sm text-muted-foreground">{currentNode?.nodeType + " #" + currentNode?.id}</p>
+                    <div className="flex">
+                        <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
+                        <p className="mb-0">{"Floor " + currentNode?.floor + ", " + currentNode?.building}</p>
                     </div>
-                )}
+                    <div>
+                        {NodeServiceRequestComponent(currentNode)}
+                    </div>
+                </div>
 
 
                 <div
