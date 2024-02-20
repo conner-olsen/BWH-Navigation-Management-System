@@ -7,10 +7,7 @@ import { parseCSV } from "common/src/parser.ts";
 import { TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
-// import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
-// import MapFloor1 from "../components/maps/MapFloor1.tsx";
-// import MapFloor2 from "../components/maps/MapFloor2.tsx";
-// import MapFloor3 from "../components/maps/MapFloor3.tsx";
+import {NodeServiceRequestComponent} from "./NodeServiceRequestComponent.tsx";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -321,6 +318,7 @@ export function BFSComponent() {
                         <div className="flex">
                             <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
                             <p className="mb-0">{"Floor " + currentNode.floor + ", " + currentNode.building}</p>
+                            {NodeServiceRequestComponent(currentNode)}
                         </div>
                     </div>
                 )}
