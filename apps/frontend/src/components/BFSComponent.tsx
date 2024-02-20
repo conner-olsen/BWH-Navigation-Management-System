@@ -318,6 +318,8 @@ export function BFSComponent() {
                         <div className="flex">
                             <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
                             <p className="mb-0">{"Floor " + currentNode.floor + ", " + currentNode.building}</p>
+                        </div>
+                        <div hidden={activeTab != 2}>
                             {NodeServiceRequestComponent(currentNode)}
                         </div>
                     </div>

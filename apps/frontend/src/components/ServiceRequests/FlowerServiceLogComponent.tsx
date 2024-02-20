@@ -14,10 +14,6 @@ function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], empl
             id:  tableData[index].ServiceRequest.id,
             senderName: tableData[index].senderName,
             senderEmail: tableData[index].senderEmail,
-            roomLongName: tableData[index].ServiceRequest.nodeId,
-            flowerType: tableData[index].flowerType,
-            deliveryDate: tableData[index].deliveryDate,
-            note: tableData[index].note,
             status: value,
             employeeUser: employeeMap[index] || tableData[index].ServiceRequest.employeeUser
 
@@ -31,10 +27,6 @@ function GenerateTableRowsServicesFlower(tableData: flowerServiceRequest[], empl
             id:  tableData[index].ServiceRequest.id,
             senderName: tableData[index].senderName,
             senderEmail: tableData[index].senderEmail,
-            roomLongName: tableData[index].ServiceRequest.nodeId,
-            flowerType: tableData[index].flowerType,
-            deliveryDate: tableData[index].deliveryDate,
-            note: tableData[index].note,
             status: statusMap[index] || tableData[index].ServiceRequest.status,
             employeeUser: value
 

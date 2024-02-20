@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import {Node} from "common/src/graph-structure.ts";
 import {
     ServiceRequest
@@ -45,7 +45,6 @@ function processServiceRequest(serviceRequest: ServiceRequest) {
         return("religiousServiceRequest");
     }
     else{
-
         return("");
     }
 }
@@ -77,8 +76,10 @@ const TableServices: React.FC<{ tableData: ServiceRequest[]}> = ({tableData}) =>
         </Table>
     );
 };
-export function NodeServiceRequestComponent(node: Node) {
-    const [serviceArray, setServiceArray] = useState<ServiceRequest[]>();
+export function NodeServiceRequestComponent(node: Node | null): JSX.Element {
+
+    const initialServiceArray: ServiceRequest[] = [];
+    const [serviceArray, setServiceArray] = useState<ServiceRequest[]>(initialServiceArray);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -92,23 +93,25 @@ export function NodeServiceRequestComponent(node: Node) {
                     setServiceArray(response.data);
                 }
             } catch (error) {
-                console.error("error getting Service Request data", (error as AxiosError).message);
-                throw error;
+                console.error("error getting Service Request data", (error));
             }
         };
 
         fetchData().then();
     }, [node]);
 
+    if (!node) {
+        return <div></div>;
+    }
 
     return(
         <div>
             <Container>
-                <TableServices tableData={(serviceArray as ServiceRequest[])}/>
+                <TableServices tableData={serviceArray}/>
             </Container>
         </div>
     );
 
-};
+}
 
 
