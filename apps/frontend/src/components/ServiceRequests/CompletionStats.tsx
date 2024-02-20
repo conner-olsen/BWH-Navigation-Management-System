@@ -1,7 +1,7 @@
 import axios from "axios";
 import {useEffect} from "react";
-import {Col, Container, Row} from "react-bootstrap";
-import {Card} from "../ui/card.tsx";
+// import {Card, CardContent} from "../ui/card.tsx";
+import {Container} from "react-bootstrap";
 
 let countProgress: number = 0;
 let countCompleted: number = 0;
@@ -64,30 +64,17 @@ const CompletionStats = () => {
     }, []); // Empty dependency array to ensure the effect runs only once
 
     return (
-        <Card>
         <Container>
-            <Row>
-                <Col>
-                    <p>Completed: {countCompleted}</p>
-                </Col>
-                <Col>
-                    <p>In Progress: {countProgress}</p>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <p>Assigned: {countAssigned}</p>
-                </Col>
-                <Col>
-                    <p>Unassigned: {countUnassigned}</p>
-                </Col>
-            </Row>
-            <Row>
-                <p>Total: {countTotal}</p>
-            </Row>
-        </Container>
+            <p>Completed: {countCompleted}</p>
 
-        </Card>
+            <p>In Progress: {countProgress}</p>
+
+            <p>Assigned: {countAssigned}</p>
+
+            <p>Unassigned: {countUnassigned}</p>
+
+            <p>Total: {countTotal}</p>
+        </Container>
     );
 };
 export default CompletionStats;
