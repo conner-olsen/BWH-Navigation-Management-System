@@ -22,6 +22,7 @@ import getStats from "./routes/count-service-requests.ts";
 import getEmployeeStats from "./routes/count-employee-service-requests.ts";
 
 
+
 const app: Express = express(); // Setup the backend
 
 // Setup generic middlewear

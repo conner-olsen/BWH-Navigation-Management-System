@@ -4,7 +4,7 @@ import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
-import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import { TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 // import MapLowerLevel2 from "../components/maps/MapLowerLevel2.tsx";
@@ -21,6 +21,13 @@ export function BFSComponent() {
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+    const [currentNode, setCurrentNode] = useState<Node | null>(null);
+
+    const updateCurrentNode = (currentNode: Node) => {
+        setHasSeen(true);
+        if (activeTab!==2 || !isExpanded) setHasSeen(false);
+        setCurrentNode(currentNode);
+    };
 
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
@@ -171,14 +178,18 @@ export function BFSComponent() {
     }
 
     const handlePhotoChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-
         setMap(event.target.value);
-
     };
     const [isExpanded, setIsExpanded] = useState(true);
+    const [activeTab, setActiveTab] = useState(1);
+    const [hasSeen, setHasSeen] = useState(false);
 
     const toggleSidebar = () => {
         setIsExpanded(!isExpanded);
+    };
+    const toggleActiveTab = (tabNumber: number) => {
+        if (tabNumber === 2 && isExpanded) setHasSeen(true);
+        setActiveTab(tabNumber);
     };
 
     return (
@@ -198,77 +209,123 @@ export function BFSComponent() {
                         </svg>
                     )}
                 </button>
+                <div>
+                    <button className={`mt-4 transition-all duration-200 ${(activeTab===1 && isExpanded)? 'bg-blue-400' : ''}`} onClick={() => {
+                        toggleActiveTab(1);
+                        setIsExpanded(true);}}>
+                        <img src="../../public/icon/search-icon.png" alt="search-icon" className="invert"></img>
+                    </button>
+                    <button className={`mt-4 text-foreground relative transition-all duration-200 
+                    ${(activeTab===2 && isExpanded)? 'bg-blue-400' : ''}`} onClick={() => {
+                        setHasSeen(true);
+                        toggleActiveTab(2);
+                        setIsExpanded(true);}}>
+                        {/*<img src="../../public/icon/search-icon.png" alt="search-icon" className="dark:invert"></img>*/}
+                        Info
+                        {(currentNode && !hasSeen && (!isExpanded || (isExpanded && activeTab !== 2))) ?
+                            <span className="absolute flex h-3 w-3 top-[-5px] right-[-10px]">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                            </span> : ''}
+                    </button>
+                </div>
             </div>
             <div
                 className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[80px] pt-[90px] sidebar 
                 ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
                 {/* Sidebar content */}
-                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
-                    <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
-                    <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
-                    <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
-                    <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
-                    <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "floor1"}/>
-                    <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
-                    <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "floor2"}/>
-                    <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
-                    <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
-                           onChange={handlePhotoChange} checked={map == "floor3"}/>
-                    <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
-                </div>
-                <div className="flex py-4 border-b-[1px] border-neutral-300">
-                    <div className="flex flex-col items-center">
-                        <img src="../../public/icon/start.svg" alt="circle" className="mb-[5px] mt-[11px] dark:invert"/>
-                        <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
-                        <img src="../../public/icon/location.svg" alt="pin"/>
-                    </div>
-                    <div className="flex flex-col grow justify-between pl-[2px] pr-2">
-                        <Select value={startNode}
-                                onValueChange={(location: string) => setStartNode(location)}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select Location" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {currentFloorNames}
-                            </SelectContent>
-                        </Select>
-                        <Select value={endNode}
-                                onValueChange={(location: string) => setEndNode(location)}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select Location" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {roomNames}
-                            </SelectContent>
-                        </Select>
-                    </div>
+                {activeTab === 1 && (
+                    <div>
+                        <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                            <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+                                   onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
+                            <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
+                            <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
+                                   onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
+                            <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
+                            <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
+                                   onChange={handlePhotoChange} checked={map == "floor1"}/>
+                            <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
+                            <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
+                                   onChange={handlePhotoChange} checked={map == "floor2"}/>
+                            <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
+                            <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
+                                   onChange={handlePhotoChange} checked={map == "floor3"}/>
+                            <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
+                        </div>
+                        <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
+                            <div className="flex flex-col items-center">
+                                <img src="../../public/icon/start.svg" alt="circle"
+                                     className="mb-[5px] mt-[11px] dark:invert"/>
+                                <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
+                                <img src="../../public/icon/location.svg" alt="pin"/>
+                            </div>
+                            <div className="flex flex-col grow justify-between pl-[2px] pr-2">
+                                <Select value={startNode}
+                                        onValueChange={(location: string) => setStartNode(location)}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select Location"/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {currentFloorNames}
+                                    </SelectContent>
+                                </Select>
+                                <Select value={endNode}
+                                        onValueChange={(location: string) => setEndNode(location)}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select Location"/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {roomNames}
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                </div>
-                <div className="py-4 px-2">
-                    <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
-                            onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
-                        <SelectTrigger>
-                            <SelectValue/>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
-                            <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
+                        </div>
+                        <div className="py-4 px-2">
+                            <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
+                                    onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
+                                <SelectTrigger>
+                                    <SelectValue/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
+                                    <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
 
-                <div>
-                    <p className="font-bold">Follow me</p>
-                    <ol type="1" className={"overflow-y-auto h-80"}>
-                        {collectLongNames().map((longName, index) => (
-                            <li key={index}>{longName}</li>
-                        ))}
-                    </ol>
-                </div>
+                        <div>
+                            <p className="font-bold">Follow me</p>
+                            <ol type="1" className={"overflow-y-auto h-[260px] px-2"}>
+                                {collectLongNames().map((longName, index) => (
+                                    <li key={index}>{longName}</li>
+                                ))}
+                            </ol>
+                        </div>
+                    </div>
+                )}
+                {activeTab === 2 && !currentNode && (
+                    <div>
+                        <p className="font-bold mb-0">Select a location</p>
+                        <p className="font-bold">to display its information</p>
+                        <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
+                    </div>
+                )}
+                {activeTab === 2 && currentNode && (
+                    <div className="px-2 text-left">
+                        <img src="../../public/room-types/hospital-room.jpeg" alt="patient-room"
+                             className="rounded-md pb-3"></img>
+                        <p className="text-xl font-bold mb-1">{currentNode.longName + " (" + currentNode.shortName + ")"}</p>
+                        <p className="text-sm text-muted-foreground">{currentNode.nodeType + " #" + currentNode.id}</p>
+                        <div className="flex">
+                            <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
+                            <p className="mb-0">{"Floor " + currentNode.floor + ", " + currentNode.building}</p>
+                        </div>
+                    </div>
+                )}
+
+
                 <div
                     className={`absolute bottom-[10px] flex flex-col bg-background rounded-xl
                                 ${isExpanded ? 'right-[-90px]' : 'right-[-170px]'}`}>
@@ -355,15 +412,15 @@ export function BFSComponent() {
                             </div>
                             <TransformComponent wrapperClass={"max-h-screen"}>
                                 {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}   />}
+                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                             </TransformComponent>
                         </React.Fragment>
                     )}
