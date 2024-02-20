@@ -291,6 +291,7 @@ export function BFSComponent() {
                                 <SelectContent>
                                     <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
                                     <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
+                                    <SelectItem value={"/api/dfs-searching"}>DFS Searching</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
