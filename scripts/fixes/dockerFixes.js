@@ -1,13 +1,14 @@
 /* eslint-env node */
-import { spawn, spawnSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import { platform } from 'os';
+import { executeCommands } from './commandRunner.js';
 
 export function isDockerRunning() {
   const result = spawnSync('docker', ['info'], { stdio: 'ignore' });
   return result.status === 0;
 }
 
-function executeDockerFixes(callback) {
+export function executeDockerFixes(callback) {
   if (!isDockerRunning()) {
     if (process.argv.includes('docker')) {
       console.error('Docker is not running. Cannot apply Docker-specific fixes.');
@@ -27,18 +28,5 @@ function executeDockerFixes(callback) {
     'docker image prune --all --force'
   ];
 
-  let i = 0;
-  const next = () => {
-    if (i < commands.length) {
-      const [cmd, ...args] = commands[i++].split(' ');
-      const proc = spawn(cmd, args, { shell: true, stdio: 'inherit' });
-      proc.on('exit', next);
-    } else {
-      callback();
-    }
-  };
-
-  next();
+  executeCommands(commands, callback);
 }
-
-export { executeDockerFixes };

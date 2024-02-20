@@ -18,10 +18,11 @@ function executePostFix () {
       }
       console.warn(
         '\x1b[33m%s\x1b[0m',
-        `Warning: ESLint path errors may arise after clearing cache and node_modules. 
+        `Notice: ESLint path errors may arise after clearing cache and node_modules. 
          WebStorm is designed to auto-resolve this, but it may take some time.
-         For a quicker fix:
-             - Rerun \`yarn install\` and restart WebStorm, or
+         You may have to rerun \`yarn install\`
+         If the issue persists, try the following: 
+             - Rerun \`yarn install\` and restart WebStorm, or if the issue persists,
              - Navigate to \`File -> Invalidate Caches...\`, then select \`Invalidate Caches and Restart\`.
          These steps are optional; the issue typically resolves on its own.`
       );
