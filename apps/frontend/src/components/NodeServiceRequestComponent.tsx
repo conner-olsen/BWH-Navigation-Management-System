@@ -12,40 +12,40 @@ function processServiceRequest(serviceRequest: ServiceRequest) {
     // Check if it includes a flower service request
     if (serviceRequest.flowerServiceRequests) {
         // Process the flower service request
-        return("flowerServiceRequest");
+        return("Flower Service Request");
     }
 
     // Check if it includes a cleaning service request
     if (serviceRequest.cleaningServiceRequest) {
         // Process the cleaning service request
-        return("cleaningServiceRequest");
+        return("Cleaning Service Request");
     }
 
     // Check if it includes an external transportation service request
     if (serviceRequest.externalTransportationServiceRequest) {
         // Process the external transportation service request
-        return("externalTransportationServiceRequest");
+        return("External Transportation Service Request");
     }
 
     // Check if it includes an internal transport service request
     if (serviceRequest.internalTransportServiceRequest) {
         // Process the internal transport service request
-        return("internalTransportServiceRequest");
+        return("Internal Transport Service Request");
     }
 
     // Check if it includes a language interpreter service request
     if (serviceRequest.languageInterpreterServiceRequest) {
         // Process the language interpreter service request
-        return("languageInterpreterServiceRequest");
+        return("Language Interpreter Service Request");
     }
 
     // Check if it includes a religious service request
     if (serviceRequest.religiousServiceRequest) {
         // Process the religious service request
-        return("religiousServiceRequest");
+        return("Religious Service Request");
     }
     else{
-        return("");
+        return("error");
     }
 }
 

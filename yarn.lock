@@ -1122,21 +1122,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:4.15.0":
-  version: 4.15.0
-  resolution: "@prisma/client@npm:4.15.0"
-  dependencies:
-    "@prisma/engines-version": "npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944"
-  peerDependencies:
-    prisma: "*"
-  peerDependenciesMeta:
-    prisma:
-      optional: true
-  checksum: 14d6609dbb41c9689731d5da06237138bc51da07aa8506bdfb3789324964f68c70ef451590a1d4c041acb1eca6227c332c3791a7f55f3ea86e16e8431a307518
-  languageName: node
-  linkType: hard
-
-"@prisma/client@npm:^5.9.0":
+"@prisma/client@npm:5.9.1, @prisma/client@npm:^5.9.0":
   version: 5.9.1
   resolution: "@prisma/client@npm:5.9.1"
   peerDependencies:
@@ -1152,13 +1138,6 @@ __metadata:
   version: 5.9.1
   resolution: "@prisma/debug@npm:5.9.1"
   checksum: ef9daf19c083e6a7c7470417aee4d4a3a12446c18285cc76f65ce2d133650c28d7a2f0fa5efe9ed7b2d0968ea91d1884e16d377908cc853f20a458270612aa44
-  languageName: node
-  linkType: hard
-
-"@prisma/engines-version@npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944":
-  version: 4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944
-  resolution: "@prisma/engines-version@npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944"
-  checksum: 693ebe6c19b44a829c60adb2b461ac6799150aff1b8e0446bbbbf9888021f3890880d640c2320afd81afda2af8caf4ca3937ef5ad43325e6863730c16bf510f0
   languageName: node
   linkType: hard
 
@@ -4340,7 +4319,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "database@workspace:packages/database"
   dependencies:
-    "@prisma/client": "npm:4.15.0"
+    "@prisma/client": "npm:5.9.1"
     eslint: "npm:latest"
     eslint-config-custom: "workspace:*"
     prettier: "npm:latest"
