@@ -15,7 +15,6 @@ export class bfsPathfinding implements PathfindingMethod  {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
-   // console.log("ran bfs");
     //add an error catcher for invalid inputs
     if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];
@@ -103,8 +102,35 @@ export class aStarPathfinding implements PathfindingMethod {
     const priorityQueue: [string[], number][] = []; // [path, f(n)] pairs
     const visited: string[][] = [];
 
+
+    //gets number value of floor
+   const getFloor = (floor: string): number => {
+      if(floor == "L2") {
+        return 1;
+      }
+      if(floor == "L1") {
+        return 2;
+      }
+      if(floor == "1") {
+        return 3;
+      }
+      if(floor == "2") {
+        return 4;
+      }
+      if(floor == "3") {
+        return 5;
+      }
+      return 0;
+    };
+
     // calculate the Manhattan distance (not hypotenuse) from one node to another
     const calculateManhattanDistance = (node1: Node, node2: Node): number => {
+      //if both nodes are stairs, add weight of difference between floors
+      if((node1.nodeType == "STAI") && (node2.nodeType == "STAI")) {
+        return Math.abs(getFloor(node1.floor) - getFloor(node2.floor));
+      }
+
+      //else, simply calculate the manhattan distance (elevators add no weight)
       return Math.abs(node1.xCoord - node2.xCoord) + Math.abs(node1.yCoord - node2.yCoord);
     };
 
