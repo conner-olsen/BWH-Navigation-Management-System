@@ -1,5 +1,6 @@
 import express, {Router, Request, Response} from "express";
 import { Graph } from "common/src/graph-structure.ts";
+import * as path from "path";
 import PathFindingRequest from "common/src/PathfindingRequest.ts";
 import client from "../bin/database-connection.ts";
 import {aStarPathfinding} from "common/src/PathfindingMethod.ts";

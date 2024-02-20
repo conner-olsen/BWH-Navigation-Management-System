@@ -49,7 +49,7 @@ router.post("/", async (req: Request, res: Response) => {
       )
     });
 
-    // language=file-reference Read the CSV string from the request body
+    // Read the CSV string from the request body
     const absolutePath = path.join(__dirname, "../../data/csv/L1Edges.csv");
     const csvFile = fs.readFileSync(absolutePath, "utf-8");
 

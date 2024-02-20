@@ -13,9 +13,3 @@ describe("sum", () => {
     expect(sum(2, 2)).toBe(4);
   });
 });
-
-describe("TestSomething", () => {
-  test("test_a_behavior should pass if 1 equals 1", () => {
-    expect(1).toBe(1);
-  });
-});

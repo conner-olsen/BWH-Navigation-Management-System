@@ -12,7 +12,8 @@
     "prettier": "latest",
     "prettier-config-custom": "workspace:*",
     "tsconfig-custom": "workspace:*",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vitest": "^0.34.1"
   },
   "scripts": {
     "lint": "yarn shared:prettierlint && prisma validate && yarn shared:eslint && yarn shared:tslint",
@@ -27,7 +28,7 @@
     "db:push": "prisma db push --skip-generate"
   },
   "dependencies": {
-    "@prisma/client": "5.9.1",
-    "prisma": "^5.9.1"
+    "@prisma/client": "4.15.0",
+    "prisma": "4.15.0"
   }
 }
