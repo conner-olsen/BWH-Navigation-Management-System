@@ -71,7 +71,7 @@ const FlowerServiceRequest: React.FC = () => {
     return (
         <Container>
 
-            <h1 className=" bg-gradient-to-r from-red-200 to-red-900 bg-clip-text text-transparent">
+            <h1 className=" bg-gradient-to-r from-red-200 to-red-900 bg-clip-text text-transparent dark:text-white">
                 Flower Service Request
             </h1>
             <div className={"border-2 border-red-200 dark:border-blue-400 rounded-lg p-4"}>

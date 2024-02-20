@@ -50,8 +50,11 @@ const ServiceLog = () => {
                             </SheetHeader>
 
                             <CreateSRChart></CreateSRChart>
+                            <br/>
                             <CompletionStats></CompletionStats>
+                            <br/>
                             <CreateEmployeeChart></CreateEmployeeChart>
+
 
                         </SheetContent>
                     </Sheet>
