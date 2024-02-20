@@ -60,12 +60,11 @@ router.get("/", async function (req: Request, res: Response) {
 });
 
 router.patch("/", async function (req: Request, res: Response) {
-  const nodeID = req.body.nodeId;
+  const nodeID = req.body.id;
   try{
     const data = await PrismaClient.serviceRequest.findMany({
       where: {
         nodeId: nodeID}});
-    console.log(JSON.stringify(data));
     res.status(200).send(data);
   } catch (error){
     console.error(`Error finding associated service requests: ${error}`);
