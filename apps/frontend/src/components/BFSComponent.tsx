@@ -312,10 +312,14 @@ export function BFSComponent() {
                         </div>
 
                         <div>
-                            <p className="font-bold">Follow me</p>
-                            <ol type="1" className={"overflow-y-auto h-[260px] px-2"}>
+                            <p className="font-bold">Follow Me</p>
+                            <ol type="1" className="overflow-y-auto h-80 text-left">
+                                {/* Render the list of long names */}
                                 {collectLongNames().map((longName, index) => (
-                                    <li key={index}>{longName}</li>
+                                    <li key={index}
+                                        className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
+                                        {longName}
+                                    </li>
                                 ))}
                             </ol>
                         </div>
