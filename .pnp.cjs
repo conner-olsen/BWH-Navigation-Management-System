@@ -63,6 +63,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@auth0/auth0-react", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:2.2.4"],\
           ["@popperjs/core", "npm:2.11.8"],\
+          ["@prisma/client", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.10.1"],\
           ["@radix-ui/react-dropdown-menu", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:2.0.6"],\
           ["@radix-ui/react-hover-card", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:1.0.7"],\
           ["@testing-library/react", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:14.2.0"],\
@@ -1529,19 +1530,19 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@prisma/client", [\
-      ["npm:5.9.1", {\
-        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-1e57d9b5e6/node_modules/@prisma/client/",\
+      ["npm:5.10.1", {\
+        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-41bee81273/node_modules/@prisma/client/",\
         "packageDependencies": [\
-          ["@prisma/client", "npm:5.9.1"]\
+          ["@prisma/client", "npm:5.10.1"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:fe27c481e11f854f2aaf80c4760560439cddfbeba750e60d2e16a63e1f6a6a95afa15077c31c3bb85454931e3cde1f859cec18d092f611e16a968032948f7247#npm:5.9.1", {\
-        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-1e57d9b5e6/node_modules/@prisma/client/",\
+      ["virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.10.1", {\
+        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-41bee81273/node_modules/@prisma/client/",\
         "packageDependencies": [\
-          ["@prisma/client", "virtual:fe27c481e11f854f2aaf80c4760560439cddfbeba750e60d2e16a63e1f6a6a95afa15077c31c3bb85454931e3cde1f859cec18d092f611e16a968032948f7247#npm:5.9.1"],\
+          ["@prisma/client", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.10.1"],\
           ["@types/prisma", null],\
-          ["prisma", "npm:5.9.1"]\
+          ["prisma", "npm:5.10.1"]\
         ],\
         "packagePeers": [\
           "@types/prisma",\
@@ -1557,13 +1558,6 @@ const RAW_RUNTIME_STATE =
           ["@prisma/debug", "npm:5.10.1"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:5.9.1", {\
-        "packageLocation": "./.yarn/cache/@prisma-debug-npm-5.9.1-5ead12191a-ef9daf19c0.zip/node_modules/@prisma/debug/",\
-        "packageDependencies": [\
-          ["@prisma/debug", "npm:5.9.1"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["@prisma/engines", [\
@@ -1577,17 +1571,6 @@ const RAW_RUNTIME_STATE =
           ["@prisma/get-platform", "npm:5.10.1"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:5.9.1", {\
-        "packageLocation": "./.yarn/unplugged/@prisma-engines-npm-5.9.1-4d1998d255/node_modules/@prisma/engines/",\
-        "packageDependencies": [\
-          ["@prisma/engines", "npm:5.9.1"],\
-          ["@prisma/debug", "npm:5.9.1"],\
-          ["@prisma/engines-version", "npm:5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64"],\
-          ["@prisma/fetch-engine", "npm:5.9.1"],\
-          ["@prisma/get-platform", "npm:5.9.1"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["@prisma/engines-version", [\
@@ -1595,13 +1578,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@prisma-engines-version-npm-5.10.0-34.5a9203d0590c951969e85a7d07215503f4672eb9-fbc223c35e-2d417c78be.zip/node_modules/@prisma/engines-version/",\
         "packageDependencies": [\
           ["@prisma/engines-version", "npm:5.10.0-34.5a9203d0590c951969e85a7d07215503f4672eb9"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64", {\
-        "packageLocation": "./.yarn/cache/@prisma-engines-version-npm-5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64-c7d3f36404-7ed88a87f6.zip/node_modules/@prisma/engines-version/",\
-        "packageDependencies": [\
-          ["@prisma/engines-version", "npm:5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1616,16 +1592,6 @@ const RAW_RUNTIME_STATE =
           ["@prisma/get-platform", "npm:5.10.1"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:5.9.1", {\
-        "packageLocation": "./.yarn/cache/@prisma-fetch-engine-npm-5.9.1-ecdef657e6-6a48b323b4.zip/node_modules/@prisma/fetch-engine/",\
-        "packageDependencies": [\
-          ["@prisma/fetch-engine", "npm:5.9.1"],\
-          ["@prisma/debug", "npm:5.9.1"],\
-          ["@prisma/engines-version", "npm:5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64"],\
-          ["@prisma/get-platform", "npm:5.9.1"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["@prisma/get-platform", [\
@@ -1634,14 +1600,6 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@prisma/get-platform", "npm:5.10.1"],\
           ["@prisma/debug", "npm:5.10.1"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:5.9.1", {\
-        "packageLocation": "./.yarn/cache/@prisma-get-platform-npm-5.9.1-9b99c820ee-14e2ba7fcb.zip/node_modules/@prisma/get-platform/",\
-        "packageDependencies": [\
-          ["@prisma/get-platform", "npm:5.9.1"],\
-          ["@prisma/debug", "npm:5.9.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -6205,12 +6163,12 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./packages/database/",\
         "packageDependencies": [\
           ["database", "workspace:packages/database"],\
-          ["@prisma/client", "virtual:fe27c481e11f854f2aaf80c4760560439cddfbeba750e60d2e16a63e1f6a6a95afa15077c31c3bb85454931e3cde1f859cec18d092f611e16a968032948f7247#npm:5.9.1"],\
+          ["@prisma/client", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.10.1"],\
           ["eslint", "npm:8.56.0"],\
           ["eslint-config-custom", "workspace:configs/eslint-config-custom"],\
           ["prettier", "npm:3.2.4"],\
           ["prettier-config-custom", "workspace:configs/prettier-config-custom"],\
-          ["prisma", "npm:5.9.1"],\
+          ["prisma", "npm:5.10.1"],\
           ["tsconfig-custom", "workspace:configs/tsconfig-custom"],\
           ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"]\
         ],\
@@ -10577,14 +10535,6 @@ const RAW_RUNTIME_STATE =
           ["@prisma/engines", "npm:5.10.1"]\
         ],\
         "linkType": "HARD"\
-      }],\
-      ["npm:5.9.1", {\
-        "packageLocation": "./.yarn/unplugged/prisma-npm-5.9.1-ab453feee9/node_modules/prisma/",\
-        "packageDependencies": [\
-          ["prisma", "npm:5.9.1"],\
-          ["@prisma/engines", "npm:5.9.1"]\
-        ],\
-        "linkType": "HARD"\
       }]\
     ]],\
     ["proc-log", [\
@@ -12378,6 +12328,7 @@ const RAW_RUNTIME_STATE =
           ["team-d-production", "workspace:."],\
           ["@auth0/auth0-react", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:2.2.4"],\
           ["@popperjs/core", "npm:2.11.8"],\
+          ["@prisma/client", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:5.10.1"],\
           ["@radix-ui/react-dropdown-menu", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:2.0.6"],\
           ["@radix-ui/react-hover-card", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:1.0.7"],\
           ["@testing-library/react", "virtual:1d4671de5ef6908b80c343210abcfbd233681bc6a8be282e5bce969206daccae753ebfdf97a7bb0c47dc03029bbda36440ddf6f2fba04c1ab21afa14b8ce8e90#npm:14.2.0"],\
