@@ -362,7 +362,7 @@ export function BFSComponent() {
                     </div>
                 )}
                 {activeTab === 2 && !currentNode && (
-                    <div className="hidden sm:block">
+                    <div className="hidden sm:block mt-4">
                         <p className="font-bold mb-0">Select a location</p>
                         <p className="font-bold">to display its information</p>
                         <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
@@ -384,7 +384,7 @@ export function BFSComponent() {
 
 
                 <div
-                    className={`absolute bottom-[calc(100vh-170px)] right-[-90px] sm:bottom-[10px] flex flex-col bg-background rounded-xl
+                    className={`absolute bottom-[calc(100vh-200px)] right-[-90px] sm:bottom-[10px] flex flex-col bg-background rounded-xl
                                 ${isExpanded ? 'sm:right-[-90px]' : 'sm:right-[-170px]'}`}>
                     <HoverCard openDelay={100}>
                         <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center
@@ -450,13 +450,17 @@ export function BFSComponent() {
                 )}
             </div>
 
-
-            <div className="sm:hidden">
+            <div className="h-0">
                 <Drawer modal={false}>
-                    <DrawerTrigger>Open</DrawerTrigger>
+                    <DrawerTrigger>
+                        <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
+                        rounded-md shadow-md sm:hidden flex items-center justify-center">
+                            <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon" className="dark:invert w-[25px]"></img>
+                        </div>
+                    </DrawerTrigger>
                     <DrawerContent>
 
-                        <div className="sm:hidden">
+                    <div>
                             <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
                                 <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
                                        onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
@@ -526,10 +530,51 @@ export function BFSComponent() {
                             </div>
                         </div>
 
-                        <DrawerClose>
-                            <Button variant="outline">Cancel</Button>
-                        </DrawerClose>
+                        <div className="mb-4 m-auto">
+                            <DrawerClose>
+                                <Button variant="destructive">Close</Button>
+                            </DrawerClose>
+                        </div>
 
+
+                    </DrawerContent>
+                </Drawer>
+            </div>
+            <div className="h-0">
+                <Drawer modal={false}>
+                    <DrawerTrigger>
+                        <div className="absolute w-[36px] h-[36px] left-[50px] top-[80px] bg-background z-40
+                        rounded-md shadow-md sm:hidden flex items-center justify-center">
+                            <img src="../../public/icon/info-icon.png" alt="nav-icon" className="invert dark:invert-0 w-[25px]"></img>
+                        </div>
+                    </DrawerTrigger>
+                    <DrawerContent>
+                        {!currentNode && (
+                            <div className="text-center mt-4">
+                                <p className="font-bold mb-0">Select a location</p>
+                                <p className="font-bold">to display its information</p>
+                                <img src="../../public/icon/red-pin.png" alt={"pin"}
+                                     className="max-w-[200px] m-auto"></img>
+                            </div>
+                        )}
+                        <div className="px-2 text-left"
+                             style={{display: !currentNode ? 'none' : 'block'}}>
+                            <img src={'../../public/room-types/nodeType-' + currentNode?.nodeType + ".png"}
+                                 alt="patient-room"
+                                 className="rounded-md pb-3"></img>
+                            <p className="text-xl font-bold mb-1">{currentNode?.longName + " (" + currentNode?.shortName + ")"}</p>
+                            <p className="text-sm text-muted-foreground">{currentNode?.nodeType + " #" + currentNode?.id}</p>
+                            <div className="flex">
+                                <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
+                                <p className="mb-0">{"Floor " + currentNode?.floor + ", " + currentNode?.building}</p>
+                            </div>
+
+                        </div>
+                        <div className="mb-4 m-auto">
+                            <DrawerClose>
+                                <Button variant="destructive">Close</Button>
+                            </DrawerClose>
+                        </div>
                     </DrawerContent>
                 </Drawer>
             </div>
