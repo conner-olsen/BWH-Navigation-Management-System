@@ -124,9 +124,13 @@ export const EmployeeManager = () => {
             <>
             <div>
                 <Outlet/>
+                <div style={{display: 'flex', alignItems: 'center', marginLeft: '15%'}}>
+                        <Col>
+                            <h1>EMPLOYEE MANAGER</h1>
+                        </Col>
+                </div>
+
                 <div className={"align-content-center container"}>
-                    <br/>
-                    <br/>
                     <Tabs defaultValue="Create Employee" className="align-content-center">
                         <TabsList classname-={"align-content-center"}>
                             {/*<TabsTrigger value="Employee List">Employee List</TabsTrigger>*/}
@@ -194,6 +198,7 @@ export const EmployeeManager = () => {
 
                                                 <Col>
                                                     <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
+                                                    <p></p>
                                                     <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
                                             <GetDataEmployees></GetDataEmployees>
 
@@ -273,7 +278,10 @@ export const EmployeeManager = () => {
                                     </div>
                                     </Col>
                                 <Col>
-                                <GetDataEmployees></GetDataEmployees>
+                                    <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
+                                    <p></p>
+                                    <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
+                                    <GetDataEmployees></GetDataEmployees>
                                 </Col>
                                 </Row>
                         </TabsContent>
@@ -303,6 +311,9 @@ export const EmployeeManager = () => {
                                 </div>
                                     </Col>
                                     <Col>
+                                        <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
+                                        <p></p>
+                                        <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
                                         <GetDataEmployees></GetDataEmployees>
                                     </Col>
                                 </Row>

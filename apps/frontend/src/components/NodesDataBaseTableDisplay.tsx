@@ -15,21 +15,12 @@ function GenerateTableRowsNodes(tableData: node[]): JSX.Element[] {
             <TableCell>{tableData[index].longName}</TableCell>
             <TableCell>{tableData[index].shortName}</TableCell>
         </TableRow>
-        // <tr key={index}>
-        //     <td>{tableData[index].nodeId}</td>
-        //     <td>{tableData[index].xcoord}</td>
-        //     <td>{tableData[index].ycoord}</td>
-        //     <td>{tableData[index].floor}</td>
-        //     <td>{tableData[index].building}</td>
-        //     <td>{tableData[index].nodeType}</td>
-        //     <td>{tableData[index].longName}</td>
-        //     <td>{tableData[index].shortName}</td>
-        // </tr>
     ));
 }
 
 const TableNodes: React.FC<{ tableData: node[] }> = ({tableData}) => {
     return (
+        <div className={"overflow-y-auto h-80"}>
         <Table>
             <TableHeader>
                 <TableRow>
@@ -47,23 +38,7 @@ const TableNodes: React.FC<{ tableData: node[] }> = ({tableData}) => {
                 {GenerateTableRowsNodes(tableData)}
             </TableBody>
         </Table>
-        // <table>
-        //     <thead>
-        //     <tr>
-        //         <th>Node ID</th>
-        //         <th>X-Coordinate</th>
-        //         <th>Y-Coordinate</th>
-        //         <th>Floor</th>
-        //         <th>Building</th>
-        //         <th>Node Type</th>
-        //         <th>Long Name</th>
-        //         <th>Short Name</th>
-        //     </tr>
-        //     </thead>
-        //     <tbody>
-        //     {GenerateTableRowsNodes(tableData)}
-        //     </tbody>
-        // </table>
+        </div>
     );
 };
 
