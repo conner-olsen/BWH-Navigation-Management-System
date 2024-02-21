@@ -42,7 +42,7 @@ function MapDisplay({
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
     const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
-
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         axios.get("/api/graph").then((res) => {
@@ -117,12 +117,14 @@ function MapDisplay({
         if (!hoverNodeId) {
             setHoverNodeId(node.id);
         }
+        setIsHovered(true);
     };
 
     const handleNodeHoverLeave = () => {
         if (hoverNodeId) {
             setHoverNodeId(null);
         }
+        setIsHovered(false);
     };
 
     const displayHoverInfo = (node: Node) => {
@@ -196,7 +198,7 @@ function MapDisplay({
                         <g key={node.id} onClick={() => handleNodeClick(node)}
                            onMouseEnter={() => handleNodeHover(node)}
                            onMouseLeave={() => handleNodeHoverLeave()}>
-                            <circle className="dark:fill-white" cx={node.xCoord} cy={node.yCoord} r="11" fill="blue"
+                            <circle className="dark:fill-white" cx={node.xCoord} cy={node.yCoord} r={isHovered ? "15" : "11"} fill="blue"
                                     style={{cursor: 'pointer'}}/>
                             {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                             {endNodeId === node.id && displaySelectedNodes(node, 'end')}
