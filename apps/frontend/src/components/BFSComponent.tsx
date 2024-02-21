@@ -4,12 +4,12 @@ import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
-import { TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 import {NodeServiceRequestComponent} from "./NodeServiceRequestComponent.tsx";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
-import { Col, Row } from "react-bootstrap";
+import {Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+// import {Col, Row} from "react-bootstrap";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -316,30 +316,24 @@ export function BFSComponent() {
 
                         <div>
                             <div>
-                                <Row>
-                                    <Col>
-                                        <p className="font-bold">Follow Me</p>
-                                    </Col>
-                                    <Col>
-                                        <button onClick={handleSpeakButtonClick}>
-                                            <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
-                                                 className="h-6 w-6 inline mr-5"></img>
-                                        </button>
-                                    </Col>
+                                <div className="flex items-center justify-center ml-6 mb-3">
+                                    <p className="font-bold mb-0">Follow Me</p>
+                                    <button onClick={handleSpeakButtonClick}>
+                                        <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
+                                             className="h-6 w-6 mr-5 ml-2 pd-0"></img>
+                                    </button>
+                                </div>
 
 
-                                    <Row>
-                                        <ol type="1" className="overflow-y-auto h-80 text-left ml-7">
-                                            {/* Render the list of long names */}
-                                            {collectLongNames().map((longName, index) => (
-                                                <li key={index}
+                                <ol type="1" className="overflow-y-auto h-80 text-left">
+                                    {/* Render the list of long names */}
+                                    {collectLongNames().map((longName, index) => (
+                                        <li key={index}
                                                     className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
                                                     {longName}
                                                 </li>
                                             ))}
                                         </ol>
-                                    </Row>
-                                </Row>
                             </div>
                         </div>
                     </div>
