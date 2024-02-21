@@ -195,12 +195,11 @@ export function BFSComponent() {
     // Assuming collectLongNames is a function that returns an array of long names
 
     useEffect(() => {
-        const hasStaircase = collectLongNames().some(longName =>
-            longName.includes("Staircase")
-        );
+        const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
 
         setShowAlert(hasStaircase);
-    }, [collectLongNames]);
+    }, [bfsResult]);
+
 
 
     return (
