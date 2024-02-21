@@ -184,6 +184,10 @@ return (
         {mobileMenuOpen && (
             <div className={`xl:hidden absolute bg-blue-950 max-w-full w-screen z-50`}>
                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                    <Link to="/AboutPage"
+                          className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline"
+                          onClick={toggleMobileMenu}>
+                        <div className={"hover:text-blue-500"}>About Us</div></Link>
                     <Link to="/Home"
                           className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline"
                             onClick={toggleMobileMenu}>
