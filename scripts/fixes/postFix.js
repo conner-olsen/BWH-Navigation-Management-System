@@ -4,7 +4,7 @@ import { isDockerRunning } from './dockerFixes.js';
 
 function executePostFix () {
   // Yes, the two yarn install commands are intentional. I am not sure why, but the first one does not always work.
-  const commands = ['yarn cache clean', 'yarn install', 'yarn build:dev', 'yarn install'];
+  const commands = ['yarn install', 'yarn build:dev', 'yarn install'];
 
   let i = 0;
   const next = () => {
