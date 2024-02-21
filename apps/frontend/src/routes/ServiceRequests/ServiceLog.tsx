@@ -6,15 +6,6 @@ import {CleaningServiceLogComponent} from "../../components/ServiceRequests/Clea
 import {InternalTransportServiceLogComponent} from "../../components/ServiceRequests/InternalServiceLogComponent.tsx";
 import {LanguageServiceLogComponent} from "../../components/ServiceRequests/LanguageServiceLogComponent.tsx";
 import {ExternalTransportServiceLogComponent} from "../../components/ServiceRequests/ExternalServiceLogComponent.tsx";
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger
-} from "../../components/ui/sheet.tsx";
-import {Button} from "../../components/ui/button.tsx";
 import CreateSRChart from "../../components/ServiceRequests/SRCountData.tsx";
 import CreateEmployeeChart from "../../components/ServiceRequests/EmployeeStats.tsx";
 import CompletionStats from "../../components/ServiceRequests/CompletionStats.tsx";
@@ -41,37 +32,7 @@ const ServiceLog = () => {
                         <TabsTrigger value="Language Service Request">Language</TabsTrigger>
                         <TabsTrigger value="Internal Transport Service Request">Internal Transport</TabsTrigger>
                         <TabsTrigger value="External Transport Service Request">External Transport</TabsTrigger>
-                        <Sheet key={"bottom"}>
-                            <SheetTrigger asChild>
-                                <Button variant="ghost">Stats</Button>
-                            </SheetTrigger>
-                            <SheetContent side={"bottom"}>
-                                <SheetHeader>
-                                    <SheetTitle>Service Request Statistics</SheetTitle>
-                                    <SheetDescription>
-                                        View graphs of the service request statistics
-                                    </SheetDescription>
-                                </SheetHeader>
-
-                                <div>
-                                    <Row>
-                                        <Col>
-                                            <CreateSRChart></CreateSRChart>
-                                        </Col>
-                                        <Col>
-                                            <CreateEmployeeChart></CreateEmployeeChart>
-                                        </Col>
-                                        <Col>
-                                            <CompletionStats></CompletionStats>
-                                        </Col>
-                                    </Row>
-
-
-                                </div>
-
-
-                            </SheetContent>
-                        </Sheet>
+                        <TabsTrigger value="Stats">Stats</TabsTrigger>
                     </TabsList>
 
                     {/*<TabsContent value="Employee List">*/}
@@ -94,6 +55,29 @@ const ServiceLog = () => {
                     </TabsContent>
                     <TabsContent value={"Language Service Request"}>
                         <LanguageServiceLogComponent></LanguageServiceLogComponent>
+                    </TabsContent>
+                    <TabsContent value={"Stats"}>
+                        <div>
+                            <Row>
+                                <Col className={"h-full"}>
+                                    <div className="border-2 border-blue-950 rounded-lg p-4 h-full">
+                                        <p>Service Request Types</p>
+                                        <CreateSRChart></CreateSRChart>
+                                    </div>
+                                </Col>
+                                <Col className={"h-full"}>
+                                    <div className="border-2 border-blue-950 rounded-lg p-4 h-full">
+                                        <p>Employee Statistics</p>
+                                        <CreateEmployeeChart></CreateEmployeeChart>
+                                    </div>
+                                    <br/>
+                                    <div className="border-2 border-blue-950 rounded-lg p-4 h-full">
+                                        <p>Service Request Statuses</p>
+                                        <CompletionStats></CompletionStats>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
                     </TabsContent>
 
 
