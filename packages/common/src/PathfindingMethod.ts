@@ -244,7 +244,7 @@ export class dfsPathfinding implements PathfindingMethod {
 
       //if currentNode is undefined, pop path from stack
       if (currentNode == undefined) {
-        stack.shift();
+        console.log("undefined current");
         visited.push(currentNodeIDPath);
       }
 
@@ -263,7 +263,12 @@ export class dfsPathfinding implements PathfindingMethod {
 
           //if path hasn't been visited and nodes aren't repeated, add to stack
           if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
+            console.log("add to stack");
+
             stack.unshift(newPath);
+          }
+          else {
+            console.log("already there, not added to stack");
           }
         });
 
