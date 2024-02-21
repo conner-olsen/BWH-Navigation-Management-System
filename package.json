@@ -22,6 +22,8 @@
     "dev:stop": "docker-compose -f docker-compose.dev.yaml down --volumes --rmi local",
     "deploy": "docker-compose -f docker-compose.prod.yaml up --build -d",
     "deploy:stop": "docker-compose -f docker-compose.prod.yaml down",
+    "merge-main": "git fetch origin main:main && git merge FETCH_HEAD",
+
     "test": "docker-compose -f docker-compose.test.yaml up --build --renew-anon-volumes -d",
     "test:stop": "docker-compose -f docker-compose.dev.yaml down --volumes --rmi local",
     "lint": "turbo run lint",
