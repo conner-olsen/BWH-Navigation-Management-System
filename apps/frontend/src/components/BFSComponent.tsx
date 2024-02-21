@@ -20,6 +20,7 @@ export function BFSComponent() {
     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
+    const [doAccessible, setDoAccessible] = useState<boolean>(false);
 
     const updateCurrentNode = (currentNode: Node) => {
         setHasSeen(true);
@@ -31,7 +32,8 @@ export function BFSComponent() {
         try {
             const request: PathfindingRequest = {
                 startid: startNode,
-                endid: endNode
+                endid: endNode,
+                doAccessible: doAccessible
             };
             const response: AxiosResponse<Node[]> = await axios.post(pathFindingType, request, {
                 headers: {
@@ -48,7 +50,7 @@ export function BFSComponent() {
             console.error("Error fetching BFS result:", (error as AxiosError).message);
             throw error;
         }
-    }, [startNode, endNode, pathFindingType]);
+    }, [startNode, endNode, pathFindingType, doAccessible]);
 
     useEffect(() => {
         fetchData()
@@ -406,9 +408,14 @@ export function BFSComponent() {
                         <AlertDescription>
                             This path contains stairs. If this is difficult, please request an accessible route.
                         </AlertDescription>
+                        <button onClick={() => setDoAccessible(true)}> Find Accessible Path</button>
                     </Alert>
                 )}
+                {/*{showAlert && <button onClick={() => setDoAccessible(true)}> Find Accessible Path</button>}*/}
             </div>
+            {/*<div>*/}
+            {/*    <button onClick={() => setDoAccessible(true)}> Find Accessible Path</button>*/}
+            {/*</div>*/}
 
 
             <div className="fixed w-screen max-w-full m-auto">
@@ -443,15 +450,15 @@ export function BFSComponent() {
                             </div>
                             <TransformComponent wrapperClass={"max-h-screen"}>
                                 {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
+                                                                          doAccessible={doAccessible} sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
+                                                                          doAccessible={doAccessible} sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
+                                                                     doAccessible={doAccessible} sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
+                                                                     doAccessible={doAccessible} sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                                 {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
+                                                                     doAccessible={doAccessible} sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
                             </TransformComponent>
                         </React.Fragment>
                     )}
