@@ -205,7 +205,7 @@ export function BFSComponent() {
     }, [bfsResult]);
 
     //booleans represent whether there is a floor change
-    const gatherTextPath = (): boolean[] => {
+    const gatherFloorChange = (): boolean[] => {
         let returnBooleans: boolean[] = [];
         let previousIsElevOrStair = false;
 
@@ -216,11 +216,13 @@ export function BFSComponent() {
                     //set current and previous nodes as true in boolean array
                     returnBooleans[i] = true;
                     returnBooleans[i - 1] = true;
-                } else {
+                }
+                else {
                     returnBooleans[i] = true;
                     previousIsElevOrStair = true;
                 }
-            } else {
+            }
+            else {
                 returnBooleans[i] = false;
             }
         }
@@ -362,7 +364,7 @@ export function BFSComponent() {
                                                      className="w-4 h-4 mr-1"/>
                                             )}
                                             <span
-                                                className={gatherTextPath()[index] ? "text-blue-500" : ""}>
+                                                className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
                                                     {node.longName}
                                                 </span>
                                             </span>
