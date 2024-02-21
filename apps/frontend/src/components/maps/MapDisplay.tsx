@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios from "axios";
+import "./animation.css";
 
 interface MapDisplayProps {
     floorMap: string;
@@ -18,8 +19,12 @@ interface MapDisplayProps {
     setChosenNode: (currentNode: Node) => void;
 }
 
-
-
+interface AnimatedPathProps {
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+}
 function MapDisplay({
                         floorMap,
                         floor,
@@ -40,7 +45,6 @@ function MapDisplay({
     const [path, setPath] = useState<string[]>([]);
     const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
 
-
     useEffect(() => {
         axios.get("/api/graph").then((res) => {
             const populatedGraph = new Graph();
@@ -55,13 +59,23 @@ function MapDisplay({
             graph.setPathfindingMethodStringRoute(pathFindingType);
 
             const pathString = graph.nodesToString(pathSent);
-            //graph.runPathfinding(startNode, endNode);
+                //graph.runPathfinding(startNode, endNode);
             setPath(pathString);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
         }
     }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
-
+    const AnimatedPath: React.FC<AnimatedPathProps> = ({ x1, y1, x2, y2 }) => (
+        <line
+            className="line-animation"
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke="red"
+            strokeWidth="3"
+        />
+    );
     const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
         for (let i = 0; i < path.length - 1; i++) {
@@ -69,11 +83,12 @@ function MapDisplay({
             const nextNode = graph.getNode(path[i + 1]);
             if (node && nextNode && node.floor === floor && nextNode.floor === floor) {
                 pathElements.push(
-                    <line className="dark:stroke-fuchsia-500"
-                          key={`${node.id}-${nextNode.id}`}
-                          x1={node.xCoord} y1={node.yCoord}
-                          x2={nextNode.xCoord} y2={nextNode.yCoord}
-                          stroke="red" strokeWidth="8"
+                    <AnimatedPath
+                        key={`${node.id}-${nextNode.id}`}
+                        x1={node.xCoord}
+                        y1={node.yCoord}
+                        x2={nextNode.xCoord}
+                        y2={nextNode.yCoord}
                     />
                 );
             }
@@ -200,7 +215,7 @@ function MapDisplay({
                     return (
                         <g key={node.id} >
 
-                            <circle className="dark:fill-white z-20 fill-blue-600" cx={node.xCoord} cy={node.yCoord} r="11" stroke="black" stroke-width="4"
+                            <circle className="dark:fill-white z-20 fill-blue-600" cx={node.xCoord} cy={node.yCoord} r={hoverNodeId === node.id ? "15" : "11"} stroke="black" stroke-width="4"
                                     style={{cursor: 'pointer'}}
                                     // Moved events here so hovering on other components don't affect displayed nodes
                                     onClick={() => handleNodeClick(node)}
@@ -274,6 +289,7 @@ function MapDisplay({
                 {graph && displayNodePins(graph)}
                 {graph && displayHoverCards(graph)}
             </svg>
+
         </div>
     );
 }

@@ -61,6 +61,9 @@ return (
         <div className="navbarStyling relative filter-none z-50 shadow-md bg-blue-950 space-x-12 items-center flex
         justify-between px-4 xl:px-0">
             <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img></Link>
+            <Link to="/AboutPage" className="text-lg no-underline p-2 text-white hidden xl:block">
+                <div className={"hover:text-blue-500"}>About Us</div>
+            </Link>
             <Link to="/Home" className="text-lg no-underline p-2 text-white hidden xl:block">
                 <div className={"hover:text-blue-500"}>Map</div>
             </Link>
@@ -112,6 +115,7 @@ return (
                     </div>
                 </div>
             </Link>
+
 
             <div className="hidden xl:block">
                 <DarkModeButton/>
@@ -180,6 +184,10 @@ return (
         {mobileMenuOpen && (
             <div className={`xl:hidden absolute bg-blue-950 max-w-full w-screen z-50`}>
                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
+                    <Link to="/AboutPage"
+                          className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline"
+                          onClick={toggleMobileMenu}>
+                        <div className={"hover:text-blue-500"}>About Us</div></Link>
                     <Link to="/Home"
                           className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline"
                             onClick={toggleMobileMenu}>

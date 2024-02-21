@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {languageInterpreterServiceRequest} from 'common/interfaces/interfaces.ts';
+import { languageInterpreterServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 
-function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
+function GenerateTableRowsServices({tableData,employeeData,selectedStatus,selectedEmployeeUser,onUpdate}:{tableData: languageInterpreterServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string,onUpdate:(data:languageInterpreterServiceRequest[])=>void}): JSX.Element[] {
     const [statusMap, setStatusMap] = useState<{ [key: number]: string }>({});
     const [employeeMap, setEmployeeMap] = useState<{ [key: number]: string }>({});
 
@@ -20,6 +20,9 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
         setStatusMap({ ...statusMap, [index]: value });
+        const updatedTableData = [...tableData];
+        updatedTableData[index].ServiceRequest.status = value;
+        onUpdate(updatedTableData);
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: languageInterpreterServiceRequest[]) => {
@@ -32,6 +35,9 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
         setEmployeeMap({ ...employeeMap, [index]: value });
+        const updatedTableData = [...tableData];
+        updatedTableData[index].ServiceRequest.employeeUser = value;
+        onUpdate(updatedTableData);
     };
 
     return tableData
@@ -46,7 +52,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
 
 
                 <TableCell>
-                    <Select defaultValue={statusMap[index] || item.ServiceRequest.status} value={statusMap[index] || item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select value={item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -60,7 +66,7 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
 
                 </TableCell>
                 <TableCell>
-                    <Select defaultValue={employeeMap[index] || item.ServiceRequest.employeeUser} value={employeeMap[index] || item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select  value={item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
@@ -77,21 +83,25 @@ function GenerateTableRowsServices(tableData: languageInterpreterServiceRequest[
         ));
 }
 
-const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string; }> = ({tableData, employeeData, selectedStatus,selectedEmployeeUser}) => {
+const TableServices: React.FC<{ tableData: languageInterpreterServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string;onUpdate:(data:languageInterpreterServiceRequest[])=>void}> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser,onUpdate}) => {
     return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Room ID</TableHead>
-                    <TableHead>Priority</TableHead>
-                    <TableHead>Patient Name</TableHead>
-                    <TableHead>Language Preference</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Assignment</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus, selectedEmployeeUser)}</TableBody>
-        </Table>
+        <div className={"overflow-y-auto h-80"}>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Room ID</TableHead>
+                        <TableHead>Priority</TableHead>
+                        <TableHead>Patient Name</TableHead>
+                        <TableHead>Language Preference</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Assignment</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <GenerateTableRowsServices tableData={tableData} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={onUpdate}></GenerateTableRowsServices>
+                </TableBody>
+            </Table>
+        </div>
     );
 };
 
@@ -175,8 +185,9 @@ export const LanguageServiceLogComponent = () => {
 
             <br/>
 
-            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser}/>
-
+            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={(cleaningData) => {
+                setData(cleaningData);
+            }}/>
         </div>
     );
 };

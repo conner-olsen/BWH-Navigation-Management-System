@@ -25,80 +25,82 @@ const ServiceLog = () => {
 
     return (
         <>
-        <div className={"align-content-center container" }>
-            <br/>
-            <br/>
+            <div style={{display: 'flex', alignItems: 'center', marginLeft: '15%'}}>
+                <Col>
+                    <h1>SERVICE LOG</h1>
+                </Col>
+            </div>
+            <div className={"align-content-center container"}>
 
 
-            <Tabs defaultValue="Flower Service Request" className="align-content-center">
-                <TabsList classname-={"align-content-center"}>
-                    <TabsTrigger value="Flower Service Request">Flower</TabsTrigger>
-                    <TabsTrigger value="Religious Service Request">Religious</TabsTrigger>
-                    <TabsTrigger value="Cleaning Service Request">Cleaning</TabsTrigger>
-                    <TabsTrigger value="Language Service Request">Language</TabsTrigger>
-                    <TabsTrigger value="Internal Transport Service Request">Internal Transport</TabsTrigger>
-                    <TabsTrigger value="External Transport Service Request">External Transport</TabsTrigger>
-                    <Sheet key={"bottom"}>
-                        <SheetTrigger asChild>
-                            <Button variant="ghost">Stats</Button>
-                        </SheetTrigger>
-                        <SheetContent side={"bottom"}>
-                            <SheetHeader>
-                                <SheetTitle>Service Request Statistics</SheetTitle>
-                                <SheetDescription>
-                                    View graphs of the service request statistics
-                                </SheetDescription>
-                            </SheetHeader>
+                <Tabs defaultValue="Flower Service Request" className="align-content-center">
+                    <TabsList classname-={"align-content-center"}>
+                        <TabsTrigger value="Flower Service Request">Flower</TabsTrigger>
+                        <TabsTrigger value="Religious Service Request">Religious</TabsTrigger>
+                        <TabsTrigger value="Cleaning Service Request">Cleaning</TabsTrigger>
+                        <TabsTrigger value="Language Service Request">Language</TabsTrigger>
+                        <TabsTrigger value="Internal Transport Service Request">Internal Transport</TabsTrigger>
+                        <TabsTrigger value="External Transport Service Request">External Transport</TabsTrigger>
+                        <Sheet key={"bottom"}>
+                            <SheetTrigger asChild>
+                                <Button variant="ghost">Stats</Button>
+                            </SheetTrigger>
+                            <SheetContent side={"bottom"}>
+                                <SheetHeader>
+                                    <SheetTitle>Service Request Statistics</SheetTitle>
+                                    <SheetDescription>
+                                        View graphs of the service request statistics
+                                    </SheetDescription>
+                                </SheetHeader>
 
-                            <div>
-                                <Row>
-                                    <Col>
-                                        <CreateSRChart></CreateSRChart>
-                                    </Col>
-                                    <Col>
-                                        <CreateEmployeeChart></CreateEmployeeChart>
-                                    </Col>
-                                    <Col>
-                                        <CompletionStats></CompletionStats>
-                                    </Col>
-                                </Row>
-
-
-
-                            </div>
+                                <div>
+                                    <Row>
+                                        <Col>
+                                            <CreateSRChart></CreateSRChart>
+                                        </Col>
+                                        <Col>
+                                            <CreateEmployeeChart></CreateEmployeeChart>
+                                        </Col>
+                                        <Col>
+                                            <CompletionStats></CompletionStats>
+                                        </Col>
+                                    </Row>
 
 
-                        </SheetContent>
-                    </Sheet>
-                </TabsList>
-
-                {/*<TabsContent value="Employee List">*/}
+                                </div>
 
 
-                <TabsContent value="Flower Service Request">
-                    <FlowerServiceLogComponent></FlowerServiceLogComponent>
-                </TabsContent>
-                <TabsContent value={"Religious Service Request"}>
-                    <ReligiousServiceLogComponent></ReligiousServiceLogComponent>
-                </TabsContent>
-                <TabsContent value={"Cleaning Service Request"}>
-                    <CleaningServiceLogComponent></CleaningServiceLogComponent>
-                </TabsContent>
-                <TabsContent value={"Internal Transport Service Request"}>
-                    <InternalTransportServiceLogComponent></InternalTransportServiceLogComponent>
-                </TabsContent>
-                <TabsContent value={"External Transport Service Request"}>
-                    <ExternalTransportServiceLogComponent></ExternalTransportServiceLogComponent>
-                </TabsContent>
-                <TabsContent value={"Language Service Request"}>
-                    <LanguageServiceLogComponent></LanguageServiceLogComponent>
-                </TabsContent>
+                            </SheetContent>
+                        </Sheet>
+                    </TabsList>
+
+                    {/*<TabsContent value="Employee List">*/}
+
+
+                    <TabsContent value="Flower Service Request">
+                        <FlowerServiceLogComponent></FlowerServiceLogComponent>
+                    </TabsContent>
+                    <TabsContent value={"Religious Service Request"}>
+                        <ReligiousServiceLogComponent></ReligiousServiceLogComponent>
+                    </TabsContent>
+                    <TabsContent value={"Cleaning Service Request"}>
+                        <CleaningServiceLogComponent></CleaningServiceLogComponent>
+                    </TabsContent>
+                    <TabsContent value={"Internal Transport Service Request"}>
+                        <InternalTransportServiceLogComponent></InternalTransportServiceLogComponent>
+                    </TabsContent>
+                    <TabsContent value={"External Transport Service Request"}>
+                        <ExternalTransportServiceLogComponent></ExternalTransportServiceLogComponent>
+                    </TabsContent>
+                    <TabsContent value={"Language Service Request"}>
+                        <LanguageServiceLogComponent></LanguageServiceLogComponent>
+                    </TabsContent>
 
 
                 </Tabs>
 
-        </div>
-        <Global_Footer />
+            </div>
+            <Global_Footer/>
         </>
     );
 
