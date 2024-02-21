@@ -256,6 +256,10 @@ export class dfsPathfinding implements PathfindingMethod {
 
       //else, cast as currentNode as Node (determined above) and add neighbor to path for each
       else {
+        //pop current node ID path from stack
+        // stack.pop();
+        visited.push(currentNodeIDPath);
+
         neighbors = (currentNode as Node).edges;
         neighbors.forEach(function (item) {
           newPath = [...currentNodeIDPath];
@@ -264,7 +268,6 @@ export class dfsPathfinding implements PathfindingMethod {
           //if path hasn't been visited and nodes aren't repeated, add to stack
           if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
             console.log("add to stack");
-
             stack.unshift(newPath);
           }
           else {
@@ -272,9 +275,6 @@ export class dfsPathfinding implements PathfindingMethod {
           }
         });
 
-        //pop current node ID path from stack
-       // stack.pop();
-        visited.push(currentNodeIDPath);
       }
     }
 
