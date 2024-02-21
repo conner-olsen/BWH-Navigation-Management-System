@@ -218,7 +218,7 @@ export function BFSComponent() {
                     returnBooleans[i - 1] = true;
                 } else {
                     returnBooleans[i] = true;
-                    previousIsElevOrStair= false;
+                    previousIsElevOrStair = true;
                 }
             } else {
                 returnBooleans[i] = false;
