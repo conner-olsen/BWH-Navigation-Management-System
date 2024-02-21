@@ -16,7 +16,9 @@ import {
 } from "../../components/ui/sheet.tsx";
 import {Button} from "../../components/ui/button.tsx";
 import CreateSRChart from "../../components/ServiceRequests/SRCountData.tsx";
-
+import CreateEmployeeChart from "../../components/ServiceRequests/EmployeeStats.tsx";
+import CompletionStats from "../../components/ServiceRequests/CompletionStats.tsx";
+import { Col, Row } from "react-bootstrap";
 
 
 const ServiceLog = () => {
@@ -36,18 +38,35 @@ const ServiceLog = () => {
                     <TabsTrigger value="Language Service Request">Language</TabsTrigger>
                     <TabsTrigger value="Internal Transport Service Request">Internal Transport</TabsTrigger>
                     <TabsTrigger value="External Transport Service Request">External Transport</TabsTrigger>
-                    <Sheet key={"right"}>
+                    <Sheet key={"bottom"}>
                         <SheetTrigger asChild>
                             <Button variant="ghost">Stats</Button>
                         </SheetTrigger>
-                        <SheetContent side={"right"}>
+                        <SheetContent side={"bottom"}>
                             <SheetHeader>
                                 <SheetTitle>Service Request Statistics</SheetTitle>
                                 <SheetDescription>
                                     View graphs of the service request statistics
                                 </SheetDescription>
                             </SheetHeader>
-                                <CreateSRChart></CreateSRChart>
+
+                            <div>
+                                <Row>
+                                    <Col>
+                                        <CreateSRChart></CreateSRChart>
+                                    </Col>
+                                    <Col>
+                                        <CreateEmployeeChart></CreateEmployeeChart>
+                                    </Col>
+                                    <Col>
+                                        <CompletionStats></CompletionStats>
+                                    </Col>
+                                </Row>
+
+
+
+                            </div>
+
 
                         </SheetContent>
                     </Sheet>

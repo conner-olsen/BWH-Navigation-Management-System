@@ -54,7 +54,7 @@ const CleaningServiceRequest: React.FC = () => {
 
     return (
         <Container>
-            <h1 className=" bg-gradient-to-r from-blue-600 to-black bg-clip-text text-transparent">Cleaning Service Request</h1>
+            <h1 className=" bg-gradient-to-r from-blue-600 to-black bg-clip-text text-transparent dark:text-white">Cleaning Service Request</h1>
             <div className="border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4">
                 <Container>
                     <Row>
