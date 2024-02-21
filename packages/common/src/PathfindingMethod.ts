@@ -532,12 +532,17 @@ export class dfsPathfinding implements PathfindingMethod {
       else {
         neighbors = (currentNode as Node).edges;
         neighbors.forEach(function (item) {
-          newPath = [...currentNodeIDPath];
-          newPath.push(item);
+          if(!((currentNode as Node).nodeType == "STAI" && (item.includes("STAI")))) {
+            newPath = [...currentNodeIDPath];
+            newPath.push(item);
 
-          //if path hasn't been visited and nodes aren't repeated, add to stack
-          if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
-            stack.unshift(newPath);
+            //if path hasn't been visited and nodes aren't repeated, add to stack
+            if (!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
+              stack.unshift(newPath);
+            }
+          }
+          else {
+            console.log("dfs skipped stair");
           }
         });
 
