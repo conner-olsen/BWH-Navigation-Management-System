@@ -218,6 +218,7 @@ export function BFSComponent() {
                     returnBooleans[i - 1] = true;
                 } else {
                     returnBooleans[i] = true;
+                    previousIsElevOrStair= false;
                 }
             } else {
                 returnBooleans[i] = false;
@@ -361,8 +362,7 @@ export function BFSComponent() {
                                                      className="w-4 h-4 mr-1"/>
                                             )}
                                             <span
-                                                className={node.nodeType === "STAI" || node.nodeType === "ELEV"
-                                                    ? "text-blue-500" : ""}>
+                                                className={gatherTextPath()[index] ? "text-blue-500" : ""}>
                                                     {node.longName}
                                                 </span>
                                             </span>
