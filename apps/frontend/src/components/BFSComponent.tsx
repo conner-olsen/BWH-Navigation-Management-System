@@ -458,8 +458,8 @@ export function BFSComponent() {
                         </div>
                     </DrawerTrigger>
                     <DrawerContent>
-
-                    <div>
+                    <div className="overflow-y-auto">
+                        <div className="max-w-[400px] m-auto">
                             <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
                                 <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
                                        onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
@@ -504,7 +504,6 @@ export function BFSComponent() {
                                         </SelectContent>
                                     </Select>
                                 </div>
-
                             </div>
                             <div className="py-4 px-2">
                                 <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
@@ -527,52 +526,57 @@ export function BFSComponent() {
                                     ))}
                                 </ol>
                             </div>
+
+                            <div className="flex justify-center">
+                                <DrawerClose>
+                                    <div className="mb-4 m-auto">
+                                        <Button variant="destructive">Close</Button>
+                                    </div>
+                                </DrawerClose>
+                            </div>
                         </div>
-
-                        <div className="mb-4 m-auto">
-                            <DrawerClose>
-                                <Button variant="destructive">Close</Button>
-                            </DrawerClose>
-                        </div>
-
-
+                    </div>
                     </DrawerContent>
                 </Drawer>
             </div>
             <div className="h-0">
                 <Drawer modal={false}>
                     <DrawerTrigger>
-                        <div className="absolute w-[36px] h-[36px] left-[50px] top-[80px] bg-background z-40
+                    <div className="absolute w-[36px] h-[36px] left-[50px] top-[80px] bg-background z-40
                         rounded-md shadow-md sm:hidden flex items-center justify-center">
                             <img src="../../public/icon/info-icon.png" alt="nav-icon" className="invert dark:invert-0 w-[25px]"></img>
                         </div>
                     </DrawerTrigger>
                     <DrawerContent>
-                        {!currentNode && (
-                            <div className="text-center mt-4">
-                                <p className="font-bold mb-0">Select a location</p>
-                                <p className="font-bold">to display its information</p>
-                                <img src="../../public/icon/red-pin.png" alt={"pin"}
-                                     className="max-w-[200px] m-auto"></img>
-                            </div>
-                        )}
-                        <div className="px-2 text-left"
-                             style={{display: !currentNode ? 'none' : 'block'}}>
-                            <img src={'../../public/room-types/nodeType-' + currentNode?.nodeType + ".png"}
-                                 alt="patient-room"
-                                 className="rounded-md pb-3"></img>
-                            <p className="text-xl font-bold mb-1">{currentNode?.longName + " (" + currentNode?.shortName + ")"}</p>
-                            <p className="text-sm text-muted-foreground">{currentNode?.nodeType + " #" + currentNode?.id}</p>
-                            <div className="flex">
-                                <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
-                                <p className="mb-0">{"Floor " + currentNode?.floor + ", " + currentNode?.building}</p>
-                            </div>
+                        <div className="overflow-y-auto">
+                            {!currentNode && (
+                                <div className="text-center mt-4">
+                                    <p className="font-bold mb-0">Select a location</p>
+                                    <p className="font-bold">to display its information</p>
+                                    <img src="../../public/icon/red-pin.png" alt={"pin"}
+                                         className="max-w-[200px] m-auto"></img>
+                                </div>
+                            )}
+                            <div className="px-2 text-left"
+                                 style={{display: !currentNode ? 'none' : 'block'}}>
+                                <img src={'../../public/room-types/nodeType-' + currentNode?.nodeType + ".png"}
+                                     alt="patient-room"
+                                     className="rounded-md pb-3"></img>
+                                <p className="text-xl font-bold mb-1">{currentNode?.longName + " (" + currentNode?.shortName + ")"}</p>
+                                <p className="text-sm text-muted-foreground">{currentNode?.nodeType + " #" + currentNode?.id}</p>
+                                <div className="flex">
+                                    <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
+                                    <p className="mb-0">{"Floor " + currentNode?.floor + ", " + currentNode?.building}</p>
+                                </div>
 
-                        </div>
-                        <div className="mb-4 m-auto">
-                            <DrawerClose>
-                                <Button variant="destructive">Close</Button>
-                            </DrawerClose>
+                            </div>
+                            <div className="flex justify-center">
+                                <DrawerClose>
+                                    <div className="mb-4 m-auto">
+                                        <Button variant="destructive">Close</Button>
+                                    </div>
+                                </DrawerClose>
+                            </div>
                         </div>
                     </DrawerContent>
                 </Drawer>

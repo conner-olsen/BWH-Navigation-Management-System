@@ -64,27 +64,27 @@ return (
             <Link to="/AboutPage" className="text-lg no-underline p-2 text-white hidden xl:block ml-2 text-[17px]">
                 <div className={"hover:text-blue-500"}>About Us</div>
             </Link>
-            <Link to="/Home" className="text-lg no-underline p-2 text-white hidden xl:block text-[17px]">
+            <Link to="/Home" className="no-underline p-2 text-white hidden xl:block text-[17px]">
                 <div className={"hover:text-blue-500"}>Map</div>
             </Link>
 
             {isAuthenticated && (
-                <Link to="/EmployeeManager" className="text-lg no-underline p-2 text-white hidden xl:block text-[17px]">
+                <Link to="/EmployeeManager" className="no-underline p-2 text-white hidden xl:block text-[17px]">
                     <div className={"hover:text-blue-500"}>Employee Manager</div>
                 </Link>
             )}
             {isAuthenticated && (
-                <Link to="/DataUpload" className="text-lg no-underline p-2 text-white hidden xl:block text-[17px]">
+                <Link to="/DataUpload" className="no-underline p-2 text-white hidden xl:block text-[17px]">
                     <div className={"hover:text-blue-500"}>Data Upload</div>
                 </Link>
             )}
             {isAuthenticated && (
-                <Link to="/ServiceLog" className="text-lg no-underline p-2 text-white hidden xl:block text-[17px]">
+                <Link to="/ServiceLog" className="no-underline p-2 text-white hidden xl:block text-[17px]">
                     <div className={"hover:text-blue-500"}>Service Log</div>
                 </Link>
             )}
 
-            <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white hidden xl:block text-[17px]"
+            <Link to="/ServiceList" className="group text-center no-underline p-2 text-white hidden xl:block text-[17px]"
                   onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <div className={"hover:text-blue-500"}>Service Request</div>
                 <div className="mt-2 pt-2 h-0 w-screen max-w-full group-hover:h-[250px] absolute
