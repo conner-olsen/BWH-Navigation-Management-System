@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const LoginButtonPatient = () => {
+const LoginButtonEmployee = () => {
     const { loginWithRedirect } = useAuth0();
     const [isHovered, setHovered] = useState<boolean>(false);
 
@@ -26,10 +26,10 @@ const LoginButtonPatient = () => {
                     transition: 'background-color 0.5s ease', // Add a smooth transition effect
                 }}
             >
-                PATIENT
+                EMPLOYEE
             </button>
         </div>
     );
 };
 
-export default LoginButtonPatient;
+export default LoginButtonEmployee;

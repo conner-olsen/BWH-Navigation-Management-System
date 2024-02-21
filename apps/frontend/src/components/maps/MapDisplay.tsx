@@ -126,7 +126,7 @@ function MapDisplay({
                         "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 " +
                         "data-[side=top]:slide-in-from-bottom-2 z-50"}>
                     <g>
-                        <img src="../../../public/room-types/hospital-room.jpeg"></img>
+                        <img src={'../../../public/room-types/nodeType-' + node.nodeType + ".png"}></img>
                         <div>
                             Type: {node.nodeType}
                         </div>
@@ -202,7 +202,7 @@ function MapDisplay({
                     return (
                         <g key={node.id} >
 
-                            <circle className="dark:fill-white z-20" cx={node.xCoord} cy={node.yCoord} r="11" fill="blue"
+                            <circle className="dark:fill-white z-20 fill-blue-600" cx={node.xCoord} cy={node.yCoord} r="11" stroke="black" stroke-width="4"
                                     style={{cursor: 'pointer'}}
                                     // Moved events here so hovering on other components don't affect displayed nodes
                                     onClick={() => handleNodeClick(node)}
