@@ -8,7 +8,20 @@ const AboutPage = () => {
 
     return (
         <div>
-            <h1 className={"text-center"}>Meet Our Team:</h1>
+
+            <div style={{display: 'flex', alignItems: 'center', marginLeft: '15%'}}>
+                <Row>
+                    <Col>
+                        <h1>THE TEAM</h1>
+                    </Col>
+                    <Row>
+                        <p className="font-roboto text-neutral-500 italic font-light dark:text-neutral-300">
+                            Team D, "The Dark Maroon Dragons", is a group of students from the Worcester Polytechnic Institute
+                        </p>
+                    </Row>
+                </Row>
+            </div>
+
             <br/>
             <Container>
                 <Row>
@@ -115,7 +128,8 @@ const AboutPage = () => {
                     <Card className={"text-center"}>
                         <p>Thank You To Brigham and Women’s Hospital and our representative, Andrew Shinn</p>
 
-                        <p>The Brigham & Women’s Hospital maps and data used in this application are copyrighted and provided for
+                        <p>The Brigham & Women’s Hospital maps and data used in this application are copyrighted and
+                            provided for
                             the sole use of educational purposes.</p>
                     </Card>
                 </Row>
@@ -125,7 +139,7 @@ const AboutPage = () => {
             </Container>
 
 
-    </div>
+        </div>
     );
 };
 
