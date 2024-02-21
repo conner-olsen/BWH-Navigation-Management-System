@@ -61,30 +61,30 @@ return (
         <div className="navbarStyling relative filter-none z-50 shadow-md bg-blue-950 space-x-12 items-center flex
         justify-between px-4 xl:px-0">
             <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img></Link>
-            <Link to="/AboutPage" className="text-lg no-underline p-2 text-white hidden xl:block">
+            <Link to="/AboutPage" className="text-lg no-underline p-2 text-white hidden xl:block ml-2 text-[17px]">
                 <div className={"hover:text-blue-500"}>About Us</div>
             </Link>
-            <Link to="/Home" className="text-lg no-underline p-2 text-white hidden xl:block">
+            <Link to="/Home" className="text-lg no-underline p-2 text-white hidden xl:block text-[17px]">
                 <div className={"hover:text-blue-500"}>Map</div>
             </Link>
 
             {isAuthenticated && (
-                <Link to="/EmployeeManager" className="text-lg no-underline p-2 text-white hidden xl:block">
+                <Link to="/EmployeeManager" className="text-lg no-underline p-2 text-white hidden xl:block text-[17px]">
                     <div className={"hover:text-blue-500"}>Employee Manager</div>
                 </Link>
             )}
             {isAuthenticated && (
-                <Link to="/DataUpload" className="text-lg no-underline p-2 text-white hidden xl:block">
+                <Link to="/DataUpload" className="text-lg no-underline p-2 text-white hidden xl:block text-[17px]">
                     <div className={"hover:text-blue-500"}>Data Upload</div>
                 </Link>
             )}
             {isAuthenticated && (
-                <Link to="/ServiceLog" className="text-lg no-underline p-2 text-white hidden xl:block">
+                <Link to="/ServiceLog" className="text-lg no-underline p-2 text-white hidden xl:block text-[17px]">
                     <div className={"hover:text-blue-500"}>Service Log</div>
                 </Link>
             )}
 
-            <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white hidden xl:block"
+            <Link to="/ServiceList" className="group text-center text-lg no-underline p-2 text-white hidden xl:block text-[17px]"
                   onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <div className={"hover:text-blue-500"}>Service Request</div>
                 <div className="mt-2 pt-2 h-0 w-screen max-w-full group-hover:h-[250px] absolute
@@ -92,25 +92,25 @@ return (
                                     transition-all duration-500">
                     <div>
                         <NavDropdown.Item as={Link} to="/ServiceList">
-                            <div className={"hover:text-blue-500"}>All Services</div>
+                            <div className={"hover:text-blue-500 text-[17px]"}>All Services</div>
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/FlowerService">
-                            <div className={"hover:text-blue-500"}>Flower Request</div>
+                            <div className={"hover:text-blue-500 text-[17px]"}>Flower Request</div>
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/ReligiousService">
-                            <div className={"hover:text-blue-500"}>Religious Request</div>
+                            <div className={"hover:text-blue-500 text-[17px]"}>Religious Request</div>
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/CleaningService">
-                            <div className={"hover:text-blue-500"}>Cleaning Request</div>
+                            <div className={"hover:text-blue-500 text-[17px]"}>Cleaning Request</div>
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/InternalTransportation">
-                            <div className={"hover:text-blue-500"}>Internal Transportation</div>
+                            <div className={"hover:text-blue-500 text-[17px]"}>Internal Transportation</div>
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/ExternalTransportation">
-                            <div className={"hover:text-blue-500"}>External Transportation</div>
+                            <div className={"hover:text-blue-500 text-[17px]"}>External Transportation</div>
                         </NavDropdown.Item>
                         <NavDropdown.Item as={Link} to="/LanguageService">
-                            <div className={"hover:text-blue-500"}>Language Service</div>
+                            <div className={"hover:text-blue-500 text-[17px]"}>Language Service</div>
                         </NavDropdown.Item>
                     </div>
                 </div>
