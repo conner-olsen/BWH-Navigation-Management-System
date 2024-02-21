@@ -64,9 +64,6 @@ export function BFSComponent() {
         setMapKey(prevKey => prevKey + 1);
     }, [pathFindingType]);
 
-    const collectLongNames = useCallback(() => {
-        return bfsResult.map(node => node.longName);
-    }, [bfsResult]);
 
 
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
@@ -309,15 +306,29 @@ export function BFSComponent() {
                         <div>
                             <p className="font-bold">Follow Me</p>
                             <ol type="1" className="overflow-y-auto h-80 text-left">
-                                {/* Render the list of long names */}
-                                {collectLongNames().map((longName, index) => (
-                                    <li key={index}
-                                        className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
-                                        {longName}
+                                {/* Render the list of long names and node names with icons */}
+                                {bfsResult.map((node, index) => (
+                                    <li key={index}>
+                                        {/* Check the node type and render the appropriate icon */}
+                                        <span className="flex items-center">
+                                            {node.nodeType === "STAI" && (
+                                                <img src="../../public/icon/stairs.png" alt="stair-icon"
+                                                     className="h-3 w-3 mr-1"/>
+
+                                            )}
+                                                {node.nodeType === "ELEV" && (
+                                                    <img src="../../public/icon/elevator.png" alt="elevator-icon"
+                                                         className="w-4 h-4 mr-1"/>
+                                                )}
+                                                <span className={node.nodeType === "STAI" || node.nodeType === "ELEV" ? "text-blue-500" : ""}>
+                                                    {node.longName}
+                                                </span>
+                                            </span>
                                     </li>
-                                ))}
+                                    ))}
                             </ol>
                         </div>
+
                     </div>
                 )}
                 {activeTab === 2 && !currentNode && (
