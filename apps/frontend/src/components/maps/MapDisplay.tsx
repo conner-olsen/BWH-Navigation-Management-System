@@ -16,6 +16,7 @@ interface MapDisplayProps {
     doDisplayNodes: boolean;
     doDisplayNames: boolean;
     pathFindingType: string;
+    setChosenNode: (currentNode: Node) => void;
 }
 
 interface AnimatedPathProps {
@@ -35,14 +36,14 @@ function MapDisplay({
                         doDisplayEdges,
                         doDisplayNodes,
                         doDisplayNames,
-                        pathSent
+                        pathSent,
+                        setChosenNode
                     }: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
     const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
-    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         axios.get("/api/graph").then((res) => {
@@ -95,7 +96,10 @@ function MapDisplay({
         return pathElements;
     };
 
+
     const handleNodeClick = (node: Node) => {
+        setChosenNode(node);
+
         if (!startNodeId) {
             setStartNodeId(node.id);
             const path: PathfindingRequest = {startid: node.id, endid: ""};
@@ -117,22 +121,25 @@ function MapDisplay({
         if (!hoverNodeId) {
             setHoverNodeId(node.id);
         }
-        setIsHovered(true);
     };
 
     const handleNodeHoverLeave = () => {
         if (hoverNodeId) {
             setHoverNodeId(null);
         }
-        setIsHovered(false);
     };
 
     const displayHoverInfo = (node: Node) => {
         return (
-            <foreignObject x={node.xCoord - 225} y={node.yCoord - 250} width="450" height="250" z="40">
+            <foreignObject x={node.xCoord - 225} y={node.yCoord - 525} width="450" height="500">
                 <div
-                    className={"h-fit rounded-md border bg-popover p-4 text-2xl text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}>
+                    className={"h-fit rounded-md border bg-popover p-4 text-2xl text-popover-foreground shadow-md " +
+                        "outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 " +
+                        "data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 " +
+                        "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 " +
+                        "data-[side=top]:slide-in-from-bottom-2 z-50"}>
                     <g>
+                        <img src={'../../../public/room-types/nodeType-' + node.nodeType + ".png"}></img>
                         <div>
                             Type: {node.nodeType}
                         </div>
@@ -158,32 +165,43 @@ function MapDisplay({
     };
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
-            <foreignObject x={node.xCoord - 5} y={node.yCoord + 20} width="250" height="250" className="z-50">
-                <div
-                    className={"w-50 h-50 rounded-3xl border bg-popover p-4 text-md text-popover-foreground shadow-md " +
-                        "outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 " +
-                        "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}
-                    style={{backgroundColor: 'rgba(122,154,255,0.7)'}}>
-                    <g>
-                        <div className="font-bold">
-                            {type === 'start' ? 'START NODE' : 'END NODE'}
-                        </div>
-                        <div>
-                            <text className="text-neutral-700 font-semibold" style={{cursor: 'pointer'}}
-                                  onClick={() => clearSelection()}>
-                                Clear
-                            </text>
-                        </div>
+            <>
+                <foreignObject x={node.xCoord - 50} y={node.yCoord - 80} width="100" height="100" className="z-50">
+                    <g onClick={() => clearSelection()} className="cursor-no-drop">
+                        {type === 'start' ?
+                            <img src="../../public/icon/red-pin.png" className="scaly-boi w-[100px] h-[100px]"></img> :
+                            <img src="../../public/icon/red-pin.png" className="scaly-boi w-[100px] h-[100px]"></img>}
                     </g>
-                </div>
-            </foreignObject>
+                </foreignObject>
+
+                {/*<foreignObject x={node.xCoord - 5} y={node.yCoord + 20} width="250" height="250" className="z-50">*/}
+                {/*    <div*/}
+                {/*        className={"w-50 h-50 rounded-3xl border bg-popover p-4 text-md text-popover-foreground shadow-md " +*/}
+                {/*            "outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 " +*/}
+                {/*            "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2"}*/}
+                {/*        style={{backgroundColor: 'rgba(122,154,255,0.7)'}}>*/}
+                {/*        <g>*/}
+                {/*            <div className="font-bold">*/}
+                {/*                {type === 'start' ? 'START NODE' : 'END NODE'}*/}
+                {/*            </div>*/}
+                {/*            <div>*/}
+                {/*                <text className="text-neutral-700 font-semibold" style={{cursor: 'pointer'}}*/}
+                {/*                      onClick={() => clearSelection()}>*/}
+                {/*                    Clear*/}
+                {/*                </text>*/}
+                {/*            </div>*/}
+                {/*        </g>*/}
+                {/*    </div>*/}
+                {/*</foreignObject>*/}
+            </>
+
         );
     };
 
     const displayName = (node: Node) => {
-        if (doDisplayNames && (node.floor == floor)) {
+        if ((doDisplayNames && (node.floor == floor)) && !(node.nodeType == "HALL")) {
             return (
-                <text className="-rotate-1 font-bold dark:invert" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                <text className="font-bold dark:invert" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
                     {node.shortName}
                 </text>
             );
@@ -195,19 +213,46 @@ function MapDisplay({
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes) {
                     return (
-                        <g key={node.id} onClick={() => handleNodeClick(node)}
-                           onMouseEnter={() => handleNodeHover(node)}
-                           onMouseLeave={() => handleNodeHoverLeave()}>
-                            <circle className="dark:fill-white" cx={node.xCoord} cy={node.yCoord} r={isHovered ? "15" : "11"} fill="blue"
-                                    style={{cursor: 'pointer'}}/>
-                            {startNodeId === node.id && displaySelectedNodes(node, 'start')}
-                            {endNodeId === node.id && displaySelectedNodes(node, 'end')}
-                            {hoverNodeId === node.id && displayHoverInfo(node)}
+                        <g key={node.id} >
+
+                            <circle className="dark:fill-white z-20 fill-blue-600" cx={node.xCoord} cy={node.yCoord} r={hoverNodeId === node.id ? "15" : "11"} stroke="black" stroke-width="4"
+                                    style={{cursor: 'pointer'}}
+                                    // Moved events here so hovering on other components don't affect displayed nodes
+                                    onClick={() => handleNodeClick(node)}
+                                    onMouseEnter={() => handleNodeHover(node)}
+                                    onMouseLeave={() => handleNodeHoverLeave()}/>
                             {displayName(node)}
                         </g>
                     );
                 }
             }));
+    };
+
+    const displayHoverCards = (graph: Graph) => {
+        // Hover cards need to be rendered after nodes to avoid overlapping
+        return (
+            Array.from(graph.nodes.values()).map((node: Node) => {
+                return (
+                    <g>
+                        {hoverNodeId === node.id && displayHoverInfo(node)}
+                    </g>
+                );
+            })
+        );
+    };
+
+    const displayNodePins = (graph: Graph) => {
+        return (
+            Array.from(graph.nodes.values()).map((node: Node) => {
+                if (node.floor === floor)
+                return (
+                    <g>
+                        {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                        {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                    </g>
+                );
+            })
+        );
     };
 
     const displayEdges = (graph: Graph) => {
@@ -220,10 +265,10 @@ function MapDisplay({
                         if (targetNode && targetNode.floor === floor) {
                             edges.push(
                                 <line className="dark:stroke-blue-300"
-                                    key={`${nodeId}-${edgeNodeId}`}
-                                    x1={node.xCoord} y1={node.yCoord}
-                                    x2={targetNode.xCoord} y2={targetNode.yCoord}
-                                    stroke="black" strokeWidth="2"
+                                      key={`${nodeId}-${edgeNodeId}`}
+                                      x1={node.xCoord} y1={node.yCoord}
+                                      x2={targetNode.xCoord} y2={targetNode.yCoord}
+                                      stroke="black" strokeWidth="2"
                                 />
                             );
                         }
@@ -237,11 +282,12 @@ function MapDisplay({
     return (
         <div className={"relative"}>
             <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
-                <image href={floorMap} width="5000" height="3400" x="0"
-                       y="0"/>
+                <image href={floorMap} width="5000" height="3400" x="0" y="0"/>
                 {graph && displayEdges(graph)}
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && displayNodes(graph)}
+                {graph && displayNodePins(graph)}
+                {graph && displayHoverCards(graph)}
             </svg>
 
         </div>
