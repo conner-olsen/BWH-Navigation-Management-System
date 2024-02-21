@@ -99,4 +99,22 @@ router.get("/status/:status", async function (req: Request, res: Response) {
   }
 });
 
+router.post("/", async function (req: Request, res: Response) {
+
+  const nodeID = req.body.id;
+
+  try{
+    const count = PrismaClient.serviceRequest.count({where:{
+      nodeId: nodeID
+    }
+    });
+
+    res.status(200).send(count);
+  }
+  catch (error){
+    console.error(`Error counting Service Requests: ${error}`);
+    res.sendStatus(500);
+  }
+});
+
 export default router;

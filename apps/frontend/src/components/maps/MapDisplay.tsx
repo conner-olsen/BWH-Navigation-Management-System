@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
-import axios from "axios";
+import axios   from "axios";
 import "./animation.css";
-
 interface MapDisplayProps {
     floorMap: string;
     floor: string;
@@ -25,6 +24,8 @@ interface AnimatedPathProps {
     x2: number;
     y2: number;
 }
+
+let nodeCount: number = 0;
 function MapDisplay({
                         floorMap,
                         floor,
@@ -44,6 +45,9 @@ function MapDisplay({
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
     const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
+
+
+
 
     useEffect(() => {
         axios.get("/api/graph").then((res) => {
@@ -65,6 +69,22 @@ function MapDisplay({
             setEndNodeId(endNode);
         }
     }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
+
+   function getCount(node: Node){
+       const fetchData = async () => {
+               try {
+                   const response = await axios.post("/api/get-stats", node);
+                   if (response.status === 200) {
+                       nodeCount = response.data;
+                   }
+               } catch (error) {
+                   console.error("error getting count ", (error));
+               }
+       };
+
+           fetchData().then();
+    }
+
     const AnimatedPath: React.FC<AnimatedPathProps> = ({ x1, y1, x2, y2 }) => (
         <line
             className="line-animation"
@@ -130,6 +150,8 @@ function MapDisplay({
     };
 
     const displayHoverInfo = (node: Node) => {
+        getCount(node);
+        console.log("THIS IS the count: ",  JSON.stringify(nodeCount));
         return (
             <foreignObject x={node.xCoord - 225} y={node.yCoord - 525} width="450" height="500">
                 <div
@@ -141,16 +163,16 @@ function MapDisplay({
                     <g>
                         <img src={'../../../public/room-types/nodeType-' + node.nodeType + ".png"}></img>
                         <div>
-                            Type: {node.nodeType}
+                            <p>Type: {node.nodeType}</p>
                         </div>
                         <div>
-                            {node.longName}
+                            <p>{node.longName}</p>
                         </div>
                         <div>
-                            {node.shortName}
+                            <p>{node.shortName}</p>
                         </div>
                         <div>
-                            Status: -/-
+                            <p>Service Requests: {nodeCount.toString()}</p>
                         </div>
                     </g>
                 </div>
