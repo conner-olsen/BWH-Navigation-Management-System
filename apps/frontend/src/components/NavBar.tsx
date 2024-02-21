@@ -86,6 +86,9 @@ return (
                         </div>
                     </div>
                 </Link>
+            
+                <Link to="/AboutPage" className="text-lg no-underline p-2 text-white"><div className={"hover:text-blue-500"}>About</div></Link>
+
 
 
             {isAuthenticated && (
