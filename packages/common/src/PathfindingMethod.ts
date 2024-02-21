@@ -231,7 +231,8 @@ export class dfsPathfinding implements PathfindingMethod {
     //start loop
     while (stack.length > 0) {
       //get first path from stack
-      currentNodeIDPath = (stack.pop() as string[]);
+      currentNodeIDPath = stack[0];
+      stack.shift();
 
       //get last node
       if(currentNodeIDPath.length > 1) {
