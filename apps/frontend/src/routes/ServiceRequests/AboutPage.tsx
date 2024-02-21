@@ -33,7 +33,7 @@ const AboutPage = () => {
                     </Col>
 
                     <Col>
-                        <TeamCard name={"Connor Olson"} role={"Lead Software Engineer"}
+                        <TeamCard name={"Conner Olsen"} role={"Lead Software Engineer"}
                                   bio={"Class of 2026, Computer Science & Mathematics"}
                                   image={"public/teamImages/Conner_Olsen.png"}>
                         </TeamCard>
