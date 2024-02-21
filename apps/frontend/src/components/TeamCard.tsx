@@ -2,7 +2,7 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader} from "./ui/c
 
 const TeamCard = (props: { name: string, role: string, bio: string, image: string }): JSX.Element=> {
     return (
-        <Card>
+        <Card className={"h-full"}>
             <CardHeader>
                 <h1 className={"text-center"}>{props.name}</h1>
             </CardHeader>

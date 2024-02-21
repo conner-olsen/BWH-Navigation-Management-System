@@ -103,7 +103,7 @@ const AboutPage = () => {
                     <Col>
                         <TeamCard name={"Steven Gao"} role={"Full-Time Software Engineer"}
                                   bio={"Class of 2026, Computer Science"}
-                                  image={"public/teamImages/Steven.HEIC"}>
+                                  image={"public/teamImages/Steven.png"}>
                         </TeamCard>
                     </Col>
 
