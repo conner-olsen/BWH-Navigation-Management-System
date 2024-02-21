@@ -23,6 +23,10 @@ export function BFSComponent() {
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
     const [doAccessible, setDoAccessible] = useState<boolean>(false);
 
+    const collectLongNames = useCallback(() => {
+        return bfsResult.map(node => node.longName);
+    }, [bfsResult]);
+
     const handleSpeakButtonClick = () => {
         const longNames = collectLongNames();
         const speech = new SpeechSynthesisUtterance();
@@ -73,9 +77,6 @@ export function BFSComponent() {
         setMapKey(prevKey => prevKey + 1);
     }, [pathFindingType]);
 
-    const collectLongNames = useCallback(() => {
-        return bfsResult.map(node => node.longName);
-    }, [bfsResult]);
 
 
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
@@ -204,12 +205,11 @@ export function BFSComponent() {
     // Assuming collectLongNames is a function that returns an array of long names
 
     useEffect(() => {
-        const hasStaircase = collectLongNames().some(longName =>
-            longName.includes("Staircase")
-        );
+        const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
 
         setShowAlert(hasStaircase);
-    }, [collectLongNames]);
+    }, [bfsResult]);
+
 
 
     return (
@@ -325,19 +325,31 @@ export function BFSComponent() {
                                              className="h-6 w-6 mr-5 ml-2 pd-0"></img>
                                     </button>
                                 </div>
-
-
-                                <ol type="1" className="overflow-y-auto h-80 text-left">
-                                    {/* Render the list of long names */}
-                                    {collectLongNames().map((longName, index) => (
-                                        <li key={index}
-                                                    className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
-                                                    {longName}
-                                                </li>
-                                            ))}
-                                        </ol>
                             </div>
+                            <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
+                                {/* Render the list of long names and node names with icons */}
+                                {bfsResult.map((node, index) => (
+                                    <li key={index}>
+                                        {/* Check the node type and render the appropriate icon */}
+                                        <span className="flex items-center">
+                                            {node.nodeType === "STAI" && (
+                                                <img src="../../public/icon/stairs.png" alt="stair-icon"
+                                                     className="h-3 w-3 mr-1"/>
+
+                                            )}
+                                                {node.nodeType === "ELEV" && (
+                                                    <img src="../../public/icon/elevator.png" alt="elevator-icon"
+                                                         className="w-4 h-4 mr-1"/>
+                                                )}
+                                                <span className={node.nodeType === "STAI" || node.nodeType === "ELEV" ? "text-blue-500" : ""}>
+                                                    {node.longName}
+                                                </span>
+                                            </span>
+                                    </li>
+                                    ))}
+                            </ol>
                         </div>
+
                     </div>
                 )}
                 {activeTab === 2 && !currentNode && (
