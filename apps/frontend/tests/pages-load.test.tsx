@@ -4,10 +4,17 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../src/App'; // Ensure this import is correct
 
-// Helper function to render the component within the MemoryRouter
+// Helper function to render the component within the MemoryRouter, if necessary
 const renderWithRouter = (ui: React.ReactElement, { route = '/' } = {}) => {
-    window.history.pushState({}, 'Test page', route);
-    return render(ui, { wrapper: MemoryRouter });
+    // Check if the component is the top-level App component that already includes a Router
+    if (ui.type === App) {
+        // For the App component, just render it without wrapping in MemoryRouter
+        render(ui);
+    } else {
+        // For other components, wrap them in MemoryRouter
+        window.history.pushState({}, 'Test page', route);
+        render(ui, { wrapper: MemoryRouter });
+    }
 };
 
 describe('Route tests', () => {
