@@ -9,6 +9,13 @@ import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 import {NodeServiceRequestComponent} from "./NodeServiceRequestComponent.tsx";
 import {Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerTrigger
+} from "./ui/drawer.tsx";
+import {Button} from "./ui/button.tsx";
 // import {Col, Row} from "react-bootstrap";
 
 export function BFSComponent() {
@@ -74,8 +81,6 @@ export function BFSComponent() {
         // When pathFindingType changes, update mapKey to force remount of MapDisplay
         setMapKey(prevKey => prevKey + 1);
     }, [pathFindingType]);
-
-
 
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
 
@@ -213,7 +218,7 @@ export function BFSComponent() {
     return (
         <div>
             <div className="fixed top-0 left-0 h-screen w-[80px] bg-neutral-500 bg-opacity-30 text-white z-20 px-4 pt-[100px]
-                      flex flex-col">
+                      flex-col hidden sm:flex">
                 <button onClick={toggleSidebar} className="text-xl text-white focus:outline-none">
                     {isExpanded ? (
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -228,31 +233,36 @@ export function BFSComponent() {
                     )}
                 </button>
                 <div>
-                    <button className={`mt-4 transition-all duration-200 ${(activeTab===1 && isExpanded)? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
-                        toggleActiveTab(1);
-                        setIsExpanded(true);}}>
+                    <button
+                        className={`mt-4 transition-all duration-200 ${(activeTab === 1 && isExpanded) ? 'bg-blue-400 rounded-full' : ''}`}
+                        onClick={() => {
+                            toggleActiveTab(1);
+                            setIsExpanded(true);
+                        }}>
                         <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon" className="invert"></img>
                     </button>
                     <button className={`mt-4 text-foreground relative transition-all duration-200 
-                    ${(activeTab===2 && isExpanded)? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
+                    ${(activeTab === 2 && isExpanded) ? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
                         setHasSeen(true);
                         toggleActiveTab(2);
-                        setIsExpanded(true);}}>
+                        setIsExpanded(true);
+                    }}>
                         <img src="../../public/icon/info-icon.png" alt="info-icon"></img>
 
                         {(currentNode && !hasSeen && (!isExpanded || (isExpanded && activeTab !== 2))) ?
                             <span className="absolute flex h-3 w-3 top-[-5px] right-[-10px]">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                <span
+                                    className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
                             </span> : ''}
                     </button>
                 </div>
             </div>
             <div
-                className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[80px] pt-[90px] sidebar 
-                ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
+                className={`fixed top-0 left-0 h-screen sm:w-[400px] bg-background text-foreground z-10 sm:pl-[80px] pt-[90px] sidebar 
+                ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'} w-0 pl-0`}>
                 {/* Sidebar content */}
-                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                <div className="px-8 pb-2 sm:flex justify-between border-b-[1px] border-neutral-300 hidden">
                     <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
                            onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
                     <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
@@ -270,7 +280,7 @@ export function BFSComponent() {
                     <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
                 </div>
                 {activeTab === 1 && (
-                    <div>
+                    <div className="hidden sm:block">
                         <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
                             <div className="flex flex-col items-center">
                                 <img src="../../public/icon/start.svg" alt="circle"
@@ -335,23 +345,24 @@ export function BFSComponent() {
                                                      className="h-3 w-3 mr-1"/>
 
                                             )}
-                                                {node.nodeType === "ELEV" && (
-                                                    <img src="../../public/icon/elevator.png" alt="elevator-icon"
-                                                         className="w-4 h-4 mr-1"/>
-                                                )}
-                                                <span className={node.nodeType === "STAI" || node.nodeType === "ELEV" ? "text-blue-500" : ""}>
+                                            {node.nodeType === "ELEV" && (
+                                                <img src="../../public/icon/elevator.png" alt="elevator-icon"
+                                                     className="w-4 h-4 mr-1"/>
+                                            )}
+                                            <span
+                                                className={node.nodeType === "STAI" || node.nodeType === "ELEV" ? "text-blue-500" : ""}>
                                                     {node.longName}
                                                 </span>
                                             </span>
                                     </li>
-                                    ))}
+                                ))}
                             </ol>
                         </div>
 
                     </div>
                 )}
                 {activeTab === 2 && !currentNode && (
-                    <div>
+                    <div className="hidden sm:block">
                         <p className="font-bold mb-0">Select a location</p>
                         <p className="font-bold">to display its information</p>
                         <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
@@ -373,8 +384,8 @@ export function BFSComponent() {
 
 
                 <div
-                    className={`absolute bottom-[10px] flex flex-col bg-background rounded-xl
-                                ${isExpanded ? 'right-[-90px]' : 'right-[-170px]'}`}>
+                    className={`absolute bottom-[calc(100vh-170px)] right-[-90px] sm:bottom-[10px] flex flex-col bg-background rounded-xl
+                                ${isExpanded ? 'sm:right-[-90px]' : 'sm:right-[-170px]'}`}>
                     <HoverCard openDelay={100}>
                         <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center
                                         no-underline text-foreground relative cursor-pointer group">
@@ -440,6 +451,90 @@ export function BFSComponent() {
             </div>
 
 
+            <div className="sm:hidden">
+                <Drawer modal={false}>
+                    <DrawerTrigger>Open</DrawerTrigger>
+                    <DrawerContent>
+
+                        <div className="sm:hidden">
+                            <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                                <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+                                       onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
+                                <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
+                                <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
+                                       onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
+                                <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
+                                <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
+                                       onChange={handlePhotoChange} checked={map == "floor1"}/>
+                                <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
+                                <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
+                                       onChange={handlePhotoChange} checked={map == "floor2"}/>
+                                <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
+                                <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
+                                       onChange={handlePhotoChange} checked={map == "floor3"}/>
+                                <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
+                            </div>
+                            <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
+                                <div className="flex flex-col items-center">
+                                    <img src="../../public/icon/start.svg" alt="circle"
+                                         className="mb-[5px] mt-[11px] dark:invert"/>
+                                    <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
+                                    <img src="../../public/icon/location.svg" alt="pin"/>
+                                </div>
+                                <div className="flex flex-col grow justify-between pl-[2px] pr-2">
+                                    <Select value={startNode}
+                                            onValueChange={(location: string) => setStartNode(location)}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select Location"/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {currentFloorNames}
+                                        </SelectContent>
+                                    </Select>
+                                    <Select value={endNode}
+                                            onValueChange={(location: string) => setEndNode(location)}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select Location"/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {roomNames}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                            </div>
+                            <div className="py-4 px-2">
+                                <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
+                                        onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
+                                    <SelectTrigger>
+                                        <SelectValue/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
+                                        <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div>
+                                <p className="font-bold text-center">Follow me</p>
+                                <ol type="1" className={"overflow-y-auto h-[100px] px-2"}>
+                                    {collectLongNames().map((longName, index) => (
+                                        <li key={index}>{longName}</li>
+                                    ))}
+                                </ol>
+                            </div>
+                        </div>
+
+                        <DrawerClose>
+                            <Button variant="outline">Cancel</Button>
+                        </DrawerClose>
+
+                    </DrawerContent>
+                </Drawer>
+            </div>
+
+
             <div className="fixed w-screen max-w-full m-auto">
                 <TransformWrapper
                     initialScale={1}
@@ -472,16 +567,41 @@ export function BFSComponent() {
                                 </button>
                             </div>
                             <TransformComponent wrapperClass={"max-h-screen"}>
-                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
-                                {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
-                                {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
-                                {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
-                                {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
+                                {lowerLevel1ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                                {lowerLevel2ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                                {floor1ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                                {floor2ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                                {floor3ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             </TransformComponent>
                         </React.Fragment>
                     )}
@@ -490,5 +610,5 @@ export function BFSComponent() {
 
         </div>
 
-            );
+    );
 }
