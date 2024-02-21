@@ -4,11 +4,12 @@ import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
-import { TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 import {NodeServiceRequestComponent} from "./NodeServiceRequestComponent.tsx";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+import {Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+// import {Col, Row} from "react-bootstrap";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -21,6 +22,16 @@ export function BFSComponent() {
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
 
+    const collectLongNames = useCallback(() => {
+        return bfsResult.map(node => node.longName);
+    }, [bfsResult]);
+
+    const handleSpeakButtonClick = () => {
+        const longNames = collectLongNames();
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = longNames.join(', ');
+        window.speechSynthesis.speak(speech);
+    };
     const updateCurrentNode = (currentNode: Node) => {
         setHasSeen(true);
         if (activeTab!==2 || !isExpanded) setHasSeen(false);
@@ -64,9 +75,6 @@ export function BFSComponent() {
         setMapKey(prevKey => prevKey + 1);
     }, [pathFindingType]);
 
-    const collectLongNames = useCallback(() => {
-        return bfsResult.map(node => node.longName);
-    }, [bfsResult]);
 
 
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
@@ -195,12 +203,11 @@ export function BFSComponent() {
     // Assuming collectLongNames is a function that returns an array of long names
 
     useEffect(() => {
-        const hasStaircase = collectLongNames().some(longName =>
-            longName.includes("Staircase")
-        );
+        const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
 
         setShowAlert(hasStaircase);
-    }, [collectLongNames]);
+    }, [bfsResult]);
+
 
 
     return (
@@ -308,17 +315,39 @@ export function BFSComponent() {
                         </div>
 
                         <div>
-                            <p className="font-bold">Follow Me</p>
-                            <ol type="1" className="overflow-y-auto h-80 text-left">
-                                {/* Render the list of long names */}
-                                {collectLongNames().map((longName, index) => (
-                                    <li key={index}
-                                        className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
-                                        {longName}
+                            <div>
+                                <div className="flex items-center justify-center ml-6 mb-3">
+                                    <p className="font-bold mb-0">Follow Me</p>
+                                    <button onClick={handleSpeakButtonClick}>
+                                        <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
+                                             className="h-6 w-6 mr-5 ml-2 pd-0"></img>
+                                    </button>
+                                </div>
+                            </div>
+                            <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
+                                {/* Render the list of long names and node names with icons */}
+                                {bfsResult.map((node, index) => (
+                                    <li key={index}>
+                                        {/* Check the node type and render the appropriate icon */}
+                                        <span className="flex items-center">
+                                            {node.nodeType === "STAI" && (
+                                                <img src="../../public/icon/stairs.png" alt="stair-icon"
+                                                     className="h-3 w-3 mr-1"/>
+
+                                            )}
+                                                {node.nodeType === "ELEV" && (
+                                                    <img src="../../public/icon/elevator.png" alt="elevator-icon"
+                                                         className="w-4 h-4 mr-1"/>
+                                                )}
+                                                <span className={node.nodeType === "STAI" || node.nodeType === "ELEV" ? "text-blue-500" : ""}>
+                                                    {node.longName}
+                                                </span>
+                                            </span>
                                     </li>
-                                ))}
+                                    ))}
                             </ol>
                         </div>
+
                     </div>
                 )}
                 {activeTab === 2 && !currentNode && (

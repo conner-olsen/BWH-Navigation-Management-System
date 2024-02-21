@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { religiousServiceRequest } from 'common/interfaces/interfaces.ts';
+import { religiousServiceRequest} from 'common/interfaces/interfaces.ts';
 import { employee } from 'common/interfaces/interfaces.ts';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 // import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
-function GenerateTableRowsServices(tableData: religiousServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
+function GenerateTableRowsServices({tableData,employeeData,selectedStatus,selectedEmployeeUser,onUpdate}:{tableData: religiousServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string,onUpdate:(data:religiousServiceRequest[])=>void}): JSX.Element[] {
     const [statusMap, setStatusMap] = useState<{ [key: number]: string }>({});
     const [employeeMap, setEmployeeMap] = useState<{ [key: number]: string }>({});;
 
@@ -22,6 +22,9 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
         setStatusMap({ ...statusMap, [index]: value });
+        const updatedTableData = [...tableData];
+        updatedTableData[index].ServiceRequest.status = value;
+        onUpdate(updatedTableData);
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: religiousServiceRequest[]) => {
@@ -35,6 +38,9 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
         setEmployeeMap({ ...employeeMap, [index]: value });
+        const updatedTableData = [...tableData];
+        updatedTableData[index].ServiceRequest.employeeUser = value;
+        onUpdate(updatedTableData);
     };
 
     return tableData
@@ -50,7 +56,7 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
 
                 <TableCell>
-                    <Select defaultValue={statusMap[index] || item.ServiceRequest.status} value={statusMap[index] || item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select value={item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                     <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -64,7 +70,7 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
 
                 </TableCell>
                 <TableCell>
-                    <Select defaultValue={employeeMap[index] || item.ServiceRequest.employeeUser} value={employeeMap[index] || item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select  value={item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                     <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
@@ -81,7 +87,7 @@ function GenerateTableRowsServices(tableData: religiousServiceRequest[], employe
         ));
 }
 
-const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string }> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser}) => {
+const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string;onUpdate:(data:religiousServiceRequest[])=>void}> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser,onUpdate}) => {
     return (
         <Table>
             <TableHeader>
@@ -95,7 +101,9 @@ const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeDa
                     <TableHead>Assignment</TableHead>
                 </TableRow>
             </TableHeader>
-            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus, selectedEmployeeUser)}</TableBody>
+            <TableBody>
+                <GenerateTableRowsServices tableData={tableData} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={onUpdate}></GenerateTableRowsServices>
+            </TableBody>
         </Table>
     );
 };
@@ -180,8 +188,9 @@ export const ReligiousServiceLogComponent = () => {
 
             <br/>
 
-            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser}/>
-
+            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={(cleaningData) => {
+                setData(cleaningData);
+            }}/>
         </div>
     );
 };
