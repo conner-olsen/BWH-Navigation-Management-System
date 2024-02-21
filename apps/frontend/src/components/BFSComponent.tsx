@@ -22,6 +22,10 @@ export function BFSComponent() {
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
 
+    const collectLongNames = useCallback(() => {
+        return bfsResult.map(node => node.longName);
+    }, [bfsResult]);
+
     const handleSpeakButtonClick = () => {
         const longNames = collectLongNames();
         const speech = new SpeechSynthesisUtterance();
@@ -319,20 +323,8 @@ export function BFSComponent() {
                                              className="h-6 w-6 mr-5 ml-2 pd-0"></img>
                                     </button>
                                 </div>
-
-
-                                <ol type="1" className="overflow-y-auto h-80 text-left">
-                                    {/* Render the list of long names */}
-                                    {collectLongNames().map((longName, index) => (
-                                        <li key={index}
-                                                    className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
-                                                    {longName}
-                                                </li>
-                                            ))}
-                                        </ol>
                             </div>
-                            <p className="font-bold">Follow Me</p>
-                            <ol type="1" className="overflow-y-auto h-80 text-left">
+                            <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
                                 {/* Render the list of long names and node names with icons */}
                                 {bfsResult.map((node, index) => (
                                     <li key={index}>
