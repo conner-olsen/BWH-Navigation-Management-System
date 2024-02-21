@@ -34,7 +34,7 @@ export function BFSComponent() {
     };
     const updateCurrentNode = (currentNode: Node) => {
         setHasSeen(true);
-        if (activeTab!==2 || !isExpanded) setHasSeen(false);
+        if (activeTab !== 2 || !isExpanded) setHasSeen(false);
         setCurrentNode(currentNode);
     };
 
@@ -74,7 +74,6 @@ export function BFSComponent() {
         // When pathFindingType changes, update mapKey to force remount of MapDisplay
         setMapKey(prevKey => prevKey + 1);
     }, [pathFindingType]);
-
 
 
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
@@ -172,14 +171,11 @@ export function BFSComponent() {
         if (nodeFloor == map && !(nodeType == "HALL")) {
             currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
-        }
-        else if (id == startNode) {
+        } else if (id == startNode) {
             currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
-        }
-        else if (id == endNode) {
+        } else if (id == endNode) {
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
-        }
-        else if (!(nodeType == "HALL")) {
+        } else if (!(nodeType == "HALL")) {
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
         }
     }
@@ -208,7 +204,27 @@ export function BFSComponent() {
         setShowAlert(hasStaircase);
     }, [bfsResult]);
 
+    //booleans represent whether there is a floor change
+    const gatherTextPath = (): boolean[] => {
+        let returnBooleans: boolean[] = [];
+        let previousIsElevOrStair = false;
 
+        for(let i = 0; i < bfsResult.length; i++) {
+            let node = bfsResult[i];
+            if (node.nodeType == "ELEV" || node.nodeType == "STAI") {
+                if (previousIsElevOrStair) {
+                    //set current and previous nodes as true in boolean array
+                    returnBooleans[i] = true;
+                    returnBooleans[i - 1] = true;
+                } else {
+                    returnBooleans[i] = true;
+                }
+            } else {
+                returnBooleans[i] = false;
+            }
+        }
+        return returnBooleans;
+    };
 
     return (
         <div>
@@ -228,21 +244,26 @@ export function BFSComponent() {
                     )}
                 </button>
                 <div>
-                    <button className={`mt-4 transition-all duration-200 ${(activeTab===1 && isExpanded)? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
-                        toggleActiveTab(1);
-                        setIsExpanded(true);}}>
+                    <button
+                        className={`mt-4 transition-all duration-200 ${(activeTab === 1 && isExpanded) ? 'bg-blue-400 rounded-full' : ''}`}
+                        onClick={() => {
+                            toggleActiveTab(1);
+                            setIsExpanded(true);
+                        }}>
                         <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon" className="invert"></img>
                     </button>
                     <button className={`mt-4 text-foreground relative transition-all duration-200 
-                    ${(activeTab===2 && isExpanded)? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
+                    ${(activeTab === 2 && isExpanded) ? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
                         setHasSeen(true);
                         toggleActiveTab(2);
-                        setIsExpanded(true);}}>
+                        setIsExpanded(true);
+                    }}>
                         <img src="../../public/icon/info-icon.png" alt="info-icon"></img>
 
                         {(currentNode && !hasSeen && (!isExpanded || (isExpanded && activeTab !== 2))) ?
                             <span className="absolute flex h-3 w-3 top-[-5px] right-[-10px]">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                <span
+                                    className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
                             </span> : ''}
                     </button>
@@ -335,16 +356,18 @@ export function BFSComponent() {
                                                      className="h-3 w-3 mr-1"/>
 
                                             )}
-                                                {node.nodeType === "ELEV" && (
-                                                    <img src="../../public/icon/elevator.png" alt="elevator-icon"
-                                                         className="w-4 h-4 mr-1"/>
-                                                )}
-                                                <span className={node.nodeType === "STAI" || node.nodeType === "ELEV" ? "text-blue-500" : ""}>
+                                            {node.nodeType === "ELEV" && (
+                                                <img src="../../public/icon/elevator.png" alt="elevator-icon"
+                                                     className="w-4 h-4 mr-1"/>
+                                            )}
+                                            <span
+                                                className={node.nodeType === "STAI" || node.nodeType === "ELEV"
+                                                    ? "text-blue-500" : ""}>
                                                     {node.longName}
                                                 </span>
                                             </span>
                                     </li>
-                                    ))}
+                                ))}
                             </ol>
                         </div>
 
@@ -472,16 +495,41 @@ export function BFSComponent() {
                                 </button>
                             </div>
                             <TransformComponent wrapperClass={"max-h-screen"}>
-                                {lowerLevel1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
-                                {lowerLevel2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                          sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
-                                {floor1ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
-                                {floor2ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
-                                {floor3ContentVisible && <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"} startNode={startNode} endNode={endNode} pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                                     sendClear={sendClear} pathSent={bfsResult} doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges} doDisplayNodes={doDisplayNodes}  setChosenNode={updateCurrentNode} />}
+                                {lowerLevel1ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                                {lowerLevel2ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                                {floor1ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                                {floor2ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                                {floor3ContentVisible &&
+                                    <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
+                                                startNode={startNode} endNode={endNode}
+                                                pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                                sendClear={sendClear} pathSent={bfsResult}
+                                                doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                                doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             </TransformComponent>
                         </React.Fragment>
                     )}
@@ -490,5 +538,5 @@ export function BFSComponent() {
 
         </div>
 
-            );
+    );
 }
