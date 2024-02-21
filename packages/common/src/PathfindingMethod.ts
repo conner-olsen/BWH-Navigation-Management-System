@@ -210,6 +210,7 @@ export class dfsPathfinding implements PathfindingMethod {
   runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
     //add an error catcher for invalid inputs
     if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
+      console.log("return empty array dfs 1");
       return [];
     }
 
@@ -230,7 +231,7 @@ export class dfsPathfinding implements PathfindingMethod {
     //start loop
     while (stack.length > 0) {
       //get first path from stack
-      currentNodeIDPath = stack[0];
+      currentNodeIDPath = (stack.pop() as string[]);
 
       //get last node
       if(currentNodeIDPath.length > 1) {
@@ -248,6 +249,7 @@ export class dfsPathfinding implements PathfindingMethod {
 
       //elif it is the end node, return current path
       else if (currentNode.id == endNode) {
+        console.log("return array dfs");
         return currentNodeIDPath;
       }
 
@@ -265,13 +267,14 @@ export class dfsPathfinding implements PathfindingMethod {
         });
 
         //pop current node ID path from stack
-        stack.pop();
+       // stack.pop();
         visited.push(currentNodeIDPath);
       }
     }
 
     //return empty if endNode not reached (probably should return something else)
     // console.log("not reached");
+    console.log("return empty array dfs 2");
     return [];
   }
 }
