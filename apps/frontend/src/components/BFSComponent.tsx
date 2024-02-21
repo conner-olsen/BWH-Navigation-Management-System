@@ -16,7 +16,6 @@ import {
     DrawerTrigger
 } from "./ui/drawer.tsx";
 import {Button} from "./ui/button.tsx";
-// import {Col, Row} from "react-bootstrap";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
