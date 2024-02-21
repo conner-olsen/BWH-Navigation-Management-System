@@ -148,6 +148,9 @@ export class bfsPathfinding implements PathfindingMethod  {
               queue.push(newPath);
             }
           }
+          else {
+            console.log("bfs skipped stair");
+          }
         });
 
         //pop current node ID path from queue
@@ -337,7 +340,6 @@ export class aStarPathfinding implements PathfindingMethod {
 
       // if current node is undefined, add to visited
       if (currentNode == undefined) {
-        console.log("astar skipped stair");
         visited.push(currentNodeIDPath);
         continue;
       }
@@ -379,6 +381,9 @@ export class aStarPathfinding implements PathfindingMethod {
             priorityQueue.push([newPath, fValue]);
           }
         }
+        else {
+          console.log("astar skipped stair");
+        }
 
         //put node with current lowest f/"cost" at the front of the queue by sorting
         //if the number in a is less than that in b, keep it in front by giving sort function a positive number
@@ -388,6 +393,7 @@ export class aStarPathfinding implements PathfindingMethod {
         //add current path to visited
         visited.push(currentNodeIDPath);
       }
+
     }
 
     return [];
