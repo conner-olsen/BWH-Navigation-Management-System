@@ -6,11 +6,9 @@ import {Col, Container, Row} from "react-bootstrap";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "../ui/table.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 // import {TabsContent, TabsList, TabsTrigger} from "./ui/tabs.tsx";
-function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string): JSX.Element[] {
+function GenerateTableRowsServices({tableData,employeeData,selectedStatus,selectedEmployeeUser,onUpdate}:{tableData: cleaningServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string,onUpdate:(data:cleaningServiceRequest[])=>void}): JSX.Element[] {
     const [statusMap, setStatusMap] = useState<{ [key: number]: string }>({});
     const [employeeMap, setEmployeeMap] = useState<{ [key: number]: string }>({});
-
-
     const handleStatusChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
         axios.patch("/api/service-request", {
             id: tableData[index].ServiceRequest.id,
@@ -23,6 +21,9 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
         setStatusMap({ ...statusMap, [index]: value });
+        const updatedTableData = [...tableData];
+        updatedTableData[index].ServiceRequest.status = value;
+        onUpdate(updatedTableData);
     };
 
     const handleAssignmentChange = (index: number, value: string, tableData: cleaningServiceRequest[]) => {
@@ -37,6 +38,10 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
         setEmployeeMap({ ...employeeMap, [index]: value });
+
+        const updatedTableData = [...tableData];
+        updatedTableData[index].ServiceRequest.employeeUser = value;
+        onUpdate(updatedTableData);
     };
 
     return tableData
@@ -49,7 +54,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                 <TableCell>{item.patientName}</TableCell> {/* Access patientName directly */}
                 <TableCell>{item.type}</TableCell> {/* Access type directly */}
                 <TableCell>
-                    <Select defaultValue={statusMap[index] || item.ServiceRequest.status} value={statusMap[index] || item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+                    <Select value={item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
                         </SelectTrigger>
@@ -62,7 +67,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
                     </Select>
                 </TableCell>
                 <TableCell>
-                    <Select defaultValue={employeeMap[index] || item.ServiceRequest.employeeUser} value={employeeMap[index] || item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+                    <Select  value={item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
                         </SelectTrigger>
@@ -80,7 +85,7 @@ function GenerateTableRowsServices(tableData: cleaningServiceRequest[], employee
         ));
 }
 
-const TableServices: React.FC<{ tableData: cleaningServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string;}> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser}) => {
+const TableServices: React.FC<{ tableData: cleaningServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string;onUpdate:(data:cleaningServiceRequest[])=>void}> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser,onUpdate}) => {
     return (
         <Table>
             <TableHeader>
@@ -93,7 +98,9 @@ const TableServices: React.FC<{ tableData: cleaningServiceRequest[]; employeeDat
                     <TableHead>Assignment</TableHead>
                 </TableRow>
             </TableHeader>
-            <TableBody>{GenerateTableRowsServices(tableData, employeeData, selectedStatus, selectedEmployeeUser)}</TableBody>
+            <TableBody>
+                <GenerateTableRowsServices tableData={tableData} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={onUpdate}></GenerateTableRowsServices>
+            </TableBody>
         </Table>
     );
 };
@@ -178,7 +185,9 @@ export const CleaningServiceLogComponent = () => {
 
             <br/>
 
-            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser}/>
+            <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={(cleaningData) => {
+                setData(cleaningData);
+            }}/>
 
         </div>
     );
