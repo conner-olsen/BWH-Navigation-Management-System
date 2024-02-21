@@ -21,15 +21,20 @@ const ServiceList = () => {
         <>
 
             <div style={{ display: 'flex', alignItems: 'center', marginLeft: '15%' }}>
-            <h1 className="font-roboto font-extrabold italic"
-                style={{marginTop: '5%', marginLeft: '10%', fontSize: '60px'}}>
-                SERVICE REQUESTS
-            </h1>
-            <p className="font-roboto text-neutral-500 italic font-light dark:text-neutral-300"
-               style={{marginRight: '30%', marginLeft: '0%', marginTop: '5%', textAlign: "right", fontSize: '25px', lineHeight: '30px'}}>
-                At Brigham and Women's we value our patients and want to accommodate to their needs
-                as seamlessly as possible. Below is a list of the services we offer.
-            </p>
+                <Row>
+                    <Col>
+                        <h1> SERVICE REQUESTS </h1>
+                    </Col>
+                    <Row>
+                        <p className="font-roboto text-neutral-500 italic font-light dark:text-neutral-300"
+                         >
+                            At Brigham and Women's we value our patients and want to accommodate to their needs
+                            as seamlessly as possible. Below is a list of the services we offer.
+                        </p>
+                    </Row>
+                </Row>
+
+
             </div>
 
             <br/>

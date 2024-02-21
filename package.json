@@ -15,6 +15,9 @@
     "url": ""
   },
   "scripts": {
+    "fix": "node scripts/fixes/fix.js",
+    "fix:docker": "node scripts/fixes/fix.js docker",
+    "fix:general": "node scripts/fixes/fix.js general",
     "dev": "docker-compose -f docker-compose.dev.yaml up --build --renew-anon-volumes -d",
     "dev:stop": "docker-compose -f docker-compose.dev.yaml down --volumes --rmi local",
     "deploy": "docker-compose -f docker-compose.prod.yaml up --build -d",

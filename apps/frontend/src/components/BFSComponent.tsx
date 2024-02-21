@@ -4,11 +4,12 @@ import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
-import { TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "./ui/hovercard.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./ui/select.tsx";
 import {NodeServiceRequestComponent} from "./NodeServiceRequestComponent.tsx";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+import {Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+// import {Col, Row} from "react-bootstrap";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -21,6 +22,12 @@ export function BFSComponent() {
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
 
+    const handleSpeakButtonClick = () => {
+        const longNames = collectLongNames();
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = longNames.join(', ');
+        window.speechSynthesis.speak(speech);
+    };
     const updateCurrentNode = (currentNode: Node) => {
         setHasSeen(true);
         if (activeTab!==2 || !isExpanded) setHasSeen(false);
@@ -217,18 +224,18 @@ export function BFSComponent() {
                     )}
                 </button>
                 <div>
-                    <button className={`mt-4 transition-all duration-200 ${(activeTab===1 && isExpanded)? 'bg-blue-400' : ''}`} onClick={() => {
+                    <button className={`mt-4 transition-all duration-200 ${(activeTab===1 && isExpanded)? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
                         toggleActiveTab(1);
                         setIsExpanded(true);}}>
-                        <img src="../../public/icon/search-icon.png" alt="search-icon" className="invert"></img>
+                        <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon" className="invert"></img>
                     </button>
                     <button className={`mt-4 text-foreground relative transition-all duration-200 
-                    ${(activeTab===2 && isExpanded)? 'bg-blue-400' : ''}`} onClick={() => {
+                    ${(activeTab===2 && isExpanded)? 'bg-blue-400 rounded-full' : ''}`} onClick={() => {
                         setHasSeen(true);
                         toggleActiveTab(2);
                         setIsExpanded(true);}}>
-                        {/*<img src="../../public/icon/search-icon.png" alt="search-icon" className="dark:invert"></img>*/}
-                        Info
+                        <img src="../../public/icon/info-icon.png" alt="info-icon"></img>
+
                         {(currentNode && !hasSeen && (!isExpanded || (isExpanded && activeTab !== 2))) ?
                             <span className="absolute flex h-3 w-3 top-[-5px] right-[-10px]">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
@@ -241,25 +248,25 @@ export function BFSComponent() {
                 className={`fixed top-0 left-0 h-screen w-[400px] bg-background text-foreground z-10 pl-[80px] pt-[90px] sidebar 
                 ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
                 {/* Sidebar content */}
+                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                    <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
+                    <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
+                    <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
+                    <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
+                    <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "floor1"}/>
+                    <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
+                    <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "floor2"}/>
+                    <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
+                    <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
+                           onChange={handlePhotoChange} checked={map == "floor3"}/>
+                    <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
+                </div>
                 {activeTab === 1 && (
                     <div>
-                        <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
-                            <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
-                            <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
-                            <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
-                            <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
-                            <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "floor1"}/>
-                            <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
-                            <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "floor2"}/>
-                            <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
-                            <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
-                                   onChange={handlePhotoChange} checked={map == "floor3"}/>
-                            <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
-                        </div>
                         <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
                             <div className="flex flex-col items-center">
                                 <img src="../../public/icon/start.svg" alt="circle"
@@ -304,6 +311,26 @@ export function BFSComponent() {
                         </div>
 
                         <div>
+                            <div>
+                                <div className="flex items-center justify-center ml-6 mb-3">
+                                    <p className="font-bold mb-0">Follow Me</p>
+                                    <button onClick={handleSpeakButtonClick}>
+                                        <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
+                                             className="h-6 w-6 mr-5 ml-2 pd-0"></img>
+                                    </button>
+                                </div>
+
+
+                                <ol type="1" className="overflow-y-auto h-80 text-left">
+                                    {/* Render the list of long names */}
+                                    {collectLongNames().map((longName, index) => (
+                                        <li key={index}
+                                                    className={longName.includes("Elevator") || longName.includes("Staircase") ? "text-red-500" : ""}>
+                                                    {longName}
+                                                </li>
+                                            ))}
+                                        </ol>
+                            </div>
                             <p className="font-bold">Follow Me</p>
                             <ol type="1" className="overflow-y-auto h-80 text-left">
                                 {/* Render the list of long names and node names with icons */}
@@ -339,7 +366,7 @@ export function BFSComponent() {
                     </div>
                 )}
                 <div className="px-2 text-left" style={{display: activeTab !== 2 || !currentNode ? 'none' : 'block'}}>
-                    <img src="../../public/room-types/hospital-room.jpeg" alt="patient-room"
+                    <img src={'../../public/room-types/nodeType-' + currentNode?.nodeType + ".png"} alt="patient-room"
                          className="rounded-md pb-3"></img>
                     <p className="text-xl font-bold mb-1">{currentNode?.longName + " (" + currentNode?.shortName + ")"}</p>
                     <p className="text-sm text-muted-foreground">{currentNode?.nodeType + " #" + currentNode?.id}</p>
@@ -436,7 +463,8 @@ export function BFSComponent() {
                                 <button onClick={() => zoomIn()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">
-                                    <img src="../../public/icon/zoom-in-icon.png" alt="zoom-in" className="w-[30%] dark:invert"></img>
+                                    <img src="../../public/icon/zoom-in-icon.png" alt="zoom-in"
+                                         className="w-[30%] dark:invert"></img>
                                 </button>
                                 <button onClick={() => zoomOut()}
                                         className="w-8 h-8 rounded-md bg-background flex items-center justify-center
