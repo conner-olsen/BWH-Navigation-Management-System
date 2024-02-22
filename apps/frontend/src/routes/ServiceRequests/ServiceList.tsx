@@ -19,7 +19,8 @@ import ExternalTransportation from "./ExternalTransportation.tsx";
 const ServiceList = () => {
     return (
         <>
-            <div style={{ display: 'flex', alignItems: 'center', marginLeft: '15%' }}>
+
+            <div className="container text-center" style={{ display: 'flex', alignItems: 'center' }}>
                 <Row>
                     <Col>
                         <h1> SERVICE REQUESTS </h1>
@@ -40,7 +41,7 @@ const ServiceList = () => {
 
             <Container>
                 <Row>
-                    <Col>
+                    <div className="col-md flex justify-center mb-4">
                         <Sheet>
                             <SheetTrigger className={"h-full"}>
                                 <Card className="max-w-md border-gray-200 hover:scale-110 hover:bg-neutral-200
@@ -61,8 +62,8 @@ const ServiceList = () => {
                                 <ReligiousServiceRequest></ReligiousServiceRequest>
                             </SheetContent>
                         </Sheet>
-                    </Col>
-                    <Col>
+                    </div>
+                    <div className="col-md flex justify-center mb-4">
                         <Sheet>
                             <SheetTrigger className={"h-full"}>
                                 <Card
@@ -84,13 +85,14 @@ const ServiceList = () => {
                                 <CleaningServiceRequest></CleaningServiceRequest>
                             </SheetContent>
                         </Sheet>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col-md flex justify-center mb-4">
                         <Sheet>
                             <SheetTrigger className={"h-full"}>
                                 <Card
-                                    className="max-w-md border-gray-200 hover:scale-110 hover:bg-red-200 dark:hover:bg-red-400 transition-all duration-200 h-full">
+                                    className="max-w-md border-gray-200 hover:scale-110 hover:bg-red-200 dark:hover:bg-red-400
+                                    transition-all duration-200 h-full">
                                     <CardHeader>
                                         <CardTitle className="text-xl">Flower Service Request</CardTitle>
                                         <CardDescription className="text-sm dark:text-neutral-300">Send a bouquet of flowers
@@ -106,13 +108,11 @@ const ServiceList = () => {
                                 <FlowerServiceRequest></FlowerServiceRequest>
                             </SheetContent>
                         </Sheet>
-                    </Col>
+                    </div>
                 </Row>
 
-                <br/>
-
                 <Row>
-                    <Col>
+                    <div className="col-md flex justify-center mb-4">
                         <Sheet>
                             <SheetTrigger className={"h-full"}>
                                 <Card
@@ -132,9 +132,9 @@ const ServiceList = () => {
                                 <LanguageService></LanguageService>
                             </SheetContent>
                         </Sheet>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col-md flex justify-center mb-4">
                         <Sheet>
                             <SheetTrigger className={"h-full"}>
                                 <Card
@@ -156,13 +156,14 @@ const ServiceList = () => {
                                 <InternalTransportation></InternalTransportation>
                             </SheetContent>
                         </Sheet>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col-md flex justify-center mb-4">
                         <Sheet>
                             <SheetTrigger className={"h-full"}>
                                 <Card
-                                    className="max-w-md border-gray-200 hover:scale-110 hover:bg-blue-200 dark:hover:bg-blue-400 transition-all duration-200 h-full">
+                                    className="max-w-md border-gray-200 hover:scale-110 hover:bg-blue-200 dark:hover:bg-blue-400
+                                    transition-all duration-200 h-full">
                                     <CardHeader>
                                         <CardTitle className="text-xl">External Transportation Request</CardTitle>
                                         <CardDescription className="text-sm dark:text-neutral-300">Send a request for
@@ -178,7 +179,7 @@ const ServiceList = () => {
                                 <ExternalTransportation></ExternalTransportation>
                             </SheetContent>
                         </Sheet>
-                    </Col>
+                    </div>
                 </Row>
             </Container>
             <Global_Footer/>

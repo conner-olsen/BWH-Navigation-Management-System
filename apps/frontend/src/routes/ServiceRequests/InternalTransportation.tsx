@@ -60,22 +60,24 @@ const InternalTransportation: React.FC = () => {
     return (
         <Container>
 
-            <h1 className=" bg-gradient-to-r from-gray-500 to-black bg-clip-text text-transparent dark:text-white">
+            <h1 className=" bg-gradient-to-r from-gray-500 to-black bg-clip-text text-transparent dark:text-white text-center">
                 Internal Transportation Request
             </h1>
-            <div className={"border-2 border-black dark:border-blue-400 rounded-lg p-4"}>
+            <div className={"border-2 border-border dark:border-blue-400 rounded-lg px-4 pb-4"}>
 
                 <Container>
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="name">Patient Name</Label>
                                 <Input type="text" id="name" placeholder={"Will Smith"}
                                        onChange={handleChangeText}/>
                             </div>
-                        </Col>
+                        </div>
 
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label>Priority</Label>
                                 <Select required onValueChange={
@@ -90,11 +92,28 @@ const InternalTransportation: React.FC = () => {
                                     </SelectContent>
                                 </Select>
                             </div>
-                        </Col>
+                        </div>
+
+                    </Row>
+                    <Row>
+                        <div className="col-sm">
+                            <br/>
+                            <div>
+                                <Label htmlFor="destination">Destination</Label>
+                                <Input type="text" id="destination" placeholder={"X-ray Labs"}
+                                       onChange={handleChangeText}/>
+                            </div>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
+                            <div>
+                                <Label htmlFor="mode">Mode Of Transportation</Label>
+                                <Input type="text" id="mode" placeholder={"Wheelchair"} onChange={handleChangeText}/>
+                            </div>
+                        </div>
 
                     </Row>
                     <br/>
-
                     <Row>
                         <Col>
                             <LocationDropdown onChange={(value) => setFormData({
@@ -103,25 +122,6 @@ const InternalTransportation: React.FC = () => {
                         </Col>
 
                     </Row>
-                    <br/>
-                    <Row>
-                        <Col>
-                            <div>
-                                <Label htmlFor="destination">Destination</Label>
-                                <Input type="text" id="destination" placeholder={"X-ray Labs"}
-                                       onChange={handleChangeText}/>
-                            </div>
-                        </Col>
-                        <Col>
-                            <div>
-                                <Label htmlFor="mode">Mode Of Transportation</Label>
-                                <Input type="text" id="mode" placeholder={"Wheelchair"} onChange={handleChangeText}/>
-                            </div>
-                        </Col>
-
-                    </Row>
-
-
                     <br/>
 
                     <Row>
