@@ -57,6 +57,7 @@ export function BFSComponent() {
             });
 
             if (response.status === 200) {
+                console.log("data recieved");
                 setBFSResult(response.data);
             }
 
