@@ -200,16 +200,13 @@ textarea{
     transition-duration: 300ms;
 }
 .map-rotate {
-    filter: opacity(70%);
     transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
 }
 .img-rotate:hover {
     filter: none;
 }
 .cancel-rotate {
-    max-width: 45%;
-    transform: none;
-    filter: none;
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(-40deg) scaleY(175%);
 }
 
 .testClass {

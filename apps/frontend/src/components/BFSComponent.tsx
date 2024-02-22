@@ -17,6 +17,8 @@ import {
 } from "./ui/drawer.tsx";
 import {Button} from "./ui/button.tsx";
 import NavMapPage from "../routes/NavMapPage.tsx";
+import MapDisplay3D from "./maps/3DMapDisplay.tsx";
+import ReactDOM from "react-dom";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -215,7 +217,67 @@ export function BFSComponent() {
         setShowAlert(hasStaircase);
     }, [bfsResult]);
 
+    // =============================== 3D PROTOTYPE =============================== //
+    useEffect(() => {
+        function filterDuplicates(paths: Node[]) {
+            const uniqueFloor: string[] = [];
+            paths.forEach(obj => {
+                // Check if there's already an object with the same name in uniqueArray
+                if (!uniqueFloor.some(item => item === obj.floor)) {
+                    uniqueFloor.push(obj.floor);
+                }
+            });
+            return uniqueFloor;
+        }
 
+        const FloorComponent: React.FC<{ floor: string }> = ({ floor }) => {
+            return (
+                <div className="flex justify-between items-center z-[9]">
+                    <h2 className="z-[2]">Floor 3</h2>
+                    <div>
+                        <MapDisplay3D key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={floor}
+                                      startNode={startNode} endNode={endNode}
+                                      pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                      pathSent={bfsResult}/>
+                    </div>
+                </div>
+            );
+        };
+
+        function renderFloors(floorArray: string[]): void {
+            const floorOrder: string[] = ["3", "2", "1", "L1", "L2"];
+            const wrapper: HTMLElement | null = document.getElementById("3d-wrapper");
+
+            if (wrapper) {
+                // Remove existing floor elements
+                floorOrder.forEach(floor => {
+                    const existingFloorElement = document.getElementById(floor);
+                    if (existingFloorElement) {
+                        existingFloorElement.remove();
+                    }
+                });
+
+                // Create an array to hold all floor components
+                const floorComponents: JSX.Element[] = [];
+
+                // Render new floor components
+                floorOrder.forEach(floor => {
+                    if (floorArray.includes(floor)) {
+                        floorComponents.push(<FloorComponent key={floor} floor={floor} />);
+                    }
+                });
+
+                // Render all floor components inside the wrapper element
+                ReactDOM.render(floorComponents, wrapper);
+            } else {
+                console.error("Wrapper element '3d-wrapper' not found.");
+            }
+        }
+
+        renderFloors(filterDuplicates(bfsResult));
+    }, [mapKey, startNode, endNode, pathFindingType, bfsResult]);
+
+    // =============================== 3D PROTOTYPE =============================== //
 
     return (
         <div>
@@ -685,60 +747,44 @@ export function BFSComponent() {
 
             {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
             <div className={`container flex flex-col relative
-                            ${(do3D && startNode !== "" && endNode !== "") ? '' : "hidden"}`}>
-                <div className="flex justify-between items-center z-[9]">
-                    <h2 className="z-[2]">Floor 3</h2>
-                    <div className="map-rotate">
-                        <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
-                                    startNode={startNode} endNode={endNode}
-                                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                    sendClear={sendClear} pathSent={bfsResult}
-                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
-                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
-                    </div>
-                </div>
+                            ${(do3D && startNode !== "" && endNode !== "") ? '' : "hidden"}`}
+                id="3d-wrapper">
+
+
                 <div className="flex justify-between items-center z-[8] relative bottom-[300px]">
                     <h2 className="z-[2]">Floor 2</h2>
-                    <div className="map-rotate">
-                        <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
+                    <div>
+                        <MapDisplay3D key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
                                     startNode={startNode} endNode={endNode}
                                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                    sendClear={sendClear} pathSent={bfsResult}
-                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
-                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
+                                    pathSent={bfsResult}/>
                     </div>
                 </div>
                 <div className="flex justify-between items-center z-[7] relative bottom-[600px]">
                     <h2 className="z-[2]">Floor 1</h2>
-                    <div className="map-rotate">
-                        <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
+                    <div>
+                        <MapDisplay3D key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
                                     startNode={startNode} endNode={endNode}
                                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                    sendClear={sendClear} pathSent={bfsResult}
-                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
-                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
+                                    pathSent={bfsResult}/>
                     </div>
                 </div>
                 <div className="flex justify-between items-center z-[6] relative bottom-[900px]">
                     <h2 className="z-[2]">Floor L1</h2>
-                    <div className="map-rotate">
-                        <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"}
+                    <div>
+                        <MapDisplay3D key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"}
                                     startNode={startNode} endNode={endNode}
                                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                    sendClear={sendClear} pathSent={bfsResult}
-                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
-                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
+                                    pathSent={bfsResult}/>
                     </div>
                 </div>
                 <div className="flex justify-between items-center z-[5] relative bottom-[1200px]">
                     <h2 className="z-[2]">Floor L2</h2>
-                    <div className="map-rotate">
-                        <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
+                    <div>
+                        <MapDisplay3D key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
                                     startNode={startNode} endNode={endNode}
                                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                    sendClear={sendClear} pathSent={bfsResult}
-                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
-                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
+                                    pathSent={bfsResult}/>
                     </div>
                 </div>
             </div>
