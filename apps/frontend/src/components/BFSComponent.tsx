@@ -16,6 +16,7 @@ import {
     DrawerTrigger
 } from "./ui/drawer.tsx";
 import {Button} from "./ui/button.tsx";
+import NavMapPage from "../routes/NavMapPage.tsx";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -26,6 +27,7 @@ export function BFSComponent() {
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+    const [do3D, set3D] = useState<boolean>(false);
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
 
     const collectLongNames = useCallback(() => {
@@ -430,6 +432,18 @@ export function BFSComponent() {
                                         <p className="m-0 text-center text-xs">Names</p>
                                     </label>
                                 </div>
+                                <div className="px-1">
+                                    <input type="checkbox" id="display-3d-switch" name="display-3d-switch"
+                                           className="hidden"
+                                           onChange={() => set3D(!do3D)}
+                                           checked={do3D}/>
+                                    <label htmlFor="display-3d-switch"
+                                           className="cursor-pointer flex flex-col justify-center">
+                                        <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                                             className="w-[50px] m-auto dark:brightness-75"></img>
+                                        <p className="m-0 text-center text-xs">3D</p>
+                                    </label>
+                                </div>
                             </form>
                         </HoverCardContent>
                     </HoverCard>
@@ -589,7 +603,7 @@ export function BFSComponent() {
             </div>
 
 
-            <div className="fixed w-screen max-w-full m-auto">
+            <div className={`fixed w-screen max-w-full m-auto ${!do3D? '': "hidden"}`}>
                 <TransformWrapper
                     initialScale={1}
                     initialPositionX={0}
@@ -662,6 +676,40 @@ export function BFSComponent() {
                 </TransformWrapper>
             </div>
 
+            {/* ================================= 3D PROTOTYPE ================================= */}
+            {/* ================= SHOW 3D NAV WHEN NO PATH IS DISPLAYED */}
+            <div className={`absolute top-0 w-full
+                            ${(do3D && (startNode==="" || endNode===""))? '': 'hidden'}`}>
+                <NavMapPage onImageClick={(mapID: string) => {setMap(mapID); set3D(false);}}></NavMapPage>
+            </div>
+
+            {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
+            <div className={`container flex flex-col relative
+                            ${(do3D && startNode!=="" && endNode!=="")? '' : "hidden"}`}>
+                <div className="flex justify-between items-center z-[9]">
+                    <h2>Floor 3</h2>
+                    <div className="img-rotate">
+                        <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
+                                    startNode={startNode} endNode={endNode}
+                                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                    sendClear={sendClear} pathSent={bfsResult}
+                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
+                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center z-[8] relative bottom-[300px]">
+                    <h2>Floor 2</h2>
+                    <div className="img-rotate">
+                        <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
+                                    startNode={startNode} endNode={endNode}
+                                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                    sendClear={sendClear} pathSent={bfsResult}
+                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
+                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
     );

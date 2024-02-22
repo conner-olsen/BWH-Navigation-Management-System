@@ -193,13 +193,18 @@ textarea{
 
 /* ============= MAP ========= */
 .img-rotate {
-    max-width: 45%;
+    max-width: 300px;
     transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
     filter: grayscale(100%);
     transition: all;
     transition-duration: 300ms;
 }
 .img-rotate:hover {
+    filter: none;
+}
+.cancel-rotate {
+    max-width: 45%;
+    transform: none;
     filter: none;
 }
 
