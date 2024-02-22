@@ -47,7 +47,6 @@ router.get("/type/:serviceType", async function (req: Request, res: Response) {
   }
 });
 
-
 router.get("/status/:status", async function (req: Request, res: Response) {
 
   let requestType;
@@ -63,7 +62,7 @@ router.get("/status/:status", async function (req: Request, res: Response) {
     case "in-progress":
       requestType = PrismaClient.serviceRequest.count({
         where: {
-          status: 'In-Progress'
+          status: 'In Progress'
         }
       });
       break;

@@ -1,8 +1,8 @@
 import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
-import TeamCard from "../../components/TeamCard.tsx";
-import {Card} from "../../components/ui/card.tsx";
-import GlobalFooter from "../../components/Global_Footer.tsx";
+import TeamCard from "../components/TeamCard.tsx";
+import {Card} from "../components/ui/card.tsx";
+import GlobalFooter from "../components/Global_Footer.tsx";
 
 const AboutPage = () => {
 
