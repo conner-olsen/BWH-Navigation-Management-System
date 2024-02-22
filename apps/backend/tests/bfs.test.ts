@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 import { Graph } from 'common/src/graph-structure.ts';
 import { Node } from 'common/src/graph-structure.ts';
+import {bfsPathfinding} from "common/src/PathfindingMethod.ts";
 
 /////////////////manual bfs testing:
 const graph = new Graph();
@@ -27,27 +28,29 @@ const startNode = '1';
 const endNode = '3';
 const answer: string[] = ["1", "3"];
 
+graph.setPathfindingMethod(new bfsPathfinding());
+
 //test full graph
 test("find path 1 4", () => {
-  expect(graph.bfs("1", "4")).toStrictEqual([]);
+  expect(graph.runPathfinding("1", "4")).toStrictEqual([]);
 });
 test("find path 1 2 3", () => {
-  expect(graph.bfs(startNode, endNode)).toStrictEqual(answer);
+  expect(graph.runPathfinding(startNode, endNode)).toStrictEqual(answer);
 });
 
 //test the same node
 test("find path 1 1", () => {
-  expect(graph.bfs("1", "1")).toStrictEqual(["1"]);
+  expect(graph.runPathfinding("1", "1")).toStrictEqual(["1"]);
 });
 
 //test backwards
 test("find path 3 2", () => {
-  expect(graph.bfs("3", "2")).toStrictEqual(["3", "2"]);
+  expect(graph.runPathfinding("3", "2")).toStrictEqual(["3", "2"]);
 });
 
 //test empty
 test("find path nothing", () => {
-  expect(graph.bfs(" ", " ")).toStrictEqual([]);
+  expect(graph.runPathfinding(" ", " ")).toStrictEqual([]);
 });
 
 //test non-existent nodes

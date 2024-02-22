@@ -1,0 +1,29 @@
+.line-animation {
+    stroke-dasharray: 20;
+    stroke-dashoffset: 30;
+    animation: moveLine 1s infinite linear, changeColor 2s infinite linear;
+}
+
+@keyframes moveLine {
+    to {
+        stroke-dashoffset: -50;
+    }
+}
+
+@keyframes changeColor {
+    0% {
+        stroke: #8B0000;
+    }
+    25% {
+        stroke: red;
+    }
+    50% {
+        stroke: #FFCCCB;
+    }
+    75% {
+        stroke: red;
+    }
+    100% {
+        stroke: #8B0000;
+    }
+}

@@ -1,5 +1,7 @@
-import fs from "fs";
-import {CSVRow, parseCSV} from "./parser.ts";
+import {aStarPathfinding, bfsPathfinding, dfsPathfinding, PathfindingMethod} from "./PathfindingMethod.ts";
+import {node} from "../interfaces/interfaces.ts";
+import {edge} from "../interfaces/interfaces.ts";
+
 
 /**
  * Class representing a Node.
@@ -65,12 +67,47 @@ export class Node {
  */
 export class Graph {
   nodes: Map<string, Node>; // Map of node IDs to Node objects
+  private pathfindingMethod: PathfindingMethod;
 
   /**
    * Create a new Graph.
    */
   constructor() {
     this.nodes = new Map();
+    this.pathfindingMethod = new aStarPathfinding();
+  }
+
+  /**
+   * change the pathfinding method
+   * @param pathfindingMethod method to change to (bfs, Astar, dfs)
+   */
+  setPathfindingMethod(pathfindingMethod: PathfindingMethod) {
+    this.pathfindingMethod = pathfindingMethod;
+  }
+
+  /**
+   * change the pathfinding method to partner of inputted route
+   * @param pathfindingMethod string name of method to change to (bfs, Astar, dfs)
+   */
+  setPathfindingMethodStringRoute(pathfindingMethod: string) {
+    if(pathfindingMethod == "/api/bfs-searching"){
+      this.pathfindingMethod = new bfsPathfinding();
+    }
+    else if (pathfindingMethod == "/api/bfsAstar-searching") {
+      this.pathfindingMethod = new aStarPathfinding();
+    }
+    else if (pathfindingMethod == "dummy") {
+      this.pathfindingMethod = new dfsPathfinding();
+    }
+  }
+
+  /**
+   * run the pathfinding algorithm specified by the current field
+   * @param startNode
+   * @param endNode
+   */
+  runPathfinding(startNode: string, endNode: string): string[] {
+    return this.pathfindingMethod.runPathfinding(startNode, endNode, this);
   }
 
   /**
@@ -110,51 +147,32 @@ export class Graph {
    * @param nodePath - path to nodeID csv file
    * @param edgePath - path to edgeID csv file
    */
-  fromCSV(nodePath: string, edgePath: string) {
-    // Read the CSV file as plain text
-    const nodeCSVString = fs.readFileSync(nodePath, "utf8");
-    const edgeCSVString = fs.readFileSync(edgePath, "utf8");
-    this.fromString(nodeCSVString, edgeCSVString);
+
+  async fromDB() {
   }
 
-  fromString(nodeCSVString: string, edgeCSVString: string) {
-    // Specify the path to your CSV file
-    let rows: CSVRow[];
+  public populateGraph(nodes: node[], edges: edge[]) {
+    // Clear existing nodes and edges
+    this.nodes.clear();
 
-    // Read the CSV file as plain text
-    rows = parseCSV(nodeCSVString);
-    // nodeID	xcoord	ycoord	floor	building	nodeType	longName	shortName
-    for (const row of rows) {
-      const nodeID = row["nodeID"];
-      const xcoord = row["xcoord"];
-      const ycoord = row["ycoord"];
-      const floor = row["floor"];
-      const building = row["building"];
-      const nodeType = row["nodeType"];
-      const longName = row["longName"];
-      const shortName = row["shortName"];
-
-      const node = new Node(
-        nodeID,
-        +xcoord,
-        +ycoord,
-        floor,
-        building,
-        nodeType,
-        longName,
-        shortName,
+    // Populate nodes
+    for (const node of nodes) {
+      const newNode = new Node(
+        node.nodeId,
+        node.xcoord,
+        node.ycoord,
+        node.floor,
+        node.building,
+        node.nodeType,
+        node.longName,
+        node.shortName,
       );
-      this.addNode(node);
+      this.addNode(newNode);
     }
 
     // Populate edges
-    rows = parseCSV(edgeCSVString);
-
-    for (const row of rows) {
-      const startNode = row["startNode"];
-      const endNode = row["endNode"];
-
-      this.addEdge(startNode, endNode);
+    for (const edge of edges) {
+      this.addEdge(edge.startNodeID, edge.endNodeID);
     }
   }
 
@@ -228,7 +246,7 @@ export class Graph {
     }
 
     //return empty if endNode not reached (probably should return something else)
-    console.log("not reached");
+   // console.log("not reached");
     return [];
   }
 
@@ -272,7 +290,7 @@ export class Graph {
 
       // if current node is the end node, return current path
       if (currentNode.id === endNode) {
-        console.log("Reached end node:", currentNodeIDPath);
+       // console.log("Reached end node:", currentNodeIDPath);
         return currentNodeIDPath;
       }
 
@@ -307,9 +325,9 @@ export class Graph {
       }
 
       //put node with current lowest f/"cost" at the front of the queue by sorting
-      //if the number in a is less than that in b, keep it in front by giving sort function a positive number
+      //if the number in a is less than that in b, keep it in front of giving sort function a positive number
       priorityQueue.sort((a, b)  => a[1] > b[1] ? 1 : -1);
-      console.log("Current priority queue:", priorityQueue);
+     // console.log("Current priority queue:", priorityQueue);
 
       //add current path to visited
       visited.push(currentNodeIDPath);
@@ -336,5 +354,14 @@ export class Graph {
     }
     
     return nodeArray;
+  }
+
+  nodesToString(arrayOfNodes: Node[]): string[] {
+    const stringArray: string[] = [];
+    for(const item of arrayOfNodes) {
+      stringArray.push((item.id));
+    }
+
+    return stringArray;
   }
 }

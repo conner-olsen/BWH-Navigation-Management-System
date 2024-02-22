@@ -33,12 +33,11 @@ router.post("/", async (req: Request, res: Response) => {
 router.get("/", async function (req: Request, res: Response) {
   try{
     const employeeCSV = await PrismaClient.employee.findMany();
-    res.send(employeeCSV);
+    res.status(200).send(employeeCSV);
   } catch (error){
     console.error(`Error exporting employee data: ${error}`);
     res.sendStatus(500);
   }
-  res.sendStatus(200);
 });
 
 router.patch("/", async function (req: Request, res: Response) {

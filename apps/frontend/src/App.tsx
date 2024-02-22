@@ -1,20 +1,21 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Global_Footer from "./components/Global_Footer.tsx";
-import { NodeData } from "./routes/NodeData.tsx";
-import {EdgeData} from "./routes/EdgeData.tsx";
-import PatientLogin from "./routes/PatientLogin.tsx";
+import { NodeEdgeData } from "./routes/NodeEdgeData.tsx";
 import HomePage from "./routes/HomePage.tsx";
-import AdminLogin from "./routes/AdminLogin.tsx";
 import BFSRoute from "./routes/BFSRoute.tsx";
 import FlowerServiceRequest from "./routes/ServiceRequests/FlowerServiceRequest.tsx";
 import CleaningServiceRequest from "./routes/ServiceRequests/CleaningServiceRequest.tsx";
 import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRequest.tsx";
 import ServiceList from "./routes/ServiceRequests/ServiceList.tsx";
 import ServiceLog from "./routes/ServiceRequests/ServiceLog.tsx";
-import MapPage from "./routes/MapPage.tsx";
-import NavMapPage from "./routes/NavMapPage.tsx";
 import BwhHomepage from "./routes/BwhHomepage.tsx";
+import UserPage from "./routes/UserPage.tsx";
+import EmployeeManager from "./routes/EmployeeManagement.tsx";
+import NavBar from "./components/NavBar.tsx";
+import ExternalTransportation from "./routes/ServiceRequests/ExternalTransportation.tsx";
+import InternalTransportation from "./routes/ServiceRequests/InternalTransportation.tsx";
+import LanguageService from "./routes/ServiceRequests/LanguageService.tsx";
+import AboutPage from "./routes/AboutPage.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -31,24 +32,12 @@ function App() {
               element: <BwhHomepage />,
           },
         {
-          path: "/PatientLogin",
-          element: <PatientLogin />,
+          path: "/DataUpload",
+          element: <NodeEdgeData />,
         },
-        {
-          path: "/NodeData",
-          element: <NodeData />,
-        },
-          {
-              path: "/EdgeData",
-              element: <EdgeData />,
-          },
         {
           path: "/HomeOUTDATED",
           element: <HomePage />,
-        },
-        {
-          path: "/AdminLogin",
-          element: <AdminLogin />,
         },
           {
               path: "/Home",
@@ -67,22 +56,37 @@ function App() {
               element: <ReligiousServiceRequest/>
           },
           {
+              path: "/LanguageService",
+              element: <LanguageService/>
+          },
+          {
+              path: "/ExternalTransportation",
+              element: <ExternalTransportation/>
+          },
+          {
+              path: "/InternalTransportation",
+              element: <InternalTransportation/>
+          },
+          {
               path: "/ServiceList",
               element: <ServiceList/>
           },
           {
-              path: "/MapPage",
-              element: <MapPage/>
-          },
-          {
-              path: "/NavMapPage",
-              element: <NavMapPage/>
-          },
-          {
               path: "/ServiceLog",
               element: <ServiceLog/>
-          }
-
+          },
+          {
+              path: "/UserPage",
+              element: <UserPage/>
+          },
+          {
+              path: "/EmployeeManager",
+              element: <EmployeeManager/>
+          },
+          {
+              path: "/AboutPage",
+              element: <AboutPage/>
+            },
       ],
     },
   ]);
@@ -93,8 +97,9 @@ function App() {
 function Root() {
   return (
     <main>
-      <Outlet />
-      <Global_Footer />
+        <NavBar></NavBar>
+
+        <Outlet />
     </main>
   );
 }

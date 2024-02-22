@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {Button} from "./ui/button.tsx";
 
 const ExportNodeDataToCSVButton = () => {
     const [file, setFile] = useState("");
@@ -49,10 +50,7 @@ const ExportNodeDataToCSVButton = () => {
     }
 
     return (
-        <button className="inline-block p-2.5 text-center text-light-blue cursor-pointer
-                           border-light-blue rounded-md border-solid border-2
-                           transition-all transition-duration-300
-                           hover:bg-light-blue hover:text-white" onClick={handleExportButton}>Export</button>
+        <Button variant={"default"} onClick={handleExportButton}>Export</Button>
     );
 };
 

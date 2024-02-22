@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    @layer base {
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 0 0% 100%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96.1%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96.1%;
+            --accent-foreground: 222.2 47.4% 11.2%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 221.2 83.2% 53.3%;
+            --radius: 0.5rem;
+        }
+
+        .dark {
+            --background: 209, 36%, 13%;
+            --foreground: 210 40% 98%;
+            --card: 222.2 84% 4.9%;
+            --card-foreground: 210 40% 98%;
+            --popover: 222.2 84% 4.9%;
+            --popover-foreground: 210 40% 98%;
+            --primary: 203, 88%, 53%;
+            --primary-foreground: 222.2 47.4% 11.2%;
+            --secondary: 142, 46%, 55%;
+            --secondary-foreground: 210 40% 98%;
+            --muted: 217.2 32.6% 17.5%;
+            --muted-foreground: 215 20.2% 65.1%;
+            --accent: 217.2 32.6% 17.5%;
+            --accent-foreground: 210 40% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 217.2 32.6% 17.5%;
+            --input: 217.2 32.6% 17.5%;
+            --ring: 224.3 76.3% 48%;
+        }
+    }
+
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+
 :root {
   /*font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/
   background-color: #ffffff;
@@ -32,11 +89,6 @@
     .nav-drop-down-link {
         @apply text-left
     }
-    .form-input {
-        @apply border-[1px] border-gray rounded-md
-               focus:border-light-blue focus-visible:outline-2 focus-visible:outline-light-blue
-               transition-all duration-200
-    }
 }
 
 main {
@@ -46,6 +98,12 @@ main {
 }
 label {
     display: block;
+}
+
+textarea{
+    color:black;
+    border-radius: 5px;
+    height: 45px;
 }
 
 /* ============== HOMEPAGE =========== */
@@ -60,12 +118,6 @@ label {
     animation: typing 2s steps(30, end);
 }
 
-
-/* ============== DARK MODE =========== */
-body.darkMode {
-    background-color: darkgray;
-
-}
 
 /* =========== LOGIN PAGE ========== */
 .loginForm input {
@@ -112,34 +164,20 @@ body.darkMode {
 
 .LoginButtonAdmin,
 .LoginButtonPatient,
-.LoginButtonGuest{
-    position: absolute;
-    height: 80px;
+.LoginButtonGuest {
     color: #fff;
     font-family: sans-serif;
-    border: none;
+    background-color: rgba(128, 128, 128, 0.85);
     cursor: pointer;
     font-size: 20px;
+    width: 200px; /* Increase width, adjust the value as needed */
+    padding: 10px; /* Reduce padding for height */
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 30px; /* Make the button oval */
+    height: fit-content;
 }
 
-.LoginButtonAdmin {
-    top: 0;
-    right: 20px;
-}
-
-.LoginButtonPatient {
-    top: 30px;
-    right: 20px;
-}
-.LoginButtonGuest{
-    top: 85px;
-    right: 20px;
-}
-
-.LoginButtonAdmin:hover,
-.LoginButtonPatient:hover{
-    color: #d9f99d;
-}
 
 .stack {
   font-size: 60px;
@@ -227,8 +265,11 @@ body.darkMode {
     transition: 0.3s ease-in-out;
 }
 .DragDropBoxOn, .DragDropBox:hover {
-    border-color: var(--light-blue);
+    border-color: var(--light-blue)!important;
     color: var(--light-blue);
+}
+body.dark .DragDropBox {
+    border-color: white;
 }
 .DragDropBox img {
     filter: grayscale(100%);
@@ -265,7 +306,6 @@ body.darkMode {
 .navbarStyling{
     text-align: center;
     justify-items: center;
-    justify-content: center;
     font-size: small;
 }
 
@@ -303,7 +343,10 @@ body.darkMode {
 .BFSBox {
     align-items: center;
     text-align: center;
+}
 
+.mapNames {
+    rotate: -45deg;
 }
 
 .idinput {
@@ -315,16 +358,6 @@ body.darkMode {
     font-family: "Open Sans", sans-serif;
 }
 
-.route{
-    font-size: 24px;
-    font-family: "Open Sans", sans-serif;
-}
-
-.routeheader{
-    font-weight: bold;
-    font-size: 28px;
-    font-family: "Open Sans", sans-serif;
-}
 
 /* ====== Flower Service Page ======= */
 
@@ -408,38 +441,67 @@ input[type="submit"]:hover {
     background-color: #4ba1ff;
 }
 
+h1 {
+    margin-top: 10px!important;
+    font-size: 40px!important;
+    font-weight: 500!important;
+    font-family: "Segoe UI", Roboto;
+    text-transform: uppercase;
+    /*font-style: italic;*/
+}
+label{
+
+}
+
 /* ========== CSV Table ========== */
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+body.dark .react-transform-wrapper image {
+    filter: invert(1) saturate(2);
 }
 
-/* Style for table headers */
-th {
-    background-color: #f2f2f2;
-    border: 1px solid #dddddd;
-    text-align: center;
-    padding: 12px;
-    font-weight: bold;
+
+/* ====== Side Bar ======= */
+.transform-component-module_wrapper__SPB86 {
+    height: 100vh!important;
+}
+body.dark .tools {
+    background-color: rgba(161, 161, 161, 0.3);
+}
+.sidebar {
+    transition: transform 0.3s ease;
+}
+.sidebar-expanded {
+    transform: translateX(0);
+}
+.sidebar-collapsed {
+    transform: translateX(-100%);
+}
+input[type="radio"]:checked + label {
+    color: rgb(59 130 246);
+}
+input[type="checkbox"]:checked + label > img, input[type="checkbox"]:hover + label > img {
+    border: 2px solid rgb(59 130 246);
+    border-radius: 10px;
+    transform: scale(0.9);
+}
+input[type="checkbox"]:checked + label, input[type="checkbox"]:hover + label {
+    color: rgb(59 130 246);
 }
 
-/* Style for alternating row colors */
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+body.dark g circle {
+    fill: white;
 }
 
-/* Style for table cells */
-td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 12px;
+.scaly-boi {
+    animation: scaly-boi 0.3s 1;
 }
 
-/* Hover effect for table rows */
-tr:hover {
-    background-color: #e5e5e5;
+@keyframes scaly-boi {
+    0%{
+        transform: scale(0);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
-

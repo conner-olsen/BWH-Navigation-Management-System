@@ -1,41 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import {node} from "common/interfaces/interfaces.ts";
+import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "./ui/table.tsx";
 
 
 function GenerateTableRowsNodes(tableData: node[]): JSX.Element[] {
     return tableData.map((item, index) => (
-        <tr key={index}>
-            <td>{tableData[index].nodeId}</td>
-            <td>{tableData[index].xcoord}</td>
-            <td>{tableData[index].ycoord}</td>
-            <td>{tableData[index].floor}</td>
-            <td>{tableData[index].building}</td>
-            <td>{tableData[index].nodeType}</td>
-            <td>{tableData[index].longName}</td>
-            <td>{tableData[index].shortName}</td>
-        </tr>
+        <TableRow key={index}>
+            <TableCell>{tableData[index].nodeId}</TableCell>
+            <TableCell>{tableData[index].xcoord}</TableCell>
+            <TableCell>{tableData[index].ycoord}</TableCell>
+            <TableCell>{tableData[index].floor}</TableCell>
+            <TableCell>{tableData[index].building}</TableCell>
+            <TableCell>{tableData[index].nodeType}</TableCell>
+            <TableCell>{tableData[index].longName}</TableCell>
+            <TableCell>{tableData[index].shortName}</TableCell>
+        </TableRow>
     ));
 }
 
 const TableNodes: React.FC<{ tableData: node[] }> = ({tableData}) => {
     return (
-        <table>
-            <thead>
-            <tr>
-                <th>Node ID</th>
-                <th>X-Coordinate</th>
-                <th>Y-Coordinate</th>
-                <th>Floor</th>
-                <th>Building</th>
-                <th>Node Type</th>
-                <th>Long Name</th>
-                <th>Short Name</th>
-            </tr>
-            </thead>
-            <tbody>
-            {GenerateTableRowsNodes(tableData)}
-            </tbody>
-        </table>
+        <div className={"overflow-y-auto h-80"}>
+        <Table>
+            <TableHeader>
+                <TableRow>
+                    <TableHead>Node ID</TableHead>
+                    <TableHead>X-Coordinate</TableHead>
+                    <TableHead>Y-Coordinate</TableHead>
+                    <TableHead>Floor</TableHead>
+                    <TableHead>Building</TableHead>
+                    <TableHead>Node Type</TableHead>
+                    <TableHead>Long Name</TableHead>
+                    <TableHead>Short Name</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {GenerateTableRowsNodes(tableData)}
+            </TableBody>
+        </Table>
+        </div>
     );
 };
 
@@ -43,7 +46,6 @@ const TableNodes: React.FC<{ tableData: node[] }> = ({tableData}) => {
 export const GetDataNodes = () => {
     const [data, setData] = useState<node[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,7 +65,7 @@ export const GetDataNodes = () => {
                 setData(result);
             } catch (err) {
                 // Handle errors
-                setError(err.message);
+                console.log(err);
             } finally {
                 // Set loading to false, indicating that the request has completed
                 setLoading(false);
@@ -75,10 +77,6 @@ export const GetDataNodes = () => {
 
     if (loading) {
         return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
     }
 
     return (

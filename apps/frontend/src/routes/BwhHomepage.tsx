@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import LoginButtonAdmin from "../components/LoginButtonAdmin.tsx";
-import LoginButtonPatient from "../components/LoginButtonPatient.tsx";
-import { Link } from 'react-router-dom';
-import '../index.css'; // Import the CSS file
+import LoginButtonEmployee from "../components/LoginButtonEmployee.tsx";
+import '../index.css';
+import LoginButtonGuest from "../components/LoginButtonGuest.tsx"; // Import the CSS file
+
 
 const BwhHomepage: React.FC = () => {
     const [fadeIn, setFadeIn] = useState<boolean>(false);
-    const [isHovered, setHovered] = useState(false);
-
-    const handleMouseEnter = () => {
-        setHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-        setHovered(false);
-    };
 
     useEffect(() => {
         // Trigger the fade-in effect after a short delay
@@ -43,43 +35,30 @@ const BwhHomepage: React.FC = () => {
                 alt="Background"
             />
 
-
             <div className="flex flex-col items-center justify-center h-full text-center text-white">
                 <h3 className="font-roboto font-extrabold"
-                    style={{fontSize: 20,
-                    letterSpacing: '30px'}}>
+                    style={{
+                        fontSize: 20,
+                        letterSpacing: '30px'
+                    }}>
                     WELCOME TO
                 </h3>
 
                 <h1
-                    className={`text-lime-200 font-extrabold typing-animation italic ${
+                    className={` text-blue-500  font-extrabold typing-animation italic ${
                         fadeIn ? 'opacity-100' : 'opacity-0'
                     } duration-200 ease-in-out`}
-                    style={{fontSize: 80}}
+                    style={{ fontSize: 80 }}
                 >
                     BRIGHAM & WOMEN'S HOSPITAL
                 </h1>
-                <div>
-                    <LoginButtonAdmin/>
+
+                <div className="absolute top-[70%] flex container justify-between">
+                    <LoginButtonAdmin />
+                    <LoginButtonEmployee />
+                    <LoginButtonGuest />
                 </div>
-                <div>
-                    <LoginButtonPatient/>
-                    <div className="LoginButtonGuest">
-                        <Link
-                            to="/Home"
-                            style={{
-                                textDecoration: 'none',
-                                color: isHovered ? '#d9f99d' : 'white',
-                                fontSize: '20px',
-                                transition: 'color 0.5s ease',
-                            }}
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
-                        >
-                            CONTINUE AS GUEST
-                        </Link>
-                    </div>
-                </div>
+
             </div>
         </div>
     );
