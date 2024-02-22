@@ -197,7 +197,6 @@ export function BFSComponent() {
 
     const [showAlert, setShowAlert] = useState(false);
 
-    // Assuming collectLongNames is a function that returns an array of long names
     useEffect(() => {
         //looks to see if theres a floor change w/ stairs
         //shows alert if so
@@ -219,10 +218,12 @@ export function BFSComponent() {
                     previousFloor = currentFloor;
                 } else {
                     returnBooleans[i] = false;
+                    previousFloor = currentFloor;
                 }
             }
             //if there is a stair floor change, show alert
             const hasStaircase = returnBooleans.includes(true);
+            console.log(returnBooleans);
             setShowAlert(hasStaircase);
         }
         else {
