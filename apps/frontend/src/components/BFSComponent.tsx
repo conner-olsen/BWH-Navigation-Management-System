@@ -329,7 +329,7 @@ export function BFSComponent() {
                                     <p className="font-bold mb-0">Follow Me</p>
                                     <button onClick={handleSpeakButtonClick}>
                                         <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
-                                             className="h-6 w-6 mr-5 ml-2 pd-0"></img>
+                                             className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
                                     </button>
                                 </div>
                             </div>
