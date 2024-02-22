@@ -1,6 +1,6 @@
 .line-animation {
-    stroke-dasharray: 5;
-    stroke-dashoffset: 0;
+    stroke-dasharray: 20;
+    stroke-dashoffset: 30;
     animation: moveLine 1s infinite linear, changeColor 2s infinite linear;
 }
 
