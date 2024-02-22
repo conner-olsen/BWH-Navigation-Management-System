@@ -47,7 +47,6 @@ router.get("/type/:serviceType", async function (req: Request, res: Response) {
   }
 });
 
-
 router.get("/status/:status", async function (req: Request, res: Response) {
 
   let requestType;
