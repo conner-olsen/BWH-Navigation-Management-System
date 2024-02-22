@@ -199,6 +199,10 @@ textarea{
     transition: all;
     transition-duration: 300ms;
 }
+.map-rotate {
+    filter: opacity(70%);
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
+}
 .img-rotate:hover {
     filter: none;
 }

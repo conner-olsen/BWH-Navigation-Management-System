@@ -20,8 +20,8 @@ import NavMapPage from "../routes/NavMapPage.tsx";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
-    const [startNode, setStartNode] = useState<string>("");
-    const [endNode, setEndNode] = useState<string>("");
+    const [startNode, setStartNode] = useState<string>("a");
+    const [endNode, setEndNode] = useState<string>("b");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
@@ -685,10 +685,10 @@ export function BFSComponent() {
 
             {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
             <div className={`container flex flex-col relative
-                            ${(do3D && startNode!=="" && endNode!=="")? '' : "hidden"}`}>
+                            ${(do3D && startNode !== "" && endNode !== "") ? '' : "hidden"}`}>
                 <div className="flex justify-between items-center z-[9]">
-                    <h2>Floor 3</h2>
-                    <div className="img-rotate">
+                    <h2 className="z-[2]">Floor 3</h2>
+                    <div className="map-rotate">
                         <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
                                     startNode={startNode} endNode={endNode}
                                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
@@ -698,8 +698,8 @@ export function BFSComponent() {
                     </div>
                 </div>
                 <div className="flex justify-between items-center z-[8] relative bottom-[300px]">
-                    <h2>Floor 2</h2>
-                    <div className="img-rotate">
+                    <h2 className="z-[2]">Floor 2</h2>
+                    <div className="map-rotate">
                         <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
                                     startNode={startNode} endNode={endNode}
                                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
@@ -708,7 +708,39 @@ export function BFSComponent() {
                                     doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
                     </div>
                 </div>
-
+                <div className="flex justify-between items-center z-[7] relative bottom-[600px]">
+                    <h2 className="z-[2]">Floor 1</h2>
+                    <div className="map-rotate">
+                        <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
+                                    startNode={startNode} endNode={endNode}
+                                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                    sendClear={sendClear} pathSent={bfsResult}
+                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
+                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center z-[6] relative bottom-[900px]">
+                    <h2 className="z-[2]">Floor L1</h2>
+                    <div className="map-rotate">
+                        <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"}
+                                    startNode={startNode} endNode={endNode}
+                                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                    sendClear={sendClear} pathSent={bfsResult}
+                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
+                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center z-[5] relative bottom-[1200px]">
+                    <h2 className="z-[2]">Floor L2</h2>
+                    <div className="map-rotate">
+                        <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
+                                    startNode={startNode} endNode={endNode}
+                                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                    sendClear={sendClear} pathSent={bfsResult}
+                                    doDisplayNames={false} doDisplayEdges={doDisplayEdges}
+                                    doDisplayNodes={false} setChosenNode={updateCurrentNode}/>
+                    </div>
+                </div>
             </div>
         </div>
 
