@@ -440,8 +440,11 @@ export function BFSComponent() {
                 {showAlert && (
                     <Alert>
                         {/* Replace the Terminal component with an img tag */}
-                        <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon" className="h-7 w-7 dark:invert"/>
-                        <AlertTitle>Accessibility Alert!</AlertTitle>
+                        <span className="flex items-center">
+                <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon"
+                     className="h-7 w-7 dark:invert mr-2"/>
+                <AlertTitle>Accessibility Alert!</AlertTitle>
+            </span>
                         <AlertDescription>
                             This path contains stairs. If this is difficult, please request an accessible route.
                         </AlertDescription>
@@ -449,17 +452,19 @@ export function BFSComponent() {
                 )}
             </div>
 
+
             <div className="h-0">
                 <Drawer modal={false}>
                     <DrawerTrigger>
                         <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
                         rounded-md shadow-md sm:hidden flex items-center justify-center">
-                            <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon" className="dark:invert w-[25px]"></img>
+                            <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon"
+                                 className="dark:invert w-[25px]"></img>
                         </div>
                     </DrawerTrigger>
                     <DrawerContent>
 
-                    <div>
+                        <div>
                             <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
                                 <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
                                        onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
@@ -544,7 +549,8 @@ export function BFSComponent() {
                     <DrawerTrigger>
                         <div className="absolute w-[36px] h-[36px] left-[50px] top-[80px] bg-background z-40
                         rounded-md shadow-md sm:hidden flex items-center justify-center">
-                            <img src="../../public/icon/info-icon.png" alt="nav-icon" className="invert dark:invert-0 w-[25px]"></img>
+                            <img src="../../public/icon/info-icon.png" alt="nav-icon"
+                                 className="invert dark:invert-0 w-[25px]"></img>
                         </div>
                     </DrawerTrigger>
                     <DrawerContent>
