@@ -7,7 +7,7 @@ const router: Router = express.Router();
 router.post("/:serviceType", async (req: Request, res: Response) => {
 
   let requestType;
-  const { nodeId,employeeUser, status, priority,id, ...specificData } = req.body;
+  const { nodeId, employeeUser, status, priority, ...specificData } = req.body;
 
   try {
 
