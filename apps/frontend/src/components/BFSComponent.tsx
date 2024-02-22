@@ -194,24 +194,54 @@ export function BFSComponent() {
         if (tabNumber === 2 && isExpanded) setHasSeen(true);
         setActiveTab(tabNumber);
     };
+
+    const gatherFloorChangeStairs = useCallback(() => {
+        //const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
+
+        //gatherFloorChange Functionality w/ stairs added
+        //produces boolean array representing if there is a stair floor change
+        const returnBooleans: boolean[] = [];
+        let previousFloor = bfsResult[0].floor;
+
+        for(let i = 0; i < bfsResult.length; i++) {
+            const node = bfsResult[i];
+            const currentFloor = node.floor;
+
+            if (!node == undefined) {
+                if (!(currentFloor == previousFloor) && node.nodeType == "STAI") {
+                    //set current and previous nodes as true in boolean array
+                    //update previous floor to be current for next loop
+                    returnBooleans[i] = true;
+                    returnBooleans[i - 1] = true;
+                    previousFloor = currentFloor;
+                } else {
+                    returnBooleans[i] = false;
+                }
+            }
+        }
+        //if there is a stair floor change, show alert
+        const hasStaircase = returnBooleans.includes(true);
+        setShowAlert(hasStaircase);
+    }, []);
+
+
     const [showAlert, setShowAlert] = useState(false);
 
     // Assuming collectLongNames is a function that returns an array of long names
-
     useEffect(() => {
-        const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
-
-        setShowAlert(hasStaircase);
-    }, [bfsResult]);
+        //looks to see if theres a floor change w/ stairs
+        //shows alert if so
+        gatherFloorChangeStairs();
+    }, [bfsResult, gatherFloorChangeStairs]);
 
     //booleans represent whether there is a floor change
-    const gatherFloorChange = (floor: string): boolean[] => {
-        let returnBooleans: boolean[] = [];
-        let previousFloor = floor;
+    const gatherFloorChange = (): boolean[] => {
+        const returnBooleans: boolean[] = [];
+        let previousFloor = bfsResult[0].floor;
 
         for(let i = 0; i < bfsResult.length; i++) {
-            let node = bfsResult[i];
-            let currentFloor = node.floor;
+            const node = bfsResult[i];
+            const currentFloor = node.floor;
 
             if (!(currentFloor == previousFloor)) {
                 //set current and previous nodes as true in boolean array
@@ -363,7 +393,7 @@ export function BFSComponent() {
                                                      className="w-4 h-4 mr-1"/>
                                             )}
                                             <span
-                                                className={gatherFloorChange(node.floor)[index] ? "text-blue-500" : ""}>
+                                                className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
                                                     {node.longName}
                                                 </span>
                                             </span>
