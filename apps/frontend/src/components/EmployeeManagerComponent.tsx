@@ -16,7 +16,7 @@ function GenerateTableRowsEmployee(tableData: employee[]): JSX.Element[] {
 
 const TableEmployee: React.FC<{ tableData: employee[] }> = ({tableData}) => {
     return (
-        <div className={"overflow-y-auto h-80"}>
+        <div className={"overflow-y-auto h-80 mt-4"}>
             <Table>
                 <TableHeader>
                     <TableRow>

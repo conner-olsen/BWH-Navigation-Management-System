@@ -25,7 +25,7 @@ const ServiceLog = () => {
 
     return (
         <>
-            <div style={{display: 'flex', alignItems: 'center', marginLeft: '15%'}}>
+            <div className="container text-center" style={{display: 'flex', alignItems: 'center'}}>
                 <Col>
                     <h1>SERVICE LOG</h1>
                 </Col>
@@ -53,7 +53,7 @@ const ServiceLog = () => {
                                     </SheetDescription>
                                 </SheetHeader>
 
-                                <div>
+                                <div className="max-h-[80vh] overflow-y-auto">
                                     <Row>
                                         <Col>
                                             <CreateSRChart></CreateSRChart>

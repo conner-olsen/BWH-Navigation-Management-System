@@ -61,7 +61,7 @@ return (
         <div className="navbarStyling relative filter-none z-50 shadow-md bg-blue-950 space-x-12 items-center flex
         justify-between px-4 xl:px-0">
             <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img></Link>
-            <Link to="/AboutPage" className="text-lg no-underline p-2 text-white hidden xl:block ml-2 text-[17px]">
+            <Link to="/AboutPage" className="no-underline p-2 text-white hidden xl:block ml-2 text-[17px]">
                 <div className={"hover:text-blue-500"}>About Us</div>
             </Link>
             <Link to="/Home" className="no-underline p-2 text-white hidden xl:block text-[17px]">
