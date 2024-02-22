@@ -11,6 +11,7 @@ interface MapDisplayProps {
     sendHoverMapPath: (path: PathfindingRequest) => void;
     pathSent: Node[];
     pathFindingType: string;
+    mapChange: (mapID: string) => void;
 }
 
 interface StrokePathProps {
@@ -18,6 +19,7 @@ interface StrokePathProps {
     y1: number;
     x2: number;
     y2: number;
+    color: string;
 }
 function MapDisplay3D({
                         floorMap,
@@ -27,6 +29,7 @@ function MapDisplay3D({
                         sendHoverMapPath,
                         pathFindingType,
                         pathSent,
+                        mapChange,
                     }: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
@@ -53,10 +56,10 @@ function MapDisplay3D({
             setEndNodeId(endNode);
         }
     }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
-    const StrokePath: React.FC<StrokePathProps> = ({ x1, y1, x2, y2 }) => (
+    const StrokePath: React.FC<StrokePathProps> = ({ x1, y1, x2, y2, color }) => (
         <line className=""
             x1={x1} y1={y1} x2={x2} y2={y2}
-            stroke="red" strokeWidth="40"/>
+            stroke={color} strokeWidth="40"/>
     );
     const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
@@ -71,9 +74,11 @@ function MapDisplay3D({
                         y1={node.yCoord}
                         x2={nextNode.xCoord}
                         y2={nextNode.yCoord}
+                        color={"red"}
                     />
                 );
             }
+
         }
         return pathElements;
     };
@@ -112,7 +117,7 @@ function MapDisplay3D({
         <div className={"relative map-rotate"}>
             <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
                 <image href={floorMap} width="5000" height="3400" x="0" y="0"
-                       className="opacity-[70%]"/>
+                       className="opacity-[70%] cursor-pointer" onClick={() => mapChange(floor)}/>
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && displayNodePins(graph)}
             </svg>
