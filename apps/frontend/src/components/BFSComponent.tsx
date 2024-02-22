@@ -223,7 +223,7 @@ export function BFSComponent() {
             }
             //if there is a stair floor change, show alert
             const hasStaircase = returnBooleans.includes(true);
-            console.log(returnBooleans);
+          //  console.log(returnBooleans);
             setShowAlert(hasStaircase);
         }
         else {
@@ -250,6 +250,7 @@ export function BFSComponent() {
             }
             else {
                 returnBooleans[i] = false;
+                previousFloor = currentFloor;
             }
         }
         //console.log(returnBooleans);
