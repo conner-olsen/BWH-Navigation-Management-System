@@ -195,20 +195,23 @@ export function BFSComponent() {
         setActiveTab(tabNumber);
     };
 
-    const gatherFloorChangeStairs = useCallback(() => {
+    const [showAlert, setShowAlert] = useState(false);
+
+    // Assuming collectLongNames is a function that returns an array of long names
+    useEffect(() => {
+        //looks to see if theres a floor change w/ stairs
+        //shows alert if so
         //const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
+        if(bfsResult[0] != undefined) {
+            const returnBooleans: boolean[] = [];
+            const firstNode = bfsResult[0];
+            let previousFloor = firstNode.floor;
 
-        //gatherFloorChange Functionality w/ stairs added
-        //produces boolean array representing if there is a stair floor change
-        const returnBooleans: boolean[] = [];
-        let previousFloor = bfsResult[0].floor;
+            for (let i = 0; i < bfsResult.length; i++) {
+                const node = bfsResult[i];
+                const currentFloor = node.floor;
 
-        for(let i = 0; i < bfsResult.length; i++) {
-            const node = bfsResult[i];
-            const currentFloor = node.floor;
-
-            if (!node == undefined) {
-                if (!(currentFloor == previousFloor) && node.nodeType == "STAI") {
+                if (!(currentFloor == previousFloor) && node.nodeType === "STAI") {
                     //set current and previous nodes as true in boolean array
                     //update previous floor to be current for next loop
                     returnBooleans[i] = true;
@@ -218,21 +221,15 @@ export function BFSComponent() {
                     returnBooleans[i] = false;
                 }
             }
+            //if there is a stair floor change, show alert
+            const hasStaircase = returnBooleans.includes(true);
+            setShowAlert(hasStaircase);
         }
-        //if there is a stair floor change, show alert
-        const hasStaircase = returnBooleans.includes(true);
-        setShowAlert(hasStaircase);
-    }, []);
+        else {
+            setShowAlert(false);
+        }
 
-
-    const [showAlert, setShowAlert] = useState(false);
-
-    // Assuming collectLongNames is a function that returns an array of long names
-    useEffect(() => {
-        //looks to see if theres a floor change w/ stairs
-        //shows alert if so
-        gatherFloorChangeStairs();
-    }, [bfsResult, gatherFloorChangeStairs]);
+    }, [bfsResult]);
 
     //booleans represent whether there is a floor change
     const gatherFloorChange = (): boolean[] => {
