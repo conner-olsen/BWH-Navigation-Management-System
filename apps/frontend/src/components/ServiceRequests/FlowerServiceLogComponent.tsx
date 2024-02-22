@@ -91,26 +91,27 @@ function GenerateTableRowsServicesFlower({tableData,employeeData,selectedStatus,
 
 const TableServicesFlower: React.FC<{ tableData: flowerServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string;onUpdate:(data:flowerServiceRequest[])=>void}> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser,onUpdate}) => {
     return (
-        <Table>
-            <TableHeader>
-            <TableRow>
-                <TableHead>debug</TableHead>
-
-                <TableHead>Room ID</TableHead>
-                <TableHead>Priority</TableHead>
-                <TableHead>Sender Name</TableHead>
-                <TableHead>Sender Email</TableHead>
-                <TableHead>Patient's Name</TableHead>
-                <TableHead>Flower Type</TableHead>
-                <TableHead>Delivery Date</TableHead>
-                <TableHead>Note</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Assignment</TableHead>
-            </TableRow>
-            </TableHeader>
-            <TableBody>
-                <GenerateTableRowsServicesFlower tableData={tableData} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={onUpdate}></GenerateTableRowsServicesFlower>
-            </TableBody>        </Table>
+        <div className={"overflow-y-auto h-80"}>
+            <Table>
+                <TableHeader>
+                <TableRow>
+                    <TableHead>Room ID</TableHead>
+                    <TableHead>Priority</TableHead>
+                    <TableHead>Sender Name</TableHead>
+                    <TableHead>Sender Email</TableHead>
+                    <TableHead>Patient's Name</TableHead>
+                    <TableHead>Flower Type</TableHead>
+                    <TableHead>Delivery Date</TableHead>
+                    <TableHead>Note</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Assignment</TableHead>
+                </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <GenerateTableRowsServicesFlower tableData={tableData} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={onUpdate}></GenerateTableRowsServicesFlower>
+                </TableBody>
+            </Table>
+        </div>
     );
 };
 

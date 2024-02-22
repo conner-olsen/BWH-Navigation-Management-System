@@ -4,6 +4,7 @@
     "useDefineForClassFields": true,
     "target": "ESNext",
     "allowJs": true,
+    "jsx": "react-jsx",
     "allowImportingTsExtensions": true,
     "skipLibCheck": false,
     "strict": true,
