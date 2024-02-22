@@ -143,7 +143,8 @@ const ServiceList = () => {
                                         <CardTitle className="text-xl">Internal Transportation Request</CardTitle>
                                         <CardDescription className="text-sm dark:text-neutral-300">Send a request for
                                             transportation within the hospital for patients on long term
-                                            stay </CardDescription>
+                                            stay
+                                        </CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                         <img src="public/service-images-transparent/wheelchair_new.png"

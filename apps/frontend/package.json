@@ -61,8 +61,13 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/add": "^2",
     "@types/bootstrap": "^5.2.6",
+    "@types/jsdom": "^21.1.6",
     "@types/node": "^20.2.5",
     "@types/prop-types": "^15.7.5",
     "@types/react": "^18.0.37",
@@ -76,6 +81,7 @@
     "eslint-config-custom": "workspace:*",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.1",
+    "jsdom": "^24.0.0",
     "prettier": "latest",
     "prettier-config-custom": "workspace:*",
     "sass": "^1.62.1",
