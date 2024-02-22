@@ -205,27 +205,26 @@ export function BFSComponent() {
     }, [bfsResult]);
 
     //booleans represent whether there is a floor change
-    const gatherFloorChange = (): boolean[] => {
+    const gatherFloorChange = (floor: string): boolean[] => {
         let returnBooleans: boolean[] = [];
-        let previousIsElevOrStair = false;
+        let previousFloor = floor;
 
         for(let i = 0; i < bfsResult.length; i++) {
             let node = bfsResult[i];
-            if (node.nodeType == "ELEV" || node.nodeType == "STAI") {
-                if (previousIsElevOrStair) {
-                    //set current and previous nodes as true in boolean array
-                    returnBooleans[i] = true;
-                    returnBooleans[i - 1] = true;
-                }
-                else {
-                    returnBooleans[i] = true;
-                    previousIsElevOrStair = true;
-                }
+            let currentFloor = node.floor;
+
+            if (!(currentFloor == previousFloor)) {
+                //set current and previous nodes as true in boolean array
+                //update previous floor to be current for next loop
+                returnBooleans[i] = true;
+                returnBooleans[i - 1] = true;
+                previousFloor = currentFloor;
             }
             else {
                 returnBooleans[i] = false;
             }
         }
+        //console.log(returnBooleans);
         return returnBooleans;
     };
 
@@ -364,7 +363,7 @@ export function BFSComponent() {
                                                      className="w-4 h-4 mr-1"/>
                                             )}
                                             <span
-                                                className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
+                                                className={gatherFloorChange(node.floor)[index] ? "text-blue-500" : ""}>
                                                     {node.longName}
                                                 </span>
                                             </span>
