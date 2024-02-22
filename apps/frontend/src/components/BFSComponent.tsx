@@ -20,8 +20,8 @@ import NavMapPage from "../routes/NavMapPage.tsx";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
-    const [startNode, setStartNode] = useState<string>("a");
-    const [endNode, setEndNode] = useState<string>("b");
+    const [startNode, setStartNode] = useState<string>("");
+    const [endNode, setEndNode] = useState<string>("");
     const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
