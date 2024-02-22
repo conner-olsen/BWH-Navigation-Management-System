@@ -341,12 +341,11 @@ export function BFSComponent() {
                                         <span className="flex items-center">
                                             {node.nodeType === "STAI" && (
                                                 <img src="../../public/icon/stairs.png" alt="stair-icon"
-                                                     className="h-3 w-3 mr-1"/>
-
+                                                     className="h-3 w-3 mr-1 dark:invert"/>
                                             )}
                                             {node.nodeType === "ELEV" && (
                                                 <img src="../../public/icon/elevator.png" alt="elevator-icon"
-                                                     className="w-4 h-4 mr-1"/>
+                                                     className="w-4 h-4 mr-1 dark:invert"/>
                                             )}
                                             <span
                                                 className={node.nodeType === "STAI" || node.nodeType === "ELEV" ? "text-blue-500" : ""}>
@@ -440,7 +439,7 @@ export function BFSComponent() {
                 {showAlert && (
                     <Alert>
                         {/* Replace the Terminal component with an img tag */}
-                        <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon" className="h-7 w-7"/>
+                        <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon" className="h-7 w-7 dark:invert"/>
                         <AlertTitle>Accessibility Alert!</AlertTitle>
                         <AlertDescription>
                             This path contains stairs. If this is difficult, please request an accessible route.
