@@ -59,7 +59,7 @@ const ServiceLog = () => {
                     <TabsContent value={"Stats"}>
                         <div>
                             <Row>
-                                <Col className={"h-full"}>
+                                <Col className={"h-full mb-4"}>
                                     <div className="border-2 border-blue-950 rounded-lg p-4 h-full">
                                         <p>Service Request Types</p>
                                         <CreateSRChart></CreateSRChart>
