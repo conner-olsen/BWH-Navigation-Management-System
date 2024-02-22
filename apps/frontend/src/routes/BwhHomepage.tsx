@@ -53,17 +53,12 @@ const BwhHomepage: React.FC = () => {
                     BRIGHAM & WOMEN'S HOSPITAL
                 </h1>
 
-                <div>
+                <div className="absolute top-[70%] flex container justify-between">
                     <LoginButtonAdmin />
-                </div>
-
-                <div>
                     <LoginButtonEmployee />
-                </div>
-
-                <div>
                     <LoginButtonGuest />
                 </div>
+
             </div>
         </div>
     );
