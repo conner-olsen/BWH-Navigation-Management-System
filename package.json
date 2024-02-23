@@ -22,7 +22,7 @@
     "dev:stop": "docker-compose -f docker-compose.dev.yaml down --volumes --rmi local",
     "deploy": "docker-compose -f docker-compose.prod.yaml up --build -d",
     "deploy:stop": "docker-compose -f docker-compose.prod.yaml down",
-    "sync": "git add . && git commit -m \"Auto-commit before merge | $(git rev-parse --abbrev-ref HEAD) - $(date +'%Y-%m-%d %I:%M%p')\" || true && git fetch origin main:main && git merge -m 'Synced with main' FETCH_HEAD",
+    "sync": "git add . && git commit -m \"Auto-commit before merge | $(git rev-parse --abbrev-ref HEAD) - $(date +'%Y-%m-%d %I:%M%p')\" || true && git fetch origin main:main && git merge -m 'Synced with main' FETCH_HEAD && git push",
     "test": "docker-compose -f docker-compose.test.yaml up --build --renew-anon-volumes -d",
     "test:stop": "docker-compose -f docker-compose.dev.yaml down --volumes --rmi local",
     "lint": "turbo run lint",
