@@ -40,7 +40,7 @@ export function BFSComponent() {
     };
     const updateCurrentNode = (currentNode: Node) => {
         setHasSeen(true);
-        if (activeTab!==2 || !isExpanded) setHasSeen(false);
+        if (activeTab !== 2 || !isExpanded) setHasSeen(false);
         setCurrentNode(currentNode);
     };
 
@@ -81,6 +81,7 @@ export function BFSComponent() {
         // When pathFindingType changes, update mapKey to force remount of MapDisplay
         setMapKey(prevKey => prevKey + 1);
     }, [pathFindingType]);
+
 
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
 
@@ -177,14 +178,11 @@ export function BFSComponent() {
         if (nodeFloor == map && !(nodeType == "HALL")) {
             currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
-        }
-        else if (id == startNode) {
+        } else if (id == startNode) {
             currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
-        }
-        else if (id == endNode) {
+        } else if (id == endNode) {
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
-        }
-        else if (!(nodeType == "HALL")) {
+        } else if (!(nodeType == "HALL")) {
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
         }
     }
@@ -203,17 +201,68 @@ export function BFSComponent() {
         if (tabNumber === 2 && isExpanded) setHasSeen(true);
         setActiveTab(tabNumber);
     };
+
     const [showAlert, setShowAlert] = useState(false);
 
-    // Assuming collectLongNames is a function that returns an array of long names
-
     useEffect(() => {
-        const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
+        //looks to see if theres a floor change w/ stairs
+        //shows alert if so
+        //const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
+        if(bfsResult[0] != undefined) {
+            const returnBooleans: boolean[] = [];
+            const firstNode = bfsResult[0];
+            let previousFloor = firstNode.floor;
 
-        setShowAlert(hasStaircase);
+            for (let i = 0; i < bfsResult.length; i++) {
+                const node = bfsResult[i];
+                const currentFloor = node.floor;
+
+                if (!(currentFloor == previousFloor) && node.nodeType === "STAI") {
+                    //set current and previous nodes as true in boolean array
+                    //update previous floor to be current for next loop
+                    returnBooleans[i] = true;
+                    returnBooleans[i - 1] = true;
+                    previousFloor = currentFloor;
+                } else {
+                    returnBooleans[i] = false;
+                    previousFloor = currentFloor;
+                }
+            }
+            //if there is a stair floor change, show alert
+            const hasStaircase = returnBooleans.includes(true);
+          //  console.log(returnBooleans);
+            setShowAlert(hasStaircase);
+        }
+        else {
+            setShowAlert(false);
+        }
+
     }, [bfsResult]);
 
+    //booleans represent whether there is a floor change
+    const gatherFloorChange = (): boolean[] => {
+        const returnBooleans: boolean[] = [];
+        let previousFloor = bfsResult[0].floor;
 
+        for(let i = 0; i < bfsResult.length; i++) {
+            const node = bfsResult[i];
+            const currentFloor = node.floor;
+
+            if (!(currentFloor == previousFloor)) {
+                //set current and previous nodes as true in boolean array
+                //update previous floor to be current for next loop
+                returnBooleans[i] = true;
+                returnBooleans[i - 1] = true;
+                previousFloor = currentFloor;
+            }
+            else {
+                returnBooleans[i] = false;
+                previousFloor = currentFloor;
+            }
+        }
+        //console.log(returnBooleans);
+        return returnBooleans;
+    };
 
     return (
         <div>
@@ -349,7 +398,7 @@ export function BFSComponent() {
                                                      className="w-4 h-4 mr-1 dark:invert"/>
                                             )}
                                             <span
-                                                className={node.nodeType === "STAI" || node.nodeType === "ELEV" ? "text-blue-500" : ""}>
+                                                className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
                                                     {node.longName}
                                                 </span>
                                             </span>
