@@ -34,7 +34,7 @@ export default function NavBar() {
     if(pathname == "/") {
         return null;
     }
-    const lohgoutWithRedirect = () =>
+    const logoutWithRedirect = () =>
         logout( {
             logoutParams: { returnTo: window.location.origin },
         });
@@ -60,7 +60,7 @@ return (
     <nav className="sticky top-0 z-50">
         <div className="navbarStyling relative filter-none z-50 shadow-md bg-blue-950 space-x-12 items-center flex
         justify-between px-4 xl:px-0">
-            <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1"></img></Link>
+            <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1" alt="Logo"></img></Link>
             <Link to="/AboutPage" className="no-underline p-2 text-white hidden xl:block ml-2 text-[17px]">
                 <div className={"hover:text-blue-500"}>About Us</div>
             </Link>
@@ -142,7 +142,7 @@ return (
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator/>
 
-                            <DropdownMenuItem onClick={() => lohgoutWithRedirect()}>
+                            <DropdownMenuItem onClick={() => logoutWithRedirect()}>
                                 Log out
                             </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -239,11 +239,12 @@ return (
                                         <NavDropdown.Item as={Link} to="/InternalTransportation" onClick={toggleMobileMenu}>
                                             <div className={"hover:text-blue-500"}>Internal Transportation Service</div>
                                         </NavDropdown.Item>
-                                    <DropdownMenuItem />
-                                    <NavDropdown.Item as={Link} to="/ExternalTransportation" onClick={toggleMobileMenu}>
-                                        <div className={"hover:text-blue-500"}>External Transporatation Service</div>
-                                    </NavDropdown.Item>
-                                </DropdownMenuItem>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <NavDropdown.Item as={Link} to="/ExternalTransportation" onClick={toggleMobileMenu}>
+                                            <div className={"hover:text-blue-500"}>External Transportation Service</div>
+                                        </NavDropdown.Item>
+                                    </DropdownMenuItem>
                                     <DropdownMenuItem>
                                         <NavDropdown.Item as={Link} to="/LanguageService" onClick={toggleMobileMenu}>
                                             <div className={"hover:text-blue-500"}>Language Service</div>

@@ -4,6 +4,7 @@ import {ServiceRequest} from "common/interfaces/interfaces.ts";
 const router: Router = express.Router();
 
 
+
 router.post("/:serviceType", async (req: Request, res: Response) => {
 
   let requestType;
@@ -52,6 +53,7 @@ router.post("/:serviceType", async (req: Request, res: Response) => {
       } });
 
     res.sendStatus(200);
+    return; 
   } catch (error) {
     console.error(`Error creating service request: ${error}`);
     res.sendStatus(500);
