@@ -7,7 +7,7 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest',
   },
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/styleMock.js',
-    '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/__mocks__/fileMock.js'
+    '\\.(css|less|scss|sass)$': '<rootDir>/apps/frontend/__mocks__/styleMock.js',
+    '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/apps/frontend/__mocks__/fileMock.js'
   },
 };
