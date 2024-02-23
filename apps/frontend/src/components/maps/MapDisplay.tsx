@@ -25,7 +25,6 @@ interface AnimatedPathProps {
     y2: number;
 }
 
-let nodeCount: number = 0;
 function MapDisplay({
                         floorMap,
                         floor,
@@ -45,7 +44,7 @@ function MapDisplay({
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
     const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
-
+    const [nodeCount, setCount] = useState<string>("Error");
 
 
 
@@ -75,7 +74,7 @@ function MapDisplay({
                try {
                    const response = await axios.post("/api/get-stats", node);
                    if (response.status === 200) {
-                       nodeCount = response.data;
+                       setCount(response.data);
                    }
                } catch (error) {
                    console.error("error getting count ", (error));
@@ -151,7 +150,6 @@ function MapDisplay({
 
     const displayHoverInfo = (node: Node) => {
         getCount(node);
-        console.log("THIS IS the count: ",  JSON.stringify(nodeCount));
         return (
             <foreignObject x={node.xCoord - 225} y={node.yCoord - 525} width="450" height="500">
                 <div

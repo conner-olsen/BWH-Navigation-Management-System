@@ -8,7 +8,8 @@ const router: Router = express.Router();
 router.post("/:serviceType", async (req: Request, res: Response) => {
 
   let requestType;
-  const { nodeId, employeeUser, status, priority, ...specificData } = req.body;
+  //DO NOT REMOVE THE ID IN THE BELOW LINE IT WILL BREAK EVERYTHING, IT'S A FAKE ERROR
+  const { nodeId, employeeUser, status, priority,id, ...specificData } = req.body;
 
   try {
 
