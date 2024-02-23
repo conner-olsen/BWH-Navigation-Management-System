@@ -42,5 +42,5 @@ out
 
 .pnp.cjs
 
-./.vscode/*
+.vscode
 !./.vscode/tasks.json

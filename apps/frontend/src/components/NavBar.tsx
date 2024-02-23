@@ -126,7 +126,7 @@ return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
 
-                            <img src={user.picture} alt={"Profile"} className={"UserProfile rounded-full w-8 h-8"}/>
+                            <img src={user?.picture} alt={"Profile"} className={"UserProfile rounded-full w-8 h-8"}/>
 
                         </DropdownMenuTrigger>
 
@@ -136,7 +136,7 @@ return (
                             <DropdownMenuGroup>
                                 <DropdownMenuItem>
                                     <NavLink to="/UserPage" className={"no-underline text-foreground"}>
-                                        {user.nickname}
+                                        {user?.nickname}
                                     </NavLink>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
@@ -239,7 +239,7 @@ return (
                                         <NavDropdown.Item as={Link} to="/InternalTransportation" onClick={toggleMobileMenu}>
                                             <div className={"hover:text-blue-500"}>Internal Transportation Service</div>
                                         </NavDropdown.Item>
-                                    </DropdownMenuItem><DropdownMenuItem>
+                                    <DropdownMenuItem />
                                     <NavDropdown.Item as={Link} to="/ExternalTransportation" onClick={toggleMobileMenu}>
                                         <div className={"hover:text-blue-500"}>External Transporatation Service</div>
                                     </NavDropdown.Item>
