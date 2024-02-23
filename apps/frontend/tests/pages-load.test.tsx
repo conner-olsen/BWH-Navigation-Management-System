@@ -1,5 +1,4 @@
 import React from 'react';
-import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../src/App'; // Ensure this import is correct
