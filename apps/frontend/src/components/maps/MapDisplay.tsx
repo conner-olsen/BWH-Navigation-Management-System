@@ -93,7 +93,7 @@ function MapDisplay({
             x2={x2}
             y2={y2}
             stroke="red"
-            strokeWidth="3"
+            strokeWidth="10"
         />
     );
     const displayPath = (graph: Graph, path: string[]) => {

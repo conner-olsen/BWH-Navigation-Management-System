@@ -2,10 +2,11 @@ import {Node, Graph} from "./graph-structure.ts";
 
 export interface PathfindingMethod {
   route: string;
+
   runPathfinding(startNode: string, endNode: string, graph: Graph): string[];
 }
 
-export class bfsPathfinding implements PathfindingMethod  {
+export class bfsPathfinding implements PathfindingMethod {
   route = "/api/bfs-searching";
 
   /**
@@ -40,10 +41,9 @@ export class bfsPathfinding implements PathfindingMethod  {
       currentNodeIDPath = queue[0];
 
       //get last node
-      if(currentNodeIDPath.length > 1) {
+      if (currentNodeIDPath.length > 1) {
         currentNode = graph.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
-      }
-      else {
+      } else {
         currentNode = graph.getNode(currentNodeIDPath[0]);
       }
 
@@ -66,7 +66,7 @@ export class bfsPathfinding implements PathfindingMethod  {
           newPath.push(item);
 
           //if path hasn't been visited and nodes aren't repeated, add to queue
-          if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
+          if (!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
             queue.push(newPath);
           }
         });
@@ -78,13 +78,14 @@ export class bfsPathfinding implements PathfindingMethod  {
     }
 
     //return empty if endNode not reached (probably should return something else)
-   // console.log("not reached");
+    // console.log("not reached");
     return [];
   }
 }
 
 export class aStarPathfinding implements PathfindingMethod {
   route = "/api/bfsAstar-searching";
+
   /**
    * Finds the path from inputted startNode to endNode in given graph
    * @param {string} startNode - The ID of the starting node.
@@ -103,20 +104,20 @@ export class aStarPathfinding implements PathfindingMethod {
 
 
     //gets number value of floor
-   const getFloor = (floor: string): number => {
-      if(floor == "L2") {
+    const getFloor = (floor: string): number => {
+      if (floor == "L2") {
         return 1;
       }
-      if(floor == "L1") {
+      if (floor == "L1") {
         return 2;
       }
-      if(floor == "1") {
+      if (floor == "1") {
         return 3;
       }
-      if(floor == "2") {
+      if (floor == "2") {
         return 4;
       }
-      if(floor == "3") {
+      if (floor == "3") {
         return 5;
       }
       return 0;
@@ -125,7 +126,7 @@ export class aStarPathfinding implements PathfindingMethod {
     // calculate the Manhattan distance (not hypotenuse) from one node to another
     const calculateManhattanDistance = (node1: Node, node2: Node): number => {
       //if both nodes are stairs, add weight of difference between floors
-      if((node1.nodeType == "STAI") && (node2.nodeType == "STAI")) {
+      if ((node1.nodeType == "STAI") && (node2.nodeType == "STAI")) {
         return Math.abs(getFloor(node1.floor) - getFloor(node2.floor));
       }
 
@@ -151,7 +152,7 @@ export class aStarPathfinding implements PathfindingMethod {
 
       // if current node is the end node, return current path
       if (currentNode.id === endNode) {
-     //   console.log("Reached end node:", currentNodeIDPath);
+        //   console.log("Reached end node:", currentNodeIDPath);
         return currentNodeIDPath;
       }
 
@@ -180,15 +181,15 @@ export class aStarPathfinding implements PathfindingMethod {
         const newPath = [...currentNodeIDPath, neighbor.id];
 
         //if path hasn't been visited and nodes aren't repeated, add to queue
-        if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(neighbor.id))) {
+        if (!(visited.includes(newPath)) && !(currentNodeIDPath.includes(neighbor.id))) {
           priorityQueue.push([newPath, fValue]);
         }
       }
 
       //put node with current lowest f/"cost" at the front of the queue by sorting
       //if the number in a is less than that in b, keep it in front by giving sort function a positive number
-      priorityQueue.sort((a, b)  => a[1] > b[1] ? 1 : -1);
-    //  console.log("Current priority queue:", priorityQueue);
+      priorityQueue.sort((a, b) => a[1] > b[1] ? 1 : -1);
+      //  console.log("Current priority queue:", priorityQueue);
 
       //add current path to visited
       visited.push(currentNodeIDPath);
@@ -208,70 +209,33 @@ export class dfsPathfinding implements PathfindingMethod {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfinding(startNode: string, endNode: string, graph: Graph): string[] {
-    //add an error catcher for invalid inputs
     if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];
     }
 
-    //define needed objects
-    //store lists of nodeID paths
-    const stack: string[][] = [];
-    const visited: string[][] = [];
+    const stack: string[][] = [[startNode]];
+    const visited: Set<string> = new Set();
 
-    //used for iterating through the loop
-    let currentNode: Node | undefined;
-    let currentNodeIDPath: string[];
-    let newPath: string[];
-    let neighbors: Set<string>;
-
-    //put startNode path in the stack
-    stack.unshift([startNode]);
-
-    //start loop
     while (stack.length > 0) {
-      //get first path from stack
-      currentNodeIDPath = stack[0];
+      const path = stack.pop() as string[];
+      const node = path[path.length - 1];
 
-      //get last node
-      if(currentNodeIDPath.length > 1) {
-        currentNode = graph.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
-      }
-      else {
-        currentNode = graph.getNode(currentNodeIDPath[0]);
+      if (node === endNode) {
+        return path;
       }
 
-      //if currentNode is undefined, pop path from stack
-      if (currentNode == undefined) {
-        stack.shift();
-        visited.push(currentNodeIDPath);
-      }
-
-      //elif it is the end node, return current path
-      else if (currentNode.id == endNode) {
-        return currentNodeIDPath;
-      }
-
-      //else, cast as currentNode as Node (determined above) and add neighbor to path for each
-      else {
-        neighbors = (currentNode as Node).edges;
-        neighbors.forEach(function (item) {
-          newPath = [...currentNodeIDPath];
-          newPath.push(item);
-
-          //if path hasn't been visited and nodes aren't repeated, add to stack
-          if(!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
-            stack.unshift(newPath);
+      if (!visited.has(node)) {
+        visited.add(node);
+        const neighbors = graph.getNode(node)?.edges;
+        neighbors?.forEach(neighbor => {
+          if (!visited.has(neighbor)) {
+            const newPath = [...path, neighbor];
+            stack.push(newPath);
           }
         });
-
-        //pop current node ID path from stack
-        stack.pop();
-        visited.push(currentNodeIDPath);
       }
     }
 
-    //return empty if endNode not reached (probably should return something else)
-    // console.log("not reached");
     return [];
   }
 }

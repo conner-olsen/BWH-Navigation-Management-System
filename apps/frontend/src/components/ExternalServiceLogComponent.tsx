@@ -10,14 +10,14 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
 
     const handleStatusChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
         axios.patch("/api/", {
-            nodeId: tableData[index].node,
-            priority: tableData[index].priority,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             name:  tableData[index].name,
             date: tableData[index].date,
             destination: tableData[index].destination,
             description: tableData[index].description,
             status: value,
-            employeeUser: tableData[index].employeeUser
+            employeeUser: tableData[index].ServiceRequest.employeeUser
 
         }).then(response => console.log(response.data))
             .catch(error => console.error(error));
@@ -25,14 +25,14 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
 
     const handleAssignmentChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
         axios.patch("/api/", {
-            nodeId: tableData[index].nodeId,
-            priority: tableData[index].priority,
+            nodeId: tableData[index].ServiceRequest.nodeId,
+            priority: tableData[index].ServiceRequest.priority,
             name:  tableData[index].name,
             date: tableData[index].date,
             transportation: tableData[index].transportation,
             destination: tableData[index].destination,
             description: tableData[index].description,
-            status: tableData[index].status,
+            status: tableData[index].ServiceRequest.status,
             employeeUser: value,
 
         }).then(response => console.log(response.data))
@@ -40,7 +40,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
     };
 
     return tableData
-        .filter(item => selectedStatus === "" || item.status === selectedStatus)
+        .filter(item => selectedStatus === "" || item.ServiceRequest.status === selectedStatus)
         .map((item, index) => (
             <TableRow key={index}>
                 <TableCell>{tableData[index].name}</TableCell>
@@ -52,7 +52,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
 
 
                 <TableCell>
-                    <Select value={tableData[index].status}
+                    <Select value={tableData[index].ServiceRequest.status}
                             onValueChange={(status) => handleStatusChange(index, status, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Unassigned" />
@@ -67,7 +67,7 @@ function GenerateTableRowsServices(tableData: externalTransportationServiceReque
 
                 </TableCell>
                 <TableCell>
-                    <Select value={tableData[index].employeeUser}
+                    <Select value={tableData[index].ServiceRequest.employeeUser}
                             onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
                         <SelectTrigger>
                             <SelectValue placeholder="None" />
