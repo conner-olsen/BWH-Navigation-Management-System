@@ -1,6 +1,6 @@
 import {Outlet} from "react-router-dom";
 import DragNDrop from "../components/DragNDrop.tsx";
-import {Col, Container, Row} from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 import {GetDataNodes} from "../components/NodesDataBaseTableDisplay.tsx";
 import ExportNodeDataToCSVButton from "../components/ExportNodeDataButton.tsx";
 import {Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/tabs.tsx";
@@ -78,28 +78,25 @@ export function NodeEdgeData() {
 
     return (
         <>
-
-
             <Outlet></Outlet>
-
             <Container>
                 <Row>
-                    <Col>
-                        <h1 className="text-left">Node Data</h1>
-                        <Container>
+                    <div className="col-sm">
+                        <h1 className="text-left max-[576px]:text-center">Node Data</h1>
+                        <div className="container flex max-[576px]:justify-center">
                             <ExportNodeDataToCSVButton></ExportNodeDataToCSVButton>
-                        </Container>
+                        </div>
                         <br/>
                         <DragNDrop onFileDrop={handleNodeFileDrop}></DragNDrop>
-                    </Col>
-                    <Col>
-                        <h1 className="text-left">Edge Data</h1>
-                        <Container>
+                    </div>
+                    <div className="col-sm">
+                        <h1 className="text-left max-[576px]:text-center">Edge Data</h1>
+                        <div className="container flex max-[576px]:justify-center">
                             <ExportEdgeDataButton></ExportEdgeDataButton>
-                        </Container>
+                        </div>
                         <br/>
                         <DragNDrop onFileDrop={handleEdgeFileDrop}></DragNDrop>
-                    </Col>
+                    </div>
                 </Row>
             </Container>
 

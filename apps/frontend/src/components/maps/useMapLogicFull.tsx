@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Graph, Node } from "common/src/graph-structure";
 import populatedGraph from "common/dev/populatedGraph";
 import React from "react";
+import 'animation.css';
 
 interface UseMapLogicReturn {
   graph: Graph | null;
@@ -17,6 +18,12 @@ interface UseMapLogicReturn {
   clearSelection: () => void;
   displaySelectedNodes: (node: Node, type: string) => JSX.Element;
   displayPath: (graph: Graph, path: string[]) => JSX.Element[];
+}
+interface AnimatedPathProps {
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
 }
 
 export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicReturn => {
@@ -36,6 +43,17 @@ export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicRe
         }
     }, [startNode, endNode, graph]);
 
+    const AnimatedPath: React.FC<AnimatedPathProps> = ({ x1, y1, x2, y2 }) => (
+        <line
+            className="line-animation"
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke="red"
+            strokeWidth="3"
+        />
+    );
     const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
         for (let i = 0; i < path.length - 1; i++) {
@@ -43,10 +61,13 @@ export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicRe
             const nextNode = graph.getNode(path[i + 1]);
             if (node && nextNode) {
                 pathElements.push(
-                    <line key={`${node.id}-${nextNode.id}`}
-                          x1={node.xCoord} y1={node.yCoord}
-                          x2={nextNode.xCoord} y2={nextNode.yCoord}
-                          stroke="red" strokeWidth="5"/>
+                    <AnimatedPath
+                        key={`${node.id}-${nextNode.id}`}
+                        x1={node.xCoord}
+                        y1={node.yCoord}
+                        x2={nextNode.xCoord}
+                        y2={nextNode.yCoord}
+                    />
                 );
             }
         }

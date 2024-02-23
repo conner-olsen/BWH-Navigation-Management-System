@@ -9,40 +9,27 @@ function GenerateTableRowsEdges(tableData: edge[]): JSX.Element[] {
             <TableCell>{tableData[index].startNodeID}</TableCell>
             <TableCell>{tableData[index].endNodeID}</TableCell>
         </TableRow>
-        // <tr key={index}>
-        //     <td>{tableData[index].edgeID}</td>
-        //     <td>{tableData[index].startNodeID}</td>
-        //     <td>{tableData[index].endNodeID}</td>
-        // </tr>
+
     ));
 }
 
 const TableEdges: React.FC<{ tableData: edge[] }> = ({tableData}) => {
     return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Edge ID</TableHead>
-                    <TableHead>Start Node ID</TableHead>
-                    <TableHead>End Node ID</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {GenerateTableRowsEdges(tableData)}
-            </TableBody>
-        </Table>
-        // <table>
-        //     <thead>
-        //     <tr>
-        //         <th>Edge ID</th>
-        //         <th>Start Node ID</th>
-        //         <th>End Node ID</th>
-        //     </tr>
-        //     </thead>
-        //     <tbody>
-        //     {GenerateTableRowsEdges(tableData)}
-        //     </tbody>
-        // </table>
+        <div className={"overflow-y-auto h-80"}>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Edge ID</TableHead>
+                        <TableHead>Start Node ID</TableHead>
+                        <TableHead>End Node ID</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {GenerateTableRowsEdges(tableData)}
+                </TableBody>
+            </Table>
+        </div>
+
     );
 };
 

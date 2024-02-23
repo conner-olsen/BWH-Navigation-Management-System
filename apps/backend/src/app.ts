@@ -2,30 +2,30 @@ import createError, { HttpError } from "http-errors";
 import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import csvRouter from "./routes/csv-handler.ts";
-import bfsRouter from "./routes/bfs-route.ts";
-import dfsRouter from "./routes/dfs-route.ts";
-import bfsAstarRouter from "./routes/Astar-route.ts";
-import userRouter from "./routes/user-route.ts";
-import nodeRouter from "./routes/node-route.ts";
-import edgeRouter from "./routes/populate-edges.ts";
-import downloadNodeDataRouter from "./routes/data-to-csv-node.ts";
-import downloadEdgeDataRouter from "./routes/data-to-csv-edge.ts";
-import employeeRouter from "./routes/populate-employee.ts";
-import authoRouter from "./routes/storing-auth0-users.ts";
-import employeeMod from "./routes/employeeMod.ts";
-import graphRoute from "./routes/GraphRoute.ts";
-import allServiceData from "./routes/all-service-logs.ts";
-import serviceRequest from "./routes/service-request.ts";
-import employeeCSVRouter from "./routes/employee-to-csv.ts";
-import getStats from "./routes/count-service-requests.ts";
-import getEmployeeStats from "./routes/count-employee-service-requests.ts";
+import csvRouter from "./routes/csv-handler";
+import bfsRouter from "./routes/bfs-route";
+import dfsRouter from "./routes/dfs-route";
+import bfsAstarRouter from "./routes/Astar-route";
+import userRouter from "./routes/user-route";
+import nodeRouter from "./routes/node-route";
+import edgeRouter from "./routes/populate-edges";
+import downloadNodeDataRouter from "./routes/data-to-csv-node";
+import downloadEdgeDataRouter from "./routes/data-to-csv-edge";
+import employeeRouter from "./routes/populate-employee";
+import authoRouter from "./routes/storing-auth0-users";
+import employeeMod from "./routes/employeeMod";
+import graphRoute from "./routes/GraphRoute";
+import allServiceData from "./routes/all-service-logs";
+import serviceRequest from "./routes/service-request";
+import employeeCSVRouter from "./routes/employee-to-csv";
+import getStats from "./routes/count-service-requests";
+import getEmployeeStats from "./routes/count-employee-service-requests";
 
 
 
-const app: Express = express(); // Setup the backend
+const app: Express = express(); // Set up the backend
 
-// Setup generic middlewear
+// Setup generic middleware
 app.use(
   logger("dev", {
     stream: {

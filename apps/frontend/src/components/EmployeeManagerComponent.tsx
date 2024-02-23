@@ -16,20 +16,21 @@ function GenerateTableRowsEmployee(tableData: employee[]): JSX.Element[] {
 
 const TableEmployee: React.FC<{ tableData: employee[] }> = ({tableData}) => {
     return (
-
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Username</TableHead>
-                    <TableHead>First Name</TableHead>
-                    <TableHead>Last Name</TableHead>
-                    <TableHead>Email</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                {GenerateTableRowsEmployee(tableData)}
-            </TableBody>
-        </Table>
+        <div className={"overflow-y-auto h-80 mt-4"}>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Username</TableHead>
+                        <TableHead>First Name</TableHead>
+                        <TableHead>Last Name</TableHead>
+                        <TableHead>Email</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {GenerateTableRowsEmployee(tableData)}
+                </TableBody>
+            </Table>
+        </div>
     );
 };
 
