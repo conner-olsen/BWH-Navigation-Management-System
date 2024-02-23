@@ -1,9 +1,17 @@
 {
-  "extends": "./tsconfig.json", // Adjust the path as necessary
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "noImplicitAny": false
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "module": "CommonJS"
   },
   "include": [
-    "**/*.test.ts"
+    "src/**/*",
+    "tests/**/*",
+    "__mocks__/**/*"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

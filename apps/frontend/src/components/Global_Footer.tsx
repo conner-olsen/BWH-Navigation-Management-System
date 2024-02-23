@@ -1,10 +1,10 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import facebookLogo from '/icon/FACEBOOK.png'; // Import the Facebook logo image
-import instagramLogo from '/icon/INSTAGRAM.png'; // Import the Instagram logo image
-import youtubeLogo from '/icon/YOUTUBE.png'; // Import the YouTube logo image
-import linkedinLogo from '/icon/LINKEDIN.png'; // Import the LinkedIn logo image
-import twitterLogo from '/icon/TWTTER.png'; // Import the Twitter logo image
+import facebookLogo from './icon/FACEBOOK.png'; // Import the Facebook logo image
+import instagramLogo from './icon/INSTAGRAM.png'; // Import the Instagram logo image
+import youtubeLogo from './icon/YOUTUBE.png'; // Import the YouTube logo image
+import linkedinLogo from './icon/LINKEDIN.png'; // Import the LinkedIn logo image
+import twitterLogo from './icon/TWTTER.png'; // Import the Twitter logo image
 
 export default function GlobalFooter() {
     return (
