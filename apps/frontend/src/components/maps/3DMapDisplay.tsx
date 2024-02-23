@@ -20,6 +20,7 @@ interface StrokePathProps {
     x2: number;
     y2: number;
     color: string;
+    style: string; // Tailwind styling
 }
 function MapDisplay3D({
                         floorMap,
@@ -35,6 +36,10 @@ function MapDisplay3D({
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
+
+    const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+
+
 
     useEffect(() => {
         axios.get("/api/graph").then((res) => {
@@ -56,32 +61,89 @@ function MapDisplay3D({
             setEndNodeId(endNode);
         }
     }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
-    const StrokePath: React.FC<StrokePathProps> = ({ x1, y1, x2, y2, color }) => (
-        <line className=""
+    const StrokePath: React.FC<StrokePathProps> = ({ x1, y1, x2, y2, color, style }) => (
+        <line className={style}
             x1={x1} y1={y1} x2={x2} y2={y2}
             stroke={color} strokeWidth="40"/>
     );
     const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
+        const firstNode = graph.getNode(path[0]); // Path must not be empty
+        const lastNode = graph.getNode(path[path.length - 1]);
+
         for (let i = 0; i < path.length - 1; i++) {
+            // Display the path
             const node = graph.getNode(path[i]);
             const nextNode = graph.getNode(path[i + 1]);
             if (node && nextNode && node.floor === floor && nextNode.floor === floor) {
                 pathElements.push(
-                    <StrokePath
-                        key={`${node.id}-${nextNode.id}`}
-                        x1={node.xCoord}
-                        y1={node.yCoord}
-                        x2={nextNode.xCoord}
-                        y2={nextNode.yCoord}
-                        color={"red"}
+                    <StrokePath key={`${node.id}-${nextNode.id}`}
+                        x1={node.xCoord} y1={node.yCoord} x2={nextNode.xCoord} y2={nextNode.yCoord}
+                        color={"red"} style={""}
                     />
                 );
             }
 
         }
+        // Push first node in the path (white filled)
+        if (firstNode && firstNode.floor === floor) pathElements.push(
+            <circle cx={firstNode.xCoord} cy={firstNode.yCoord} r="50" fill="white" stroke="black" stroke-width="10"/>);
+        // Push last node in the path (green filled, indicate destination)
+        if (lastNode && lastNode.floor === floor) pathElements.push(
+            <circle cx={lastNode.xCoord} cy={lastNode.yCoord} r="50" fill="lime" stroke="black" stroke-width="10"/>);
         return pathElements;
     };
+
+    const displayFloorStart = (graph: Graph, path: string[]) => {
+        // This function displays all the nodes indicating the start of a path on a NEW floor
+        let stairsCounter = 1;
+        const pathElements: React.JSX.Element[] = [];
+
+        for (let i = 0; i < path.length - 1; i++) {
+            const prevNode = graph.getNode(path[i]);
+            const node = graph.getNode(path[i + 1]);
+            const nextNode = graph.getNode(path[i + 2]);
+            if (node && prevNode && nextNode && node.floor === floor && prevNode.floor !== floor
+                && nextNode.nodeType !== node.nodeType) {
+                pathElements.push(<circle cx={node.xCoord} cy={node.yCoord} r="50"
+                                          fill={"black"} stroke="white" stroke-width="10"/>
+                );
+            }
+            if (node && nextNode && node.floor !== nextNode.floor && node.floor === floor) {
+                // Yellow indicates stairs, while blue indicates elevator (accessible) to a DIFFERENT floor
+                pathElements.push(<circle id={"cf" + stairsCounter} cx={node.xCoord} cy={node.yCoord} r="50"
+                                          fill={node.nodeType === "STAI"? 'yellow' : 'blue'} stroke="black" stroke-width="10"/>
+                );
+                stairsCounter++;
+            }
+        }
+        return pathElements;
+    };
+
+    useEffect(() => {
+        const element = document.getElementById('cf1');
+        if (element) {
+            const rect = element.getBoundingClientRect();
+            setCoordinates({ x: rect.x, y: rect.y });
+            console.log(rect.x + " " + rect.y);
+        }
+    }, []);
+
+    useEffect(() => {
+        const divElement = document.createElement('div');
+        divElement.style.position = 'absolute';
+        divElement.style.left = `${coordinates.x}px`;
+        divElement.style.top = `${coordinates.y}px`;
+        divElement.style.width = '100px';
+        divElement.style.height = '100px';
+        divElement.style.backgroundColor = 'blue';
+        divElement.textContent = 'Div with respect to screen';
+        document.body.appendChild(divElement);
+
+        return () => {
+            document.body.removeChild(divElement);
+        };
+    }, [coordinates]);
 
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
@@ -119,10 +181,11 @@ function MapDisplay3D({
                 <image href={floorMap} width="5000" height="3400" x="0" y="0"
                        className="opacity-[70%] cursor-pointer" onClick={() => mapChange(floor)}/>
                 {graph && path.length > 0 && displayPath(graph, path)}
+                {graph && path.length > 0 && displayFloorStart(graph, path)}
                 {graph && displayNodePins(graph)}
             </svg>
-
         </div>
     );
 }
+
 export default MapDisplay3D;
