@@ -71,37 +71,41 @@ const FlowerServiceRequest: React.FC = () => {
     return (
         <Container>
 
-            <h1 className=" bg-gradient-to-r from-red-200 to-red-900 bg-clip-text text-transparent dark:text-white">
+            <h1 className="bg-gradient-to-r from-red-200 to-red-900 bg-clip-text text-transparent dark:text-white text-center">
                 Flower Service Request
             </h1>
-            <div className={"border-2 border-red-200 dark:border-blue-400 rounded-lg p-4"}>
+            <div className={"border-2 border-red-200 dark:border-blue-400 rounded-lg px-4 pb-4"}>
 
                 <Container>
                 <Row>
-                        <Col>
-                            <div>
-                                <Label htmlFor="senderName">Sender Name</Label>
-                                <Input type="text" id="senderName" placeholder={"John Doe"}
-                                       onChange={handleChangeText}/>
-                            </div>
-                        </Col>
-                        <Col>
-                            <div>
-                                <Label htmlFor="senderEmail">Sender Email</Label>
-                                <Input type="email" id="senderEmail" placeholder={"johndoe@gmail.com"}
-                                       onChange={handleChangeText}/>
-                            </div>
-                        </Col>
-                    </Row>
-                    <br/>
+                    <div className="col-sm">
+                        <br/>
+                        <div>
+                            <Label htmlFor="senderName">Sender Name</Label>
+                            <Input type="text" id="senderName" placeholder={"John Doe"}
+                                   onChange={handleChangeText}/>
+                        </div>
+                    </div>
+                    <div className="col-sm">
+                        <br/>
+                        <div>
+                            <Label htmlFor="senderEmail">Sender Email</Label>
+                            <Input type="email" id="senderEmail" placeholder={"johndoe@gmail.com"}
+                                   onChange={handleChangeText}/>
+                        </div>
+                    </div>
+                </Row>
 
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <LocationDropdown onChange={(value) => setFormData({
-                                ...formData, "nodeId": value})}></LocationDropdown>
-                        </Col>
+                                ...formData, "nodeId": value
+                            })}></LocationDropdown>
+                        </div>
 
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label>Flower Type</Label>
                                 <Select required onValueChange={
@@ -120,29 +124,29 @@ const FlowerServiceRequest: React.FC = () => {
                                     </SelectContent>
                                 </Select>
                             </div>
-                        </Col>
+                        </div>
                     </Row>
-
-                    <br/>
 
                     <Row>
 
 
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <Label htmlFor="patientName">Patient Name</Label>
                             <Input type="text" id="patientName" placeholder="John Smith"
                                    onChange={handleChangeText}></Input>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <Label htmlFor="note">Add a note</Label>
-                            <Textarea id="note" placeholder="Get well soon! Miss you loads <3"
+                            <Textarea id="note" placeholder="Get well soon!"
                                       onChange={handleChangeTextArea}></Textarea>
-                        </Col>
+                        </div>
                     </Row>
-                    <br/>
 
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <Label>Priority</Label>
                             <Select required onValueChange={
                                 (value) => setFormData({ ...formData, "priority": value })}>
@@ -155,14 +159,15 @@ const FlowerServiceRequest: React.FC = () => {
                                     <SelectItem value="Emergency">Emergency</SelectItem>
                                 </SelectContent>
                             </Select>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <Label htmlFor="date">Delivery Date</Label>
                             <Input type="text" id="deliveryDate" placeholder="DD/MM/YY" onChange={handleChangeText}></Input>
-                        </Col>
+                        </div>
                     </Row>
-                    <br/>
 
+                    <br/>
                     <Row>
                         <Col className={"justify-center flex"}>
                             <Button variant={"default"} onClick={handleSubmit}>Submit</Button>

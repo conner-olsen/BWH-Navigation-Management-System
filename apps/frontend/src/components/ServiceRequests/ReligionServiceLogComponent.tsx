@@ -89,22 +89,24 @@ function GenerateTableRowsServices({tableData,employeeData,selectedStatus,select
 
 const TableServices: React.FC<{ tableData: religiousServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string;onUpdate:(data:religiousServiceRequest[])=>void}> = ({tableData, employeeData, selectedStatus, selectedEmployeeUser,onUpdate}) => {
     return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Room ID</TableHead>
-                    <TableHead>Priority</TableHead>
-                    <TableHead>Patient Name</TableHead>
-                    <TableHead>Religion</TableHead>
-                    <TableHead>Note</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Assignment</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                <GenerateTableRowsServices tableData={tableData} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={onUpdate}></GenerateTableRowsServices>
-            </TableBody>
-        </Table>
+        <div className={"overflow-y-auto h-80"}>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Room ID</TableHead>
+                        <TableHead>Priority</TableHead>
+                        <TableHead>Patient Name</TableHead>
+                        <TableHead>Religion</TableHead>
+                        <TableHead>Note</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Assignment</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <GenerateTableRowsServices tableData={tableData} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={onUpdate}></GenerateTableRowsServices>
+                </TableBody>
+            </Table>
+        </div>
     );
 };
 

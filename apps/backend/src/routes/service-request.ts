@@ -4,10 +4,11 @@ import {ServiceRequest} from "common/interfaces/interfaces.ts";
 const router: Router = express.Router();
 
 
+
 router.post("/:serviceType", async (req: Request, res: Response) => {
 
   let requestType;
-  const { nodeId,employeeUser, status, priority,id, ...specificData } = req.body;
+  const { nodeId, employeeUser, status, priority, ...specificData } = req.body;
 
   try {
 
@@ -31,7 +32,7 @@ router.post("/:serviceType", async (req: Request, res: Response) => {
         requestType = {flowerServiceRequests: {create: specificData}};
         break;
       default:
-        res.sendStatus(501);
+        return res.sendStatus(501); // Ensure function exits after sending response in default case
     }
 
 
@@ -51,10 +52,10 @@ router.post("/:serviceType", async (req: Request, res: Response) => {
         ...requestType
       } });
 
-    res.sendStatus(200);
+    return res.sendStatus(200); // Exit function after sending response
   } catch (error) {
     console.error(`Error creating service request: ${error}`);
-    res.sendStatus(500);
+    return res.sendStatus(500); // Ensure function exits after sending response on error
   }
 });
 
@@ -81,19 +82,19 @@ router.get("/:serviceType", async (req: Request, res: Response) => {
       requestType = PrismaClient.flowerServiceRequest.findMany({include: {ServiceRequest: true}});
       break;
     default:
-      res.sendStatus(501);
+      return res.sendStatus(501); // Ensure function exits after sending response in default case
   }
 
   try{
     if(requestType){
       const internalCSV = await requestType;
 
-      res.status(200).send(internalCSV);
+      return res.status(200).send(internalCSV); // Exit function after sending response
     }
     }
   catch (error){
     console.error(`Error exporting Service Request data: ${error}`);
-    res.sendStatus(500);
+    return res.sendStatus(500); // Ensure function exits after sending response on error
   }
 });
 
@@ -103,7 +104,6 @@ router.patch("/", async (req: Request, res: Response) => {
 
 
   try {
-    res.send(srUpdate);
     const updatedRequest = await PrismaClient.serviceRequest.update({
       where: {id: srUpdate.id  },
       data: {
@@ -112,10 +112,10 @@ router.patch("/", async (req: Request, res: Response) => {
       }
     });
 
-    res.status(200).send(updatedRequest);
+    return res.status(200).send(updatedRequest); // Exit function after sending response
   } catch (error) {
     console.error(`Error updating ServiceRequest fields: ${error}`);
-    res.sendStatus(500);
+    return res.sendStatus(500); // Ensure function exits after sending response on error
   }
 
 });
