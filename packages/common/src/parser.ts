@@ -37,6 +37,9 @@ export function parseCSV(csvString: string): CSVRow[] {
   return lines.slice(1).filter(line => line.trim() !== '').map((line) => {
     // Split the line by comma and create an object
     const data = line.split(",");
+    if (data.length !== headers.length) {
+      throw new Error("Number of fields in row does not match number of headers");
+    }
     return headers.reduce((obj, nextKey, index) => {
       obj[nextKey] = data[index];
       return obj;
