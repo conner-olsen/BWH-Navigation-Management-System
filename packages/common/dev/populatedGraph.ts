@@ -10,6 +10,4 @@ import { Graph } from "../src/graph.ts";
 
 const populatedGraph = new Graph();
 
-populatedGraph.fromDB();
-
 export default populatedGraph;

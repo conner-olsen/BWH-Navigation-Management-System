@@ -1,6 +1,7 @@
 import { PathfindingStrategy } from "./pathfinding-strategy.ts";
 import { Node } from "./node.ts";
 import { node, edge } from "../interfaces/interfaces.ts";
+import { AStarPathfindingStrategy } from "./pathfinding-strategy.ts";
 
 /**
  * Class representing a Graph.
@@ -10,11 +11,12 @@ export class Graph {
   private pathfindingStrategy: PathfindingStrategy;
 
   /**
-   Z* Create a new Graph.
+   * Create a new Graph, optionally with a custom pathfinding strategy.
+   * @param pathfindingStrategy The pathfinding strategy to use. Defaults to A* if not provided.
    */
-  constructor(pathfindingStrategy: PathfindingStrategy) {
+  constructor(pathfindingStrategy?: PathfindingStrategy) {
     this.nodes = new Map();
-    this.pathfindingStrategy = pathfindingStrategy;
+    this.pathfindingStrategy = pathfindingStrategy || new AStarPathfindingStrategy();
   }
 
   /**
@@ -32,7 +34,7 @@ export class Graph {
    * @returns An array of node IDs representing the path from start to end.
    */
   runPathfinding(startNode: string, endNode: string): string[] {
-    return this.pathfindingStrategy.findPath(this, startNode, endNode);
+    return this.pathfindingStrategy.findPath(startNode, endNode, this);
   }
 
   /**

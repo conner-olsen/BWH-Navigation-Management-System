@@ -180,7 +180,7 @@ export class DijkstraPathfindingStrategy implements PathfindingStrategy {
 
     const openSet: Set<string> = new Set([startNode]);
     const cameFrom: Map<string, string> = new Map();
-    const gScore: Map<string, number> = new Map(graph.nodes.keys().map(nodeId => [nodeId, Infinity]));
+    const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
     gScore.set(startNode, 0);
 
     while (openSet.size > 0) {
