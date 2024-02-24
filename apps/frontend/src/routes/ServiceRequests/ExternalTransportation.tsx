@@ -69,34 +69,36 @@ const ExternalTransportation: React.FC = () => {
     return (
         <Container>
 
-            <h1 className=" bg-gradient-to-r from-blue-600 to-black bg-clip-text text-transparent dark:text-white">
+            <h1 className=" bg-gradient-to-r from-blue-600 to-black bg-clip-text text-transparent dark:text-white text-center">
                 External Transportation Request
             </h1>
-            <div className={"border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4"}>
+            <div className={"border-2 border-blue-600 dark:border-blue-400 rounded-lg pb-4 px-4"}>
 
                 <Container>
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="name">Patient Name</Label>
                                 <Input type="text" id="name" placeholder={"Tanya Khan"}
                                        onChange={handleChangeText}/>
                             </div>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="transportation">Transportation</Label>
                                 <Input type="text" id="transportation" placeholder={"Ambulance"}
                                        onChange={handleChangeText}/>
                             </div>
-                        </Col>
+                        </div>
 
                     </Row>
-                    <br/>
 
                     <Row>
 
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label>Priority</Label>
                                 <Select required onValueChange={
@@ -111,31 +113,34 @@ const ExternalTransportation: React.FC = () => {
                                     </SelectContent>
                                 </Select>
                             </div>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="destination">Destination</Label>
                                 <Input type="text" id="destination" placeholder={"Mayo Clinic"}
                                        onChange={handleChangeText}/>
                             </div>
-                        </Col>
+                        </div>
 
                     </Row>
-                    <br/>
+
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="date">Date</Label>
                                 <Input type="text" id="date" placeholder={"02/14/2024"} onChange={handleChangeText}/>
                             </div>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="description">Description</Label>
                                 <Textarea id="description" placeholder={"Subdural Hematoma"}
                                           onChange={handleChangeTextArea}/>
                             </div>
-                        </Col>
+                        </div>
 
                         <br/>
 

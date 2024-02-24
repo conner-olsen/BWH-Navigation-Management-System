@@ -68,35 +68,38 @@ const ReligiousServiceRequest: React.FC = () => {
             <h1 className=" bg-gradient-to-r from-gray-500 to-black bg-clip-text text-transparent dark:text-white">
                 Religious Service Request
             </h1>
-            <div className={"border-2 border-black rounded-lg p-4 dark:border-blue-400"}>
+            <div className={"border-2 border-border dark:border-blue-400 rounded-lg px-4 pb-4"}>
 
                 <Container>
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="patientName">Patient Name</Label>
                                 <Input type="text" id="patientName" placeholder={"James Walden"}
                                        onChange={handleChangeText}/>
                             </div>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="religion">Religion</Label>
                                 <Input type="text" id="religion" placeholder={"Christianity"}
                                        onChange={handleChangeText}/>
                             </div>
-                        </Col>
+                        </div>
                     </Row>
-                    <br/>
 
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <LocationDropdown onChange={(value) => setFormData({
                                 ...formData, "nodeId": value
                             })}></LocationDropdown>
-                        </Col>
+                        </div>
 
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label>Priority</Label>
                                 <Select required onValueChange={
@@ -111,16 +114,17 @@ const ReligiousServiceRequest: React.FC = () => {
                                     </SelectContent>
                                 </Select>
                             </div>
-                        </Col>
+                        </div>
 
 
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="note">Request Details</Label>
                                 <Textarea id="note" placeholder="Prayer time breaks"
                                           onChange={handleChangeTextArea}></Textarea>
                             </div>
-                        </Col>
+                        </div>
                     </Row>
 
                     <br/>

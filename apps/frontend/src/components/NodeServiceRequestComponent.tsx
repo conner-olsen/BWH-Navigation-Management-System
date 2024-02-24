@@ -63,17 +63,19 @@ function GenerateTableRowsServices(tableData: ServiceRequest[]): JSX.Element[] {
 }
 const TableServices: React.FC<{ tableData: ServiceRequest[]}> = ({tableData}) => {
     return (
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead>Priority</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Assignment</TableHead>
-                    <TableHead>Type</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>{GenerateTableRowsServices(tableData)}</TableBody>
-        </Table>
+        <div className={"overflow-y-auto h-80"}>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Priority</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Assignment</TableHead>
+                        <TableHead>Type</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>{GenerateTableRowsServices(tableData)}</TableBody>
+            </Table>
+        </div>
     );
 };
 export function NodeServiceRequestComponent(node: Node | null): JSX.Element {

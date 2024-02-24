@@ -15,6 +15,7 @@ import NavBar from "./components/NavBar.tsx";
 import ExternalTransportation from "./routes/ServiceRequests/ExternalTransportation.tsx";
 import InternalTransportation from "./routes/ServiceRequests/InternalTransportation.tsx";
 import LanguageService from "./routes/ServiceRequests/LanguageService.tsx";
+import AboutPage from "./routes/AboutPage.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -81,8 +82,11 @@ function App() {
           {
               path: "/EmployeeManager",
               element: <EmployeeManager/>
-          }
-
+          },
+          {
+              path: "/AboutPage",
+              element: <AboutPage/>
+            },
       ],
     },
   ]);
