@@ -7,6 +7,7 @@ import {Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/tabs.t
 import ExportEdgeDataButton from "../components/ExportEdgeDataButton.tsx";
 import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
 import Global_Footer from "../components/Global_Footer.tsx";
+import ExportAllDataToCSVButton from "../components/ExportAllButton.tsx";
 
 export function NodeEdgeData() {
 
@@ -85,6 +86,7 @@ export function NodeEdgeData() {
                         <h1 className="text-left max-[576px]:text-center">Node Data</h1>
                         <div className="container flex max-[576px]:justify-center">
                             <ExportNodeDataToCSVButton></ExportNodeDataToCSVButton>
+                            <ExportAllDataToCSVButton></ExportAllDataToCSVButton>
                         </div>
                         <br/>
                         <DragNDrop onFileDrop={handleNodeFileDrop}></DragNDrop>

@@ -69,14 +69,14 @@ return (
 
             {isAuthenticated && (
                 <Link to="/EmployeeManager" className="no-underline p-2 text-white hidden xl:block text-[17px]">
-                    <div className={"hover:text-blue-500"}>Employee Manager</div>
+                    <div className={"hover:text-blue-500"}>Data Manager</div>
                 </Link>
             )}
-            {isAuthenticated && (
-                <Link to="/DataUpload" className="no-underline p-2 text-white hidden xl:block text-[17px]">
-                    <div className={"hover:text-blue-500"}>Data Upload</div>
-                </Link>
-            )}
+            {/*{isAuthenticated && (*/}
+            {/*    <Link to="/DataUpload" className="no-underline p-2 text-white hidden xl:block text-[17px]">*/}
+            {/*        <div className={"hover:text-blue-500"}>Data Upload</div>*/}
+            {/*    </Link>*/}
+            {/*)}*/}
             {isAuthenticated && (
                 <Link to="/ServiceLog" className="no-underline p-2 text-white hidden xl:block text-[17px]">
                     <div className={"hover:text-blue-500"}>Service Log</div>
