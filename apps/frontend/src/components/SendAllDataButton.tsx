@@ -47,7 +47,7 @@ const SendAllDataButton = () => {
 
     return (
         <div>
-            <Input type="file" multiple onChange={handleFileChange} className={"hover:bg-blue-300"}/>
+            <Input type="file" multiple onChange={handleFileChange} className={"hover:bg-blue-300"} />
         </div>
     );
 };
