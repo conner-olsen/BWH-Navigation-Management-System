@@ -1,4 +1,4 @@
-import {Col,  Row } from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "../components/ui/tabs.tsx";
 import {GetDataEmployees} from "../components/EmployeeManagerComponent.tsx";
 import {Outlet} from "react-router-dom";
@@ -10,6 +10,11 @@ import {Input} from "../components/ui/input.tsx";
 import ExportEmployeeCSVButton from "../components/ExportEmployeeCSVButton.tsx";
 import DragNDrop from "../components/DragNDrop.tsx";
 import SendAllDataButton from "../components/SendAllDataButton.tsx";
+import {GetDataNodes} from "../components/NodesDataBaseTableDisplay.tsx";
+import ExportNodeDataToCSVButton from "../components/ExportNodeDataButton.tsx";
+import ExportAllDataToCSVButton from "../components/ExportAllButton.tsx";
+import ExportEdgeDataToCSVButton from "../components/ExportEdgeDataButton.tsx";
+import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
 export const EmployeeManager = () => {
 
     const [formData, setFormData] = useState({
@@ -120,6 +125,70 @@ export const EmployeeManager = () => {
         reader.readAsText(file);
     };
 
+    const handleNodeFileDrop = async(file: File) => {
+        // Create a FileReader
+        const nodeReader = new FileReader();
+
+        // Set up a callback for when the file is loaded
+        nodeReader.onload = async (event) => {
+            if (event.target) {
+                // Extract the CSV content as a string
+                const csvString = event.target.result as string;
+
+                console.log(csvString);
+
+                try {
+                    const res = await fetch("/api/node-populate", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json", // Set the appropriate content type
+                        },
+                        body: JSON.stringify({csvString}), // Send the CSV string as JSON
+                    });
+
+
+                    console.log(res);
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            }
+
+        };
+        nodeReader.readAsText(file);
+    };
+
+    const handleEdgeFileDrop = async(file: File) => {
+        // Create a FileReader
+        const edgeReader = new FileReader();
+
+        // Set up a callback for when the file is loaded
+        edgeReader.onload = async (event) => {
+            if (event.target) {
+                // Extract the CSV content as a string
+                const csvString = event.target.result as string;
+
+                console.log(csvString);
+
+                try {
+                    const res = await fetch("/api/edge-populate", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json", // Set the appropriate content type
+                        },
+                        body: JSON.stringify({csvString}), // Send the CSV string as JSON
+                    });
+
+
+                    console.log(res);
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            }
+
+        };
+        edgeReader.readAsText(file);
+    };
+
 
         return (
             <>
@@ -127,7 +196,7 @@ export const EmployeeManager = () => {
                 <Outlet/>
                 <div className="container" style={{display: 'flex', alignItems: 'center'}}>
                         <Col>
-                            <h1>EMPLOYEE MANAGER</h1>
+                            <h1>DATA MANAGER</h1>
                         </Col>
                 </div>
 
@@ -138,10 +207,13 @@ export const EmployeeManager = () => {
                             <TabsTrigger value="Create Employee">Create Employee</TabsTrigger>
                             <TabsTrigger value="Update Employee">Update Employee</TabsTrigger>
                             <TabsTrigger value="Delete Employee">Delete Employee</TabsTrigger>
+                            <TabsTrigger value="Node Data">Node Data</TabsTrigger>
+                            <TabsTrigger value="Edge Data">Edge Data</TabsTrigger>
+                            <ExportAllDataToCSVButton></ExportAllDataToCSVButton>
                             <SendAllDataButton></SendAllDataButton>
-                        </TabsList>
 
-                        {/*<TabsContent value="Employee List">*/}
+
+                        </TabsList>
 
                         <TabsContent value="Create Employee">
 
@@ -196,7 +268,7 @@ export const EmployeeManager = () => {
                                             </div>
                                                 </Col>
 
-                                {/*This is the delete employee thing*/}
+                                {/*This is the delete employee functionality*/}
 
                                                 <Col>
                                                     <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
@@ -211,8 +283,6 @@ export const EmployeeManager = () => {
                                             </Row>
 
                         </TabsContent>
-
-
 
 
                         <TabsContent value="Update Employee">
@@ -320,10 +390,34 @@ export const EmployeeManager = () => {
                                     </Col>
                                 </Row>
                         </TabsContent>
+
+                    {/* Node and Edge Data */}
+                        <TabsContent value="Node Data">
+                            <Container>
+                                <div className="container flex max-[576px]:justify-center">
+                                    <ExportNodeDataToCSVButton></ExportNodeDataToCSVButton>
+                                </div>
+                                <br/>
+                                <DragNDrop onFileDrop={handleNodeFileDrop}></DragNDrop>
+                                <GetDataNodes></GetDataNodes>
+                            </Container>
+                        </TabsContent>
+                        <TabsContent value="Edge Data">
+                            <Container>
+                                <div className="container flex max-[576px]:justify-center">
+                                    <ExportEdgeDataToCSVButton></ExportEdgeDataToCSVButton>
+                                </div>
+                                <br/>
+                                <DragNDrop onFileDrop={handleEdgeFileDrop}></DragNDrop>
+                                <GetDataEdges></GetDataEdges>
+                            </Container>
+                        </TabsContent>
+
+
                     </Tabs>
                 </div>
             </div>
-            <Global_Footer/>
+                <Global_Footer/>
             </>
         );
 };
