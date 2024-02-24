@@ -1,4 +1,5 @@
 import {ChangeEvent, useCallback, useEffect, useState} from "react";
+import {Input} from "./ui/input.tsx";
 
 const SendAllDataButton = () => {
 
@@ -46,10 +47,7 @@ const SendAllDataButton = () => {
 
     return (
         <div>
-            <input type="file" multiple onChange={handleFileChange}/>
-            <div>
-                <p>Import All Files:</p>
-            </div>
+            <Input type="file" multiple onChange={handleFileChange} className={"hover:bg-blue-300"}/>
         </div>
     );
 };
