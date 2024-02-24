@@ -219,13 +219,39 @@ export function BFSComponent() {
 
     // =============================== 3D PROTOTYPE =============================== //
     const nodeFloorToURL = (floor: string) => {
-        if (floor === "3") return "public/maps/03_thethirdfloor.png";
-        else if (floor === "2") return "public/maps/02_thesecondfloor.png";
-        else if (floor === "1") return "public/maps/01_thefirstfloor.png";
-        else if (floor === "L1") return "public/maps/00_thelowerlevel1.png";
-        else if (floor === "L2") return "public/maps/00_thelowerlevel2.png";
+        if (floor === "3") return "public/maps/map-floor3-cropped.png";
+        else if (floor === "2") return "public/maps/map-floor2-cropped.png";
+        else if (floor === "1") return "public/maps/map-floor1-cropped.png";
+        else if (floor === "L1") return "public/maps/map-lowerlevel1-cropped.png";
+        else if (floor === "L2") return "public/maps/map-lowerlevel2-cropped.png";
         else return "";
     };
+    // const clearGuidelines = () => {
+    //     const floors = ["3", "2", "1", "L1", "L2"];
+    //     let id = 1;
+    //     floors.forEach((floor) => {
+    //         while (id < 20) {
+    //             const element = document.getElementById(`d${id}f` + floor);
+    //             if (element) {
+    //                 element.remove();
+    //             } else break;
+    //         }
+    //     });
+    //     console.log("ran");
+    // };
+    useEffect(() => {
+        const handleBodyClass = () => {
+            if (do3D && startNode !== "" && endNode !== "") {
+                document.body.classList.add('threeD-on');
+            } else {
+                document.body.classList.remove('threeD-on');
+            }
+        };
+        handleBodyClass(); // Initial setup
+        return () => {
+            document.body.classList.remove('threeD-on'); // Cleanup on unmount
+        };
+    }, [do3D, startNode, endNode]);
 
     useEffect(() => {
         // Check which floor will be present in the path
@@ -242,7 +268,8 @@ export function BFSComponent() {
 
         const FloorComponent: React.FC<{ floor: string, marginTop: number, z_index: number }> = ({ floor, marginTop, z_index }) => {
             return (
-                <div className={`flex justify-between items-center z-[${z_index}] bottom-[${marginTop}px] ${marginTop === 0? '' : 'relative'}`}>
+                <div className={`flex justify-between items-center ${marginTop === 0? '' : 'relative'}`}
+                    style={{bottom: marginTop + 'px', zIndex: z_index}}>
                     <h2 className="z-[2]">Floor {floor}</h2>
                     <div>
                         <MapDisplay3D key={mapKey} floorMap={nodeFloorToURL(floor)} floor={floor}
@@ -369,7 +396,9 @@ export function BFSComponent() {
                             </div>
                             <div className="flex flex-col grow justify-between pl-[2px] pr-2">
                                 <Select value={startNode}
-                                        onValueChange={(location: string) => setStartNode(location)}>
+                                        onValueChange={(location: string) => {
+                                            setStartNode(location);
+                                            }}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select Location"/>
                                     </SelectTrigger>
@@ -378,7 +407,9 @@ export function BFSComponent() {
                                     </SelectContent>
                                 </Select>
                                 <Select value={endNode}
-                                        onValueChange={(location: string) => setEndNode(location)}>
+                                        onValueChange={(location: string) => {
+                                            setEndNode(location);
+                                            }}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select Location"/>
                                     </SelectTrigger>
@@ -585,7 +616,9 @@ export function BFSComponent() {
                                 </div>
                                 <div className="flex flex-col grow justify-between pl-[2px] pr-2">
                                     <Select value={startNode}
-                                            onValueChange={(location: string) => setStartNode(location)}>
+                                            onValueChange={(location: string) => {
+                                                setStartNode(location);
+                                                }}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Select Location"/>
                                         </SelectTrigger>
@@ -594,7 +627,9 @@ export function BFSComponent() {
                                         </SelectContent>
                                     </Select>
                                     <Select value={endNode}
-                                            onValueChange={(location: string) => setEndNode(location)}>
+                                            onValueChange={(location: string) => {
+                                                setEndNode(location);
+                                                }}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Select Location"/>
                                         </SelectTrigger>

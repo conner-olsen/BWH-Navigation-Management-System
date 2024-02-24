@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios from "axios";
+import ReactDOM from "react-dom";
+import Guideline from "./Guideline.tsx";
 
 interface MapDisplayProps {
     floorMap: string;
@@ -37,7 +39,7 @@ function MapDisplay3D({
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
 
-    const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+    //const [coordinates, setCoordinates] = useState({ x: 100, y: 0 });
 
 
 
@@ -61,6 +63,7 @@ function MapDisplay3D({
             setEndNodeId(endNode);
         }
     }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
+
     const StrokePath: React.FC<StrokePathProps> = ({ x1, y1, x2, y2, color, style }) => (
         <line className={style}
             x1={x1} y1={y1} x2={x2} y2={y2}
@@ -111,39 +114,102 @@ function MapDisplay3D({
             }
             if (node && nextNode && node.floor !== nextNode.floor && node.floor === floor) {
                 // Yellow indicates stairs, while blue indicates elevator (accessible) to a DIFFERENT floor
-                pathElements.push(<circle id={"cf" + stairsCounter} cx={node.xCoord} cy={node.yCoord} r="50"
+                pathElements.push(<circle id={"c" + stairsCounter + "f" + floor} cx={node.xCoord} cy={node.yCoord} r="50"
                                           fill={node.nodeType === "STAI"? 'yellow' : 'blue'} stroke="black" stroke-width="10"/>
                 );
                 stairsCounter++;
             }
         }
+        if (path.length > 0) displayGuidelines();
         return pathElements;
     };
 
-    useEffect(() => {
-        const element = document.getElementById('cf1');
-        if (element) {
-            const rect = element.getBoundingClientRect();
-            setCoordinates({ x: rect.x, y: rect.y });
-            console.log(rect.x + " " + rect.y);
+    const displayGuidelines = () => {
+        let id = 1;
+        const coordinateArr: {x: number, y: number}[] = [];
+
+        while (id) {
+            const element = document.getElementById(`c${id}f` + floor);
+            if (element) {
+                const rect = element.getBoundingClientRect();
+                coordinateArr.push({x: rect.x, y: rect.y});
+                id++;
+                console.log(element);
+            } else break;
         }
-    }, []);
 
-    useEffect(() => {
-        const divElement = document.createElement('div');
-        divElement.style.position = 'absolute';
-        divElement.style.left = `${coordinates.x}px`;
-        divElement.style.top = `${coordinates.y}px`;
-        divElement.style.width = '100px';
-        divElement.style.height = '100px';
-        divElement.style.backgroundColor = 'blue';
-        divElement.textContent = 'Div with respect to screen';
-        document.body.appendChild(divElement);
+        for (let i = 0; i < coordinateArr.length; i++) {
+            const coordinate = coordinateArr[i];
+            const div = document.createElement('div');
+            div.id = `d${id}f${floor}`;
+            div.style.position = 'absolute';
+            div.style.top = `${coordinate.y + 5}px`;
+            div.style.left = `${coordinate.x + 10}px`;
+            document.body.appendChild(div); // Append the div to the body
 
-        return () => {
-            document.body.removeChild(divElement);
-        };
-    }, [coordinates]);
+            // Render the MyComponent inside the dynamically created div
+            ReactDOM.render(<Guideline goingUp={false} floorsApart={1}/>, div);
+        }
+        return <></>;
+    };
+
+    // function renderElivators(elivatorNode:Node[]) {
+    //     elivatorNode.map((node) => {
+    //         if(node.nodeType == "ELEV") {
+    //             console.log("test");
+    //             const div = document.createElement('div');
+    //             div.style.position = 'absolute';
+    //             div.style.top = `${node.xCoord + 6}px`;
+    //             div.style.left = `${node.yCoord + 10}px`;
+    //             document.body.appendChild(div); // Append the div to the body
+    //
+    //             // Render the MyComponent inside the dynamically created div
+    //             ReactDOM.render(<Guideline/>,
+    //                 div);
+    //         }
+    //     });
+    // }
+
+    // const [cords,setCords] = useState<{x: number, y: number}[]>([]);
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     let id = 1;
+    //     const coordinateArr: {x: number, y: number}[] = [];
+    //     setTimeout(() => {
+    //         while (id) {
+    //             const element = document.getElementById(`c${id}f` + floor);
+    //             if (element) {
+    //                 const rect = element.getBoundingClientRect();
+    //                 coordinateArr.push({x: rect.x, y: rect.y});
+    //                 id++;
+    //             } else break;
+    //
+    //         }
+    //         setCords(coordinateArr);
+    //     },5000);
+    // }, [floor]);
+    //
+    // useEffect(() => {
+    //     for (let i = 0; i < cords.length; i++) {
+    //         const coordinate = cords[i];
+    //         const div = document.createElement('div');
+    //         div.style.position = 'absolute';
+    //         div.style.top = `${coordinate.y + 5}px`;
+    //         div.style.left = `${coordinate.x + 10}px`;
+    //         document.body.appendChild(div); // Append the div to the body
+    //
+    //         // Render the MyComponent inside the dynamically created div
+    //         ReactDOM.render(<Guideline goingUp={true} floorsApart={2}/>,
+    //             div);
+    //     }
+    //
+    //     // Cleanup function to remove the dynamically created div when the component unmounts
+    //     return () => {
+    //         // ReactDOM.unmountComponentAtNode(div);
+    //         // document.body.removeChild(div);
+    //     };
+    //
+    // }, [cords]);
 
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (
@@ -159,7 +225,6 @@ function MapDisplay3D({
         );
     };
 
-
     const displayNodePins = (graph: Graph) => {
         return (
             Array.from(graph.nodes.values()).map((node: Node) => {
@@ -169,17 +234,14 @@ function MapDisplay3D({
                             {startNodeId === node.id && displaySelectedNodes(node, 'start')}
                             {endNodeId === node.id && displaySelectedNodes(node, 'end')}
                         </g>
-                    );
-            })
-        );
+                    );}));
     };
-
 
     return (
         <div className={"relative map-rotate"}>
             <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
                 <image href={floorMap} width="5000" height="3400" x="0" y="0"
-                       className="opacity-[70%] cursor-pointer" onClick={() => mapChange(floor)}/>
+                       className="opacity-[70%] cursor-pointer dark:invert" onClick={() => mapChange(floor)}/>
                 {graph && path.length > 0 && displayPath(graph, path)}
                 {graph && path.length > 0 && displayFloorStart(graph, path)}
                 {graph && displayNodePins(graph)}
