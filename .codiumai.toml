@@ -50,15 +50,13 @@ Use 'test' instead of 'it' for Jest tests.
 # });
 # """
 example_test = """
-describe("something", () => {
-  test("it says 'bar'", () => {
-    // given
+describe("sum", () => {
+  test("adds 1 + 2 to equal 3", () => {
+    expect(sum(1, 2)).toBe(3);
+  });
 
-    // when
-    const res = something.say();
-   
-    // Then
-    expect(res).to.equal("bar");
+  test("adds 2 + 2 to equal 4", () => {
+    expect(sum(2, 2)).toBe(4);
   });
 });
 """
