@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import {Node} from "common/src/graph-structure.ts";
 import {
     ServiceRequest
-} from "../../../../packages/common/interfaces/interfaces.ts";
+} from "common/interfaces/interfaces.ts";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
 import {Container} from "react-bootstrap";
 
