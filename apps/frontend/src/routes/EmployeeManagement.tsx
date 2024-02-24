@@ -9,6 +9,7 @@ import {Label} from "../components/ui/label.tsx";
 import {Input} from "../components/ui/input.tsx";
 import ExportEmployeeCSVButton from "../components/ExportEmployeeCSVButton.tsx";
 import DragNDrop from "../components/DragNDrop.tsx";
+import SendAllDataButton from "../components/SendAllDataButton.tsx";
 export const EmployeeManager = () => {
 
     const [formData, setFormData] = useState({
@@ -137,6 +138,7 @@ export const EmployeeManager = () => {
                             <TabsTrigger value="Create Employee">Create Employee</TabsTrigger>
                             <TabsTrigger value="Update Employee">Update Employee</TabsTrigger>
                             <TabsTrigger value="Delete Employee">Delete Employee</TabsTrigger>
+                            <SendAllDataButton></SendAllDataButton>
                         </TabsList>
 
                         {/*<TabsContent value="Employee List">*/}
