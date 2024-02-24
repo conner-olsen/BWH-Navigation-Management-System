@@ -309,7 +309,6 @@ function MapDisplay({
                 {graph && displayNodePins(graph)}
                 {graph && displayHoverCards(graph)}
             </svg>
-
         </div>
     );
 }
