@@ -1,11 +1,11 @@
-import { Graph } from 'common/src/graph-structure.ts';
-import { Node } from 'common/src/graph-structure.ts';
+import { Graph } from 'src/graph.ts';
 import {bfsPathfinding} from "common/src/PathfindingMethod.ts";
+import {Node} from "src/node.ts";
 
 /////////////////manual bfs testing:
 const graph = new Graph();
 
-// Add nodes and edges to the graph (similar to the example in graph-structure.ts)
+// Add nodes and edges to the graph (similar to the example in graph.ts)
 // create nodes
 const node1 = new Node("1", 1, 1, "1", "1", "1", "1", "1");
 const node2 = new Node("2", 2, 2, "2", "2", "2", "2", "2");

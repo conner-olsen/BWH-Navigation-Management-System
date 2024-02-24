@@ -1,6 +1,6 @@
 import React from 'react';
-import {Node} from 'common/src/graph-structure.ts';
 import {useMapLogic} from "./useMapLogicFull.tsx";
+import {Node} from "common/src/node.ts";
 
 
 function MapLowerLevel1() {

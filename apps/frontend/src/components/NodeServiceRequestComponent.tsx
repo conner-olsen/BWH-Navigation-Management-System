@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import axios, { AxiosResponse } from "axios";
-import {Node} from "common/src/graph-structure.ts";
 import {
     ServiceRequest
 } from "../../../../packages/common/interfaces/interfaces.ts";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
 import {Container} from "react-bootstrap";
+import {Node} from "common/src/node.ts";
 
 
 function processServiceRequest(serviceRequest: ServiceRequest) {

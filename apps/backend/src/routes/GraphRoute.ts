@@ -1,6 +1,6 @@
 import express from "express";
 import client from "../bin/database-connection.ts";
-import {Graph} from "common/src/graph-structure.ts";
+import {Graph} from "src/graph.ts";
 
 const router = express.Router();
 

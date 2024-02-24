@@ -1,9 +1,10 @@
 
 import { useState, useEffect } from 'react';
-import { Graph, Node } from "common/src/graph-structure";
+import { Graph } from "common/src/graph.ts";
 import populatedGraph from "common/dev/populatedGraph";
 import React from "react";
 import 'animation.css';
+import {Node} from "common/src/node.ts";
 
 interface UseMapLogicReturn {
   graph: Graph | null;

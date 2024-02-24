@@ -1,4 +1,4 @@
-import { Graph } from "../../common/src/graph-structure.ts";
+import { Graph } from "../src/graph.ts";
 // import nodeCSVString from "./nodeCSVString.ts";
 // import edgeCSVString from "./edgeCSVString.ts";
 

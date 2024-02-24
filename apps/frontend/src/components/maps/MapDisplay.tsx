@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Graph, Node} from 'common/src/graph-structure.ts';
+import {Graph} from 'common/src/graph.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import axios   from "axios";
 import "./animation.css";
+import {Node} from "common/src/node.ts";
 interface MapDisplayProps {
     floorMap: string;
     floor: string;

@@ -1,4 +1,5 @@
-import {Node, Graph} from "./graph-structure.ts";
+import {Graph} from "./graph.ts";
+import {Node} from "./node.ts";
 
 export interface PathfindingMethod {
   route: string;

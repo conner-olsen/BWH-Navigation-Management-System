@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Node } from "common/src/graph-structure.ts";
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
@@ -16,6 +15,7 @@ import {
     DrawerTrigger
 } from "./ui/drawer.tsx";
 import {Button} from "./ui/button.tsx";
+import {Node} from "common/src/node.ts";
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
