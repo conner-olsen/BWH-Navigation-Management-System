@@ -1,4 +1,5 @@
 import {Graph} from "./graph.ts";
+import TinyQueue from 'tinyqueue';
 
 export interface PathfindingStrategy {
   findPath(startNode: string, endNode: string, graph: Graph): string[];
@@ -41,6 +42,7 @@ export class BFSPathfindingStrategy implements PathfindingStrategy {
     return [];
   }
 }
+
 export class AStarPathfindingStrategy implements PathfindingStrategy {
   /**
    * Finds the path from the startNode to the endNode in the given graph using the A* algorithm.
@@ -54,18 +56,21 @@ export class AStarPathfindingStrategy implements PathfindingStrategy {
       return [];
     }
 
-    const openSet: [string, number][] = [[startNode, 0]]; // Open set as [nodeId, fScore]
-    const cameFrom: Map<string, string> = new Map(); // For reconstructing path
-    const gScore: Map<string, number> = new Map(); // Cost from start to node
-    const fScore: Map<string, number> = new Map(); // Estimated cost from start to end through node
+    // Define a comparator for the priority queue based on fScore
+    const comparator = (a: [string, number], b: [string, number]) => a[1] - b[1];
+    const openSet = new TinyQueue<[string, number]>([], comparator);
+
+    const cameFrom: Map<string, string> = new Map();
+    const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map((nodeId: string) => [nodeId, Infinity]));
+    const fScore: Map<string, number> = new Map([...graph.nodes.keys()].map((nodeId: string) => [nodeId, Infinity]));
 
     gScore.set(startNode, 0);
     fScore.set(startNode, this.calculateDistance(startNode, endNode, graph, false));
 
+    openSet.push([startNode, fScore.get(startNode) as number]); // Asserting as number since we just set it above
+
     while (openSet.length > 0) {
-      // Sort by fScore
-      openSet.sort((a, b) => (fScore.get(a[0]) || Infinity) - (fScore.get(b[0]) || Infinity));
-      const current = openSet.shift()![0];
+      const current = openSet.pop()![0];
 
       if (current === endNode) {
         return this.reconstructPath(cameFrom, current);
@@ -81,8 +86,8 @@ export class AStarPathfindingStrategy implements PathfindingStrategy {
           gScore.set(neighbor, tentativeGScore);
           fScore.set(neighbor, tentativeGScore + this.calculateDistance(neighbor, endNode, graph, false));
 
-          if (!openSet.some(([nodeId]) => nodeId === neighbor)) {
-            openSet.push([neighbor, fScore.get(neighbor) || Infinity]);
+          if (!openSet.data.some(([nodeId]) => nodeId === neighbor)) {
+            openSet.push([neighbor, fScore.get(neighbor) as number]); // Asserting as number
           }
         }
       }
@@ -91,14 +96,6 @@ export class AStarPathfindingStrategy implements PathfindingStrategy {
     return []; // Return empty path if no path is found
   }
 
-  /**
-   * Calculates the distance between two nodes, optionally applying extra weight for vertical movement.
-   * @param {string} nodeAId - The ID of the first node.
-   * @param {string} nodeBId - The ID of the second node.
-   * @param {Graph} graph - The graph containing the nodes.
-   * @param {boolean} weightStairs - Whether to apply extra weight for vertical movement.
-   * @return {number} - The calculated distance.
-   */
   private calculateDistance(nodeAId: string, nodeBId: string, graph: Graph, weightStairs: boolean): number {
     const nodeA = graph.getNode(nodeAId);
     const nodeB = graph.getNode(nodeBId);
@@ -124,7 +121,6 @@ export class AStarPathfindingStrategy implements PathfindingStrategy {
   }
 }
 
-//not yet implemented, dummy run function right now
 export class DFSPathfindingStrategy implements PathfindingStrategy {
   /**
    * Finds the path from the specified startNode to endNode in the given graph using Depth-First Search.
@@ -153,7 +149,7 @@ export class DFSPathfindingStrategy implements PathfindingStrategy {
         visited.add(node);
         const neighbors = graph.getNode(node)?.edges || [];
 
-        neighbors.forEach(neighbor => {
+        neighbors.forEach((neighbor: string) => {
           if (!visited.has(neighbor)) {
             stack.push([...path, neighbor]);
           }
