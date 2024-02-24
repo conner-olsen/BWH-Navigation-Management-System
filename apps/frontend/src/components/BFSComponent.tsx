@@ -512,7 +512,8 @@ export function BFSComponent() {
                 <AlertTitle>Accessibility Alert!</AlertTitle>
             </span>
                         <AlertDescription>
-                            This path contains stairs. If this is difficult, please request an accessible route.
+                            This path contains stairs. If this is difficult, please request an accessible route with
+                            the accessibility switch.
                         </AlertDescription>
                     </Alert>
                 )}
