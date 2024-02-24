@@ -13,7 +13,6 @@ const SendAllDataButton = () => {
         }));
 
         try {
-            console.log(filemap);
 
             const res1 = await fetch("/api/single-button-import", {
                 method: "POST",
