@@ -15,9 +15,11 @@ router.post("/", async (req: Request, res: Response) => {
     // This is created with the idea that the front end
     // stores each individual csv with
 
+    console.log(req.body);
+
     Object.keys(req.body).forEach(key => {
       const csv = req.body[key];
-      if (csv.includes("nodeID")) {
+      if (csv.includes("nodeId")) {
         dataType["node"] = csv;
       } else if (csv.includes("edgeID")) {
         dataType["edge"] = csv;
@@ -25,6 +27,7 @@ router.post("/", async (req: Request, res: Response) => {
         dataType["employee"] = csv;
       }
     });
+
     const rowsNode = parseCSV(dataType["node"]);
     const transformedNode:node[] = rowsNode.map((row) => {
       const rowval = Object.values(row);
