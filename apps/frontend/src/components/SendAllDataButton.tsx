@@ -18,7 +18,7 @@ const SendAllDataButton = () => {
                 headers: {
                     "Content-Type": "application/json", // Set the appropriate content type
                 },
-                body: filemap // Send an empty JSON object
+                body: JSON.stringify(filemap) // Send an empty JSON object
             });
 
             console.log(res1);
@@ -26,35 +26,6 @@ const SendAllDataButton = () => {
             console.error("Error:", error);
         }
 
-        // //Send second file
-        // try {
-        //     const res2 = await fetch("/api/single-button-import", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json", // Set the appropriate content type
-        //         },
-        //         body: JSON.stringify(selectedFiles[1]), // Send an empty JSON object
-        //     });
-        //
-        //     console.log(res2);
-        // } catch (error) {
-        //     console.error("Error:", error);
-        // }
-        //
-        // //Send third file
-        // try {
-        //     const res3 = await fetch("/api/single-button-import", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json", // Set the appropriate content type
-        //         },
-        //         body: JSON.stringify(selectedFiles[2]), // Send an empty JSON object
-        //     });
-        //
-        //     console.log(res3);
-        // } catch (error) {
-        //     console.error("Error:", error);
-        // }
     };
 
 
