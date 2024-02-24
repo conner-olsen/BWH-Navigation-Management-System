@@ -14,7 +14,7 @@ import downloadEdgeDataRouter from "./routes/data-to-csv-edge";
 import employeeRouter from "./routes/populate-employee";
 import authoRouter from "./routes/storing-auth0-users";
 import employeeMod from "./routes/employeeMod";
-import graphRoute from "./routes/GraphRoute";
+import graphRoute from "./routes/graph-route";
 import allServiceData from "./routes/all-service-logs";
 import serviceRequest from "./routes/service-request";
 import employeeCSVRouter from "./routes/employee-to-csv";

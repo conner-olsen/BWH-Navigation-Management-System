@@ -55,4 +55,20 @@ export class Node {
   hasEdge(nodeId: string): boolean {
     return this.edges.has(nodeId);
   }
+
+  /**
+   * Converts the string floor to a numeric value.
+   * @param {string} floor - The floor to convert.
+   * @return {number} - The numeric value of the floor.
+   */
+  getFloorNumber(): number {
+    switch (this.floor) {
+      case "L2": return 1;
+      case "L1": return 2;
+      case "1": return 3;
+      case "2": return 4;
+      case "3": return 5;
+      default: return 0;
+    }
+  }
 }
