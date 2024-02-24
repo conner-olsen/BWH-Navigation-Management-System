@@ -5108,6 +5108,7 @@ __metadata:
     jest: "npm:^29.7.0"
     prettier: "npm:latest"
     prettier-config-custom: "workspace:*"
+    tinyqueue: "npm:^2.0.3"
     ts-jest: "npm:^29.1.2"
     tsconfig-custom: "workspace:*"
     typescript: "npm:^5.3.3"
@@ -11654,6 +11655,13 @@ __metadata:
   version: 2.0.0
   resolution: "tinylogic@npm:2.0.0"
   checksum: 6467b1ed9b602dae035726ee3faf2682bddffb5389b42fdb4daf13878037420ed9981a572ca7db467bd26c4ab00fb4eefe654f24e35984ec017fb5e83081db97
+  languageName: node
+  linkType: hard
+
+"tinyqueue@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "tinyqueue@npm:2.0.3"
+  checksum: b676fdf2050bc9b2b76fe3faa433f3122c623e3f2c32d2a6921487b1e8fb541a85af79ea0eca3618e261b293280db78b02e1f835321783b8c078c507b739017c
   languageName: node
   linkType: hard
 
