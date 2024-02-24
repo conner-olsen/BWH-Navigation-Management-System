@@ -1,11 +1,20 @@
 import {Graph} from "./graph.ts";
 import TinyQueue from 'tinyqueue';
 
-export interface PathfindingStrategy {
-  findPath(startNode: string, endNode: string, graph: Graph): string[];
+export abstract class PathfindingStrategy {
+  abstract findPath(startNode: string, endNode: string, graph: Graph): string[];
+
+  reconstructPath(cameFrom: Map<string, string>, current: string): string[] {
+    const totalPath = [current];
+    while (cameFrom.has(current)) {
+      current = cameFrom.get(current)!;
+      totalPath.unshift(current);
+    }
+    return totalPath;
+  }
 }
 
-export class BFSPathfindingStrategy implements PathfindingStrategy {
+export class BFSPathfindingStrategy extends PathfindingStrategy {
   /**
    * Finds the shortest path from startNode to endNode in the given graph using BFS
    * @param {string} startNode - The ID of the starting node.
@@ -43,7 +52,7 @@ export class BFSPathfindingStrategy implements PathfindingStrategy {
   }
 }
 
-export class AStarPathfindingStrategy implements PathfindingStrategy {
+export class AStarPathfindingStrategy extends PathfindingStrategy {
   /**
    * Finds the path from the startNode to the endNode in the given graph using the A* algorithm.
    * @param {string} startNode - The ID of the starting node.
@@ -56,21 +65,23 @@ export class AStarPathfindingStrategy implements PathfindingStrategy {
       return [];
     }
 
-    // Define a comparator for the priority queue based on fScore
     const comparator = (a: [string, number], b: [string, number]) => a[1] - b[1];
-    const openSet = new TinyQueue<[string, number]>([], comparator);
+    const openSetQueue = new TinyQueue<[string, number]>([], comparator);
+    const openSet = new Set<string>(); // New Set to track nodes in the open set
 
     const cameFrom: Map<string, string> = new Map();
-    const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map((nodeId: string) => [nodeId, Infinity]));
-    const fScore: Map<string, number> = new Map([...graph.nodes.keys()].map((nodeId: string) => [nodeId, Infinity]));
+    const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
+    const fScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
 
     gScore.set(startNode, 0);
     fScore.set(startNode, this.calculateDistance(startNode, endNode, graph, false));
 
-    openSet.push([startNode, fScore.get(startNode) as number]); // Asserting as number since we just set it above
+    openSetQueue.push([startNode, fScore.get(startNode) as number]);
+    openSet.add(startNode); // Add to the new open set
 
-    while (openSet.length > 0) {
-      const current = openSet.pop()![0];
+    while (openSetQueue.length > 0) {
+      const current = openSetQueue.pop()![0];
+      openSet.delete(current); // Remove from the open set when popped
 
       if (current === endNode) {
         return this.reconstructPath(cameFrom, current);
@@ -86,8 +97,9 @@ export class AStarPathfindingStrategy implements PathfindingStrategy {
           gScore.set(neighbor, tentativeGScore);
           fScore.set(neighbor, tentativeGScore + this.calculateDistance(neighbor, endNode, graph, false));
 
-          if (!openSet.data.some(([nodeId]) => nodeId === neighbor)) {
-            openSet.push([neighbor, fScore.get(neighbor) as number]); // Asserting as number
+          if (!openSet.has(neighbor)) {
+            openSetQueue.push([neighbor, fScore.get(neighbor) as number]);
+            openSet.add(neighbor); // Add to the open set
           }
         }
       }
@@ -110,18 +122,9 @@ export class AStarPathfindingStrategy implements PathfindingStrategy {
 
     return dx + dy + (dz * stairWeight); // Manhattan distance with optional weighted floor difference
   }
-
-  private reconstructPath(cameFrom: Map<string, string>, current: string): string[] {
-    const totalPath = [current];
-    while (cameFrom.has(current)) {
-      current = cameFrom.get(current)!;
-      totalPath.unshift(current);
-    }
-    return totalPath;
-  }
 }
 
-export class DFSPathfindingStrategy implements PathfindingStrategy {
+export class DFSPathfindingStrategy extends PathfindingStrategy {
   /**
    * Finds the path from the specified startNode to endNode in the given graph using Depth-First Search.
    * @param {string} startNode - The ID of the starting node.
@@ -161,7 +164,7 @@ export class DFSPathfindingStrategy implements PathfindingStrategy {
   }
 }
 
-export class DijkstraPathfindingStrategy implements PathfindingStrategy {
+export class DijkstraPathfindingStrategy extends PathfindingStrategy {
   /**
    * Finds the shortest path from startNode to endNode in the given graph using Dijkstra's algorithm.
    * @param {string} startNode - The ID of the starting node.
@@ -224,14 +227,5 @@ export class DijkstraPathfindingStrategy implements PathfindingStrategy {
 
     // Assuming direct distance is 1 for simplicity, adjust based on your graph's actual weights
     return 1;
-  }
-
-  private reconstructPath(cameFrom: Map<string, string>, current: string): string[] {
-    const totalPath = [current];
-    while (cameFrom.has(current)) {
-      current = cameFrom.get(current)!;
-      totalPath.unshift(current);
-    }
-    return totalPath;
   }
 }
