@@ -11,5 +11,4 @@ module.exports = {
     '\\.(gif|ttf|eot|svg|png|jpg|jpeg)$': '<rootDir>/apps/frontend/__mocks__/fileMock.js'
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.cjs'],
-  setupFiles: ['<rootDir>/jest.globalSetup.cjs'],
 };

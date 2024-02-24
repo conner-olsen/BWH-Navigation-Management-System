@@ -1,7 +1,11 @@
 import { parseCSV } from '../../src/parser';
 
-describe('parseCSV', () => {
+interface ParsedCSV {
+  name?: string;
+  age?: string;
+}
 
+describe('parseCSV', () => {
     // Should correctly parse a CSV string with one row and one column
     test('should correctly parse a CSV string with one row and one column', () => {
       const csvString = 'name\nJohn';
@@ -41,7 +45,7 @@ describe('parseCSV', () => {
     // Should return an empty array when given an empty string
     test('should return an empty array when given an empty string', () => {
       const csvString = '';
-      const expected: any[] = [];
+      const expected: ParsedCSV[] = [];
 
       const result = parseCSV(csvString);
 
@@ -51,7 +55,7 @@ describe('parseCSV', () => {
     // Should return an empty array when given a string with only headers
     test('should return an empty array when given a string with only headers', () => {
       const csvString = 'name,age';
-      const expected: any[] = [];
+      const expected: ParsedCSV[] = [];
 
       const result = parseCSV(csvString);
 
@@ -61,7 +65,7 @@ describe('parseCSV', () => {
     // Should return an empty array when given a string with only one empty row
     test('should return an empty array when given a string with only one empty row', () => {
       const csvString = 'name,age\n';
-      const expected: any[] = [];
+      const expected: ParsedCSV[] = [];
 
       const result = parseCSV(csvString);
 

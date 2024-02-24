@@ -4,15 +4,12 @@ import '@testing-library/jest-dom';
 import App from '../src/App';
 import { MemoryRouter } from 'react-router-dom';
 import { cleanup } from '@testing-library/react';
-// import axios from 'axios';
-require("leaked-handles");
+import axios from 'axios';
 
 // Mock network requests globally in your test file
 jest.mock('axios');
-jest.mock('vaul');
 
 // Inside your test or beforeEach block, specify the mock implementation
-import axios from 'axios';
 beforeEach(() => {
   // Clear all mocks before each test
   jest.clearAllMocks();
@@ -21,20 +18,21 @@ beforeEach(() => {
   (axios.get as jest.Mock).mockImplementation(() => Promise.resolve({ data: {} }));
 });
 
-// Suppress console.error messages for the duration of your tests
+// Suppress all console output and logs for this test file
 beforeAll(() => {
-  jest.spyOn(console, 'error').mockImplementation(() => {
-    // nothing
-  });
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 afterAll(() => {
-  // Use type assertion to inform TypeScript about the mocked nature of console.error
-  (console.error as jest.MockedFunction<typeof console.error>).mockRestore();
+  // Restore the original console functions
+  jest.restoreAllMocks();
 });
 
 // Automatically unmount and cleanup DOM after the test is finished.
 afterEach(cleanup);
+
 
 describe('Page load tests', () => {
   test('Root path does not show "Page not found"', async () => {
