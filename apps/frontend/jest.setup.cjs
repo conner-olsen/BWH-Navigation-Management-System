@@ -2,3 +2,5 @@
 const nodeFetch = require('cross-fetch');
 global.fetch = nodeFetch;
 
+// Mock console.log to suppress logs during tests
+console.log = jest.fn();
