@@ -90,6 +90,7 @@ export class bfsPathfinding implements PathfindingMethod {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfindingAccessible(startNode: string, endNode: string, graph: Graph): string[] {
+    console.log("doing accessible bfs");
     //add an error catcher for invalid inputs
     if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];
@@ -288,6 +289,7 @@ export class aStarPathfinding implements PathfindingMethod {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfindingAccessible(startNode: string, endNode: string, graph: Graph): string[] {
+    console.log("doing accessible astar");
     // if start or end is undefined, return empty array
     if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];
@@ -448,76 +450,35 @@ export class dfsPathfinding implements PathfindingMethod {
    * @return {string[]} - array of NodeIDs of nodes in path
    */
   runPathfindingAccessible(startNode: string, endNode: string, graph: Graph): string[] {
-    //add an error catcher for invalid inputs
     if (graph.getNode(startNode) == undefined || graph.getNode(endNode) == undefined) {
       return [];
     }
 
-    //define needed objects
-    //store lists of nodeID paths
-    const stack: string[][] = [];
-    const visited: string[][] = [];
+    const stack: string[][] = [[startNode]];
+    const visited: Set<string> = new Set();
 
-    //used for iterating through the loop
-    let currentNode: Node | undefined;
-    let currentNodeIDPath: string[];
-    let newPath: string[];
-    let neighbors: Set<string>;
-
-    //put startNode path in the stack
-    stack.unshift([startNode]);
-
-    //start loop
     while (stack.length > 0) {
-      //get first path from stack
-      currentNodeIDPath = stack[0];
+      const path = stack.pop() as string[];
+      const node = path[path.length - 1];
 
-      //get last node
-      if(currentNodeIDPath.length > 1) {
-        currentNode = graph.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
-      }
-      else {
-        currentNode = graph.getNode(currentNodeIDPath[0]);
+      if (node === endNode) {
+        return path;
       }
 
-      //if currentNode is undefined or is a stair, pop path from stack
-      if (currentNode == undefined || (currentNode.nodeType == "STAI" && currentNode.id != endNode)) {
-        console.log("dfs skipped stair");
-        stack.shift();
-        visited.push(currentNodeIDPath);
-      }
-
-      //elif it is the end node, return current path
-      else if (currentNode.id == endNode) {
-        return currentNodeIDPath;
-      }
-
-      //else, cast as currentNode as Node (determined above) and add neighbor to path for each
-      else {
-        neighbors = (currentNode as Node).edges;
-        neighbors.forEach(function (item) {
-          if(!((currentNode as Node).nodeType == "STAI" && (item.includes("STAI")))) {
-            newPath = [...currentNodeIDPath];
-            newPath.push(item);
-
-            //if path hasn't been visited and nodes aren't repeated, add to stack
-            if (!(visited.includes(newPath)) && !(currentNodeIDPath.includes(item))) {
-              stack.unshift(newPath);
-            }
+      if (!visited.has(node)) {
+        visited.add(node);
+        const neighbors = graph.getNode(node)?.edges;
+        neighbors?.forEach(neighbor => {
+          //if both aren't stairs and not in visited, add path
+          if (!visited.has(neighbor) && (!(neighbor.includes("STAI") && (neighbor.includes("STAI"))))) {
+            const newPath = [...path, neighbor];
+            stack.push(newPath);
           }
-          else {
-            console.log("dfs skipped stair");
-          }
+
         });
-
-        //pop current node ID path from stack
-        stack.pop();
-        visited.push(currentNodeIDPath);
       }
     }
 
-    //return empty if endNode not reached (probably should return something else)
-    // console.log("not reached");
     return [];
   }
 }

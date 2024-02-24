@@ -44,6 +44,7 @@ export function BFSComponent() {
 
     const handleAccessibilityToggle = () => {
         setDoAccessible(doAccessible => !doAccessible);
+        console.log("do accessible to " + doAccessible);
     };
 
     const updateCurrentNode = (currentNode: Node) => {
@@ -385,7 +386,6 @@ export function BFSComponent() {
                         <div className="relative h-6 w-32">
                             <div className="absolute inset-y-0 left-1 w-16">
                                 <Switch onCheckedChange={handleAccessibilityToggle} defaultChecked={false}>
-                                    Find Accessible Route
                                 </Switch>
                             </div>
                         </div>
@@ -692,7 +692,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
-                                                doAccessible={false}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {lowerLevel2ContentVisible &&
@@ -700,7 +700,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
-                                                doAccessible={false}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor1ContentVisible &&
@@ -708,7 +708,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
-                                                doAccessible={false}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor2ContentVisible &&
@@ -716,7 +716,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
-                                                doAccessible={false}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor3ContentVisible &&
@@ -724,7 +724,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
-                                                doAccessible={false}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             </TransformComponent>
