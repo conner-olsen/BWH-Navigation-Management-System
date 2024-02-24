@@ -8,11 +8,11 @@
 ##  Javascript / Typescript: Jest, Mocha, Vitest, Karma, Jasmine, QUnit, React Testing Library
 ##    HOWEVER: running tests in JS / TS is at the moment only supported
 ##    for Jest, Mocha, Vitest, and React Testing Library
-framework = "Vitest"
+framework = "Jest"
 
 ## An additional Javascript utility library used to test your code, if any. 
 ## Possible values are None, Testing Library, Enzyme, or Chai. Not applicable to Python projects.
-# utility_library = "Testing Library"
+utility_library = "Testing Library"
 
 ## A hint to the test generator about whether to use mocks or not. Possible values are true or false.
 # use_mocks = false
@@ -30,10 +30,9 @@ num_desired_tests = 6
 # Each comment should start with the comment number (1., 2. etc.)
 # """
 plan_instructions = """
-You are using Vitest as your testing framework.
-You will use describe, test, and expect functions to write your tests.
+Maintain strict type adherence so that nothing implicitly has an 'any' type.
+Use 'test' instead of 'it' for Jest tests.
 """
-
 
 ## A multiline string, delimited with triple-quotes (""") serving as an example test that represents
 ## what you would like the generated tests to look like in terms of style, setup, etc.
@@ -51,12 +50,17 @@ You will use describe, test, and expect functions to write your tests.
 # });
 # """
 example_test = """
-describe('TestSomething', () => {
-  test('test_a_behavior should pass if 1 equals 1', () => {
-    expect(1).toBe(1);
+describe("sum", () => {
+  test("adds 1 + 2 to equal 3", () => {
+    expect(sum(1, 2)).toBe(3);
+  });
+
+  test("adds 2 + 2 to equal 4", () => {
+    expect(sum(2, 2)).toBe(4);
   });
 });
 """
+
 
 [tests.javascript]
 
@@ -103,13 +107,9 @@ describe('TestSomething', () => {
 ## (select codium-ai from the dropdown).
 ## It's helpful to clear the output (right-click -> clear) and then run the tests again.
 ##
-# overrideTestRunScript = "npx jest --runTestsByPath TEST_FILEPATH"
-overrideTestRunScript = "node vitest-wrapper.js TEST_FILEPATH"
+overrideTestRunScript = "yarn jest --runTestsByPath TEST_FILEPATH"
 
 ## A multiline string, delimited with triple-quotes ("""),
 ## containing import declaration to use in each test file. 
 # overrideImports = """ 
 # import {expect} from 'chai'; """
-overrideImports = """
-import { describe, test, expect } from 'vitest";
-"""

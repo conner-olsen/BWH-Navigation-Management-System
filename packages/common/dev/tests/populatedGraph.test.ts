@@ -1,5 +1,4 @@
 import pGraph from "../populatedGraph.ts";
-import { expect, test } from "vitest";
 
 const populatedGraph = pGraph;
 

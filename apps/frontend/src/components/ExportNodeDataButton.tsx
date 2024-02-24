@@ -50,7 +50,7 @@ const ExportNodeDataToCSVButton = () => {
     }
 
     return (
-        <Button variant={"default"} onClick={handleExportButton}>Export</Button>
+        <Button variant={"default"} onClick={handleExportButton}>Export Node Data</Button>
     );
 };
 

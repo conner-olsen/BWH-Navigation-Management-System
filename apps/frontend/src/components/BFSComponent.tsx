@@ -171,8 +171,8 @@ export function BFSComponent() {
     //parse node CSV into array of CSVRows
     const CSVRow = parseCSV(nodeCSVData);
     //make array to be inserted in the html code
-    const roomNames = [];
-    const currentFloorNames = [];
+    const roomNames: JSX.Element[] = [];
+    const currentFloorNames: JSX.Element[] = [];
 
 
     //for each CSV row, add an option with the value as id and name as longName into array

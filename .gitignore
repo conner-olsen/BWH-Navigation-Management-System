@@ -44,3 +44,4 @@ out
 
 .vscode
 !./.vscode/tasks.json
+!./.vscode/settings.json

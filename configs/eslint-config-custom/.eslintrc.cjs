@@ -1,6 +1,9 @@
 require("@rushstack/eslint-patch/modern-module-resolution");
 
 module.exports = {
+    env: {
+        node: true, // Add this line
+    },
     extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', "turbo", "prettier"],
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint'],

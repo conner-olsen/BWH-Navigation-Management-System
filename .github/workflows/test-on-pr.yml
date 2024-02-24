@@ -17,4 +17,4 @@ jobs:
       - name: build project
         run: yarn run build
       - name: test
-        run: yarn run vitest --run
+        run: yarn run jest --runInBand --detectOpenHandles --forceExit
