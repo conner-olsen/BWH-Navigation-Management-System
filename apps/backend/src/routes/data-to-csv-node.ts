@@ -26,12 +26,11 @@ router.get("/", async function (req: Request, res: Response) {
   try{
     const nodeCSV = await PrismaClient.node.findMany();
     const csvNode: string = convertToCSV(nodeCSV);
-    res.send(csvNode);
+    res.status(200).send(csvNode);
   } catch (error){
     console.error(`Error exporting node data: ${error}`);
     res.sendStatus(500);
   }
-  res.sendStatus(200);
 });
 
 export default router;
