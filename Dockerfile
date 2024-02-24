@@ -223,4 +223,4 @@ ENV BACKEND_SOURCE=$BACKEND_SOURCE
 RUN yarn run build
 
 # Run with CMD, since dev may want to use other commands
-CMD ["yarn", "run", "vitest", "--ui", "--open=false"]
+CMD ["yarn", "run", "jest"]
