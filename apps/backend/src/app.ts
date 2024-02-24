@@ -20,6 +20,7 @@ import serviceRequest from "./routes/service-request.ts";
 import employeeCSVRouter from "./routes/employee-to-csv.ts";
 import getStats from "./routes/count-service-requests.ts";
 import getEmployeeStats from "./routes/count-employee-service-requests.ts";
+import totalDataImport from "./routes/single-button-import.ts";
 
 
 
@@ -58,6 +59,7 @@ app.use("/api/service-request", serviceRequest);
 app.use("/api/employee-csv", employeeCSVRouter);
 app.use("/api/get-stats", getStats);
 app.use("/api/get-employee-stats", getEmployeeStats);
+app.use("/api/single-button-import", totalDataImport);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
