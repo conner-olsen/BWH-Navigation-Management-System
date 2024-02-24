@@ -57,29 +57,31 @@ const LanguageService: React.FC = () => {
     return (
         <Container>
 
-            <h1 className=" bg-gradient-to-r from-red-200 to-red-900 bg-clip-text text-transparent dark:text-white">
+            <h1 className=" bg-gradient-to-r from-red-200 to-red-900 bg-clip-text text-transparent dark:text-white text-center">
                 Language Service Request
             </h1>
-            <div className={"border-2 border-red-200 dark:border-blue-400 rounded-lg p-4"}>
+            <div className={"border-2 border-red-200 dark:border-blue-400 rounded-lg pb-4 px-4"}>
 
                 <Container>
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="name">Patient Name</Label>
                                 <Input type="text" id="name" placeholder={"Aiden Deady"}/>
                             </div>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <LocationDropdown onChange={(value) => setFormData({
                                 ...formData, "nodeId": value
                             })}></LocationDropdown>
-                        </Col>
+                        </div>
                     </Row>
-                    <br/>
 
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label>Priority</Label>
                                 <Select required onValueChange={
@@ -94,14 +96,15 @@ const LanguageService: React.FC = () => {
                                     </SelectContent>
                                 </Select>
                             </div>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="languagePref">Language</Label>
                                 <Input type="text" id="languagePref" placeholder={"French"}
                                        onChange={handleChangeText}/>
                             </div>
-                        </Col>
+                        </div>
                     </Row>
 
                     <br/>

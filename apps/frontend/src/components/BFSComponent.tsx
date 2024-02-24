@@ -40,7 +40,7 @@ export function BFSComponent() {
     };
     const updateCurrentNode = (currentNode: Node) => {
         setHasSeen(true);
-        if (activeTab!==2 || !isExpanded) setHasSeen(false);
+        if (activeTab !== 2 || !isExpanded) setHasSeen(false);
         setCurrentNode(currentNode);
     };
 
@@ -57,6 +57,7 @@ export function BFSComponent() {
             });
 
             if (response.status === 200) {
+                console.log("data recieved");
                 setBFSResult(response.data);
             }
 
@@ -80,6 +81,7 @@ export function BFSComponent() {
         // When pathFindingType changes, update mapKey to force remount of MapDisplay
         setMapKey(prevKey => prevKey + 1);
     }, [pathFindingType]);
+
 
     const [nodeCSVData, setNodeCSVData] = useState<string>("");
 
@@ -176,14 +178,11 @@ export function BFSComponent() {
         if (nodeFloor == map && !(nodeType == "HALL")) {
             currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
-        }
-        else if (id == startNode) {
+        } else if (id == startNode) {
             currentFloorNames.push(<SelectItem value={id}> {longName} </SelectItem>);
-        }
-        else if (id == endNode) {
+        } else if (id == endNode) {
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
-        }
-        else if (!(nodeType == "HALL")) {
+        } else if (!(nodeType == "HALL")) {
             roomNames.push(<SelectItem value={id}> {longName} </SelectItem>);
         }
     }
@@ -202,17 +201,68 @@ export function BFSComponent() {
         if (tabNumber === 2 && isExpanded) setHasSeen(true);
         setActiveTab(tabNumber);
     };
+
     const [showAlert, setShowAlert] = useState(false);
 
-    // Assuming collectLongNames is a function that returns an array of long names
-
     useEffect(() => {
-        const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
+        //looks to see if theres a floor change w/ stairs
+        //shows alert if so
+        //const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
+        if(bfsResult[0] != undefined) {
+            const returnBooleans: boolean[] = [];
+            const firstNode = bfsResult[0];
+            let previousFloor = firstNode.floor;
 
-        setShowAlert(hasStaircase);
+            for (let i = 0; i < bfsResult.length; i++) {
+                const node = bfsResult[i];
+                const currentFloor = node.floor;
+
+                if (!(currentFloor == previousFloor) && node.nodeType === "STAI") {
+                    //set current and previous nodes as true in boolean array
+                    //update previous floor to be current for next loop
+                    returnBooleans[i] = true;
+                    returnBooleans[i - 1] = true;
+                    previousFloor = currentFloor;
+                } else {
+                    returnBooleans[i] = false;
+                    previousFloor = currentFloor;
+                }
+            }
+            //if there is a stair floor change, show alert
+            const hasStaircase = returnBooleans.includes(true);
+          //  console.log(returnBooleans);
+            setShowAlert(hasStaircase);
+        }
+        else {
+            setShowAlert(false);
+        }
+
     }, [bfsResult]);
 
+    //booleans represent whether there is a floor change
+    const gatherFloorChange = (): boolean[] => {
+        const returnBooleans: boolean[] = [];
+        let previousFloor = bfsResult[0].floor;
 
+        for(let i = 0; i < bfsResult.length; i++) {
+            const node = bfsResult[i];
+            const currentFloor = node.floor;
+
+            if (!(currentFloor == previousFloor)) {
+                //set current and previous nodes as true in boolean array
+                //update previous floor to be current for next loop
+                returnBooleans[i] = true;
+                returnBooleans[i - 1] = true;
+                previousFloor = currentFloor;
+            }
+            else {
+                returnBooleans[i] = false;
+                previousFloor = currentFloor;
+            }
+        }
+        //console.log(returnBooleans);
+        return returnBooleans;
+    };
 
     return (
         <div>
@@ -329,7 +379,7 @@ export function BFSComponent() {
                                     <p className="font-bold mb-0">Follow Me</p>
                                     <button onClick={handleSpeakButtonClick}>
                                         <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
-                                             className="h-6 w-6 mr-5 ml-2 pd-0"></img>
+                                             className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
                                     </button>
                                 </div>
                             </div>
@@ -341,15 +391,14 @@ export function BFSComponent() {
                                         <span className="flex items-center">
                                             {node.nodeType === "STAI" && (
                                                 <img src="../../public/icon/stairs.png" alt="stair-icon"
-                                                     className="h-3 w-3 mr-1"/>
-
+                                                     className="h-3 w-3 mr-1 dark:invert"/>
                                             )}
                                             {node.nodeType === "ELEV" && (
                                                 <img src="../../public/icon/elevator.png" alt="elevator-icon"
-                                                     className="w-4 h-4 mr-1"/>
+                                                     className="w-4 h-4 mr-1 dark:invert"/>
                                             )}
                                             <span
-                                                className={node.nodeType === "STAI" || node.nodeType === "ELEV" ? "text-blue-500" : ""}>
+                                                className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
                                                     {node.longName}
                                                 </span>
                                             </span>
@@ -440,8 +489,11 @@ export function BFSComponent() {
                 {showAlert && (
                     <Alert>
                         {/* Replace the Terminal component with an img tag */}
-                        <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon" className="h-7 w-7"/>
-                        <AlertTitle>Accessibility Alert!</AlertTitle>
+                        <span className="flex items-center">
+                <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon"
+                     className="h-7 w-7 dark:invert mr-2"/>
+                <AlertTitle>Accessibility Alert!</AlertTitle>
+            </span>
                         <AlertDescription>
                             This path contains stairs. If this is difficult, please request an accessible route.
                         </AlertDescription>
@@ -449,17 +501,19 @@ export function BFSComponent() {
                 )}
             </div>
 
+
             <div className="h-0">
                 <Drawer modal={false}>
                     <DrawerTrigger>
                         <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
                         rounded-md shadow-md sm:hidden flex items-center justify-center">
-                            <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon" className="dark:invert w-[25px]"></img>
+                            <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon"
+                                 className="dark:invert w-[25px]"></img>
                         </div>
                     </DrawerTrigger>
                     <DrawerContent>
-
-                    <div>
+                    <div className="overflow-y-auto">
+                        <div className="max-w-[400px] m-auto">
                             <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
                                 <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
                                        onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
@@ -504,7 +558,6 @@ export function BFSComponent() {
                                         </SelectContent>
                                     </Select>
                                 </div>
-
                             </div>
                             <div className="py-4 px-2">
                                 <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
@@ -527,52 +580,58 @@ export function BFSComponent() {
                                     ))}
                                 </ol>
                             </div>
+
+                            <div className="flex justify-center">
+                                <DrawerClose>
+                                    <div className="mb-4 m-auto">
+                                        <Button variant="destructive">Close</Button>
+                                    </div>
+                                </DrawerClose>
+                            </div>
                         </div>
-
-                        <div className="mb-4 m-auto">
-                            <DrawerClose>
-                                <Button variant="destructive">Close</Button>
-                            </DrawerClose>
-                        </div>
-
-
+                    </div>
                     </DrawerContent>
                 </Drawer>
             </div>
             <div className="h-0">
                 <Drawer modal={false}>
                     <DrawerTrigger>
-                        <div className="absolute w-[36px] h-[36px] left-[50px] top-[80px] bg-background z-40
+                    <div className="absolute w-[36px] h-[36px] left-[50px] top-[80px] bg-background z-40
                         rounded-md shadow-md sm:hidden flex items-center justify-center">
-                            <img src="../../public/icon/info-icon.png" alt="nav-icon" className="invert dark:invert-0 w-[25px]"></img>
+                            <img src="../../public/icon/info-icon.png" alt="nav-icon"
+                                 className="invert dark:invert-0 w-[25px]"></img>
                         </div>
                     </DrawerTrigger>
                     <DrawerContent>
-                        {!currentNode && (
-                            <div className="text-center mt-4">
-                                <p className="font-bold mb-0">Select a location</p>
-                                <p className="font-bold">to display its information</p>
-                                <img src="../../public/icon/red-pin.png" alt={"pin"}
-                                     className="max-w-[200px] m-auto"></img>
-                            </div>
-                        )}
-                        <div className="px-2 text-left"
-                             style={{display: !currentNode ? 'none' : 'block'}}>
-                            <img src={'../../public/room-types/nodeType-' + currentNode?.nodeType + ".png"}
-                                 alt="patient-room"
-                                 className="rounded-md pb-3"></img>
-                            <p className="text-xl font-bold mb-1">{currentNode?.longName + " (" + currentNode?.shortName + ")"}</p>
-                            <p className="text-sm text-muted-foreground">{currentNode?.nodeType + " #" + currentNode?.id}</p>
-                            <div className="flex">
-                                <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
-                                <p className="mb-0">{"Floor " + currentNode?.floor + ", " + currentNode?.building}</p>
-                            </div>
+                        <div className="overflow-y-auto">
+                            {!currentNode && (
+                                <div className="text-center mt-4">
+                                    <p className="font-bold mb-0">Select a location</p>
+                                    <p className="font-bold">to display its information</p>
+                                    <img src="../../public/icon/red-pin.png" alt={"pin"}
+                                         className="max-w-[200px] m-auto"></img>
+                                </div>
+                            )}
+                            <div className="px-2 text-left"
+                                 style={{display: !currentNode ? 'none' : 'block'}}>
+                                <img src={'../../public/room-types/nodeType-' + currentNode?.nodeType + ".png"}
+                                     alt="patient-room"
+                                     className="rounded-md pb-3"></img>
+                                <p className="text-xl font-bold mb-1">{currentNode?.longName + " (" + currentNode?.shortName + ")"}</p>
+                                <p className="text-sm text-muted-foreground">{currentNode?.nodeType + " #" + currentNode?.id}</p>
+                                <div className="flex">
+                                    <img src="../../public/icon/red-pin.png" className="w-[30px]"></img>
+                                    <p className="mb-0">{"Floor " + currentNode?.floor + ", " + currentNode?.building}</p>
+                                </div>
 
-                        </div>
-                        <div className="mb-4 m-auto">
-                            <DrawerClose>
-                                <Button variant="destructive">Close</Button>
-                            </DrawerClose>
+                            </div>
+                            <div className="flex justify-center">
+                                <DrawerClose>
+                                    <div className="mb-4 m-auto">
+                                        <Button variant="destructive">Close</Button>
+                                    </div>
+                                </DrawerClose>
+                            </div>
                         </div>
                     </DrawerContent>
                 </Drawer>

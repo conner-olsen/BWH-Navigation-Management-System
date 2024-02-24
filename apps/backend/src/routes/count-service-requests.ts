@@ -47,7 +47,6 @@ router.get("/type/:serviceType", async function (req: Request, res: Response) {
   }
 });
 
-
 router.get("/status/:status", async function (req: Request, res: Response) {
 
   let requestType;
@@ -63,7 +62,7 @@ router.get("/status/:status", async function (req: Request, res: Response) {
     case "in-progress":
       requestType = PrismaClient.serviceRequest.count({
         where: {
-          status: 'In-Progress'
+          status: 'In Progress'
         }
       });
       break;
@@ -98,5 +97,25 @@ router.get("/status/:status", async function (req: Request, res: Response) {
     res.sendStatus(500);
   }
 });
+
+router.post("/", async function (req: Request, res: Response) {
+  const nodeID = req.body.id;
+
+  try {
+    const countPromise = PrismaClient.serviceRequest.count({
+      where: {
+        nodeId: nodeID
+      }
+    });
+
+    const count = await countPromise; // Await the count promise
+
+    res.status(200).send(count.toString()); // Convert count to string before sending
+  } catch (error) {
+    console.error(`Error counting Service Requests: ${error}`);
+    res.sendStatus(500);
+  }
+});
+
 
 export default router;

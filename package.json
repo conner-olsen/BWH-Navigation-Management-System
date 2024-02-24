@@ -22,7 +22,7 @@
     "dev:stop": "docker-compose -f docker-compose.dev.yaml down --volumes --rmi local",
     "deploy": "docker-compose -f docker-compose.prod.yaml up --build -d",
     "deploy:stop": "docker-compose -f docker-compose.prod.yaml down",
-    "sync": "git fetch origin main:main && git merge -m 'Synced with main' FETCH_HEAD",
+    "sync": "git add . && git commit -m \"Auto-commit before merge | $(git rev-parse --abbrev-ref HEAD) - $(date +'%Y-%m-%d %I:%M%p')\" || true && git fetch && git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD) && git fetch origin main:main && git merge -m 'Synced with main' FETCH_HEAD && git push",
     "test": "docker-compose -f docker-compose.test.yaml up --build --renew-anon-volumes -d",
     "test:stop": "docker-compose -f docker-compose.dev.yaml down --volumes --rmi local",
     "lint": "turbo run lint",
@@ -37,8 +37,10 @@
   "devDependencies": {
     "@testing-library/react": "^14.2.0",
     "@types/bootstrap": "^5",
+    "@types/eslint": "^8",
+    "@types/morgan": "^1",
     "@types/react-dom": "^18.0.11",
-    "@vitest/ui": "^1.3.0",
+    "@vitest/ui": "^1.3.1",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "eslint-config-custom": "workspace:*",
@@ -52,7 +54,7 @@
     "turbo": "latest",
     "typescript": "^5.0.4",
     "vite": "^5.1.3",
-    "vitest": "^1.3.0"
+    "vitest": "^1.3.1"
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
@@ -65,6 +67,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.323.0",
+    "morgan": "^1.10.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",

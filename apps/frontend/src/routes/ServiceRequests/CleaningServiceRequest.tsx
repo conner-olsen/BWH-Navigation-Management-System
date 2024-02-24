@@ -54,17 +54,19 @@ const CleaningServiceRequest: React.FC = () => {
 
     return (
         <Container>
-            <h1 className=" bg-gradient-to-r from-blue-600 to-black bg-clip-text text-transparent dark:text-white">Cleaning Service Request</h1>
-            <div className="border-2 border-blue-600 dark:border-blue-400 rounded-lg p-4">
+            <h1 className=" bg-gradient-to-r from-blue-600 to-black bg-clip-text text-transparent dark:text-white text-center">Cleaning Service Request</h1>
+            <div className="border-2 border-blue-600 dark:border-blue-400 rounded-lg px-4 pb-4">
                 <Container>
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label htmlFor="patientName">Patient Name</Label>
                                 <Input type="text" id="patientName" placeholder="Karish Gupta" onChange={handleChangeText} />
                             </div>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label>Type of Cleaning</Label>
                                 <Select required onValueChange={
@@ -79,15 +81,17 @@ const CleaningServiceRequest: React.FC = () => {
                                     </SelectContent>
                                 </Select>
                             </div>
-                        </Col>
+                        </div>
                     </Row>
-                    <br />
+
                     <Row>
-                        <Col>
+                        <div className="col-sm">
+                            <br/>
                             <LocationDropdown onChange={(value) => setFormData({
                                 ...formData, "nodeId": value})}></LocationDropdown>
-                        </Col>
-                        <Col>
+                        </div>
+                        <div className="col-sm">
+                            <br/>
                             <div>
                                 <Label>Priority</Label>
                                 <Select required onValueChange={
@@ -102,7 +106,7 @@ const CleaningServiceRequest: React.FC = () => {
                                     </SelectContent>
                                 </Select>
                             </div>
-                        </Col>
+                        </div>
                     </Row>
                     <br />
                     <Row>

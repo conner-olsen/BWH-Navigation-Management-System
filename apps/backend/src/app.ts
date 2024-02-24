@@ -24,9 +24,9 @@ import totalDataImport from "./routes/single-button-import.ts";
 
 
 
-const app: Express = express(); // Setup the backend
+const app: Express = express(); // Set up the backend
 
-// Setup generic middlewear
+// Setup generic middleware
 app.use(
   logger("dev", {
     stream: {

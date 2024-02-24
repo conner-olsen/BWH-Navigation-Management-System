@@ -1,15 +1,15 @@
 import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
-import TeamCard from "../../components/TeamCard.tsx";
-import {Card} from "../../components/ui/card.tsx";
-import GlobalFooter from "../../components/Global_Footer.tsx";
+import TeamCard from "../components/TeamCard.tsx";
+import {Card} from "../components/ui/card.tsx";
+import GlobalFooter from "../components/Global_Footer.tsx";
 
 const AboutPage = () => {
 
     return (
         <div>
 
-            <div style={{display: 'flex', alignItems: 'center', marginLeft: '15%'}}>
+            <div className="container text-center">
                 <Row>
                     <Col>
                         <h1>THE TEAM</h1>
@@ -22,103 +22,98 @@ const AboutPage = () => {
                 </Row>
             </div>
 
-            <br/>
             <Container>
                 <Row>
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"Nick Leslie"} role={"Team Coach"}
                                   bio={"Class of 2025, Computer Science"}
                                   image={"public/teamImages/Nick_pic.png"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"Conner Olsen"} role={"Lead Software Engineer"}
                                   bio={"Class of 2026, Computer Science & Mathematics"}
                                   image={"public/teamImages/Conner_Olsen.png"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"Karish Gupta"} role={"Assistant Team Lead"}
                                   bio={"Class of 2026, Computer Science & Data Science"}
                                   image={"public/teamImages/KARISH_GUPTA.jpg"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"Max Gosselin"} role={"Assistant Team Lead"}
                                   bio={"Class of 2026, Computer Science & Data  Science"}
                                   image={"public/teamImages/Max.png"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
                 </Row>
 
-                <br/>
-
                 <Row>
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"Shivank Gupta"} role={"Scrum Master"}
                                   bio={"Class of 2024, Mechanical and Robotics Engineering"}
                                   image={"public/teamImages/Shivank.jpeg"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"Tanya Khan"} role={"Product Owner"}
                                   bio={"Class of 2025, Computer Science and IMGD"}
                                   image={"public/teamImages/TanyaKhan.jpg"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"Aiden Deady"} role={"Documentation Analyst"}
                                   bio={"Class of 2024, Robotics Engineering"}
                                   image={"public/teamImages/Aiden.JPG"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"William Smith"} role={"Project Manager"}
                                   bio={"Class of 2025, Interactive Media and Game Development"}
                                   image={"public/teamImages/WilliamSmith.jpg"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
                 </Row>
 
-                <br/>
-
                 <Row>
 
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"Minh Bui"} role={"Full-Time Software Engineer"}
                                   bio={"Class of 2026, Computer Science"}
                                   image={"public/teamImages/Minh_Bui.JPG"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
 
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"Ceci Herriman"} role={"Full-Time Software Engineer"}
                                   bio={"Class of 2026, Computer Science"}
                                   image={"public/teamImages/Ceci.jpeg"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
-                    <Col>
+                    <div className="col mb-4">
                         <TeamCard name={"James Walden"} role={"Full-Time Software Engineer"}
                                   bio={"Class of 2026, Computer Science"}
                                   image={"public/teamImages/James.jpeg"}>
                         </TeamCard>
-                    </Col>
-                    <Col>
+                    </div>
+                    <div className="col mb-4">
                         <TeamCard name={"Steven Gao"} role={"Full-Time Software Engineer"}
                                   bio={"Class of 2026, Computer Science"}
                                   image={"public/teamImages/Steven.png"}>
                         </TeamCard>
-                    </Col>
+                    </div>
 
                 </Row>
 

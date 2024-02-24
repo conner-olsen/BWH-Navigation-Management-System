@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Graph, Node} from 'common/src/graph-structure.ts';
 import PathfindingRequest from "common/src/PathfindingRequest.ts";
-import axios from "axios";
+import axios   from "axios";
 import "./animation.css";
-
 interface MapDisplayProps {
     floorMap: string;
     floor: string;
@@ -25,6 +24,7 @@ interface AnimatedPathProps {
     x2: number;
     y2: number;
 }
+
 function MapDisplay({
                         floorMap,
                         floor,
@@ -44,6 +44,9 @@ function MapDisplay({
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
     const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
+    const [nodeCount, setCount] = useState<string>("Error");
+
+
 
     useEffect(() => {
         axios.get("/api/graph").then((res) => {
@@ -65,6 +68,22 @@ function MapDisplay({
             setEndNodeId(endNode);
         }
     }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
+
+   function getCount(node: Node){
+       const fetchData = async () => {
+               try {
+                   const response = await axios.post("/api/get-stats", node);
+                   if (response.status === 200) {
+                       setCount(response.data);
+                   }
+               } catch (error) {
+                   console.error("error getting count ", (error));
+               }
+       };
+
+           fetchData().then();
+    }
+
     const AnimatedPath: React.FC<AnimatedPathProps> = ({ x1, y1, x2, y2 }) => (
         <line
             className="line-animation"
@@ -73,7 +92,7 @@ function MapDisplay({
             x2={x2}
             y2={y2}
             stroke="red"
-            strokeWidth="3"
+            strokeWidth="10"
         />
     );
     const displayPath = (graph: Graph, path: string[]) => {
@@ -130,8 +149,9 @@ function MapDisplay({
     };
 
     const displayHoverInfo = (node: Node) => {
+        getCount(node);
         return (
-            <foreignObject x={node.xCoord - 225} y={node.yCoord - 525} width="450" height="500">
+            <foreignObject x={node.xCoord - 225} y={node.yCoord - 550} width="450" height="525">
                 <div
                     className={"h-fit rounded-md border bg-popover p-4 text-2xl text-popover-foreground shadow-md " +
                         "outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 " +
@@ -141,16 +161,16 @@ function MapDisplay({
                     <g>
                         <img src={'../../../public/room-types/nodeType-' + node.nodeType + ".png"}></img>
                         <div>
-                            Type: {node.nodeType}
+                            <p>Type: {node.nodeType}</p>
                         </div>
                         <div>
-                            {node.longName}
+                            <p>{node.longName}</p>
                         </div>
                         <div>
-                            {node.shortName}
+                            <p>{node.shortName}</p>
                         </div>
                         <div>
-                            Status: -/-
+                            <p>Service Requests: {nodeCount.toString()}</p>
                         </div>
                     </g>
                 </div>
