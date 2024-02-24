@@ -3,6 +3,10 @@ import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from '../src/App';
 import { MemoryRouter } from 'react-router-dom';
+import { cleanup } from '@testing-library/react';
+
+// Automatically unmount and cleanup DOM after the test is finished.
+afterEach(cleanup);
 
 test('landing on a bad page', () => {
   const badRoute = '/some/bad/route';
@@ -17,13 +21,13 @@ test('landing on a bad page', () => {
   expect(screen.getByText(/page not found/i)).toBeInTheDocument();
 });
 
-// test('navigating to "/BwhHomepage" does not show "Page not found"', () => {
-//   render(
-//     <MemoryRouter initialEntries={["/BwhHomepage"]}>
-//       <App />
-//     </MemoryRouter>
-//   );
+test('navigating to "/BwhHomepage" does not show "Page not found"', () => {
+  render(
+    <MemoryRouter initialEntries={["/BwhHomepage"]}>
+      <App />
+    </MemoryRouter>
+  );
 
-//   // Verify that "Page not found" is not displayed
-//   expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
-// });
+  // Verify that "Page not found" is not displayed
+  expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+});
