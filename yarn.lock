@@ -11631,6 +11631,7 @@ __metadata:
     identity-obj-proxy: "npm:^3.0.0"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
+    jest-runtime: "npm:^29.7.0"
     lucide-react: "npm:^0.323.0"
     morgan: "npm:^1.10.0"
     postcss: "npm:^8.4.35"

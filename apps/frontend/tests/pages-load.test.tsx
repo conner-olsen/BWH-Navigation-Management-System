@@ -13,7 +13,7 @@ test('landing on a bad page', () => {
 
   render(
     <MemoryRouter initialEntries={[badRoute]}>
-      <App />
+      <App /> 
     </MemoryRouter>
   );
 
