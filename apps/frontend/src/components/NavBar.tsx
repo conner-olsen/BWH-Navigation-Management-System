@@ -12,7 +12,6 @@ import {
 } from "./ui/dropdown-menu.tsx";
 
 import {Link, NavLink, useLocation} from "react-router-dom";
-import {NavDropdown} from "react-bootstrap";
 import {Button} from "./ui/button.tsx";
 
 
@@ -84,38 +83,37 @@ return (
                 </Link>
             )}
 
-            <Link to="/ServiceList" className="group text-center no-underline p-2 text-white hidden xl:block text-[17px]"
-                  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                <div className={"hover:text-blue-500"}>Service Request</div>
+            <div className="group text-center no-underline p-2 text-white hidden xl:block text-[17px]"
+                 onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                <div className={"hover:text-blue-500 cursor-pointer"}>Service Request</div>
                 <div className="mt-2 pt-2 h-0 w-screen max-w-full group-hover:h-[250px] absolute
-                                    bg-blue-950 left-0 overflow-hidden flex justify-center
-                                    transition-all duration-500">
+                                bg-blue-950 left-0 overflow-hidden flex justify-center
+                                transition-all duration-500">
                     <div>
-                        <NavDropdown.Item as={Link} to="/ServiceList">
+                        <Link to="/ServiceList" className="dropdown-item">
                             <div className={"hover:text-blue-500 text-[17px]"}>All Services</div>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/FlowerService">
+                        </Link>
+                        <Link to="/FlowerService" className="dropdown-item">
                             <div className={"hover:text-blue-500 text-[17px]"}>Flower Request</div>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/ReligiousService">
+                        </Link>
+                        <Link to="/ReligiousService" className="dropdown-item">
                             <div className={"hover:text-blue-500 text-[17px]"}>Religious Request</div>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/CleaningService">
+                        </Link>
+                        <Link to="/CleaningService" className="dropdown-item">
                             <div className={"hover:text-blue-500 text-[17px]"}>Cleaning Request</div>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/InternalTransportation">
+                        </Link>
+                        <Link to="/InternalTransportation" className="dropdown-item">
                             <div className={"hover:text-blue-500 text-[17px]"}>Internal Transportation</div>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/ExternalTransportation">
+                        </Link>
+                        <Link to="/ExternalTransportation" className="dropdown-item">
                             <div className={"hover:text-blue-500 text-[17px]"}>External Transportation</div>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item as={Link} to="/LanguageService">
+                        </Link>
+                        <Link to="/LanguageService" className="dropdown-item">
                             <div className={"hover:text-blue-500 text-[17px]"}>Language Service</div>
-                        </NavDropdown.Item>
+                        </Link>
                     </div>
                 </div>
-            </Link>
-
+            </div>
 
             <div className="hidden xl:block">
                 <DarkModeButton/>
@@ -149,13 +147,15 @@ return (
                     </DropdownMenu>
                 )}
                 {!isAuthenticated && (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant={"default"} className={"mt-0.5"} onClick={() => loginWithRedirect()}>
-                                Login
-                            </Button>
-                        </DropdownMenuTrigger>
-                    </DropdownMenu>
+                    <div className="hidden xl:block">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant={"default"} className={"mt-0.5"} onClick={() => loginWithRedirect()}>
+                                    Login
+                                </Button>
+                            </DropdownMenuTrigger>
+                        </DropdownMenu>
+                    </div>
                 )}
                 <div className="-mr-2 flex xl:hidden">
                     <button
@@ -205,53 +205,8 @@ return (
                                   className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
                                 <div className={"hover:text-blue-500"}>Service Log</div>
                             </Link>
-                            <DropdownMenu>
-                            <DropdownMenuTrigger>
-                                    <button
-                                        className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium mb-2">Service
-                                        Request
-                                    </button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                    <DropdownMenuLabel>Service Request</DropdownMenuLabel>
-                                    <DropdownMenuSeparator/>
-                                    <DropdownMenuItem>
-                                        <NavDropdown.Item as={Link} to="/ServiceList" onClick={toggleMobileMenu}>
-                                            <div className={"hover:text-blue-500"}>All Service</div>
-                                        </NavDropdown.Item>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <NavDropdown.Item as={Link} to="/FlowerService" onClick={toggleMobileMenu}>
-                                            <div className={"hover:text-blue-500"}>Flower Service</div>
-                                        </NavDropdown.Item>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <NavDropdown.Item as={Link} to="/ReligiousService" onClick={toggleMobileMenu}>
-                                            <div className={"hover:text-blue-500"}>Religious Service</div>
-                                        </NavDropdown.Item>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <NavDropdown.Item as={Link} to="/CleaningService" onClick={toggleMobileMenu}>
-                                            <div className={"hover:text-blue-500"}>Cleaning Service</div>
-                                        </NavDropdown.Item>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <NavDropdown.Item as={Link} to="/InternalTransportation" onClick={toggleMobileMenu}>
-                                            <div className={"hover:text-blue-500"}>Internal Transportation Service</div>
-                                        </NavDropdown.Item>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <NavDropdown.Item as={Link} to="/ExternalTransportation" onClick={toggleMobileMenu}>
-                                            <div className={"hover:text-blue-500"}>External Transportation Service</div>
-                                        </NavDropdown.Item>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem>
-                                        <NavDropdown.Item as={Link} to="/LanguageService" onClick={toggleMobileMenu}>
-                                            <div className={"hover:text-blue-500"}>Language Service</div>
-                                        </NavDropdown.Item>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                            <div className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium mb-2 cursor-pointer"
+                                 onClick={toggleMobileMenu}>Service Request</div>
                         </>
                     )}
                     {!isAuthenticated && (

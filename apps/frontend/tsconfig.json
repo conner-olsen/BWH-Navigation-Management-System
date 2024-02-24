@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig-custom/tsconfig.base.json",
+  "extends": "../../configs/tsconfig-custom/tsconfig.base.json",
   "compilerOptions": {
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],

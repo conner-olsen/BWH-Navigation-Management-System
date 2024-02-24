@@ -1,36 +1,181 @@
-import React from 'react';
-import { describe, expect, test } from 'vitest';
+// pages-load.test.tsx
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import App from '../src/App';
 import { MemoryRouter } from 'react-router-dom';
-import App from '../src/App'; // Ensure this import is correct
+import { cleanup } from '@testing-library/react';
+import axios from 'axios';
 
-// Helper function to render the component within the MemoryRouter, if necessary
-const renderWithRouter = (ui: React.ReactElement, { route = '/' } = {}) => {
-    // Check if the component is the top-level App component that already includes a Router
-    if (ui.type === App) {
-        // For the App component, just render it without wrapping in MemoryRouter
-        render(ui);
-    } else {
-        // For other components, wrap them in MemoryRouter
-        window.history.pushState({}, 'Test page', route);
-        render(ui, { wrapper: MemoryRouter });
-    }
-};
+// Mock network requests globally in your test file
+jest.mock('axios');
 
-describe('Route tests', () => {
-    test('Homepage loads without React error popup or 404', async () => {
-        renderWithRouter(<App />, { route: '/' });
-        expect(screen.queryByText(/Page not found/i)).toBeNull();
-        // Add more assertions here to check for the absence of the React error popup
-    });
+// Inside your test or beforeEach block, specify the mock implementation
+beforeEach(() => {
+  // Clear all mocks before each test
+  jest.clearAllMocks();
 
-    // Repeat this structure for other routes, for example:
-    test('BwhHomepage loads successfully', async () => {
-        renderWithRouter(<App />, { route: '/BwhHomepage' });
-        expect(screen.queryByText(/Page not found/i)).toBeNull();
-        // More assertions specific to BwhHomepage
-    });
-
-    // Add more tests for other routes...
+  // Setup mock for axios.get (or other methods as needed)
+  (axios.get as jest.Mock).mockImplementation(() => Promise.resolve({ data: {} }));
 });
 
+// Suppress all console output and logs for this test file
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {});
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+});
+
+afterAll(() => {
+  // Restore the original console functions
+  jest.restoreAllMocks();
+});
+
+// Automatically unmount and cleanup DOM after the test is finished.
+afterEach(cleanup);
+
+
+describe('Page load tests', () => {
+  test('Root path does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/BwhHomepage" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/BwhHomepage"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/DataUpload" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/DataUpload"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/HomeOUTDATED" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/HomeOUTDATED"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/Home" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/Home"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/FlowerService" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/FlowerService"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/CleaningService" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/CleaningService"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/ReligiousService" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/ReligiousService"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/LanguageService" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/LanguageService"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/ExternalTransportation" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/ExternalTransportation"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/InternalTransportation" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/InternalTransportation"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/ServiceList" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/ServiceList"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/ServiceLog" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/ServiceLog"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/UserPage" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/UserPage"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/EmployeeManager" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/EmployeeManager"]}>
+      <App />
+    </MemoryRouter>
+  );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+
+  test('"/AboutPage" does not show "Page not found"', async () => {
+    render(
+      <MemoryRouter initialEntries={["/AboutPage"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  });
+});

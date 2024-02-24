@@ -23,7 +23,7 @@ export class Node {
    * @param {number} xCoord - The X coordinate of the node.
    * @param {number} yCoord - The Y coordinate of the node.
    * @param {string} floor - The floor where the node is located.
-    * @param {string} building - The building where the node is located.
+   * @param {string} building - The building where the node is located.
    * @param {string} nodeType - The type of the node.
    * @param {string} longName - The long name of the node.
    * @param {string} shortName - The short name of the node.
@@ -149,9 +149,16 @@ export class Graph {
    */
 
   async fromDB() {
+    // temp
   }
 
   public populateGraph(nodes: node[], edges: edge[]) {
+    // Check if nodes is iterable
+    if (!Array.isArray(nodes)) {
+      console.error("populateGraph was called with a non-iterable nodes parameter.");
+      return; // Exit the method early or throw an error
+    }
+    
     // Clear existing nodes and edges
     this.nodes.clear();
 
@@ -277,7 +284,7 @@ export class Graph {
 
     while (priorityQueue.length > 0) {
       // get first queue element and set to the current path
-      let [currentNodeIDPath, gValue] = priorityQueue.shift()!;
+      const [currentNodeIDPath, gValue] = priorityQueue.shift()!;
 
       // get last node in the current path and set to current
       const currentNode = this.getNode(currentNodeIDPath[currentNodeIDPath.length - 1]);
