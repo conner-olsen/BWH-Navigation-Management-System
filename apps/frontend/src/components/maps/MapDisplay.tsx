@@ -151,7 +151,7 @@ function MapDisplay({
     const displayHoverInfo = (node: Node) => {
         getCount(node);
         return (
-            <foreignObject x={node.xCoord - 225} y={node.yCoord - 525} width="450" height="500">
+            <foreignObject x={node.xCoord - 225} y={node.yCoord - 550} width="450" height="525">
                 <div
                     className={"h-fit rounded-md border bg-popover p-4 text-2xl text-popover-foreground shadow-md " +
                         "outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 " +

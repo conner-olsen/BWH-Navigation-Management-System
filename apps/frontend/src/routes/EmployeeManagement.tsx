@@ -9,6 +9,7 @@ import {Label} from "../components/ui/label.tsx";
 import {Input} from "../components/ui/input.tsx";
 import ExportEmployeeCSVButton from "../components/ExportEmployeeCSVButton.tsx";
 import DragNDrop from "../components/DragNDrop.tsx";
+import SendAllDataButton from "../components/SendAllDataButton.tsx";
 import {GetDataNodes} from "../components/NodesDataBaseTableDisplay.tsx";
 import ExportNodeDataToCSVButton from "../components/ExportNodeDataButton.tsx";
 import ExportAllDataToCSVButton from "../components/ExportAllButton.tsx";
@@ -209,6 +210,8 @@ export const EmployeeManager = () => {
                             <TabsTrigger value="Node Data">Node Data</TabsTrigger>
                             <TabsTrigger value="Edge Data">Edge Data</TabsTrigger>
                             <ExportAllDataToCSVButton></ExportAllDataToCSVButton>
+                            <SendAllDataButton></SendAllDataButton>
+
 
                         </TabsList>
 
@@ -280,8 +283,6 @@ export const EmployeeManager = () => {
                                             </Row>
 
                         </TabsContent>
-
-
 
 
                         <TabsContent value="Update Employee">
