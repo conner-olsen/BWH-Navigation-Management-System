@@ -16,6 +16,8 @@ import {
     DrawerTrigger
 } from "./ui/drawer.tsx";
 import {Button} from "./ui/button.tsx";
+import {Switch} from "./ui/switch.tsx";
+
 
 export function BFSComponent() {
     const [bfsResult, setBFSResult] = useState<Node[]>([]);
@@ -39,6 +41,11 @@ export function BFSComponent() {
         speech.text = longNames.join(', ');
         window.speechSynthesis.speak(speech);
     };
+
+    const handleAccessibilityToggle = () => {
+        setDoAccessible(doAccessible => !doAccessible);
+    };
+
     const updateCurrentNode = (currentNode: Node) => {
         setHasSeen(true);
         if (activeTab !== 2 || !isExpanded) setHasSeen(false);
@@ -361,7 +368,7 @@ export function BFSComponent() {
                             </div>
 
                         </div>
-                        <div className="py-4 px-2">
+                        <div className="pt-4 pb-2 px-2">
                             <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
                                     onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
                                 <SelectTrigger>
@@ -373,6 +380,14 @@ export function BFSComponent() {
                                     <SelectItem value={"/api/dfs-searching"}>DFS Searching</SelectItem>
                                 </SelectContent>
                             </Select>
+                        </div>
+
+                        <div className="relative h-6 w-32">
+                            <div className="absolute inset-y-0 left-1 w-16">
+                                <Switch onCheckedChange={handleAccessibilityToggle} defaultChecked={false}>
+                                    Find Accessible Route
+                                </Switch>
+                            </div>
                         </div>
 
                         <div>
@@ -499,10 +514,8 @@ export function BFSComponent() {
                         <AlertDescription>
                             This path contains stairs. If this is difficult, please request an accessible route.
                         </AlertDescription>
-                        <button onClick={() => setDoAccessible(true)}> Find Accessible Path</button>
                     </Alert>
                 )}
-                {/*{showAlert && <button onClick={() => setDoAccessible(true)}> Find Accessible Path</button>}*/}
             </div>
 
 
@@ -585,8 +598,8 @@ export function BFSComponent() {
                                 </ol>
                             </div>
 
-                            <div className="flex justify-center">
-                                <DrawerClose>
+                        <div className="flex justify-center">
+                        <DrawerClose>
                                     <div className="mb-4 m-auto">
                                         <Button variant="destructive">Close</Button>
                                     </div>
@@ -679,6 +692,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
+                                                doAccessible={false}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {lowerLevel2ContentVisible &&
@@ -686,6 +700,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
+                                                doAccessible={false}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor1ContentVisible &&
@@ -693,6 +708,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
+                                                doAccessible={false}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor2ContentVisible &&
@@ -700,6 +716,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
+                                                doAccessible={false}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor3ContentVisible &&
@@ -707,6 +724,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={bfsResult}
+                                                doAccessible={false}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             </TransformComponent>
