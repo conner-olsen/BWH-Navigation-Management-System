@@ -335,12 +335,17 @@ function MapDisplay({
                 if((node as Node).floor == floor && (floorChanges[index] != "")) {
                     return (
                         <g>
-                            <rect className="dark:fill-white z-20 fill-blue-600" x={(node as Node).xCoord - 63}
-                          y={(node as Node).yCoord - 48}
-                          width="120" height="28" rx="1" fill="green" stroke="black" stroke-width="4">
-                             </rect>
-                            <text className="font-bold dark:invert" x={(node as Node).xCoord - 57}
-                                y={(node as Node).yCoord - 28} fill="black">
+                            <rect className="dark:fill-white z-20 fill-indigo-400" x={(node as Node).xCoord - 64}
+                                  y={(node as Node).yCoord - 48}
+                                  width="125" height="28" rx="1" stroke="black" stroke-width="4">
+                                <animate
+                                    attributeName="rx"
+                                    values="0;13;0"
+                                    dur="2s"
+                                    repeatCount="indefinite"/>
+                            </rect>
+                            <text className="font-bold dark:invert" x={(node as Node).xCoord - 59}
+                                  y={(node as Node).yCoord - 28} fill="black">
                                  {floorChanges[index]}
                      </text>
                     </g>
