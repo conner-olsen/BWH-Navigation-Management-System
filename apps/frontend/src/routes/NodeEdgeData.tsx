@@ -6,7 +6,7 @@ import ExportNodeDataToCSVButton from "../components/ExportNodeDataButton.tsx";
 import {Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/tabs.tsx";
 import ExportEdgeDataButton from "../components/ExportEdgeDataButton.tsx";
 import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
-import Global_Footer from "../components/Global_Footer.tsx";
+import Global_Footer from "../components/GlobalFooter.tsx";
 
 export function NodeEdgeData() {
 

@@ -162,6 +162,11 @@ export class AStarPathfindingStrategy extends PathfindingStrategy {
       if (!currentNode) continue;
   
       for (const neighbor of currentNode.edges) {
+        // Prevent cycles by checking if the neighbor is already in the cameFrom map
+        if (cameFrom.has(neighbor)) {
+          continue;
+        }
+
         const tentativePathCost = (costFromStart.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
         if (tentativePathCost < (costFromStart.get(neighbor) || Infinity)) {
           cameFrom.set(neighbor, current);

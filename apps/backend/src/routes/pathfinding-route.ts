@@ -1,31 +1,31 @@
 import express, { Router, Request, Response } from "express";
-import { Graph } from "src/graph.ts";
-import PathFindingRequest from "common/src/PathfindingRequest.ts";
+import { Graph } from "common/src/graph.ts";
+import PathFindingRequest from "common/interfaces/pathfinding-request.ts";
 import client from "../bin/database-connection.ts";
-import { AStarPathfindingStrategy, BFSPathfindingStrategy, DFSPathfindingStrategy, DijkstraPathfindingStrategy } from "../../../../packages/common/src/pathfinding-strategy.ts";
+import { AStarPathfindingStrategy, BFSPathfindingStrategy, DFSPathfindingStrategy, DijkstraPathfindingStrategy } from "common/src/pathfinding-strategy.ts";
 
 const router: Router = express.Router();
 
-router.post("/:strategy", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   try {
     const requestData: PathFindingRequest = req.body;
     const graph = new Graph();
-    const startNode = requestData.startid;
-    const endNode = requestData.endid;
-    const strategy = req.params.strategy; // Access the strategy from the URL parameter
+    const startNode = requestData.startId;
+    const endNode = requestData.endId;
+    const strategy = requestData.strategy; // This should be passed in the request body
 
-    // Set the pathfinding strategy based on the URL parameter
+    // Set the pathfinding strategy based on the request
     switch (strategy) {
-      case "aStar":
+      case "A*":
         graph.setPathfindingStrategy(new AStarPathfindingStrategy());
         break;
-      case "bfs":
+      case "BFS":
         graph.setPathfindingStrategy(new BFSPathfindingStrategy());
         break;
-      case "dfs":
+      case "DFS":
         graph.setPathfindingStrategy(new DFSPathfindingStrategy());
         break;
-      case "dijkstra":
+      case "Dijkstra":
         graph.setPathfindingStrategy(new DijkstraPathfindingStrategy());
         break;
       default:

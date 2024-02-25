@@ -1,9 +1,9 @@
 import React from "react";
-import { BFSComponent } from "../components/BFSComponent.tsx";
+import { BFSComponent } from "../components/MapPageComponent.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
-export default function BFSRoute() {
+export default function MapPage() {
     return (
-        <div className="BFSBox">
+        <div className="MapPage">
             <BFSComponent />
         </div>
     );

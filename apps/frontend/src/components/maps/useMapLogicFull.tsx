@@ -37,7 +37,8 @@ export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicRe
     useEffect(() => {
         setGraph(populatedGraph);
         if (startNode && endNode && graph) {
-            const path = graph.bfsAstar(startNode, endNode);
+            graph.setPathfindingStrategy("A*");
+            const path = graph.findPath(startNode, endNode);
             setPath(path);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
@@ -85,7 +86,8 @@ export const useMapLogic = (startNode?: string, endNode?: string): UseMapLogicRe
         else if (!endNodeId) {
             setEndNodeId(node.id);
             if (graph && startNodeId) {
-                const path = graph.bfs(startNodeId, node.id);
+                graph.setPathfindingStrategy("BFS");  
+                const path = graph.findPath(startNodeId, node.id);
                 setPath(path);
             }
         }

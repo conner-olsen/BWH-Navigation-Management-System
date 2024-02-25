@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Graph} from 'common/src/graph.ts';
-import PathfindingRequest from "common/src/PathfindingRequest.ts";
+import PathfindingRequest from "common/interfaces/pathfinding-request";
 import axios   from "axios";
 import "./animation.css";
 import {Node} from "common/src/node.ts";
@@ -39,13 +39,13 @@ function MapDisplay({
                         doDisplayNames,
                         pathSent,
                         setChosenNode
-                    }: MapDisplayProps) {
+                    }: Readonly<MapDisplayProps>) {
     const [graph, setGraph] = useState<Graph>(new Graph());
     const [startNodeId, setStartNodeId] = useState<string | null>(null);
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
     const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
-    const [nodeCount, setCount] = useState<string>("Error");
+    const [nodeCount, setNodeCount] = useState<string>("Error");
 
 
 
@@ -60,10 +60,9 @@ function MapDisplay({
     useEffect(() => {
         if (startNode && endNode && graph) {
             //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
-            graph.setPathfindingMethodStringRoute(pathFindingType);
+            graph.setPathfindingStrategy(pathFindingType);
 
             const pathString = graph.nodesToString(pathSent);
-                //graph.runPathfinding(startNode, endNode);
             setPath(pathString);
             setStartNodeId(startNode);
             setEndNodeId(endNode);
@@ -75,7 +74,7 @@ function MapDisplay({
                try {
                    const response = await axios.post("/api/get-stats", node);
                    if (response.status === 200) {
-                       setCount(response.data);
+                       setNodeCount(response.data);
                    }
                } catch (error) {
                    console.error("error getting count ", (error));
@@ -122,7 +121,7 @@ function MapDisplay({
 
         if (!startNodeId) {
             setStartNodeId(node.id);
-            const path: PathfindingRequest = {startid: node.id, endid: ""};
+            const path: PathfindingRequest = {startId: node.id, endId: "", strategy: pathFindingType};
             sendHoverMapPath(path);
         } else if (node.id == startNodeId) {
             clearSelection();
@@ -131,7 +130,7 @@ function MapDisplay({
             if (graph && startNodeId) {
                 setStartNodeId(startNodeId);
                 setEndNodeId(node.id);
-                const path: PathfindingRequest = {startid: startNodeId, endid: node.id};
+                const path: PathfindingRequest = {startId: startNodeId, endId: node.id, strategy: pathFindingType};
                 sendHoverMapPath(path);
             }
         }

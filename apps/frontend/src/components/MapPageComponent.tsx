@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import PathfindingRequest from "common/src/PathfindingRequest.ts";
+import PathfindingRequest from "common/interfaces/pathfinding-request.ts";
 import MapDisplay from "./maps/MapDisplay.tsx";
 import { parseCSV } from "common/src/parser.ts";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
@@ -18,10 +18,10 @@ import {Button} from "./ui/button.tsx";
 import {Node} from "common/src/node.ts";
 
 export function BFSComponent() {
-    const [bfsResult, setBFSResult] = useState<Node[]>([]);
+    const [pathfindingResult, setBFSResult] = useState<Node[]>([]);
     const [startNode, setStartNode] = useState<string>("");
     const [endNode, setEndNode] = useState<string>("");
-    const [pathFindingType, setPathFindingType] = useState<string>("/api/bfsAstar-searching");
+    const [pathFindingType, setPathFindingType] = useState<string>("A*");
     const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
     const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
@@ -29,8 +29,8 @@ export function BFSComponent() {
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
 
     const collectLongNames = useCallback(() => {
-        return bfsResult.map(node => node.longName);
-    }, [bfsResult]);
+        return pathfindingResult.map(node => node.longName);
+    }, [pathfindingResult]);
 
     const handleSpeakButtonClick = () => {
         const longNames = collectLongNames();
@@ -47,8 +47,9 @@ export function BFSComponent() {
     const fetchData = useCallback(async (): Promise<AxiosResponse<Node[]>> => {
         try {
             const request: PathfindingRequest = {
-                startid: startNode,
-                endid: endNode
+                startId: startNode,
+                endId: endNode,
+                strategy: pathFindingType
             };
             const response: AxiosResponse<Node[]> = await axios.post(pathFindingType, request, {
                 headers: {
@@ -57,7 +58,7 @@ export function BFSComponent() {
             });
 
             if (response.status === 200) {
-                console.log("data recieved");
+                console.log("data received");
                 setBFSResult(response.data);
             }
 
@@ -110,8 +111,8 @@ export function BFSComponent() {
     }, []); //
 
     const sendHoverMapPath = (path: PathfindingRequest) => {
-        setStartNode(path.startid);
-        setEndNode(path.endid);
+        setStartNode(path.startId);
+        setEndNode(path.endId);
     };
 
     const sendClear = () => {
@@ -208,13 +209,13 @@ export function BFSComponent() {
         //looks to see if theres a floor change w/ stairs
         //shows alert if so
         //const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
-        if(bfsResult[0] != undefined) {
+        if(pathfindingResult[0] != undefined) {
             const returnBooleans: boolean[] = [];
-            const firstNode = bfsResult[0];
+            const firstNode = pathfindingResult[0];
             let previousFloor = firstNode.floor;
 
-            for (let i = 0; i < bfsResult.length; i++) {
-                const node = bfsResult[i];
+            for (let i = 0; i < pathfindingResult.length; i++) {
+                const node = pathfindingResult[i];
                 const currentFloor = node.floor;
 
                 if (!(currentFloor == previousFloor) && node.nodeType === "STAI") {
@@ -237,15 +238,15 @@ export function BFSComponent() {
             setShowAlert(false);
         }
 
-    }, [bfsResult]);
+    }, [pathfindingResult]);
 
     //booleans represent whether there is a floor change
     const gatherFloorChange = (): boolean[] => {
         const returnBooleans: boolean[] = [];
-        let previousFloor = bfsResult[0].floor;
+        let previousFloor = pathfindingResult[0].floor;
 
-        for(let i = 0; i < bfsResult.length; i++) {
-            const node = bfsResult[i];
+        for(let i = 0; i < pathfindingResult.length; i++) {
+            const node = pathfindingResult[i];
             const currentFloor = node.floor;
 
             if (!(currentFloor == previousFloor)) {
@@ -360,15 +361,16 @@ export function BFSComponent() {
 
                         </div>
                         <div className="py-4 px-2">
-                            <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
+                            <Select value={pathFindingType} defaultValue={"A*"}
                                     onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
                                 <SelectTrigger>
                                     <SelectValue/>
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
-                                    <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
-                                    <SelectItem value={"/api/dfs-searching"}>DFS Searching</SelectItem>
+                                    <SelectItem value={"A*"}>A* Searching</SelectItem>
+                                    <SelectItem value={"BFS"}>BFS Searching</SelectItem>
+                                    <SelectItem value={"DFS"}>DFS Searching</SelectItem>
+                                    <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -385,7 +387,7 @@ export function BFSComponent() {
                             </div>
                             <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
                                 {/* Render the list of long names and node names with icons */}
-                                {bfsResult.map((node, index) => (
+                                {pathfindingResult.map((node, index) => (
                                     <li key={index}>
                                         {/* Check the node type and render the appropriate icon */}
                                         <span className="flex items-center">
@@ -674,35 +676,35 @@ export function BFSComponent() {
                                     <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"}
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                sendClear={sendClear} pathSent={bfsResult}
+                                                sendClear={sendClear} pathSent={pathfindingResult}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {lowerLevel2ContentVisible &&
                                     <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                sendClear={sendClear} pathSent={bfsResult}
+                                                sendClear={sendClear} pathSent={pathfindingResult}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor1ContentVisible &&
                                     <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                sendClear={sendClear} pathSent={bfsResult}
+                                                sendClear={sendClear} pathSent={pathfindingResult}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor2ContentVisible &&
                                     <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                sendClear={sendClear} pathSent={bfsResult}
+                                                sendClear={sendClear} pathSent={pathfindingResult}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor3ContentVisible &&
                                     <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                                sendClear={sendClear} pathSent={bfsResult}
+                                                sendClear={sendClear} pathSent={pathfindingResult}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             </TransformComponent>

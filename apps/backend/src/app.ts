@@ -3,9 +3,6 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import csvRouter from "./routes/csv-handler";
-import bfsRouter from "./routes/bfs-route";
-import dfsRouter from "./routes/dfs-route";
-import bfsAstarRouter from "./routes/Astar-route";
 import userRouter from "./routes/user-route";
 import nodeRouter from "./routes/node-route";
 import edgeRouter from "./routes/populate-edges";
@@ -20,6 +17,7 @@ import serviceRequest from "./routes/service-request";
 import employeeCSVRouter from "./routes/employee-to-csv";
 import getStats from "./routes/count-service-requests";
 import getEmployeeStats from "./routes/count-employee-service-requests";
+import pathfindingRoute from "./routes/pathfinding-route";
 
 
 
@@ -42,9 +40,6 @@ app.use(cookieParser()); // Cookie parser
 // won't be reached by the default proxy and prod setup
 app.use("/api/csv-to-json", csvRouter);
 app.use("/api/node-populate", nodeRouter);
-app.use("/api/bfs-searching", bfsRouter);
-app.use("/api/dfs-searching", dfsRouter);
-app.use("/api/bfsAstar-searching", bfsAstarRouter);
 app.use("/api/edge-populate", edgeRouter);
 app.use("/api/user", userRouter);
 app.use("/api/download-node-csv", downloadNodeDataRouter);
@@ -58,6 +53,7 @@ app.use("/api/service-request", serviceRequest);
 app.use("/api/employee-csv", employeeCSVRouter);
 app.use("/api/get-stats", getStats);
 app.use("/api/get-employee-stats", getEmployeeStats);
+app.use("/api/pathfinding", pathfindingRoute);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

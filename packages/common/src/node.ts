@@ -26,25 +26,24 @@ export class Node {
    */
   constructor(
     id: string,
-    xCoord: number,
-    yCoord: number,
-    floor: string,
-    building: string,
-    nodeType: string,
-    longName: string,
-    shortName: string,
+    xCoord?: number,
+    yCoord?: number,
+    floor?: string,
+    building?: string,
+    nodeType?: string,
+    longName?: string,
+    shortName?: string,
   ) {
     this.id = id;
-    this.xCoord = xCoord;
-    this.yCoord = yCoord;
-    this.floor = floor;
-    this.building = building;
-    this.nodeType = nodeType;
-    this.longName = longName;
-    this.shortName = shortName;
+    this.xCoord = xCoord || 0;
+    this.yCoord = yCoord || 0;
+    this.floor = floor || '';
+    this.building = building || '';
+    this.nodeType = nodeType || '';
+    this.longName = longName || '';
+    this.shortName = shortName || '';
     this._edges = new Set();
   }
-
   /**
    * Getter for the edges connected to this node.
    * @return {Set<string>} - A set of node IDs representing the edges.

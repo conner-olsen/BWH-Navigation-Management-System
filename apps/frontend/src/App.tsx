@@ -1,8 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { NodeEdgeData } from "./routes/NodeEdgeData.tsx";
-import HomePage from "./routes/HomePage.tsx";
-import BFSRoute from "./routes/BFSRoute.tsx";
+import MapPage from "./routes/MapPage.tsx";
 import FlowerServiceRequest from "./routes/ServiceRequests/FlowerServiceRequest.tsx";
 import CleaningServiceRequest from "./routes/ServiceRequests/CleaningServiceRequest.tsx";
 import ReligiousServiceRequest from "./routes/ServiceRequests/ReligiousServiceRequest.tsx";
@@ -25,8 +24,7 @@ function App() {
         <Route path="/" element={<BwhHomepage />} />
         <Route path="/BwhHomepage" element={<BwhHomepage />} />
         <Route path="/DataUpload" element={<NodeEdgeData />} />
-        <Route path="/HomeOUTDATED" element={<HomePage />} />
-        <Route path="/Home" element={<BFSRoute />} />
+        <Route path="/Home" element={<MapPage />} />
         <Route path="/FlowerService" element={<FlowerServiceRequest />} />
         <Route path="/CleaningService" element={<CleaningServiceRequest />} />
         <Route path="/ReligiousService" element={<ReligiousServiceRequest />} />

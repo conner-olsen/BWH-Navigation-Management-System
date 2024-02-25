@@ -1,4 +1,4 @@
-import { PathfindingStrategy, AStarPathfindingStrategy } from "./pathfinding-strategy.ts";
+import { PathfindingStrategy, AStarPathfindingStrategy, BFSPathfindingStrategy, DFSPathfindingStrategy, DijkstraPathfindingStrategy } from "./pathfinding-strategy.ts";
 import { Node } from "./node.ts";
 import { node, edge } from "../interfaces/interfaces.ts";
 
@@ -22,11 +22,31 @@ export class Graph {
 
   /**
    * Set the pathfinding strategy.
-   * @param pathfindingStrategy The pathfinding strategy to use.
+   * @param pathfindingStrategy The pathfinding strategy to use. Can be an instance of PathfindingStrategy or a string representing the strategy.
    */
-  setPathfindingStrategy(pathfindingStrategy: PathfindingStrategy) {
-    this.pathfindingStrategy = pathfindingStrategy;
+  setPathfindingStrategy(pathfindingStrategy: PathfindingStrategy | string) {
+    if (typeof pathfindingStrategy === "string") {
+      switch (pathfindingStrategy.toUpperCase()) {
+        case "A*":
+          this.pathfindingStrategy = new AStarPathfindingStrategy();
+          break;
+        case "BFS":
+          this.pathfindingStrategy = new BFSPathfindingStrategy();
+          break;
+        case "DFS":
+          this.pathfindingStrategy = new DFSPathfindingStrategy();
+          break;
+        case "DIJKSTRA":
+          this.pathfindingStrategy = new DijkstraPathfindingStrategy();
+          break;
+        default:
+          throw new Error(`Unknown pathfinding strategy: ${pathfindingStrategy}`);
+      }
+    } else {
+      this.pathfindingStrategy = pathfindingStrategy;
+    }
   }
+
 
   /**
    * Run the pathfinding algorithm specified by the current strategy.
@@ -158,6 +178,6 @@ export class Graph {
       });
     });
   
-    return edgeCount > 0 ? totalDistance / edgeCount : 0;
+    return edgeCount > 0 ? Math.round(totalDistance / edgeCount) : 0;
   }
 }
