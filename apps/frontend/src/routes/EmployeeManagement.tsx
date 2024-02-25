@@ -194,7 +194,7 @@ export const EmployeeManager = () => {
             <>
             <div>
                 <Outlet/>
-                <div className="container" style={{display: 'flex', alignItems: 'center'}}>
+                <div className="text-center" style={{display: 'flex', alignItems: 'center'}}>
                         <Col>
                             <h1>DATA MANAGER</h1>
                         </Col>

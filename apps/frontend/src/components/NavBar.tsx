@@ -78,11 +78,7 @@ return (
             {/*        <div className={"hover:text-blue-500"}>Data Upload</div>*/}
             {/*    </Link>*/}
             {/*)}*/}
-            {isAuthenticated && (
-                <Link to="/ServiceLog" className="no-underline p-2 text-white hidden xl:block text-[17px]">
-                    <div className={"hover:text-blue-500"}>Service Log</div>
-                </Link>
-            )}
+
 
             <div className="group text-center no-underline p-2 text-white hidden xl:block text-[17px]"
                  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -115,6 +111,12 @@ return (
                     </div>
                 </div>
             </div>
+
+            {isAuthenticated && (
+                <Link to="/ServiceLog" className="no-underline p-2 text-white hidden xl:block text-[17px]">
+                    <div className={"hover:text-blue-500"}>Service Log</div>
+                </Link>
+            )}
 
             <div className="hidden xl:block">
                 <DarkModeButton/>
