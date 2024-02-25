@@ -218,7 +218,7 @@ export function MapComponent() {
   useEffect(() => {
     //looks to see if theres a floor change w/ stairs
     //shows alert if so
-    //const hasStaircase = bfsResult.some(node => node.nodeType === "STAI");
+
     if (pathfindingResult[0] != undefined) {
       const returnBooleans: boolean[] = [];
       const firstNode = pathfindingResult[0];
