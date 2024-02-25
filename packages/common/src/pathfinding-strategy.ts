@@ -1,5 +1,5 @@
 import {Graph} from "./graph.ts";
-import TinyQueue from 'tinyqueue';
+import FastPriorityQueue from 'fastpriorityqueue';
 
 export abstract class PathfindingStrategy {
   abstract findPath(startNode: string, endNode: string, graph: Graph): string[];
@@ -11,6 +11,37 @@ export abstract class PathfindingStrategy {
       totalPath.unshift(current);
     }
     return totalPath;
+  }
+
+  calculateDistance(nodeAId: string, nodeBId: string, graph: Graph): number {
+    const nodeA = graph.getNode(nodeAId);
+    const nodeB = graph.getNode(nodeBId);
+    if (!nodeA || !nodeB) return Infinity;
+  
+    const dx = Math.abs(nodeA.xCoord - nodeB.xCoord);
+    const dy = Math.abs(nodeA.yCoord - nodeB.yCoord);
+    const floorDifference = Math.abs(nodeA.getFloorNumber() - nodeB.getFloorNumber());
+  
+    const baseCost = dx + dy;
+  
+    let floorChangeCost = 0;
+    if (floorDifference > 0) {
+      // Directly use the cached average distance
+      const averageDistance = graph.getAverageDistance();
+  
+      // Define multipliers for stairs and elevators
+      const stairMultiplier = 3; // Example: stairs are 3 times harder than moving the same distance on flat ground
+      const elevatorMultiplier = 1.5; // Example: elevators are 1.5 times harder due to waiting time
+
+      // Apply the appropriate multiplier based on the node type
+      if (nodeA.nodeType === 'stair') {
+        floorChangeCost = averageDistance * stairMultiplier * floorDifference;
+      } else {
+        floorChangeCost = averageDistance * floorDifference * elevatorMultiplier;
+      }
+    }
+  
+    return baseCost + floorChangeCost;
   }
 }
 
@@ -38,7 +69,7 @@ export class BFSPathfindingStrategy extends PathfindingStrategy {
         return path;
       }
 
-      const neighbors = graph.getNode(node)?.edges || [];
+      const neighbors = graph.getNode(node)?.edges ?? [];
 
       for (const neighbor of neighbors) {
         if (!visited.has(neighbor)) {
@@ -49,78 +80,6 @@ export class BFSPathfindingStrategy extends PathfindingStrategy {
     }
 
     return [];
-  }
-}
-
-export class AStarPathfindingStrategy extends PathfindingStrategy {
-  /**
-   * Finds the path from the startNode to the endNode in the given graph using the A* algorithm.
-   * @param {string} startNode - The ID of the starting node.
-   * @param {string} endNode - The ID of the ending node.
-   * @param {Graph} graph - The graph to search within.
-   * @return {string[]} - An array of NodeIDs representing the path.
-   */
-  findPath(startNode: string, endNode: string, graph: Graph): string[] {
-    if (!graph.getNode(startNode) || !graph.getNode(endNode)) {
-      return [];
-    }
-
-    const comparator = (a: [string, number], b: [string, number]) => a[1] - b[1];
-    const openSetQueue = new TinyQueue<[string, number]>([], comparator);
-    const openSet = new Set<string>(); // New Set to track nodes in the open set
-
-    const cameFrom: Map<string, string> = new Map();
-    const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
-    const fScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
-
-    gScore.set(startNode, 0);
-    fScore.set(startNode, this.calculateDistance(startNode, endNode, graph, false));
-
-    openSetQueue.push([startNode, fScore.get(startNode) as number]);
-    openSet.add(startNode); // Add to the new open set
-
-    while (openSetQueue.length > 0) {
-      const current = openSetQueue.pop()![0];
-      openSet.delete(current); // Remove from the open set when popped
-
-      if (current === endNode) {
-        return this.reconstructPath(cameFrom, current);
-      }
-
-      const currentNode = graph.getNode(current);
-      if (!currentNode) continue;
-
-      for (const neighbor of currentNode.edges) {
-        const tentativeGScore = (gScore.get(current) || Infinity) + this.calculateDistance(current, neighbor, graph, true);
-        if (tentativeGScore < (gScore.get(neighbor) || Infinity)) {
-          cameFrom.set(neighbor, current);
-          gScore.set(neighbor, tentativeGScore);
-          fScore.set(neighbor, tentativeGScore + this.calculateDistance(neighbor, endNode, graph, false));
-
-          if (!openSet.has(neighbor)) {
-            openSetQueue.push([neighbor, fScore.get(neighbor) as number]);
-            openSet.add(neighbor); // Add to the open set
-          }
-        }
-      }
-    }
-
-    return []; // Return empty path if no path is found
-  }
-
-  private calculateDistance(nodeAId: string, nodeBId: string, graph: Graph, weightStairs: boolean): number {
-    const nodeA = graph.getNode(nodeAId);
-    const nodeB = graph.getNode(nodeBId);
-    if (!nodeA || !nodeB) return Infinity;
-
-    const dx = Math.abs(nodeA.xCoord - nodeB.xCoord);
-    const dy = Math.abs(nodeA.yCoord - nodeB.yCoord);
-    const dz = Math.abs(nodeA.getFloorNumber() - nodeB.getFloorNumber());
-
-    // Apply extra weight for vertical movement if specified
-    const stairWeight = weightStairs ? 10 : 1;
-
-    return dx + dy + (dz * stairWeight); // Manhattan distance with optional weighted floor difference
   }
 }
 
@@ -150,7 +109,7 @@ export class DFSPathfindingStrategy extends PathfindingStrategy {
 
       if (!visited.has(node)) {
         visited.add(node);
-        const neighbors = graph.getNode(node)?.edges || [];
+        const neighbors = graph.getNode(node)?.edges ?? [];
 
         neighbors.forEach((neighbor: string) => {
           if (!visited.has(neighbor)) {
@@ -160,6 +119,67 @@ export class DFSPathfindingStrategy extends PathfindingStrategy {
       }
     }
 
+    return [];
+  }
+}
+
+export class AStarPathfindingStrategy extends PathfindingStrategy {
+  /**
+   * Finds the path from the startNode to the endNode in the given graph using the A* algorithm.
+   * @param {string} startNode - The ID of the starting node.
+   * @param {string} endNode - The ID of the ending node.
+   * @param {Graph} graph - The graph to search within.
+   * @return {string[]} - An array of NodeIDs representing the path.
+   */
+  findPath(startNode: string, endNode: string, graph: Graph): string[] {
+    if (!graph.getNode(startNode) || !graph.getNode(endNode)) {
+      return [];
+    }
+  
+    const comparator = (a: [string, number], b: [string, number]) => a[1] < b[1];
+    const openSetQueue = new FastPriorityQueue(comparator);
+    const openSet = new Set<string>();
+  
+    const cameFrom: Map<string, string> = new Map();
+    const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
+    const fScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
+  
+    gScore.set(startNode, 0);
+    fScore.set(startNode, this.calculateDistance(startNode, endNode, graph));
+  
+    openSetQueue.add([startNode, fScore.get(startNode) as number]);
+    openSet.add(startNode);
+  
+    while (!openSetQueue.isEmpty()) {
+      const current = openSetQueue.poll()![0];
+      openSet.delete(current);
+  
+      if (current === endNode) {
+        return this.reconstructPath(cameFrom, current);
+      }
+  
+      const currentNode = graph.getNode(current);
+      if (!currentNode) continue;
+  
+      for (const neighbor of currentNode.edges) {
+        const tentativeGScore = (gScore.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
+        if (tentativeGScore < (gScore.get(neighbor) || Infinity)) {
+          cameFrom.set(neighbor, current);
+          gScore.set(neighbor, tentativeGScore);
+          fScore.set(neighbor, tentativeGScore + this.calculateDistance(neighbor, endNode, graph));
+  
+          if (!openSet.has(neighbor)) {
+            openSetQueue.add([neighbor, fScore.get(neighbor) as number]);
+            openSet.add(neighbor);
+          } else {
+            // Decrease key operation
+            openSetQueue.removeOne(([nodeId,]) => nodeId === neighbor);
+            openSetQueue.add([neighbor, fScore.get(neighbor) as number]);
+          }
+        }
+      }
+    }
+  
     return [];
   }
 }
@@ -177,55 +197,42 @@ export class DijkstraPathfindingStrategy extends PathfindingStrategy {
       return [];
     }
 
-    const openSet: Set<string> = new Set([startNode]);
+    const comparator = (a: [string, number], b: [string, number]) => a[1] < b[1];
+    const openSetQueue = new FastPriorityQueue(comparator);
     const cameFrom: Map<string, string> = new Map();
     const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
+    const inQueue: Set<string> = new Set();
+
     gScore.set(startNode, 0);
+    openSetQueue.add([startNode, 0]);
+    inQueue.add(startNode);
 
-    while (openSet.size > 0) {
-      let current: string | undefined = undefined;
-      let lowestFScore: number = Infinity;
-
-      // Find the node in openSet with the lowest gScore
-      openSet.forEach(nodeId => {
-        const score = gScore.get(nodeId) || Infinity;
-        if (score < lowestFScore) {
-          current = nodeId;
-          lowestFScore = score;
-        }
-      });
+    while (!openSetQueue.isEmpty()) {
+      const [current,] = openSetQueue.poll()!;
+      inQueue.delete(current);
 
       if (current === endNode) {
         return this.reconstructPath(cameFrom, current);
       }
 
-      openSet.delete(current!);
-
-      const currentNode = graph.getNode(current!);
+      const currentNode = graph.getNode(current);
       if (!currentNode) continue;
 
       for (const neighbor of currentNode.edges) {
-        // Tentative gScore is the distance from start to the neighbor through current
-        const tentativeGScore = (gScore.get(current!) || Infinity) + this.distanceBetween(current!, neighbor, graph);
+        const tentativeGScore = (gScore.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
 
         if (tentativeGScore < (gScore.get(neighbor) || Infinity)) {
-          // This path to neighbor is better than any previous one. Record it!
-          cameFrom.set(neighbor, current!);
+          cameFrom.set(neighbor, current);
           gScore.set(neighbor, tentativeGScore);
-          openSet.add(neighbor);
+
+          if (!inQueue.has(neighbor)) {
+            openSetQueue.add([neighbor, tentativeGScore]);
+            inQueue.add(neighbor);
+          }
         }
       }
     }
 
-    return []; // Return empty path if no path is found
-  }
-
-  private distanceBetween(nodeAId: string, nodeBId: string, graph: Graph): number {
-    const nodeA = graph.getNode(nodeAId);
-    const nodeB = graph.getNode(nodeBId);
-    if (!nodeA || !nodeB) return Infinity;
-
-    // Assuming direct distance is 1 for simplicity, adjust based on your graph's actual weights
-    return 1;
+    return [];
   }
 }

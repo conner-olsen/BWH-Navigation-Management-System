@@ -19,6 +19,6 @@
     "lint:fix": "yarn shared:prettierlint:fix && yarn shared:eslint:fix && yarn shared:tslint"
   },
   "dependencies": {
-    "tinyqueue": "^2.0.3"
+    "fastpriorityqueue": "^0.7.4"
   }
 }

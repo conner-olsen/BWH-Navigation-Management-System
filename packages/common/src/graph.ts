@@ -1,7 +1,6 @@
-import { PathfindingStrategy } from "./pathfinding-strategy.ts";
+import { PathfindingStrategy, AStarPathfindingStrategy } from "./pathfinding-strategy.ts";
 import { Node } from "./node.ts";
 import { node, edge } from "../interfaces/interfaces.ts";
-import { AStarPathfindingStrategy } from "./pathfinding-strategy.ts";
 
 /**
  * Class representing a Graph.
@@ -9,6 +8,7 @@ import { AStarPathfindingStrategy } from "./pathfinding-strategy.ts";
 export class Graph {
   nodes: Map<string, Node>; // Map of node IDs to Node objects
   private pathfindingStrategy: PathfindingStrategy;
+  private averageDistance: number | null = null; // Store the average distance
 
   /**
    * Create a new Graph, optionally with a custom pathfinding strategy.
@@ -16,7 +16,8 @@ export class Graph {
    */
   constructor(pathfindingStrategy?: PathfindingStrategy) {
     this.nodes = new Map();
-    this.pathfindingStrategy = pathfindingStrategy || new AStarPathfindingStrategy();
+    this.pathfindingStrategy = pathfindingStrategy ?? new AStarPathfindingStrategy();
+    // Initialize averageDistance to null to indicate it needs to be calculated
   }
 
   /**
@@ -43,6 +44,7 @@ export class Graph {
    */
   addNode(node: Node) {
     this.nodes.set(node.id, node);
+    this.averageDistance = null; // Invalidate the cached average distance
   }
 
   /**
@@ -58,6 +60,7 @@ export class Graph {
       node1.connectTo(nodeId2);
       node2.connectTo(nodeId1);
     }
+    this.averageDistance = null; // Invalidate the cached average distance
   }
 
   /**
@@ -121,5 +124,40 @@ export class Graph {
    */
   nodesToString(arrayOfNodes: Node[]): string[] {
     return arrayOfNodes.map(node => node.id);
+  }
+
+  /**
+   * Calculate or retrieve the cached average distance between nodes in the graph.
+   * @returns The average distance between nodes in the graph.
+   */
+  getAverageDistance(): number {
+    if (this.averageDistance === null) {
+      // Calculate the average distance only if it hasn't been calculated or if the graph has changed
+      this.averageDistance = this.calculateAverageDistance();
+    }
+    return this.averageDistance;
+  }
+
+  /**
+   * Calculate the average distance between nodes in the graph.
+   * @returns The average distance between nodes in the graph.
+   */
+  calculateAverageDistance(): number {
+    let totalDistance = 0;
+    let edgeCount = 0;
+  
+    this.nodes.forEach((node) => {
+      node.edges.forEach(neighborId => {
+        const neighbor = this.getNode(neighborId);
+        if (neighbor) {
+          const dx = Math.abs(node.xCoord - neighbor.xCoord);
+          const dy = Math.abs(node.yCoord - neighbor.yCoord);
+          totalDistance += Math.sqrt(dx * dx + dy * dy);
+          edgeCount++;
+        }
+      });
+    });
+  
+    return edgeCount > 0 ? totalDistance / edgeCount : 0;
   }
 }
