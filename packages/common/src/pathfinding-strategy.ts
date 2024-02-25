@@ -34,7 +34,7 @@ export abstract class PathfindingStrategy {
       const elevatorMultiplier = 1.5; // Example: elevators are 1.5 times harder due to waiting time
 
       // Apply the appropriate multiplier based on the node type
-      if (nodeA.nodeType === 'stair') {
+      if (nodeA.nodeType === 'STAI') {
         floorChangeCost = averageDistance * stairMultiplier * floorDifference;
       } else {
         floorChangeCost = averageDistance * floorDifference * elevatorMultiplier;
