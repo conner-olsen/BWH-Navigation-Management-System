@@ -1,6 +1,6 @@
 import { PathfindingStrategy, AStarPathfindingStrategy, BFSPathfindingStrategy, DFSPathfindingStrategy, DijkstraPathfindingStrategy } from "./pathfinding-strategy.ts";
 import { Node } from "./node.ts";
-import { node, edge } from "../interfaces/interfaces.ts";
+import { node, edge } from "./interfaces/interfaces.ts";
 
 /**
  * Class representing a Graph.
