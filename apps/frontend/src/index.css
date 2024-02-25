@@ -202,6 +202,12 @@ textarea{
 .map-rotate {
     transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
 }
+.map-rotate image {
+    filter: drop-shadow(100px 121px 1px #000000);
+}
+body.dark .map-rotate image {
+    filter: drop-shadow(100px 121px 1px #FFFFFF);
+}
 .img-rotate:hover {
     filter: none;
 }

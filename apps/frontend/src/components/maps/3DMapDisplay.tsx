@@ -64,6 +64,27 @@ function MapDisplay3D({
         }
     }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
 
+    function filterDuplicates(paths: Node[]) {
+        const uniqueFloor: string[] = [];
+        const sortOrder: { [key: string]: number } = { "3": 1, "2": 2, "1": 3, "L1": 4, "L2": 5 };
+        paths.forEach(obj => {
+            // Check if there's already an object with the same name in uniqueArray
+            if (!uniqueFloor.some(item => item === obj.floor)) {
+                uniqueFloor.push(obj.floor);
+            }
+        });
+        uniqueFloor.sort((a, b) => (sortOrder[a] || Infinity) - (sortOrder[b] || Infinity));
+        return uniqueFloor;
+    }
+
+    function extractFloor(id: string) {
+        const index_f = id.indexOf('f');
+        const index_t = id.indexOf('t');
+        const from = id.slice(index_f + 1, index_t);
+        const to = id.slice(index_t + 1);
+        return [from, to];
+    }
+
     const StrokePath: React.FC<StrokePathProps> = ({ x1, y1, x2, y2, color, style }) => (
         <line className={style}
             x1={x1} y1={y1} x2={x2} y2={y2}
@@ -114,7 +135,7 @@ function MapDisplay3D({
             }
             if (node && nextNode && node.floor !== nextNode.floor && node.floor === floor) {
                 // Yellow indicates stairs, while blue indicates elevator (accessible) to a DIFFERENT floor
-                pathElements.push(<circle id={"c" + stairsCounter + "f" + floor} cx={node.xCoord} cy={node.yCoord} r="50"
+                pathElements.push(<circle id={"c" + stairsCounter + "f" + floor + "t" + nextNode.floor} cx={node.xCoord} cy={node.yCoord} r="50"
                                           fill={node.nodeType === "STAI"? 'yellow' : 'blue'} stroke="black" stroke-width="10"/>
                 );
                 stairsCounter++;
@@ -125,16 +146,17 @@ function MapDisplay3D({
     };
 
     const displayGuidelines = () => {
+        const filteredFloors = filterDuplicates(pathSent);
         let id = 1;
-        const coordinateArr: {x: number, y: number}[] = [];
+        const coordinateArr: {x: number, y: number, from: string, to: string}[] = [];
 
         while (id) {
-            const element = document.getElementById(`c${id}f` + floor);
+            const element = document.querySelector(`[id^="c${id}f${floor}"]`);
             if (element) {
+                const [from, to] = extractFloor(element.id);
                 const rect = element.getBoundingClientRect();
-                coordinateArr.push({x: rect.x, y: rect.y});
+                coordinateArr.push({x: rect.x, y: rect.y, from: from, to: to});
                 id++;
-                console.log(element);
             } else break;
         }
 
@@ -145,10 +167,16 @@ function MapDisplay3D({
             div.style.position = 'absolute';
             div.style.top = `${coordinate.y + 5}px`;
             div.style.left = `${coordinate.x + 10}px`;
-            document.body.appendChild(div); // Append the div to the body
 
+            const indexFrom = filteredFloors.indexOf(coordinate.from);
+            const indexTo = filteredFloors.indexOf(coordinate.to);
+            const goingUp = indexFrom > indexTo;
+            const floorsApart = Math.abs(indexFrom - indexTo);
+            if (goingUp) div.style.left = `${coordinate.x + 12}px`; // Slightly off
+
+            document.body.appendChild(div); // Append the div to the body
             // Render the MyComponent inside the dynamically created div
-            ReactDOM.render(<Guideline goingUp={false} floorsApart={1}/>, div);
+            ReactDOM.render(<Guideline goingUp={goingUp} floorsApart={floorsApart}/>, div);
         }
         return <></>;
     };

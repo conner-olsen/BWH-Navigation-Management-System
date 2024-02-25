@@ -226,19 +226,13 @@ export function BFSComponent() {
         else if (floor === "L2") return "public/maps/map-lowerlevel2-cropped.png";
         else return "";
     };
-    // const clearGuidelines = () => {
-    //     const floors = ["3", "2", "1", "L1", "L2"];
-    //     let id = 1;
-    //     floors.forEach((floor) => {
-    //         while (id < 20) {
-    //             const element = document.getElementById(`d${id}f` + floor);
-    //             if (element) {
-    //                 element.remove();
-    //             } else break;
-    //         }
-    //     });
-    //     console.log("ran");
-    // };
+    const clearGuidelines = () => {
+        // THIS WILL DELETE EVERY ELEMENT WITH ID STARTING WITH D
+        const elements = document.querySelectorAll('[id^="d"]');
+        const elementsArray = Array.from(elements);
+        elementsArray.forEach((element) => element.remove());
+    };
+
     useEffect(() => {
         const handleBodyClass = () => {
             if (do3D && startNode !== "" && endNode !== "") {
@@ -398,7 +392,7 @@ export function BFSComponent() {
                                 <Select value={startNode}
                                         onValueChange={(location: string) => {
                                             setStartNode(location);
-                                            }}>
+                                            clearGuidelines();}}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select Location"/>
                                     </SelectTrigger>
@@ -409,7 +403,7 @@ export function BFSComponent() {
                                 <Select value={endNode}
                                         onValueChange={(location: string) => {
                                             setEndNode(location);
-                                            }}>
+                                            clearGuidelines();}}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select Location"/>
                                     </SelectTrigger>
@@ -422,7 +416,9 @@ export function BFSComponent() {
                         </div>
                         <div className="py-4 px-2">
                             <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
-                                    onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
+                                    onValueChange={(algorithm: string) =>
+                                    {setPathFindingType(algorithm);
+                                     clearGuidelines();}}>
                                 <SelectTrigger>
                                     <SelectValue/>
                                 </SelectTrigger>
@@ -618,7 +614,7 @@ export function BFSComponent() {
                                     <Select value={startNode}
                                             onValueChange={(location: string) => {
                                                 setStartNode(location);
-                                                }}>
+                                                clearGuidelines();}}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Select Location"/>
                                         </SelectTrigger>
@@ -629,7 +625,7 @@ export function BFSComponent() {
                                     <Select value={endNode}
                                             onValueChange={(location: string) => {
                                                 setEndNode(location);
-                                                }}>
+                                                clearGuidelines();}}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Select Location"/>
                                         </SelectTrigger>
@@ -641,13 +637,16 @@ export function BFSComponent() {
                             </div>
                             <div className="py-4 px-2">
                                 <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
-                                        onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
+                                        onValueChange={(algorithm: string) =>
+                                        {setPathFindingType(algorithm);
+                                         clearGuidelines();}}>
                                     <SelectTrigger>
                                         <SelectValue/>
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
                                         <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
+                                        <SelectItem value={"/api/dfs-searching"}>DFS Searching</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
