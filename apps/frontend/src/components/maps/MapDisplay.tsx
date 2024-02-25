@@ -71,6 +71,11 @@ function MapDisplay({
       setStartNodeId(startNode);
       setEndNodeId(endNode);
     }
+    else if(startNode == "" && endNode == "") {
+        setStartNodeId(null);
+        setEndNodeId(null);
+        setPath([]);
+    }
   }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
 
   function getCount(node: Node) {

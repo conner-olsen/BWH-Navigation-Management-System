@@ -17,6 +17,7 @@ import {
 import { Button } from "./ui/button.tsx";
 import { Node } from "common/src/node.ts";
 import { Switch } from "./ui/switch.tsx";
+import ClearPathButton from "./ClearPathButton.tsx";
 
 
 export function MapComponent() {
@@ -369,7 +370,9 @@ export function MapComponent() {
                                 </SelectContent>
                             </Select>
                         </div>
-
+                    </div>
+                    <div>
+                        <ClearPathButton sendClear={sendClear}/>
                     </div>
                     <div className="pt-4 pb-2 px-2">
                         <Select value={pathFindingType} defaultValue={"A*"}
@@ -571,6 +574,7 @@ export function MapComponent() {
                                             </SelectContent>
                                         </Select>
                                     </div>
+
                                 </div>
                                 <div className="py-4 px-2">
                                     <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
