@@ -10,8 +10,9 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*", "apps/frontend/*", "apps/backend/*", "packages/common/*", "packages/database/*"]
-    }
-  }
+      "*": [ "apps/frontend/*", "apps/backend/*", "packages/common/*", "packages/database/*"]
+    },
+  },
+  "exclude": ["node_modules", "**/node_modules/*", "./.pnp.cjs"]
 }
 
