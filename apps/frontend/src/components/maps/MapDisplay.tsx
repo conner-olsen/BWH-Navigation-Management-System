@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Graph, Node} from 'common/src/graph-structure.ts';
-import PathfindingRequest from "common/src/PathfindingRequest.ts";
+import {Graph} from 'common/src/graph.ts';
+//import {PathfindingStrategy} from "common/src/pathfinding-strategy.ts";
 import axios   from "axios";
 import "./animation.css";
 import { Node } from "common/src/node.ts";
+import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
+
 interface MapDisplayProps {
   floorMap: string;
   floor: string;
@@ -301,11 +303,11 @@ function MapDisplay({
     }
   };
 
-    const gatherFloorChangeStrings = (graph: Graph, path: string[]): string[] => {
+    const gatherFloorChangeStrings = (): string[] => {
         const returnStrings: string[] = [];
         let previousFloor = pathSent[0].floor;
 
-        for(let i = 0; i < path.length; i++) {
+        for(let i = 0; i < pathSent.length; i++) {
             const currentFloor = pathSent[i].floor;
 
             if (!(currentFloor == previousFloor)) {
@@ -323,12 +325,14 @@ function MapDisplay({
         return returnStrings;
     };
 
-    const displayFloorChange = (graph: Graph, path: string[]) => {
-        const floorChanges = gatherFloorChangeStrings(graph, path);
+    const displayFloorChange = () => {
+        // console.log("path sent");
+        // console.log(pathSent);
+        // console.log(path);
+        const floorChanges = gatherFloorChangeStrings();
 
         return (
-            Array.from(path.map((nodeID: string, index: number) => {
-                const node = pathSent[index];
+            Array.from(pathSent.map((node: Node, index: number) => {
                 if(node.floor == floor && !(floorChanges[index] == "")) {
                     return (
                         <g>
@@ -361,23 +365,11 @@ function MapDisplay({
                 {graph && displayNodes(graph)}
                 {graph && displayNodePins(graph)}
                 {graph && displayHoverCards(graph)}
-                {graph && path.length > 0 && pathSent.length > 0 && displayFloorChange(graph, path)}
+                {graph && path.length > 0 && pathSent.length > 0 && displayFloorChange()}
             </svg>
 
         </div>
     );
-  return (
-    <div className={"relative"}>
-      <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
-        <image href={floorMap} width="5000" height="3400" x="0" y="0" />
-        {graph && displayEdges(graph)}
-        {graph && path.length > 0 && displayPath(graph, path)}
-        {graph && displayNodes(graph)}
-        {graph && displayNodePins(graph)}
-        {graph && displayHoverCards(graph)}
-      </svg>
-    </div>
-  );
 }
 
 /**
