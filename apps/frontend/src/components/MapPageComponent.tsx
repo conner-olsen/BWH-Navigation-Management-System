@@ -19,7 +19,7 @@ import { Node } from "common/src/node.ts";
 import { Switch } from "./ui/switch.tsx";
 
 
-export function BFSComponent() {
+export function MapComponent() {
   const [pathfindingResult, setBFSResult] = useState<Node[]>([]);
   const [startNode, setStartNode] = useState<string>("");
   const [endNode, setEndNode] = useState<string>("");

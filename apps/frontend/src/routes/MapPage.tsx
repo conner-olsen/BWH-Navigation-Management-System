@@ -1,10 +1,10 @@
 import React from "react";
-import { BFSComponent } from "../components/MapPageComponent.tsx";
+import { MapComponent } from "../components/MapPageComponent.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 export default function MapPage() {
     return (
         <div className="MapPage">
-            <BFSComponent />
+            <MapComponent />
         </div>
     );
 } 
