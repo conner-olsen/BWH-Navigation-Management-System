@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json", // Adjust the path as necessary
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "__mocks__/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

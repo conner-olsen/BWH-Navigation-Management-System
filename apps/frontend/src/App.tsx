@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { NodeEdgeData } from "./routes/NodeEdgeData.tsx";
 import HomePage from "./routes/HomePage.tsx";
 import BFSRoute from "./routes/BFSRoute.tsx";
@@ -16,91 +16,31 @@ import ExternalTransportation from "./routes/ServiceRequests/ExternalTransportat
 import InternalTransportation from "./routes/ServiceRequests/InternalTransportation.tsx";
 import LanguageService from "./routes/ServiceRequests/LanguageService.tsx";
 import AboutPage from "./routes/AboutPage.tsx";
+
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      errorElement: <h1>Page not found</h1>,
-      element: <Root />,
-      children: [
-        {
-          path: "/",
-          element: <BwhHomepage />,
-        },
-          {
-              path: "/BwhHomepage",
-              element: <BwhHomepage />,
-          },
-        {
-          path: "/DataUpload",
-          element: <NodeEdgeData />,
-        },
-        {
-          path: "/HomeOUTDATED",
-          element: <HomePage />,
-        },
-          {
-              path: "/Home",
-              element: <BFSRoute/>
-          },
-          {
-              path: "/FlowerService",
-              element: <FlowerServiceRequest/>
-          },
-          {
-              path: "/CleaningService",
-              element: <CleaningServiceRequest/>
-          },
-          {
-              path: "/ReligiousService",
-              element: <ReligiousServiceRequest/>
-          },
-          {
-              path: "/LanguageService",
-              element: <LanguageService/>
-          },
-          {
-              path: "/ExternalTransportation",
-              element: <ExternalTransportation/>
-          },
-          {
-              path: "/InternalTransportation",
-              element: <InternalTransportation/>
-          },
-          {
-              path: "/ServiceList",
-              element: <ServiceList/>
-          },
-          {
-              path: "/ServiceLog",
-              element: <ServiceLog/>
-          },
-          {
-              path: "/UserPage",
-              element: <UserPage/>
-          },
-          {
-              path: "/EmployeeManager",
-              element: <EmployeeManager/>
-          },
-          {
-              path: "/AboutPage",
-              element: <AboutPage/>
-            },
-      ],
-    },
-  ]);
-
-  return <RouterProvider router={router} />;
-}
-
-function Root() {
   return (
-    <main>
-        <NavBar></NavBar>
-
-        <Outlet />
-    </main>
+    <>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<BwhHomepage />} />
+        <Route path="/BwhHomepage" element={<BwhHomepage />} />
+        <Route path="/DataUpload" element={<NodeEdgeData />} />
+        <Route path="/HomeOUTDATED" element={<HomePage />} />
+        <Route path="/Home" element={<BFSRoute />} />
+        <Route path="/FlowerService" element={<FlowerServiceRequest />} />
+        <Route path="/CleaningService" element={<CleaningServiceRequest />} />
+        <Route path="/ReligiousService" element={<ReligiousServiceRequest />} />
+        <Route path="/LanguageService" element={<LanguageService />} />
+        <Route path="/ExternalTransportation" element={<ExternalTransportation />} />
+        <Route path="/InternalTransportation" element={<InternalTransportation />} />
+        <Route path="/ServiceList" element={<ServiceList />} />
+        <Route path="/ServiceLog" element={<ServiceLog />} />
+        <Route path="/UserPage" element={<UserPage />} />
+        <Route path="/EmployeeManager" element={<EmployeeManager />} />
+        <Route path="/AboutPage" element={<AboutPage />} />
+        <Route path="*" element={<h1>Page not found</h1>} />
+      </Routes>
+    </>
   );
 }
 

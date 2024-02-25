@@ -14,6 +14,7 @@ router.post("/", async (req: Request, res: Response) => {
     const graphCSV = new Graph();
     const startNodeCSV =  requestData.startid;
     const endNodeCSV = requestData.endid;
+    const doAccessible = requestData.doAccessible;
 
     try {
       // Fetch nodes from the database
@@ -29,8 +30,8 @@ router.post("/", async (req: Request, res: Response) => {
       console.error('Error fetching data from the database:', error);
     }
 
-    //run bfs, convert to an array of nodes
-    res.status(200).json(graphCSV.stringsToNodes(graphCSV.runPathfinding(startNodeCSV, endNodeCSV)));
+    //run a*, convert to an array of nodes
+    res.status(200).json(graphCSV.stringsToNodes(graphCSV.runPathfinding(startNodeCSV, endNodeCSV, doAccessible)));
 
   }
   catch (error) {

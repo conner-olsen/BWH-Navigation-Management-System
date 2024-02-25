@@ -14,6 +14,7 @@ interface MapDisplayProps {
     doDisplayEdges: boolean;
     doDisplayNodes: boolean;
     doDisplayNames: boolean;
+    doAccessible: boolean;
     pathFindingType: string;
     setChosenNode: (currentNode: Node) => void;
 }
@@ -37,6 +38,7 @@ function MapDisplay({
                         doDisplayNodes,
                         doDisplayNames,
                         pathSent,
+                        doAccessible,
                         setChosenNode
                     }: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph>(new Graph());
@@ -121,7 +123,7 @@ function MapDisplay({
 
         if (!startNodeId) {
             setStartNodeId(node.id);
-            const path: PathfindingRequest = {startid: node.id, endid: ""};
+            const path: PathfindingRequest = {startid: node.id, endid: "", doAccessible: doAccessible};
             sendHoverMapPath(path);
         } else if (node.id == startNodeId) {
             clearSelection();
@@ -130,7 +132,7 @@ function MapDisplay({
             if (graph && startNodeId) {
                 setStartNodeId(startNodeId);
                 setEndNodeId(node.id);
-                const path: PathfindingRequest = {startid: startNodeId, endid: node.id};
+                const path: PathfindingRequest = {startid: startNodeId, endid: node.id, doAccessible: doAccessible};
                 sendHoverMapPath(path);
             }
         }

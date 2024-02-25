@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "tsconfig-custom/tsconfig.base.json",
+  "extends": "./configs/tsconfig-custom/tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
@@ -14,3 +14,4 @@
     }
   }
 }
+

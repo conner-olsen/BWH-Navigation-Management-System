@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json", // Adjust the path as necessary
+  "compilerOptions": {
+    "noImplicitAny": false
+  },
+  "include": [
+    "**/*.test.ts"
+  ]
+}
