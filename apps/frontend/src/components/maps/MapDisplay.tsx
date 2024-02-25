@@ -301,6 +301,45 @@ function MapDisplay({
         }
     };
 
+    const gatherFloorChangeStrings = (graph: Graph, path: string[]): string[] => {
+        const returnStrings: string[] = [];
+        const firstNode = graph.getNode(path[0]);
+        let previousFloor = (firstNode as Node).floor;
+
+
+        for(let i = 0; i < path.length; i++) {
+            const node = graph.getNode(path[i]);
+            const currentFloor = (node as Node).floor;
+
+            if (!(currentFloor == previousFloor)) {
+                //update previous node in array to have string announcing floor change
+                //to current... update previous floor to be current for next loop
+                returnStrings[i] = "";
+                returnStrings[i - 1] = "Go to floor " + currentFloor;
+                previousFloor = currentFloor;
+            }
+            else {
+                returnStrings[i] = "";
+                previousFloor = currentFloor;
+            }
+        }
+
+        return returnStrings;
+    };
+
+    const displayFloorChange = (graph: Graph, path: string[]) => {
+        const floorChanges = gatherFloorChangeStrings(graph, path);
+
+        return (
+            Array.from(graph.nodes.values()).map((node: Node, index: number) => {
+                return (
+                        <text className="font-bold dark:invert" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+                            {floorChanges[index]}
+                        </text>
+                    );
+            }));
+    };
+
     return (
         <div className={"relative"}>
             <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
@@ -310,6 +349,7 @@ function MapDisplay({
                 {graph && displayNodes(graph)}
                 {graph && displayNodePins(graph)}
                 {graph && displayHoverCards(graph)}
+                {graph && displayFloorChange(graph, path)}
             </svg>
 
         </div>
