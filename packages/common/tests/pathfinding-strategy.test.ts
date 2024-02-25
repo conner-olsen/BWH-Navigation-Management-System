@@ -117,7 +117,7 @@ describe('PathfindingStrategy', () => {
   });
 
   // Can find a path between two nodes in a graph using Dijkstra algorithm
-  it('should find a path between two nodes using Dijkstra algorithm', () => {
+  test('should find a path between two nodes using Dijkstra algorithm', () => {
     // Create a mock graph
     const graph = new Graph();
     const node1 = new Node("1", 0, 0, "L1", "Building A", "NODE", "Node 1", "N1");
