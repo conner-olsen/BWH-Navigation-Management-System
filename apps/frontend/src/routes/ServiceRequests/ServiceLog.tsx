@@ -1,5 +1,5 @@
 import {FlowerServiceLogComponent} from "../../components/ServiceRequests/FlowerServiceLogComponent.tsx";
-import Global_Footer from "../../components/Global_Footer.tsx";
+import Global_Footer from "../../components/GlobalFooter.tsx";
 import {TabsContent, TabsList, TabsTrigger, Tabs} from "../../components/ui/tabs.tsx";
 import {ReligiousServiceLogComponent} from "../../components/ServiceRequests/ReligionServiceLogComponent.tsx";
 import {CleaningServiceLogComponent} from "../../components/ServiceRequests/CleaningServiceLogComponent.tsx";

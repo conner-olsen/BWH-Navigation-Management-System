@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from  "../../components/ui/card.tsx";
 import {Col, Container, Row} from "react-bootstrap";
-import Global_Footer from "../../components/Global_Footer.tsx";
+import Global_Footer from "../../components/GlobalFooter.tsx";
 import CleaningServiceRequest from "./CleaningServiceRequest.tsx";
 import {
     Sheet,

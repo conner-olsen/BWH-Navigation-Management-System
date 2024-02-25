@@ -372,7 +372,7 @@ body.dark .DragDropBox {
     margin-bottom: 5px;
 }
 
-.BFSBox {
+.MapPage {
     align-items: center;
     text-align: center;
 }
@@ -389,6 +389,11 @@ body.dark .DragDropBox {
     font-size: 24px;
     font-family: "Open Sans", sans-serif;
 }
+
+/*.accessibilityToggle {*/
+/*    margin-top: 10px;*/
+/*    margin-left: 10px;*/
+/*}*/
 
 
 /* ====== Flower Service Page ======= */
