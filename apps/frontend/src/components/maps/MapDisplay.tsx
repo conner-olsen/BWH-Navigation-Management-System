@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Graph } from 'common/src/graph.ts';
-import PathfindingRequest from "common/src/interfaces/pathfinding-request";
-import axios from "axios";
+import React, {useEffect, useState} from 'react';
+import {Graph} from 'common/src/graph.ts';
+//import {PathfindingStrategy} from "common/src/pathfinding-strategy.ts";
+import axios   from "axios";
 import "./animation.css";
 import { Node } from "common/src/node.ts";
+import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
+
 interface MapDisplayProps {
   floorMap: string;
   floor: string;
@@ -301,18 +303,73 @@ function MapDisplay({
     }
   };
 
-  return (
-    <div className={"relative"}>
-      <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
-        <image href={floorMap} width="5000" height="3400" x="0" y="0" />
-        {graph && displayEdges(graph)}
-        {graph && path.length > 0 && displayPath(graph, path)}
-        {graph && displayNodes(graph)}
-        {graph && displayNodePins(graph)}
-        {graph && displayHoverCards(graph)}
-      </svg>
-    </div>
-  );
+    const gatherFloorChangeStrings = (): string[] => {
+        const returnStrings: string[] = [];
+        let previousFloor = pathSent[0].floor;
+
+        for(let i = 0; i < pathSent.length; i++) {
+            const currentFloor = pathSent[i].floor;
+
+            if (!(currentFloor == previousFloor)) {
+                //update previous node in array to have string announcing floor change
+                //to current... update previous floor to be current for next loop
+                returnStrings[i] = "";
+                returnStrings[i - 1] = "Go to floor " + currentFloor;
+                previousFloor = currentFloor;
+            }
+            else {
+                returnStrings[i] = "";
+                previousFloor = currentFloor;
+            }
+        };
+        return returnStrings;
+    };
+
+    const displayFloorChange = () => {
+        // console.log("path sent");
+        // console.log(pathSent);
+        // console.log(path);
+        const floorChanges = gatherFloorChangeStrings();
+
+        return (
+            Array.from(pathSent.map((node: Node, index: number) => {
+                if(node.floor == floor && !(floorChanges[index] == "")) {
+                    return (
+                        <g>
+                            <rect className="dark:fill-white z-20 fill-indigo-400" x={node.xCoord - 64}
+                                  y={node.yCoord - 48}
+                                  width="125" height="28" rx="1" stroke="black" stroke-width="4">
+                                <animate
+                                    attributeName="rx"
+                                    values="0;13;0"
+                                    dur="2s"
+                                    repeatCount="indefinite"/>
+                            </rect>
+                            <text className="font-bold dark:invert" x={node.xCoord - 59}
+                                  y={node.yCoord - 28} fill="black">
+                                 {floorChanges[index]}
+                     </text>
+                    </g>
+                );
+                }
+            }))
+        );
+    };
+
+    return (
+        <div className={"relative"}>
+            <svg viewBox="0 0 5000 3400" className={"w-screen max-w-full"}>
+                <image href={floorMap} width="5000" height="3400" x="0" y="0"/>
+                {graph && displayEdges(graph)}
+                {graph && path.length > 0 && displayPath(graph, path)}
+                {graph && displayNodes(graph)}
+                {graph && displayNodePins(graph)}
+                {graph && displayHoverCards(graph)}
+                {graph && path.length > 0 && pathSent.length > 0 && displayFloorChange()}
+            </svg>
+
+        </div>
+    );
 }
 
 /**
