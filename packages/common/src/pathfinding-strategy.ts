@@ -169,15 +169,15 @@ export class AStarPathfindingStrategy extends PathfindingStrategy {
 
         const tentativePathCost = (costFromStart.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
         if (tentativePathCost < (costFromStart.get(neighbor) || Infinity)) {
-          cameFrom.set(neighbor, current);
+          cameFrom.set(neighbor, current); // Correctly point neighbor back to current
           costFromStart.set(neighbor, tentativePathCost);
           estimatedTotalCost.set(neighbor, tentativePathCost + this.calculateDistance(neighbor, endNode, graph));
-  
+        
           if (!nodesToEvaluate.has(neighbor)) {
             priorityQueue.add([neighbor, estimatedTotalCost.get(neighbor) as number]);
             nodesToEvaluate.add(neighbor);
           } else {
-            // Decrease key operation
+            // If the neighbor is already in the queue but now has a lower cost, update its cost in the priority queue
             priorityQueue.removeOne(([nodeId,]) => nodeId === neighbor);
             priorityQueue.add([neighbor, estimatedTotalCost.get(neighbor) as number]);
           }
