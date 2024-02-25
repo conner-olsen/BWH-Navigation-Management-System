@@ -447,7 +447,6 @@ export function BFSComponent() {
                     </div>
                 </div>
 
-
                 <div
                     className={`absolute bottom-[calc(100vh-200px)] right-[-90px] sm:bottom-[10px] flex flex-col bg-background rounded-xl
                                 ${isExpanded ? 'sm:right-[-90px]' : 'sm:right-[-170px]'}`}>
