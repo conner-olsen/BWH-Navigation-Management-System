@@ -14,6 +14,7 @@ import {
 import {Link, NavLink, useLocation} from "react-router-dom";
 import {NavDropdown} from "react-bootstrap";
 import {Button} from "./ui/button.tsx";
+import ChatComponent from "./ChatBot.tsx";
 
 
 export default function NavBar() {
@@ -119,6 +120,10 @@ return (
 
             <div className="hidden xl:block">
                 <DarkModeButton/>
+            </div>
+
+            <div>
+                <ChatComponent></ChatComponent>
             </div>
 
             <div className="flex items-center gap-2">

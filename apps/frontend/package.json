@@ -47,6 +47,7 @@
     "localforage": "^1.10.0",
     "lucide-react": "^0.323.0",
     "match-sorter": "^6.3.1",
+    "openai": "^4.28.0",
     "postcss": "^8.4.34",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
