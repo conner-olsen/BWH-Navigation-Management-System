@@ -135,56 +135,46 @@ export class AStarPathfindingStrategy extends PathfindingStrategy {
     if (!graph.getNode(startNode) || !graph.getNode(endNode)) {
       return [];
     }
-  
-    const comparator = (a: [string, number], b: [string, number]) => a[1] < b[1];
-    const priorityQueue = new FastPriorityQueue(comparator);
-    const nodesToEvaluate = new Set<string>();
-  
-    const cameFrom: Map<string, string> = new Map(); // The node that is the parent of the current node
-    const costFromStart: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity])); // gScore
-    const estimatedTotalCost: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
-  
-    costFromStart.set(startNode, 0);
-    estimatedTotalCost.set(startNode, this.calculateDistance(startNode, endNode, graph));
-  
-    priorityQueue.add([startNode, estimatedTotalCost.get(startNode) as number]);
-    nodesToEvaluate.add(startNode);
-  
-    while (!priorityQueue.isEmpty()) {
-      const current = priorityQueue.poll()![0];
-      nodesToEvaluate.delete(current);
-  
+
+    const openSet = new FastPriorityQueue<[string, number]>((a, b) => a[1] < b[1]);
+    const cameFrom: Map<string, string> = new Map();
+    const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
+    const fScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
+    const nodesInQueue = new Set<string>();
+
+    gScore.set(startNode, 0);
+    fScore.set(startNode, this.calculateDistance(startNode, endNode, graph));
+    openSet.add([startNode, fScore.get(startNode) ?? Infinity]);
+    nodesInQueue.add(startNode);
+
+    while (!openSet.isEmpty()) {
+      const currentPair = openSet.poll();
+      if (!currentPair) break; // This should never happen if the queue is not empty, but it's good to guard against it.
+      const current = currentPair[0];
+      nodesInQueue.delete(current);
+
       if (current === endNode) {
         return this.reconstructPath(cameFrom, current);
       }
-  
+
       const currentNode = graph.getNode(current);
       if (!currentNode) continue;
-  
-      for (const neighbor of currentNode.edges) {
-        // Prevent cycles by checking if the neighbor is already in the cameFrom map
-        if (cameFrom.has(neighbor)) {
-          continue;
-        }
 
-        const tentativePathCost = (costFromStart.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
-        if (tentativePathCost < (costFromStart.get(neighbor) || Infinity)) {
-          cameFrom.set(neighbor, current); // Correctly point neighbor back to current
-          costFromStart.set(neighbor, tentativePathCost);
-          estimatedTotalCost.set(neighbor, tentativePathCost + this.calculateDistance(neighbor, endNode, graph));
-        
-          if (!nodesToEvaluate.has(neighbor)) {
-            priorityQueue.add([neighbor, estimatedTotalCost.get(neighbor) as number]);
-            nodesToEvaluate.add(neighbor);
-          } else {
-            // If the neighbor is already in the queue but now has a lower cost, update its cost in the priority queue
-            priorityQueue.removeOne(([nodeId,]) => nodeId === neighbor);
-            priorityQueue.add([neighbor, estimatedTotalCost.get(neighbor) as number]);
+      for (const neighbor of currentNode.edges) {
+        const tentativeGScore = (gScore.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
+        if (tentativeGScore < (gScore.get(neighbor) ?? Infinity)) {
+          cameFrom.set(neighbor, current);
+          gScore.set(neighbor, tentativeGScore);
+          fScore.set(neighbor, tentativeGScore + this.calculateDistance(neighbor, endNode, graph));
+
+          if (!nodesInQueue.has(neighbor)) {
+            openSet.add([neighbor, fScore.get(neighbor) ?? Infinity]);
+            nodesInQueue.add(neighbor);
           }
         }
       }
     }
-    
+
     return [];
   }
 }
