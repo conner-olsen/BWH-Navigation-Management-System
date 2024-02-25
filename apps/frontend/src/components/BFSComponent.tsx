@@ -247,6 +247,23 @@ export function BFSComponent() {
         };
     }, [do3D, startNode, endNode]);
 
+    // Force user to top of page on 3D rendering
+    useEffect(() => {
+        if (do3D && startNode !== "" && endNode !== "") {
+            document.body.style.maxHeight = '100vh';
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.maxHeight = '';
+            document.body.style.overflow = '';
+        }
+
+        // Cleanup function to reset styles when component unmounts
+        return () => {
+            document.body.style.maxHeight = '';
+            document.body.style.overflow = '';
+        };
+    }, [do3D, startNode, endNode]);
+
     useEffect(() => {
         // Check which floor will be present in the path
         function filterDuplicates(paths: Node[]) {

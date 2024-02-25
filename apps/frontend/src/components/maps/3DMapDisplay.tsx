@@ -177,6 +177,8 @@ function MapDisplay3D({
             document.body.appendChild(div); // Append the div to the body
             // Render the MyComponent inside the dynamically created div
             ReactDOM.render(<Guideline goingUp={goingUp} floorsApart={floorsApart}/>, div);
+            // Allow user to scroll once it's finished rendering
+            document.body.style.overflow = '';
         }
         return <></>;
     };
