@@ -338,7 +338,7 @@ function MapDisplay({
                         <g>
                             <rect className="dark:fill-white z-20 fill-indigo-400" x={node.xCoord - 64}
                                   y={node.yCoord - 48}
-                                  width="125" height="28" rx="1" stroke="black" stroke-width="4">
+                                  width="125" height="28" rx="1" stroke="black" strokeWidth="4">
                                 <animate
                                     attributeName="rx"
                                     values="0;13;0"
