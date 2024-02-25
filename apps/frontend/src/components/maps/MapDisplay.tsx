@@ -15,6 +15,7 @@ interface MapDisplayProps {
     doDisplayEdges: boolean;
     doDisplayNodes: boolean;
     doDisplayNames: boolean;
+    doAccessible: boolean;
     pathFindingType: string;
     setChosenNode: (currentNode: Node) => void;
 }
@@ -38,6 +39,7 @@ function MapDisplay({
                         doDisplayNodes,
                         doDisplayNames,
                         pathSent,
+                        doAccessible,
                         setChosenNode
                     }: Readonly<MapDisplayProps>) {
     const [graph, setGraph] = useState<Graph>(new Graph());
@@ -121,7 +123,7 @@ function MapDisplay({
 
         if (!startNodeId) {
             setStartNodeId(node.id);
-            const path: PathfindingRequest = {startId: node.id, endId: "", strategy: pathFindingType};
+            const path: PathfindingRequest = {startId: node.id, endId: "", strategy: pathFindingType, doAccessible: doAccessible};
             sendHoverMapPath(path);
         } else if (node.id == startNodeId) {
             clearSelection();
@@ -130,7 +132,7 @@ function MapDisplay({
             if (graph && startNodeId) {
                 setStartNodeId(startNodeId);
                 setEndNodeId(node.id);
-                const path: PathfindingRequest = {startId: startNodeId, endId: node.id, strategy: pathFindingType};
+                const path: PathfindingRequest = {startId: startNodeId, endId: node.id, strategy: pathFindingType, doAccessible: doAccessible};
                 sendHoverMapPath(path);
             }
         }
@@ -151,7 +153,7 @@ function MapDisplay({
     const displayHoverInfo = (node: Node) => {
         getCount(node);
         return (
-            <foreignObject x={node.xCoord - 225} y={node.yCoord - 525} width="450" height="500">
+            <foreignObject x={node.xCoord - 225} y={node.yCoord - 550} width="450" height="525">
                 <div
                     className={"h-fit rounded-md border bg-popover p-4 text-2xl text-popover-foreground shadow-md " +
                         "outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 " +
@@ -309,7 +311,6 @@ function MapDisplay({
                 {graph && displayNodePins(graph)}
                 {graph && displayHoverCards(graph)}
             </svg>
-
         </div>
     );
 }

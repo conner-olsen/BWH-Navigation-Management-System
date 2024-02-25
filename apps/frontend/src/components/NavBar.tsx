@@ -13,6 +13,7 @@ import {
 
 import {Link, NavLink, useLocation} from "react-router-dom";
 import {Button} from "./ui/button.tsx";
+import ChatComponent from "./ChatBot.tsx";
 
 
 export default function NavBar() {
@@ -69,19 +70,15 @@ return (
 
             {isAuthenticated && (
                 <Link to="/EmployeeManager" className="no-underline p-2 text-white hidden xl:block text-[17px]">
-                    <div className={"hover:text-blue-500"}>Employee Manager</div>
+                    <div className={"hover:text-blue-500"}>Data Manager</div>
                 </Link>
             )}
-            {isAuthenticated && (
-                <Link to="/DataUpload" className="no-underline p-2 text-white hidden xl:block text-[17px]">
-                    <div className={"hover:text-blue-500"}>Data Upload</div>
-                </Link>
-            )}
-            {isAuthenticated && (
-                <Link to="/ServiceLog" className="no-underline p-2 text-white hidden xl:block text-[17px]">
-                    <div className={"hover:text-blue-500"}>Service Log</div>
-                </Link>
-            )}
+            {/*{isAuthenticated && (*/}
+            {/*    <Link to="/DataUpload" className="no-underline p-2 text-white hidden xl:block text-[17px]">*/}
+            {/*        <div className={"hover:text-blue-500"}>Data Upload</div>*/}
+            {/*    </Link>*/}
+            {/*)}*/}
+
 
             <div className="group text-center no-underline p-2 text-white hidden xl:block text-[17px]"
                  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -115,8 +112,18 @@ return (
                 </div>
             </div>
 
+            {isAuthenticated && (
+                <Link to="/ServiceLog" className="no-underline p-2 text-white hidden xl:block text-[17px]">
+                    <div className={"hover:text-blue-500"}>Service Log</div>
+                </Link>
+            )}
+
             <div className="hidden xl:block">
                 <DarkModeButton/>
+            </div>
+
+            <div>
+                <ChatComponent></ChatComponent>
             </div>
 
             <div className="flex items-center gap-2">

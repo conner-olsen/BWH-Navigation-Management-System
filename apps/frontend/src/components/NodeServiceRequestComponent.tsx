@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios, { AxiosResponse } from "axios";
 import {
     ServiceRequest
-} from "../../../../packages/common/interfaces/interfaces.ts";
+} from "common/interfaces/interfaces.ts";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./ui/table.tsx";
 import {Container} from "react-bootstrap";
 import {Node} from "common/src/node.ts";

@@ -16,6 +16,8 @@ import {
 } from "./ui/drawer.tsx";
 import {Button} from "./ui/button.tsx";
 import {Node} from "common/src/node.ts";
+import {Switch} from "./ui/switch.tsx";
+
 
 export function BFSComponent() {
     const [pathfindingResult, setBFSResult] = useState<Node[]>([]);
@@ -27,6 +29,7 @@ export function BFSComponent() {
     const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
     const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
     const [currentNode, setCurrentNode] = useState<Node | null>(null);
+    const [doAccessible, setDoAccessible] = useState<boolean>(false);
 
     const collectLongNames = useCallback(() => {
         return pathfindingResult.map(node => node.longName);
@@ -38,6 +41,12 @@ export function BFSComponent() {
         speech.text = longNames.join(', ');
         window.speechSynthesis.speak(speech);
     };
+
+    const handleAccessibilityToggle = () => {
+        setDoAccessible(doAccessible => !doAccessible);
+        console.log("do accessible to " + doAccessible);
+    };
+
     const updateCurrentNode = (currentNode: Node) => {
         setHasSeen(true);
         if (activeTab !== 2 || !isExpanded) setHasSeen(false);
@@ -49,7 +58,8 @@ export function BFSComponent() {
             const request: PathfindingRequest = {
                 startId: startNode,
                 endId: endNode,
-                strategy: pathFindingType
+                strategy: pathFindingType,
+                doAccessible: doAccessible
             };
             const response: AxiosResponse<Node[]> = await axios.post('/api/pathfinding', request, {
                 headers: {
@@ -67,7 +77,7 @@ export function BFSComponent() {
             console.error("Error fetching pathFinding result:", (error as AxiosError).message);
             throw error;
         }
-    }, [startNode, endNode, pathFindingType]);
+    }, [startNode, endNode, pathFindingType, doAccessible]);
 
     useEffect(() => {
         fetchData()
@@ -360,7 +370,7 @@ export function BFSComponent() {
                             </div>
 
                         </div>
-                        <div className="py-4 px-2">
+                        <div className="pt-4 pb-2 px-2">
                             <Select value={pathFindingType} defaultValue={"A*"}
                                     onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
                                 <SelectTrigger>
@@ -373,6 +383,13 @@ export function BFSComponent() {
                                     <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
                                 </SelectContent>
                             </Select>
+                        </div>
+
+                        <div className="relative h-6 w-32">
+                            <div className="absolute inset-y-0 left-1 w-16">
+                                <Switch onCheckedChange={handleAccessibilityToggle} defaultChecked={false}>
+                                </Switch>
+                            </div>
                         </div>
 
                         <div>
@@ -431,7 +448,6 @@ export function BFSComponent() {
                         {NodeServiceRequestComponent(currentNode)}
                     </div>
                 </div>
-
 
                 <div
                     className={`absolute bottom-[calc(100vh-200px)] right-[-90px] sm:bottom-[10px] flex flex-col bg-background rounded-xl
@@ -497,7 +513,8 @@ export function BFSComponent() {
                 <AlertTitle>Accessibility Alert!</AlertTitle>
             </span>
                         <AlertDescription>
-                            This path contains stairs. If this is difficult, please request an accessible route.
+                            This path contains stairs. If this is difficult, please request an accessible route with
+                            the accessibility switch.
                         </AlertDescription>
                     </Alert>
                 )}
@@ -677,6 +694,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={pathfindingResult}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {lowerLevel2ContentVisible &&
@@ -684,6 +702,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={pathfindingResult}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor1ContentVisible &&
@@ -691,6 +710,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={pathfindingResult}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor2ContentVisible &&
@@ -698,6 +718,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={pathfindingResult}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                                 {floor3ContentVisible &&
@@ -705,6 +726,7 @@ export function BFSComponent() {
                                                 startNode={startNode} endNode={endNode}
                                                 pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                                 sendClear={sendClear} pathSent={pathfindingResult}
+                                                doAccessible={doAccessible}
                                                 doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                                 doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             </TransformComponent>
