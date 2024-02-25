@@ -30,8 +30,8 @@ export abstract class PathfindingStrategy {
       const averageDistance = graph.getAverageDistance();
   
       // Define multipliers for stairs and elevators
-      const stairMultiplier = 3; // Example: stairs are 3 times harder than moving the same distance on flat ground
-      const elevatorMultiplier = 1.5; // Example: elevators are 1.5 times harder due to waiting time
+      const stairMultiplier = 3; // stairs are 3 times harder than moving the same distance on flat ground
+      const elevatorMultiplier = 1.5; //  elevators are 1.5 times harder due to waiting time
 
       // Apply the appropriate multiplier based on the node type
       if (nodeA.nodeType === 'STAI') {
@@ -203,7 +203,7 @@ export class DijkstraPathfindingStrategy extends PathfindingStrategy {
     inQueue.add(startNode);
 
     while (!priorityQueue.isEmpty()) {
-      const [current,] = priorityQueue.poll()!;
+      const [current] = priorityQueue.poll()!;
       inQueue.delete(current);
 
       if (current === endNode) {
@@ -216,7 +216,7 @@ export class DijkstraPathfindingStrategy extends PathfindingStrategy {
       for (const neighbor of currentNode.edges) {
         const tentativePathCost = (costFromStart.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
 
-        if (tentativePathCost < (costFromStart.get(neighbor) || Infinity)) {
+        if (tentativePathCost < (costFromStart.get(neighbor) ?? Infinity)) {
           cameFrom.set(neighbor, current);
           costFromStart.set(neighbor, tentativePathCost);
 

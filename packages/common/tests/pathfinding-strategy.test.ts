@@ -162,11 +162,11 @@ describe('PathfindingStrategy', () => {
     const distance = pathfindingStrategy.calculateDistance("A", "B", graph);
 
     // Assert the distance is correct
-    expect(distance).toBe(5);
+    expect(distance).toBe(7);
   });
 
   // Can reconstruct a path given a map of nodes and a current node
-  it('should reconstruct the path correctly when given a map of nodes and a current node', () => {
+  test('should reconstruct the path correctly when given a map of nodes and a current node', () => {
     // Create a mock graph with nodes and edges
     const graph = new Graph();
     const nodeA = new Node("A", 0, 0);
@@ -202,7 +202,7 @@ describe('PathfindingStrategy', () => {
   // Handles graphs with no nodes or edges
   test('should return an empty array when finding a path in a graph with no nodes or edges', () => {
     const graph = new Graph();
-    const strategy = new PathfindingStrategyTest();
+    const strategy = new AStarPathfindingStrategy();
 
     const startNode = 'A';
     const endNode = 'B';
@@ -213,7 +213,7 @@ describe('PathfindingStrategy', () => {
   });
 
   // Calculates the distance between two nodes on different floors using the cached average distance
-  it('should calculate the distance between two nodes on different floors using the cached average distance', () => {
+  test('should calculate the distance between two nodes on different floors using the cached average distance', () => {
     // Mock graph
     const graph = new Graph();
     const nodeA = new Node("A", 0, 0, "L1", "Building A", "NODE_TYPE", "Long Name A", "Short Name A");
@@ -233,7 +233,7 @@ describe('PathfindingStrategy', () => {
     const distance = pathfindingStrategy.calculateDistance("A", "B", graph);
 
     // Verify the result
-    const expectedDistance = Math.abs(nodeA.xCoord - nodeB.xCoord) + Math.abs(nodeA.yCoord - nodeB.yCoord) + averageDistance;
+    const expectedDistance = Math.abs(nodeA.xCoord - nodeB.xCoord) + Math.abs(nodeA.yCoord - nodeB.yCoord) + (averageDistance * 1.5);
     expect(distance).toBe(expectedDistance);
   });
 
@@ -241,8 +241,8 @@ describe('PathfindingStrategy', () => {
   test('should apply the appropriate multiplier based on the node type when calculating the cost of changing floors', () => {
     // Create a mock graph with nodes and edges
     const graph = new Graph();
-    const nodeA = new Node("A", 0, 0, "L1", "Building A", "NODE_TYPE_A", "Long Name A", "Short Name A");
-    const nodeB = new Node("B", 1, 0, "L2", "Building B", "NODE_TYPE_B", "Long Name B", "Short Name B");
+    const nodeA = new Node("A", 0, 0, "L1", "Building A", "STAI", "Long Name A", "Short Name A");
+    const nodeB = new Node("B", 1, 0, "L2", "Building B", "STAI", "Long Name B", "Short Name B");
     graph.addNode(nodeA);
     graph.addNode(nodeB);
     graph.addEdge("A", "B");
@@ -253,8 +253,11 @@ describe('PathfindingStrategy', () => {
     // Calculate the distance between the nodes using the pathfinding strategy
     const distance = pathfindingStrategy.calculateDistance("A", "B", graph);
 
+    const averageDistance = graph.getAverageDistance();
+    const expectedDistance = Math.abs(nodeA.xCoord - nodeB.xCoord) + Math.abs(nodeA.yCoord - nodeB.yCoord) + (averageDistance * 3);
+
     // Assert that the distance is calculated correctly based on the node types
-    expect(distance).toBe(3); // Example: NODE_TYPE_A has a multiplier of 1, NODE_TYPE_B has a multiplier of 3
+    expect(distance).toBe(expectedDistance); // Example: STAI has a multiplier of 3, ELEV has a multiplier of 1.5
   });
 
 });
