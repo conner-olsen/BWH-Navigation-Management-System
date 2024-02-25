@@ -13,6 +13,7 @@ router.post("/", async (req: Request, res: Response) => {
     const graphCSV = new Graph();
     const startNodeCSV =  requestData.startid;
     const endNodeCSV = requestData.endid;
+    const doAccessible = requestData.doAccessible;
 
     //populate graph
     try {
@@ -30,7 +31,7 @@ router.post("/", async (req: Request, res: Response) => {
     }
 
     //run bfs, convert to an array of nodes
-    res.status(200).json(graphCSV.stringsToNodes(graphCSV.runPathfinding(startNodeCSV, endNodeCSV)));
+    res.status(200).json(graphCSV.stringsToNodes(graphCSV.runPathfinding(startNodeCSV, endNodeCSV, doAccessible)));
 
   }
   catch (error) {

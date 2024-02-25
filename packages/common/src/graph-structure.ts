@@ -106,7 +106,10 @@ export class Graph {
    * @param startNode
    * @param endNode
    */
-  runPathfinding(startNode: string, endNode: string): string[] {
+  runPathfinding(startNode: string, endNode: string, doAccessible: boolean): string[] {
+    if(doAccessible) {
+      return this.pathfindingMethod.runPathfindingAccessible(startNode, endNode, this);
+    }
     return this.pathfindingMethod.runPathfinding(startNode, endNode, this);
   }
 
