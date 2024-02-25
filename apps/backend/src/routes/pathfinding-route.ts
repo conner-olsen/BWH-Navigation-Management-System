@@ -12,7 +12,8 @@ router.post("/", async (req: Request, res: Response) => {
     const graph = new Graph();
     const startNode = requestData.startId;
     const endNode = requestData.endId;
-    const strategy = requestData.strategy; // This should be passed in the request body
+    const strategy = requestData.strategy; 
+    const accessibilityRoute = requestData.accessibilityRoute; 
 
     // Set the pathfinding strategy based on the request
     switch (strategy) {
@@ -45,7 +46,7 @@ router.post("/", async (req: Request, res: Response) => {
     }
 
     // Run pathfinding and convert to an array of nodes
-    const path = graph.findPath(startNode, endNode);
+    const path = graph.findPath(startNode, endNode, accessibilityRoute);
     res.status(200).json(graph.stringsToNodes(path));
 
   } catch (error) {

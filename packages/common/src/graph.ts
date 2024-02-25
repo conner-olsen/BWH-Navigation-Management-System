@@ -54,8 +54,8 @@ export class Graph {
    * @param endNode The ID of the end node.
    * @returns An array of node IDs representing the path from start to end.
    */
-  findPath(startNode: string, endNode: string): string[] {
-    return this.pathfindingStrategy.findPath(startNode, endNode, this);
+  findPath(startNode: string, endNode: string, accessibilityRoute: boolean = false): string[] {
+    return this.pathfindingStrategy.findPath(startNode, endNode, this, accessibilityRoute);
   }
 
   /**
