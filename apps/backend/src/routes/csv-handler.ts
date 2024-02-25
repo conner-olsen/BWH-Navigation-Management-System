@@ -3,8 +3,7 @@ import { parseCSV} from "common/src/parser.ts";
 import * as fs from "fs";
 import * as path from "path";
 import PrismaClient from "../bin/database-connection.ts";
-import {node} from "common/interfaces/interfaces.ts";
-import {edge} from "common/interfaces/interfaces.ts";
+import {node, edge} from "common/interfaces/interfaces.ts";
 
 
 

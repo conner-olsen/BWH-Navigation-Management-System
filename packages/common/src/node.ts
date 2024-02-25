@@ -62,7 +62,7 @@ export class Node {
   }
 
   /**
-   * Connect this node to another node.
+   * Connect this node to another node by adding an edge.
    * @param {string} nodeId - The ID of the node to connect to.
    */
   connectTo(nodeId: string) {

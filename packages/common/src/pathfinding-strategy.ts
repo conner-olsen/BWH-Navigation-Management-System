@@ -137,22 +137,22 @@ export class AStarPathfindingStrategy extends PathfindingStrategy {
     }
   
     const comparator = (a: [string, number], b: [string, number]) => a[1] < b[1];
-    const openSetQueue = new FastPriorityQueue(comparator);
-    const openSet = new Set<string>();
+    const priorityQueue = new FastPriorityQueue(comparator);
+    const nodesToEvaluate = new Set<string>();
   
-    const cameFrom: Map<string, string> = new Map();
-    const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
-    const fScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
+    const cameFrom: Map<string, string> = new Map(); // The node that is the parent of the current node
+    const costFromStart: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity])); // gScore
+    const estimatedTotalCost: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
   
-    gScore.set(startNode, 0);
-    fScore.set(startNode, this.calculateDistance(startNode, endNode, graph));
+    costFromStart.set(startNode, 0);
+    estimatedTotalCost.set(startNode, this.calculateDistance(startNode, endNode, graph));
   
-    openSetQueue.add([startNode, fScore.get(startNode) as number]);
-    openSet.add(startNode);
+    priorityQueue.add([startNode, estimatedTotalCost.get(startNode) as number]);
+    nodesToEvaluate.add(startNode);
   
-    while (!openSetQueue.isEmpty()) {
-      const current = openSetQueue.poll()![0];
-      openSet.delete(current);
+    while (!priorityQueue.isEmpty()) {
+      const current = priorityQueue.poll()![0];
+      nodesToEvaluate.delete(current);
   
       if (current === endNode) {
         return this.reconstructPath(cameFrom, current);
@@ -162,24 +162,24 @@ export class AStarPathfindingStrategy extends PathfindingStrategy {
       if (!currentNode) continue;
   
       for (const neighbor of currentNode.edges) {
-        const tentativeGScore = (gScore.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
-        if (tentativeGScore < (gScore.get(neighbor) || Infinity)) {
+        const tentativePathCost = (costFromStart.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
+        if (tentativePathCost < (costFromStart.get(neighbor) || Infinity)) {
           cameFrom.set(neighbor, current);
-          gScore.set(neighbor, tentativeGScore);
-          fScore.set(neighbor, tentativeGScore + this.calculateDistance(neighbor, endNode, graph));
+          costFromStart.set(neighbor, tentativePathCost);
+          estimatedTotalCost.set(neighbor, tentativePathCost + this.calculateDistance(neighbor, endNode, graph));
   
-          if (!openSet.has(neighbor)) {
-            openSetQueue.add([neighbor, fScore.get(neighbor) as number]);
-            openSet.add(neighbor);
+          if (!nodesToEvaluate.has(neighbor)) {
+            priorityQueue.add([neighbor, estimatedTotalCost.get(neighbor) as number]);
+            nodesToEvaluate.add(neighbor);
           } else {
             // Decrease key operation
-            openSetQueue.removeOne(([nodeId,]) => nodeId === neighbor);
-            openSetQueue.add([neighbor, fScore.get(neighbor) as number]);
+            priorityQueue.removeOne(([nodeId,]) => nodeId === neighbor);
+            priorityQueue.add([neighbor, estimatedTotalCost.get(neighbor) as number]);
           }
         }
       }
     }
-  
+    
     return [];
   }
 }
@@ -198,17 +198,17 @@ export class DijkstraPathfindingStrategy extends PathfindingStrategy {
     }
 
     const comparator = (a: [string, number], b: [string, number]) => a[1] < b[1];
-    const openSetQueue = new FastPriorityQueue(comparator);
+    const priorityQueue = new FastPriorityQueue(comparator);
     const cameFrom: Map<string, string> = new Map();
-    const gScore: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
+    const costFromStart: Map<string, number> = new Map([...graph.nodes.keys()].map(nodeId => [nodeId, Infinity]));
     const inQueue: Set<string> = new Set();
 
-    gScore.set(startNode, 0);
-    openSetQueue.add([startNode, 0]);
+    costFromStart.set(startNode, 0);
+    priorityQueue.add([startNode, 0]);
     inQueue.add(startNode);
 
-    while (!openSetQueue.isEmpty()) {
-      const [current,] = openSetQueue.poll()!;
+    while (!priorityQueue.isEmpty()) {
+      const [current,] = priorityQueue.poll()!;
       inQueue.delete(current);
 
       if (current === endNode) {
@@ -219,14 +219,14 @@ export class DijkstraPathfindingStrategy extends PathfindingStrategy {
       if (!currentNode) continue;
 
       for (const neighbor of currentNode.edges) {
-        const tentativeGScore = (gScore.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
+        const tentativePathCost = (costFromStart.get(current) ?? Infinity) + this.calculateDistance(current, neighbor, graph);
 
-        if (tentativeGScore < (gScore.get(neighbor) || Infinity)) {
+        if (tentativePathCost < (costFromStart.get(neighbor) || Infinity)) {
           cameFrom.set(neighbor, current);
-          gScore.set(neighbor, tentativeGScore);
+          costFromStart.set(neighbor, tentativePathCost);
 
           if (!inQueue.has(neighbor)) {
-            openSetQueue.add([neighbor, tentativeGScore]);
+            priorityQueue.add([neighbor, tentativePathCost]);
             inQueue.add(neighbor);
           }
         }

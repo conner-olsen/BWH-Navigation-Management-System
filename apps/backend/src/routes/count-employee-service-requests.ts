@@ -26,11 +26,4 @@ router.get("/", async function (req: Request, res: Response) {
 });
 
 
-// getEmployeeServiceRequestCounts()
-//   .then(employeeServiceRequestCounts => console.log(employeeServiceRequestCounts))
-//   .catch(error => console.error(error))
-//   .finally(() => PrismaClient.$disconnect());
-//
-//
-
 export default router;
