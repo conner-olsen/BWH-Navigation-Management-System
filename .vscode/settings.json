@@ -7,5 +7,6 @@
     "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
     "typescript.tsdk": ".yarn/sdks/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
-    "jest.jestCommandLine": "yarn jest"
+    "jest.jestCommandLine": "yarn jest",
+    "jest.runMode": "on-demand"
 } 

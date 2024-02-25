@@ -1,5 +1,5 @@
-// import { Graph } from "common/src/graph-structure.ts";
-// import { Node } from "common/src/graph-structure.ts";
+// import { Graph } from "common/src/graph.ts";
+// import { Node } from "common/src/graph.ts";
 // import fs from "fs";
 // import {parseCSV} from "common/src/parser.ts";
 // import path from "path";

@@ -4,7 +4,7 @@ import {GetDataEmployees} from "../components/EmployeeManagerComponent.tsx";
 import {Outlet} from "react-router-dom";
 import {useState} from "react";
 import {Button} from "../components/ui/button.tsx";
-import Global_Footer from "../components/Global_Footer.tsx";
+import Global_Footer from "../components/GlobalFooter.tsx";
 import {Label} from "../components/ui/label.tsx";
 import {Input} from "../components/ui/input.tsx";
 import ExportEmployeeCSVButton from "../components/ExportEmployeeCSVButton.tsx";
@@ -194,7 +194,7 @@ export const EmployeeManager = () => {
             <>
             <div>
                 <Outlet/>
-                <div className="container" style={{display: 'flex', alignItems: 'center'}}>
+                <div className="text-center" style={{display: 'flex', alignItems: 'center'}}>
                         <Col>
                             <h1>DATA MANAGER</h1>
                         </Col>
