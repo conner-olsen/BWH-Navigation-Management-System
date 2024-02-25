@@ -1,10 +1,10 @@
-import express, {Router, Request, Response} from "express";
+import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/database-connection.ts";
 import { Prisma } from "database";
 import path from "path";
 import fs from "fs";
-import {parseCSV} from "common/src/parser.ts";
-import {employee, user} from "common/interfaces/interfaces.ts";
+import { parseCSV } from "common/src/parser.ts";
+import { employee, user } from "common/src/interfaces/interfaces.ts";
 import client from "../bin/database-connection.ts";
 // import path from "path";
 // import fs from "fs";
@@ -21,7 +21,7 @@ router.post("/", async (req: Request, res: Response) => {
   try {
     // Create the FlowerServiceRequest with the connected room
 
-    await PrismaClient.employee.create({data: employeeRequestAttempt});
+    await PrismaClient.employee.create({ data: employeeRequestAttempt });
 
     res.sendStatus(200);
   } catch (error) {
@@ -30,18 +30,18 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/", async function (req: Request, res: Response) {
-  try{
+router.get("/", async function(req: Request, res: Response) {
+  try {
     const employeeCSV = await PrismaClient.employee.findMany();
     res.status(200).send(employeeCSV);
-  } catch (error){
+  } catch (error) {
     console.error(`Error exporting employee data: ${error}`);
     res.sendStatus(500);
   }
 });
 
-router.patch("/", async function (req: Request, res: Response) {
-  try{
+router.patch("/", async function(req: Request, res: Response) {
+  try {
     const relativeNodePath = "../../testData/users.csv";
     const absoluteNodePath = path.join(__dirname, relativeNodePath);
     const csvFileNode = fs.readFileSync(absoluteNodePath, "utf-8");
@@ -49,17 +49,19 @@ router.patch("/", async function (req: Request, res: Response) {
     console.log(csvFileNode);
     // Parse the CSV string to an array of CSVRow objects
     const rowsNode = parseCSV(csvFileNode);
-    const transformedNode:user[] = rowsNode.map((row) => {
+    const transformedNode: user[] = rowsNode.map((row) => {
       const rowval = Object.values(row);
       return {
-        Username:rowval[0]
+        Username: rowval[0]
       };
     });
 
-    await client.user.createMany({data:transformedNode.map((self) => {
+    await client.user.createMany({
+      data: transformedNode.map((self) => {
         return {
           Username: self.Username
-        };}
+        };
+      }
       )
     });
 
@@ -68,7 +70,7 @@ router.patch("/", async function (req: Request, res: Response) {
     const csvFile = fs.readFileSync(absolutePath, "utf-8");
 
     const rows = parseCSV(csvFile);
-    const transformed:employee[] = rows.map((row) => {
+    const transformed: employee[] = rows.map((row) => {
       const rowval = Object.values(row);
       return {
         username: rowval[0],
@@ -79,16 +81,18 @@ router.patch("/", async function (req: Request, res: Response) {
     });
 
 
-    await client.employee.createMany({data:transformed.map((self) => {
+    await client.employee.createMany({
+      data: transformed.map((self) => {
         return {
           username: self.username,
           firstName: self.firstName,
           lastName: self.lastName,
           email: self.email
-        };}
+        };
+      }
       )
     });
-  } catch (error){
+  } catch (error) {
     console.error(`Error exporting employee data: ${error}`);
     res.sendStatus(500);
   }
