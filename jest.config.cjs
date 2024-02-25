@@ -1,6 +1,7 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
   preset: 'ts-jest',
+  roots: ['<rootDir>/packages/common/src', '<rootDir>/apps/frontend/src', '<rootDir>/apps/backend/src'],
   testEnvironment: 'jsdom',
   projects: ['<rootDir>', '<rootDir>/apps/*', '<rootDir>/packages/*'],
   transform: {
