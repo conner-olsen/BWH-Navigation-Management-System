@@ -63,6 +63,7 @@ function MapDisplay({
             graph.setPathfindingStrategy(pathFindingType);
 
             const pathString = graph.nodesToString(pathSent);
+            console.log(pathString);
             setPath(pathString);
             setStartNodeId(startNode);
             setEndNodeId(endNode);

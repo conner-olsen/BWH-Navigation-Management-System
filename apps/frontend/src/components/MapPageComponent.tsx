@@ -51,7 +51,7 @@ export function BFSComponent() {
                 endId: endNode,
                 strategy: pathFindingType
             };
-            const response: AxiosResponse<Node[]> = await axios.post(pathFindingType, request, {
+            const response: AxiosResponse<Node[]> = await axios.post('/api/pathfinding', request, {
                 headers: {
                     'Content-Type': "application/json"
                 }
@@ -64,7 +64,7 @@ export function BFSComponent() {
 
             return response;
         } catch (error) {
-            console.error("Error fetching BFS result:", (error as AxiosError).message);
+            console.error("Error fetching pathFinding result:", (error as AxiosError).message);
             throw error;
         }
     }, [startNode, endNode, pathFindingType]);
