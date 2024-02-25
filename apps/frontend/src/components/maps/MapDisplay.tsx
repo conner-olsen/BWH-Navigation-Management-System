@@ -323,21 +323,31 @@ function MapDisplay({
                 previousFloor = currentFloor;
             }
         }
-
         return returnStrings;
     };
 
     const displayFloorChange = (graph: Graph, path: string[]) => {
         const floorChanges = gatherFloorChangeStrings(graph, path);
-
+       // console.log(floorChanges);
         return (
-            Array.from(graph.nodes.values()).map((node: Node, index: number) => {
-                return (
-                        <text className="font-bold dark:invert" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
-                            {floorChanges[index]}
-                        </text>
-                    );
-            }));
+            Array.from(path.map((nodeID: string, index: number) => {
+                const node = graph.getNode(nodeID);
+                if((node as Node).floor == floor && (floorChanges[index] != "")) {
+                    return (
+                        <g>
+                            <rect className="dark:fill-white z-20 fill-blue-600" x={(node as Node).xCoord - 63}
+                          y={(node as Node).yCoord - 48}
+                          width="120" height="28" rx="1" fill="green" stroke="black" stroke-width="4">
+                             </rect>
+                            <text className="font-bold dark:invert" x={(node as Node).xCoord - 57}
+                                y={(node as Node).yCoord - 28} fill="black">
+                                 {floorChanges[index]}
+                     </text>
+                    </g>
+                )
+                    ;
+                }
+            })));
     };
 
     return (
@@ -349,7 +359,7 @@ function MapDisplay({
                 {graph && displayNodes(graph)}
                 {graph && displayNodePins(graph)}
                 {graph && displayHoverCards(graph)}
-                {graph && displayFloorChange(graph, path)}
+                {graph && path.length > 0 && displayFloorChange(graph, path)}
             </svg>
 
         </div>
