@@ -9,6 +9,7 @@ function ChatComponent() {
 
     const openai = new OpenAI(apiKey);
 
+
     const sendMessage = async () => {
         setLoading(true);
         const response = await openai.completions.create({
