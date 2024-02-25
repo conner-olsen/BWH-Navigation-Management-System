@@ -303,13 +303,10 @@ function MapDisplay({
 
     const gatherFloorChangeStrings = (graph: Graph, path: string[]): string[] => {
         const returnStrings: string[] = [];
-        const firstNode = graph.getNode(path[0]);
-        let previousFloor = (firstNode as Node).floor;
-
+        let previousFloor = pathSent[0].floor;
 
         for(let i = 0; i < path.length; i++) {
-            const node = graph.getNode(path[i]);
-            const currentFloor = (node as Node).floor;
+            const currentFloor = pathSent[i].floor;
 
             if (!(currentFloor == previousFloor)) {
                 //update previous node in array to have string announcing floor change
@@ -322,21 +319,21 @@ function MapDisplay({
                 returnStrings[i] = "";
                 previousFloor = currentFloor;
             }
-        }
+        };
         return returnStrings;
     };
 
     const displayFloorChange = (graph: Graph, path: string[]) => {
         const floorChanges = gatherFloorChangeStrings(graph, path);
-       // console.log(floorChanges);
+
         return (
             Array.from(path.map((nodeID: string, index: number) => {
-                const node = graph.getNode(nodeID);
-                if((node as Node).floor == floor && (floorChanges[index] != "")) {
+                const node = pathSent[index];
+                if(node.floor == floor && !(floorChanges[index] == "")) {
                     return (
                         <g>
-                            <rect className="dark:fill-white z-20 fill-indigo-400" x={(node as Node).xCoord - 64}
-                                  y={(node as Node).yCoord - 48}
+                            <rect className="dark:fill-white z-20 fill-indigo-400" x={node.xCoord - 64}
+                                  y={node.yCoord - 48}
                                   width="125" height="28" rx="1" stroke="black" stroke-width="4">
                                 <animate
                                     attributeName="rx"
@@ -344,15 +341,15 @@ function MapDisplay({
                                     dur="2s"
                                     repeatCount="indefinite"/>
                             </rect>
-                            <text className="font-bold dark:invert" x={(node as Node).xCoord - 59}
-                                  y={(node as Node).yCoord - 28} fill="black">
+                            <text className="font-bold dark:invert" x={node.xCoord - 59}
+                                  y={node.yCoord - 28} fill="black">
                                  {floorChanges[index]}
                      </text>
                     </g>
-                )
-                    ;
+                );
                 }
-            })));
+            }))
+        );
     };
 
     return (
@@ -364,7 +361,7 @@ function MapDisplay({
                 {graph && displayNodes(graph)}
                 {graph && displayNodePins(graph)}
                 {graph && displayHoverCards(graph)}
-                {graph && path.length > 0 && displayFloorChange(graph, path)}
+                {graph && path.length > 0 && pathSent.length > 0 && displayFloorChange(graph, path)}
             </svg>
 
         </div>
