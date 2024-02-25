@@ -1,5 +1,6 @@
 module.exports = {
     extends: ["custom"],
     root: true,
-    parserOptions: { ecmaVersion: "ESNext", sourceType: "script" },
-}
+    parserOptions: { ecmaVersion: "ESNext", sourceType: "script", jest: true },
+};
+
