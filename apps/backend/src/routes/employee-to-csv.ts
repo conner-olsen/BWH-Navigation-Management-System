@@ -1,7 +1,7 @@
 import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/database-connection.ts";
-import {parseCSV} from "common/src/parser.ts";
-import {employee} from "common/interfaces/interfaces.ts";
+import { parseCSV } from "common/src/parser.ts";
+import { employee } from "common/src/interfaces/interfaces.ts";
 
 
 const router: Router = express.Router();
@@ -13,7 +13,7 @@ function convertToCSV(data: employee[]): string {
   const rows = data.map((node) => Object.values(node).join(','));
   return `${headers}\n${rows.join('\n')}`;
 }
-router.post("/", async function(req: Request, res: Response){
+router.post("/", async function(req: Request, res: Response) {
   try {
     // Get the JSON body from the JSON object
     const employeeCSVData = req.body["csvString"];
@@ -32,7 +32,7 @@ router.post("/", async function(req: Request, res: Response){
 
     // Create records in 'user' table
     await PrismaClient.user.createMany({
-      data: transformedEmp.map((self)  => {
+      data: transformedEmp.map((self) => {
         return {
           Username: self.username,
         };
@@ -60,12 +60,12 @@ router.post("/", async function(req: Request, res: Response){
   }
 });
 
-router.get("/", async function (req: Request, res: Response) {
-  try{
+router.get("/", async function(req: Request, res: Response) {
+  try {
     const employeeCSV = await PrismaClient.employee.findMany();
     const csvEdge: string = convertToCSV(employeeCSV);
     res.send(csvEdge);
-  } catch (error){
+  } catch (error) {
     console.error(`Error exporting node data: ${error}`);
     res.sendStatus(500);
   }
@@ -73,4 +73,3 @@ router.get("/", async function (req: Request, res: Response) {
 });
 
 export default router;
-

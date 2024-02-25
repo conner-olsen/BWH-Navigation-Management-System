@@ -6,10 +6,6 @@ import fs from "fs";
 import { parseCSV } from "common/src/parser.ts";
 import { employee, user } from "common/src/interfaces/interfaces.ts";
 import client from "../bin/database-connection.ts";
-// import path from "path";
-// import fs from "fs";
-// import {parseCSV} from "common/src/parser.ts";
-// import {edge, employee, node, user} from "common/interfaces/interfaces.ts";
 
 const router: Router = express.Router();
 

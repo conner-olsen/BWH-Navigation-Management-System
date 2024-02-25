@@ -1,6 +1,6 @@
 import express, { Router, Request, Response } from "express";
 import { Graph } from "common/src/graph.ts";
-import PathFindingRequest from "common/interfaces/pathfinding-request.ts";
+import PathFindingRequest from "common/src/interfaces/pathfinding-request.ts";
 import client from "../bin/database-connection.ts";
 import { AStarPathfindingStrategy, BFSPathfindingStrategy, DFSPathfindingStrategy, DijkstraPathfindingStrategy } from "common/src/pathfinding-strategy.ts";
 
