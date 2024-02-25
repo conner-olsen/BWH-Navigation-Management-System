@@ -5105,10 +5105,10 @@ __metadata:
     "@types/jest": "npm:^29.5.12"
     "@types/node": "npm:^20.11.10"
     eslint-config-custom: "workspace:*"
+    fastpriorityqueue: "npm:^0.7.4"
     jest: "npm:^29.7.0"
     prettier: "npm:latest"
     prettier-config-custom: "workspace:*"
-    tinyqueue: "npm:^2.0.3"
     ts-jest: "npm:^29.1.2"
     tsconfig-custom: "workspace:*"
     typescript: "npm:^5.3.3"
@@ -6470,6 +6470,13 @@ __metadata:
   dependencies:
     punycode: "npm:^1.3.2"
   checksum: 6d33f46ce9776f7f3017576926207a950ca39bc5eb78fc794404f2288fe494720f9a119084b75569bd9eb09d2b46678bfaf39c191fb2c808ef3c833dc8982752
+  languageName: node
+  linkType: hard
+
+"fastpriorityqueue@npm:^0.7.4":
+  version: 0.7.4
+  resolution: "fastpriorityqueue@npm:0.7.4"
+  checksum: 066bcfbc7d0043430e53a24fe5d0007286796cf00054eff06c2b79ad798b78e0f49d243ae67a4ad6e9ad22264a6a06578627d5f6930b1b5b7ab9608ec197df0c
   languageName: node
   linkType: hard
 
@@ -11655,13 +11662,6 @@ __metadata:
   version: 2.0.0
   resolution: "tinylogic@npm:2.0.0"
   checksum: 6467b1ed9b602dae035726ee3faf2682bddffb5389b42fdb4daf13878037420ed9981a572ca7db467bd26c4ab00fb4eefe654f24e35984ec017fb5e83081db97
-  languageName: node
-  linkType: hard
-
-"tinyqueue@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "tinyqueue@npm:2.0.3"
-  checksum: b676fdf2050bc9b2b76fe3faa433f3122c623e3f2c32d2a6921487b1e8fb541a85af79ea0eca3618e261b293280db78b02e1f835321783b8c078c507b739017c
   languageName: node
   linkType: hard
 
