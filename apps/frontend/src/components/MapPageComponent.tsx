@@ -54,8 +54,18 @@ export function MapComponent() {
                 const currentX = pathfindingResult[i].xCoord;
                 const currentY = pathfindingResult[i].yCoord;
 
+                //if going up/down floor by elevator
+                if((pathfindingResult[i].nodeType == "ELEV") && (pathfindingResult[i - 1].nodeType == "ELEV")) {
+                    longNamesDirections[i] = "Take elevator to floor " + pathfindingResult[i].floor;
+                }
+
+                //if going up/down floor by stair
+                else if((pathfindingResult[i].nodeType == "STAI") && (pathfindingResult[i - 1].nodeType == "STAI")) {
+                    longNamesDirections[i] = "Take elevator to floor " + pathfindingResult[i].floor;
+                }
+
                 //if facing in the Y direction
-                if(facingUp || facingDown) {
+                else if(facingUp || facingDown) {
                     //going solely upwards or downwards, X not changing with MOE of 5
                     //and you were previously facing in the Y
                     if((Math.abs(pastX - currentX) <= 5)) {
@@ -177,7 +187,7 @@ export function MapComponent() {
                 }
             }
         }
-        console.log(longNamesDirections);
+       // console.log(longNamesDirections);
         return longNamesDirections;
 
     }, [pathfindingResult]);
@@ -195,7 +205,7 @@ export function MapComponent() {
 
   const handleAccessibilityToggle = () => {
     setAccessibilityRoute(doAccessible => !doAccessible);
-    console.log("do accessible to " + accessibilityRoute);
+   // console.log("do accessible to " + accessibilityRoute);
   };
 
   const updateCurrentNode = (currentNode: Node) => {
@@ -736,14 +746,15 @@ export function MapComponent() {
                                     </Select>
                                 </div>
 
-                                <div>
-                                    <p className="font-bold text-center">Follow me</p>
-                                    <ol type="1" className={"overflow-y-auto h-[100px] px-2"}>
-                                        {/*{collectLongNames().map((string, index) => (*/}
-                                        {/*    <li key={index}>{string}</li>*/}
-                                        {/*))}*/}
-                                    </ol>
-                                </div>
+                                {/*path text display moved below*/}
+                                {/*<div>*/}
+                                {/*    <p className="font-bold text-center">Follow me</p>*/}
+                                {/*    <ol type="1" className={"overflow-y-auto h-[100px] px-2"}>*/}
+                                {/*        /!*{collectLongNames().map((string, index) => (*!/*/}
+                                {/*        /!*    <li key={index}>{string}</li>*!/*/}
+                                {/*        /!*))}*!/*/}
+                                {/*    </ol>*/}
+                                {/*</div>*/}
 
                                 <div className="flex justify-center">
                                     <DrawerClose>
