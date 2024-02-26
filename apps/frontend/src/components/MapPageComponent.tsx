@@ -35,7 +35,7 @@ export function MapComponent() {
     return pathfindingResult.map(node => node.longName);
   }, [pathfindingResult]);
 
-    const collectLongNamesDirections = useCallback(() => {
+  const collectLongNamesDirections = useCallback(() => {
         const longNamesDirections: string[] = [];
 
         let facingUp = false;
@@ -45,7 +45,7 @@ export function MapComponent() {
 
         //find where first facing (depend on OG spot?)
 
-        for(let i = 1; i < pathfindingResult.length; i++) {
+        for(let i = 0; i < pathfindingResult.length; i++) {
             if(i == 0) {
                 longNamesDirections[0] = "Start at " + pathfindingResult[0].longName;
             }
@@ -63,7 +63,15 @@ export function MapComponent() {
                     //going solely upwards or downwards, X not changing with MOE of 5
                     //and you were previously facing in the Y
                     if((Math.abs(pastX - currentX) <= 5)) {
-                        longNamesDirections[i - 1] = "Continue to " + pathfindingResult[i].longName;
+                        longNamesDirections[i] = "Continue to " + pathfindingResult[i].longName;
+                        if(pastY < currentY) {
+                            facingUp = true;
+                            facingDown = false;
+                        }
+                        else {
+                            facingUp = false;
+                            facingDown = true;
+                        }
                         facingLeft = false;
                         facingRight = false;
                     }
@@ -72,7 +80,7 @@ export function MapComponent() {
                     else if(pastX < currentX) {
                         //going right if facing up
                         if(facingUp) {
-                            longNamesDirections[i - 1] = "Turn right to " + pathfindingResult[i].longName;
+                            longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
                             facingLeft = false;
                             facingRight = true;
                             facingDown = false;
@@ -81,7 +89,7 @@ export function MapComponent() {
 
                         //going left if facing down
                         else {
-                            longNamesDirections[i - 1] = "Turn left to " + pathfindingResult[i].longName;
+                            longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
                             facingLeft = false;
                             facingRight = true;
                             facingDown = false;
@@ -93,7 +101,7 @@ export function MapComponent() {
                     else if(pastX > currentX) {
                         //going left if facing up
                         if(facingUp) {
-                            longNamesDirections[i - 1] = "Turn left to " + pathfindingResult[i].longName;
+                            longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
                             facingLeft = true;
                             facingRight = false;
                             facingDown = false;
@@ -102,7 +110,7 @@ export function MapComponent() {
 
                         //going right if facing down
                         else {
-                            longNamesDirections[i - 1] = "Turn right to " + pathfindingResult[i].longName;
+                            longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
                             facingLeft = true;
                             facingRight = false;
                             facingDown = false;
@@ -116,7 +124,15 @@ export function MapComponent() {
                     //going solely left or right, Y not changing with MOE of 5
                     //and you were previously facing in the X
                     if ((Math.abs(pastY - currentY) <= 5)) {
-                        longNamesDirections[i - 1] = "Continue to " + pathfindingResult[i].longName;
+                        longNamesDirections[i] = "Continue to " + pathfindingResult[i].longName;
+                        if(pastX > currentX) {
+                            facingLeft = true;
+                            facingRight = false;
+                        }
+                        else {
+                            facingLeft = false;
+                            facingRight = true;
+                        }
                         facingUp = false;
                         facingDown = false;
                     }
@@ -125,7 +141,7 @@ export function MapComponent() {
                     else if(pastY < currentY) {
                         //going right if facing left
                         if(facingLeft) {
-                            longNamesDirections[i - 1] = "Turn right to " + pathfindingResult[i].longName;
+                            longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
                             facingLeft = false;
                             facingRight = false;
                             facingDown = false;
@@ -134,7 +150,7 @@ export function MapComponent() {
 
                         //going left if facing right
                         else {
-                            longNamesDirections[i - 1] = "Turn left to " + pathfindingResult[i].longName;
+                            longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
                             facingLeft = false;
                             facingRight = false;
                             facingDown = false;
@@ -146,7 +162,7 @@ export function MapComponent() {
                     else if(pastY > currentY) {
                         //going left if facing left
                         if(facingLeft) {
-                            longNamesDirections[i - 1] = "Turn left to " + pathfindingResult[i].longName;
+                            longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
                             facingLeft = false;
                             facingRight = false;
                             facingDown = true;
@@ -155,7 +171,7 @@ export function MapComponent() {
 
                         //going right if facing right
                         else {
-                            longNamesDirections[i - 1] = "Turn right to " + pathfindingResult[i].longName;
+                            longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
                             facingLeft = false;
                             facingRight = false;
                             facingDown = true;
