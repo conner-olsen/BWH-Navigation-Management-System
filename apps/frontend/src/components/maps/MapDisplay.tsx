@@ -119,9 +119,16 @@ function MapDisplay({
     return pathElements;
   };
 
+    const clearGuidelines = () => {
+        // THIS WILL DELETE EVERY ELEMENT WITH ID STARTING WITH D
+        const elements = document.querySelectorAll('[id^="d"]');
+        const elementsArray = Array.from(elements);
+        elementsArray.forEach((element) => element.remove());
+    };
 
   const handleNodeClick = (node: Node) => {
     setChosenNode(node);
+    clearGuidelines();
 
     if (!startNodeId) {
       setStartNodeId(node.id);
