@@ -82,7 +82,7 @@ const ExportAllDataToCSVButton = () => {
     }
 
     return (
-        <Button variant={"ghost"} onClick={handleExportButton}>Export All</Button>
+        <Button variant={"default"} onClick={handleExportButton}>Export All</Button>
     );
 };
 

@@ -154,7 +154,7 @@ export const ReligiousServiceLogComponent = () => {
   return (
     <div>
       {/*<TabsContent value={"Flower Request"}>*/}
-      <Container>
+        <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
         <Row>
           <Col>
             <p>Filter by Status:</p>
@@ -188,11 +188,12 @@ export const ReligiousServiceLogComponent = () => {
         </Row>
       </Container>
 
-      <br />
+        <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
 
-      <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={(cleaningData) => {
+        <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={(cleaningData) => {
         setData(cleaningData);
       }} />
+        </Container>
     </div>
   );
 };
