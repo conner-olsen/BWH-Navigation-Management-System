@@ -31,11 +31,7 @@ export function MapComponent() {
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
 
-  const collectLongNames = useCallback(() => {
-    return pathfindingResult.map(node => node.longName);
-  }, [pathfindingResult]);
-
-  const collectLongNamesDirections = useCallback(() => {
+  const collectLongNamesDirections = useCallback((): string[] => {
         const longNamesDirections: string[] = [];
 
         let facingUp = false;
@@ -185,6 +181,10 @@ export function MapComponent() {
         return longNamesDirections;
 
     }, [pathfindingResult]);
+
+    const collectLongNames = useCallback(() => {
+        return collectLongNamesDirections();
+    }, [collectLongNamesDirections]);
 
   const handleSpeakButtonClick = () => {
     const longNames = collectLongNames();
@@ -575,7 +575,7 @@ export function MapComponent() {
                                         )}
                                         <span
                                             className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
-                        {node.longName}
+                        {collectLongNames()[index]}
                       </span>
                     </span>
                                 </li>
@@ -739,9 +739,9 @@ export function MapComponent() {
                                 <div>
                                     <p className="font-bold text-center">Follow me</p>
                                     <ol type="1" className={"overflow-y-auto h-[100px] px-2"}>
-                                        {collectLongNamesDirections().map((longName, index) => (
-                                            <li key={index}>{longName}</li>
-                                        ))}
+                                        {/*{collectLongNames().map((string, index) => (*/}
+                                        {/*    <li key={index}>{string}</li>*/}
+                                        {/*))}*/}
                                     </ol>
                                 </div>
 
