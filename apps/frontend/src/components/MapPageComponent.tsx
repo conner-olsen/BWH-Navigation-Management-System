@@ -63,7 +63,7 @@ export function MapComponent() {
 
                 //if going up/down floor by stair
                 else if((pathfindingResult[i].nodeType == "STAI") && (pathfindingResult[i - 1].nodeType == "STAI")) {
-                    longNamesDirections[i] = "Take elevator to floor " + pathfindingResult[i].floor;
+                    longNamesDirections[i] = "Take stairs to floor " + pathfindingResult[i].floor;
                 }
 
                 //if facing in the Y direction

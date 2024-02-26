@@ -248,7 +248,7 @@ function MapDisplay({
             if(floorChanges.includes(node.id)) {
                 return (
                     <g key={node.id} >
-                        <circle className="dark:fill-purple-500 z-20 fill-green-800" cx={node.xCoord} cy={node.yCoord} r={hoverNodeId === node.id ? "15" : "11"} stroke="black" stroke-width="4"
+                        <circle className="dark:fill-purple-500 z-20 fill-indigo-400" cx={node.xCoord} cy={node.yCoord} r={hoverNodeId === node.id ? "15" : "11"} stroke="black" stroke-width="4"
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => handleNodeClick(node)}
                                 onMouseEnter={() => handleNodeHover(node)}
