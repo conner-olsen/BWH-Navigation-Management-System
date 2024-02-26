@@ -5,6 +5,7 @@ import axios   from "axios";
 import "./animation.css";
 import { Node } from "common/src/node.ts";
 import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
+import {iconPaths} from "./IconPath.tsx";
 
 interface MapDisplayProps {
   floorMap: string;
@@ -28,6 +29,8 @@ interface AnimatedPathProps {
   x2: number;
   y2: number;
 }
+
+
 
 function MapDisplay({
   floorMap,
@@ -239,45 +242,63 @@ function MapDisplay({
     }
   };
 
+
   const displayNodes = (graph: Graph) => {
-    return (
-      Array.from(graph.nodes.values()).map((node: Node) => {
-        if (node.floor == floor && doDisplayNodes) {
-          return (
-            <g key={node.id} >
-
-              <circle className="dark:fill-white z-20 fill-blue-600" cx={node.xCoord} cy={node.yCoord} r={hoverNodeId === node.id ? "15" : "11"} stroke="black" stroke-width="4"
-                style={{ cursor: 'pointer' }}
-                // Moved events here so hovering on other components don't affect displayed nodes
-                onClick={() => handleNodeClick(node)}
-                onMouseEnter={() => handleNodeHover(node)}
-                onMouseLeave={() => handleNodeHoverLeave()} />
-              {displayName(node)}
-            </g>
-          );
-        }
-      }));
-  };
-
-  const displayHoverCards = (graph: Graph) => {
-    // Hover cards need to be rendered after nodes to avoid overlapping
-    return (
-      Array.from(graph.nodes.values()).map((node: Node) => {
         return (
-          <g>
-            {hoverNodeId === node.id && displayHoverInfo(node)}
-          </g>
-        );
-      })
-    );
-  };
+            Array.from(graph.nodes.values()).map((node: Node) => {
+                if (node.floor == floor && doDisplayNodes) {
+                    let iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
+                    const iconSize = hoverNodeId === node.id ? { width: 25, height: 25} : { width: 20, height: 20 };  // Example sizes, adjust as needed
 
-  const displayNodePins = (graph: Graph) => {
-    return (
-      Array.from(graph.nodes.values()).map((node: Node) => {
-        if (node.floor === floor)
-          return (
-            <g>
+                    return (
+                        <g key={node.id}>
+                            <rect
+                                x={node.xCoord - iconSize.width / 2}
+                                y={node.yCoord - iconSize.height / 2}
+                                width={iconSize.width}
+                                height={iconSize.height}
+                                fill="white"
+                                style={{cursor: 'pointer'}}
+                            />
+                            <image
+                                href={iconPath}
+                                x={node.xCoord - iconSize.width / 2}
+                                y={node.yCoord - iconSize.height / 2}
+                                width={iconSize.width}
+                                height={iconSize.height}
+                                style={{cursor: 'pointer'}}
+                                onClick={() => handleNodeClick(node)}
+                                onMouseEnter={() => handleNodeHover(node)}
+                                onMouseLeave={() => handleNodeHoverLeave()}
+                            />
+                            {displayName(node)}
+                        </g>
+                    );
+                }
+                return null; // Return null for map elements that don't meet the condition
+            }).filter(element => element !== null)); // Filter out null elements
+    };
+
+
+    const displayHoverCards = (graph: Graph) => {
+        // Hover cards need to be rendered after nodes to avoid overlapping
+        return (
+            Array.from(graph.nodes.values()).map((node: Node) => {
+                return (
+                    <g>
+                        {hoverNodeId === node.id && displayHoverInfo(node)}
+                    </g>
+                );
+            })
+        );
+    };
+
+    const displayNodePins = (graph: Graph) => {
+        return (
+            Array.from(graph.nodes.values()).map((node: Node) => {
+                if (node.floor === floor)
+                    return (
+                        <g>
               {startNodeId === node.id && displaySelectedNodes(node, 'start')}
               {endNodeId === node.id && displaySelectedNodes(node, 'end')}
             </g>
