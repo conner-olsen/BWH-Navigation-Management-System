@@ -7,7 +7,6 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hovercard.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx";
 import { NodeServiceRequestComponent } from "./NodeServiceRequestComponent.tsx";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
 import {
   Drawer,
   DrawerClose,
@@ -217,7 +216,7 @@ export function MapComponent() {
     setActiveTab(tabNumber);
   };
 
-  const [showAlert, setShowAlert] = useState(false);
+  const [, setShowAlert] = useState(false);
 
   useEffect(() => {
     //looks to see if theres a floor change w/ stairs
