@@ -242,6 +242,18 @@ textarea{
     padding: 10px;
     scale: 0.75;
 }
+.ClearPathButton {
+    color: #fff;
+    font-family: sans-serif;
+    cursor: pointer;
+    font-size: 16px;
+    width: 115px; /* Increase width, adjust the value as needed */
+    padding: 10px; /* Reduce padding for height */
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 20px; /* Make the button oval */
+    height: fit-content;
+}
 
 /* ============= DRAG AND DROP ========= */
 .DragDropBox, .DragDropBoxOn {

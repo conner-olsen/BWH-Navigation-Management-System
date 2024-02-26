@@ -370,10 +370,13 @@ export function MapComponent() {
                                 </SelectContent>
                             </Select>
                         </div>
+                        <div className="flex flex-col">
+                            <ClearPathButton sendClear={sendClear}/>
+                        </div>
                     </div>
-                    <div>
-                        <ClearPathButton sendClear={sendClear}/>
-                    </div>
+                    {/*<div>*/}
+                    {/*    <ClearPathButton sendClear={sendClear}/>*/}
+                    {/*</div>*/}
                     <div className="pt-4 pb-2 px-2">
                         <Select value={pathFindingType} defaultValue={"A*"}
                                 onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
