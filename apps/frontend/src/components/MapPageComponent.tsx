@@ -35,6 +35,141 @@ export function MapComponent() {
     return pathfindingResult.map(node => node.longName);
   }, [pathfindingResult]);
 
+    const collectLongNamesDirections = useCallback(() => {
+        const longNamesDirections: string[] = [];
+
+        let facingUp = false;
+        let facingDown = false;
+        let facingLeft = false;
+        let facingRight = true;
+
+        //find where first facing (depend on OG spot?)
+
+        for(let i = 1; i < pathfindingResult.length; i++) {
+            if(i == 0) {
+                longNamesDirections[0] = "Start at " + pathfindingResult[0].longName;
+            }
+            // else if(i == pathfindingResult.length - 1) {
+            //     longNamesDirections[i] = "Implement later" + pathfindingResult[i].longName;
+            // }
+            else {
+                const pastX = pathfindingResult[i - 1].xCoord;
+                const pastY = pathfindingResult[i - 1].yCoord;
+                const currentX = pathfindingResult[i].xCoord;
+                const currentY = pathfindingResult[i].yCoord;
+
+                //if facing in the Y direction
+                if(facingUp || facingDown) {
+                    //going solely upwards or downwards, X not changing with MOE of 5
+                    //and you were previously facing in the Y
+                    if((Math.abs(pastX - currentX) <= 5)) {
+                        longNamesDirections[i - 1] = "Continue to " + pathfindingResult[i].longName;
+                        facingLeft = false;
+                        facingRight = false;
+                    }
+
+                    //end up facing right
+                    else if(pastX < currentX) {
+                        //going right if facing up
+                        if(facingUp) {
+                            longNamesDirections[i - 1] = "Turn right to " + pathfindingResult[i].longName;
+                            facingLeft = false;
+                            facingRight = true;
+                            facingDown = false;
+                            facingUp = false;
+                        }
+
+                        //going left if facing down
+                        else {
+                            longNamesDirections[i - 1] = "Turn left to " + pathfindingResult[i].longName;
+                            facingLeft = false;
+                            facingRight = true;
+                            facingDown = false;
+                            facingUp = false;
+                        }
+                    }
+
+                    //end up facing left
+                    else if(pastX > currentX) {
+                        //going left if facing up
+                        if(facingUp) {
+                            longNamesDirections[i - 1] = "Turn left to " + pathfindingResult[i].longName;
+                            facingLeft = true;
+                            facingRight = false;
+                            facingDown = false;
+                            facingUp = false;
+                        }
+
+                        //going right if facing down
+                        else {
+                            longNamesDirections[i - 1] = "Turn right to " + pathfindingResult[i].longName;
+                            facingLeft = true;
+                            facingRight = false;
+                            facingDown = false;
+                            facingUp = false;
+                        }
+                    }
+                }
+
+                //if facing in the X direction
+                else if (facingLeft || facingRight) {
+                    //going solely left or right, Y not changing with MOE of 5
+                    //and you were previously facing in the X
+                    if ((Math.abs(pastY - currentY) <= 5)) {
+                        longNamesDirections[i - 1] = "Continue to " + pathfindingResult[i].longName;
+                        facingUp = false;
+                        facingDown = false;
+                    }
+
+                    //end up facing up
+                    else if(pastY < currentY) {
+                        //going right if facing left
+                        if(facingLeft) {
+                            longNamesDirections[i - 1] = "Turn right to " + pathfindingResult[i].longName;
+                            facingLeft = false;
+                            facingRight = false;
+                            facingDown = false;
+                            facingUp = true;
+                        }
+
+                        //going left if facing right
+                        else {
+                            longNamesDirections[i - 1] = "Turn left to " + pathfindingResult[i].longName;
+                            facingLeft = false;
+                            facingRight = false;
+                            facingDown = false;
+                            facingUp = true;
+                        }
+                    }
+
+                    //end up facing down
+                    else if(pastY > currentY) {
+                        //going left if facing left
+                        if(facingLeft) {
+                            longNamesDirections[i - 1] = "Turn left to " + pathfindingResult[i].longName;
+                            facingLeft = false;
+                            facingRight = false;
+                            facingDown = true;
+                            facingUp = false;
+                        }
+
+                        //going right if facing right
+                        else {
+                            longNamesDirections[i - 1] = "Turn right to " + pathfindingResult[i].longName;
+                            facingLeft = false;
+                            facingRight = false;
+                            facingDown = true;
+                            facingUp = false;
+                        }
+                    }
+                }
+            }
+        }
+        console.log(longNamesDirections);
+        return longNamesDirections;
+
+    }, [pathfindingResult]);
+
   const handleSpeakButtonClick = () => {
     const longNames = collectLongNames();
     const speech = new SpeechSynthesisUtterance();
@@ -588,7 +723,7 @@ export function MapComponent() {
                                 <div>
                                     <p className="font-bold text-center">Follow me</p>
                                     <ol type="1" className={"overflow-y-auto h-[100px] px-2"}>
-                                        {collectLongNames().map((longName, index) => (
+                                        {collectLongNamesDirections().map((longName, index) => (
                                             <li key={index}>{longName}</li>
                                         ))}
                                     </ol>
