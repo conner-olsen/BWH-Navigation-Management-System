@@ -636,7 +636,7 @@ export function MapComponent() {
                                checked={do3D}/>
                         <label htmlFor="display-3d-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                            <img src="../../public/icon/map-3d-icon.png" alt="edge-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">3D</p>
                         </label>
