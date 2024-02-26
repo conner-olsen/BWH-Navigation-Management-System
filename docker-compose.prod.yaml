@@ -1,0 +1,134 @@
+# Production arguments passed to both containers
+x-prod-args: &prod-args
+  # Port that both servers will run production on
+  PRODUCTION_PORT: &prod-port 80
+  PORT: *prod-port # Duplicate this under the name that the env variable will expect. Build args will override as necessary
+
+x-db-info: &db-args
+  POSTGRES_PASSWORD: teamD500
+  POSTGRES_USER: teamD
+  POSTGRES_DB: teamD
+
+# Port and URL for the DB
+x-db-loc: &db-loc
+  POSTGRES_CONTAINER: team-d-prod.cxceq2y8wkrm.us-east-2.rds.amazonaws.com
+  POSTGRES_PORT: &pg-port "5432"
+
+  # The environment variables will expect this to already be formed, build args will override it
+  POSTGRES_URL: ""
+
+# Health check for all processes
+x-health-check: &health-check
+  interval: 30s
+  timeout: 30s
+  retries: 3
+
+# Running containers
+services:
+  # Traefik container, used for production routing. ALL requests will automatically be routed through here
+  # (hence why this is the only service with a "ports") to their appropriate destination based on the routing rules
+  traefik:
+    image: traefik:latest
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+
+      # This is what will actually be used
+      - "--entrypoints.websecure.address=:443"
+
+      # Expose the standard HTTP port, have it automatically redirect to https
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+
+      # Auto-certificate generation parameters
+      - "--certificatesresolvers.letsencrypt.acme.email=mrgosselin@wpi.edu"
+      - "--certificatesresolvers.letsencrypt.acme.storage=acme.json"
+
+      # Used during resolution
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+    # Everything enters through Traefik, so this exposes the environment
+    ports:
+      - "80:80"
+      - "443:443"
+    # Traefik requirement
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      # Mount the certificate, so that we don't try to renew the cert every time we start up
+      - acme_cert:/etc/traefik/acme
+    restart: always
+    depends_on:
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+
+  # Frontend (UI)
+  frontend:
+    # This is the exposed production port, so that Traefik routing can access it
+    expose:
+      - *prod-port
+    # Use the standard Dockerfile
+    # Environment allows this to work with prebuilt images
+    environment:
+      <<: *prod-args
+    build:
+      # Taken from our github repo
+      context: .
+      args:
+        <<: *prod-args
+      # Use the prod-frontend stage
+      target: prod-frontend
+    # Traefik labels
+    labels:
+      - "traefik.enable=true"
+
+      # The 443 entrypoint is the actual site
+      - "traefik.http.routers.frontend-https.entrypoints=websecure"
+      - "traefik.http.routers.frontend-https.rule=Host(`ec2-18-117-240-192.us-east-2.compute.amazonaws.com`)"
+      - "traefik.http.routers.frontend-https.tls=true"
+
+      # Despite the "loadbalancer" naming, this just describes what port this container exposes
+      - "traefik.http.services.frontend-https.loadbalancer.server.port=80"
+    image: maxgossselin/softeng-teamd:frontend
+    restart: always
+    healthcheck:
+      *health-check
+
+  # Backend (API)
+  backend:
+    # This is the exposed production port, so that Traefik routing can access it
+    expose:
+      - *prod-port
+    # Use the standard Dockerfile
+    # Environment allows this to work with prebuilt images
+    environment:
+      # Ignore the warnings, this just merges those three
+      <<: [ *prod-args, *db-args, *db-loc ]
+    build:
+      # Taken from our github repo
+      context: .
+      args:
+        # Ignore the warnings, this just merges those three
+        <<: [*prod-args, *db-args, *db-loc]
+      # This time, build the backend
+      target: prod-backend
+    # This is the same as above, except everywhere that it said frontend is now backend, and
+    # it requires the /api prefix on everything
+    labels:
+      - "traefik.enable=true"
+
+      # The 443 entrypoint is the actual site
+      - "traefik.http.routers.backend-https.entrypoints=websecure"
+      - "traefik.http.routers.backend-https.rule=Host(`ec2-18-117-240-192.us-east-2.compute.amazonaws.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.backend-https.tls=true"
+
+      # Despite the "loadbalancer" naming, this just describes what port this container exposes
+      - "traefik.http.services.backend-https.loadbalancer.server.port=80"
+    image: maxgossselin/softeng-teamd:backend
+    restart: always
+    healthcheck:
+      *health-check
+volumes:
+  acme_cert:
