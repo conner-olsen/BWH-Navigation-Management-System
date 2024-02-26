@@ -35,3 +35,4 @@ const TeamCard = (props: { name: string, role: string, bio: string, image: strin
     );
 };
 export default TeamCard;
+
