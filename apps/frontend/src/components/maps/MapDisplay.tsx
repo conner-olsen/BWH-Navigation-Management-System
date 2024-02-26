@@ -240,21 +240,38 @@ function MapDisplay({
   };
 
   const displayNodes = (graph: Graph) => {
+      const floorChanges = gatherFloorChangeNodes();
     return (
       Array.from(graph.nodes.values()).map((node: Node) => {
         if (node.floor == floor && doDisplayNodes) {
-          return (
-            <g key={node.id} >
+            //if node is involved in a floor change, display node with diff color
+            if(floorChanges.includes(node.id)) {
+                return (
+                    <g key={node.id} >
+                        <circle className="dark:fill-purple-500 z-20 fill-green-800" cx={node.xCoord} cy={node.yCoord} r={hoverNodeId === node.id ? "15" : "11"} stroke="black" stroke-width="4"
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => handleNodeClick(node)}
+                                onMouseEnter={() => handleNodeHover(node)}
+                                onMouseLeave={() => handleNodeHoverLeave()} />
+                        {displayName(node)}
+                    </g>
+                );
+            }
+            else {
+                return (
+                    <g key={node.id} >
 
-              <circle className="dark:fill-white z-20 fill-blue-600" cx={node.xCoord} cy={node.yCoord} r={hoverNodeId === node.id ? "15" : "11"} stroke="black" stroke-width="4"
-                style={{ cursor: 'pointer' }}
-                // Moved events here so hovering on other components don't affect displayed nodes
-                onClick={() => handleNodeClick(node)}
-                onMouseEnter={() => handleNodeHover(node)}
-                onMouseLeave={() => handleNodeHoverLeave()} />
-              {displayName(node)}
-            </g>
-          );
+                        <circle className="dark:fill-white z-20 fill-blue-600" cx={node.xCoord} cy={node.yCoord} r={hoverNodeId === node.id ? "15" : "11"} stroke="black" stroke-width="4"
+                                style={{ cursor: 'pointer' }}
+                            // Moved events here so hovering on other components don't affect displayed nodes
+                                onClick={() => handleNodeClick(node)}
+                                onMouseEnter={() => handleNodeHover(node)}
+                                onMouseLeave={() => handleNodeHoverLeave()} />
+                        {displayName(node)}
+                    </g>
+                );
+            }
+
         }
       }));
   };
@@ -310,6 +327,29 @@ function MapDisplay({
     }
   };
 
+    const gatherFloorChangeNodes = (): string[] => {
+        const returnNodes: string[] = [];
+        if(pathSent.length > 0) {
+            let previousFloor = pathSent[0].floor;
+
+            for (let i = 1; i < pathSent.length; i++) {
+                const node = pathSent[i];
+                const currentFloor = node.floor;
+
+                if (!(currentFloor == previousFloor)) {
+                    //set current and previous nodes as true in boolean array
+                    //update previous floor to be current for next loop
+                    returnNodes.push(pathSent[i].id);
+                    returnNodes.push(pathSent[i - 1].id);
+                    previousFloor = currentFloor;
+                } else {
+                    previousFloor = currentFloor;
+                }
+            }
+        }
+     //   console.log(returnNodes);
+        return returnNodes;
+    };
     const gatherFloorChangeStrings = (): string[] => {
         const returnStrings: string[] = [];
         let previousFloor = pathSent[0].floor;
