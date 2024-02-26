@@ -243,60 +243,60 @@ textarea{
     scale: 0.75;
 }
 
-/* ============= DRAG AND DROP ========= */
-.DragDropBox, .DragDropBoxOn {
-    position: relative;
-    width: 50%;
-    border: 2px dashed var(--dark-blue);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    transition: 0.3s ease-in-out;
-}
-.DragDropBoxOn, .DragDropBox:hover {
-    border-color: var(--light-blue)!important;
-    color: var(--light-blue);
-}
-body.dark .DragDropBox {
-    border-color: white;
-}
-.DragDropBox img {
-    filter: grayscale(100%);
-    transition: 0.3s ease-in-out;
-}
-.DragDropBoxOn img, .DragDropBox:hover img {
-    filter: grayscale(0%);
-    transition: 0.3s ease-in-out;
-}
+/*!* ============= DRAG AND DROP ========= *!*/
+/*.DragDropBox, .DragDropBoxOn {*/
+/*    position: relative;*/
+/*    width: 50%;*/
+/*    border: 2px dashed var(--dark-blue);*/
+/*    border-radius: 8px;*/
+/*    padding: 20px;*/
+/*    text-align: center;*/
+/*    transition: 0.3s ease-in-out;*/
+/*}*/
+/*.DragDropBoxOn, .DragDropBox:hover {*/
+/*    border-color: var(--light-blue)!important;*/
+/*    color: var(--light-blue);*/
+/*}*/
+/*body.dark .DragDropBox {*/
+/*    border-color: white;*/
+/*}*/
+/*.DragDropBox img {*/
+/*    filter: grayscale(100%);*/
+/*    transition: 0.3s ease-in-out;*/
+/*}*/
+/*.DragDropBoxOn img, .DragDropBox:hover img {*/
+/*    filter: grayscale(0%);*/
+/*    transition: 0.3s ease-in-out;*/
+/*}*/
 
 
-.file-drop-box.dragging {
-    border: 2px dashed #2ecc71;
-}
+/*.file-drop-box.dragging {*/
+/*    border: 2px dashed #2ecc71;*/
+/*}*/
 
-.content {
-    color: #3498db;
-}
+/*.content {*/
+/*    color: #3498db;*/
+/*}*/
 
-.content div {
-    margin-top: 10px;
-}
+/*.content div {*/
+/*    margin-top: 10px;*/
+/*}*/
 
-.CsvDataText {
-    font-family: sans-serif;
-    text-align: center;
+/*.CsvDataText {*/
+/*    font-family: sans-serif;*/
+/*    text-align: center;*/
 
-    align-items: center;
-    width: 50%;
-    border-radius: 8px;
-    border: 2px dashed var(--dark-blue);
-    background: white;
-}
-.navbarStyling{
-    text-align: center;
-    justify-items: center;
-    font-size: small;
-}
+/*    align-items: center;*/
+/*    width: 50%;*/
+/*    border-radius: 8px;*/
+/*    border: 2px dashed var(--dark-blue);*/
+/*    background: white;*/
+/*}*/
+/*.navbarStyling{*/
+/*    text-align: center;*/
+/*    justify-items: center;*/
+/*    font-size: small;*/
+/*}*/
 
 /* ====== BFS ======= */
 
