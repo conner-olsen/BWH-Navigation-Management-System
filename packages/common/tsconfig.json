@@ -3,9 +3,5 @@
   "compilerOptions": {
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "baseUrl": ".",
-    "paths": {
-      "*": ["../../node_modules/*"]
-    }
   },
 }

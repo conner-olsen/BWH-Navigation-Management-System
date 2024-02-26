@@ -1,13 +1,29 @@
 import React from 'react';
-import {Col, Container, Row} from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import { motion, useAnimation } from "framer-motion"; // Import motion and useAnimation
 import TeamCard from "../components/TeamCard.tsx";
-import {Card} from "../components/ui/card.tsx";
-import GlobalFooter from "../components/Global_Footer.tsx";
-
+import { Card } from "../components/ui/card.tsx";
+import GlobalFooter from "../components/GlobalFooter.tsx";
+import { useEffect } from "react";
+// import {SwipeCarousel} from "../components/SwipeCarousel.tsx";
 const AboutPage = () => {
+
+    const controls = useAnimation(); // Initialize animation controls
+
+    // Define animation variants
+    const cardVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    };
+
+    // Use useEffect to trigger animation when component mounts
+    useEffect(() => {
+        controls.start("visible"); // Start the animation when component mounts
+    }, [controls]);
 
     return (
         <div>
+            {/*<SwipeCarousel></SwipeCarousel>*/}
 
             <div className="container text-center">
                 <Row>
@@ -23,119 +39,139 @@ const AboutPage = () => {
             </div>
 
             <Container>
-                <Row>
-                    <div className="col mb-4">
-                        <TeamCard name={"Nick Leslie"} role={"Team Coach"}
-                                  bio={"Class of 2025, Computer Science"}
-                                  image={"public/teamImages/Nick_pic.png"}>
-                        </TeamCard>
-                    </div>
+                <motion.div variants={cardVariants} initial="hidden" animate={controls} className="col mb-4">
 
-                    <div className="col mb-4">
-                        <TeamCard name={"Conner Olsen"} role={"Lead Software Engineer"}
-                                  bio={"Class of 2026, Computer Science & Mathematics"}
-                                  image={"public/teamImages/Conner_Olsen.png"}>
-                        </TeamCard>
-                    </div>
+                    <Row>
+                        <div className="col mb-4">
+                            <TeamCard name={"Nick Leslie"} role={"Team Coach"}
+                                      bio={"Class of 2025, Computer Science"}
+                                      image={"public/teamImages/Nick_pic.png"}
+                                      quote={' "The only way to do great work is to love what you do" Steve Jobs'}>
+                            </TeamCard>
+                        </div>
 
-                    <div className="col mb-4">
-                        <TeamCard name={"Karish Gupta"} role={"Assistant Team Lead"}
-                                  bio={"Class of 2026, Computer Science & Data Science"}
-                                  image={"public/teamImages/KARISH_GUPTA.jpg"}>
-                        </TeamCard>
-                    </div>
+                        <div className="col mb-4">
+                            <TeamCard name={"Conner Olsen"} role={"Lead Software Engineer"}
+                                      bio={"Class of 2026, Computer Science & Mathematics"}
+                                      image={"public/teamImages/Conner_Olsen.png"}
+                                      quote={' "The only way to do great work is to love what you do" Steve Jobs'}
+                            >
+                            </TeamCard>
+                        </div>
 
-                    <div className="col mb-4">
-                        <TeamCard name={"Max Gosselin"} role={"Assistant Team Lead"}
-                                  bio={"Class of 2026, Computer Science & Data  Science"}
-                                  image={"public/teamImages/Max.png"}>
-                        </TeamCard>
-                    </div>
+                        <div className="col mb-4">
+                            <TeamCard name={"Karish Gupta"} role={"Assistant Team Lead"}
+                                      bio={"Class of 2026, Computer Science & Data Science"}
+                                      image={"public/teamImages/KARISH_GUPTA.jpg"}
+                                      quote={' "People will forget what you said, people will forget what you did, but people will never forget how you made them feel" - Maya Angelou'}>
+                            </TeamCard>
+                        </div>
 
-                </Row>
+                        <div className="col mb-4">
+                            <TeamCard name={"Max Gosselin"} role={"Assistant Team Lead"}
+                                      bio={"Class of 2026, Computer Science & Data  Science"}
+                                      image={"public/teamImages/Max.png"}
+                                        quote={' "The only way to do great work is to love what you do" Steve Jobs'}>
+                            </TeamCard>
+                        </div>
 
-                <Row>
-                    <div className="col mb-4">
-                        <TeamCard name={"Shivank Gupta"} role={"Scrum Master"}
-                                  bio={"Class of 2024, Mechanical and Robotics Engineering"}
-                                  image={"public/teamImages/Shivank.jpeg"}>
-                        </TeamCard>
-                    </div>
+                    </Row>
+                </motion.div>
 
-                    <div className="col mb-4">
-                        <TeamCard name={"Tanya Khan"} role={"Product Owner"}
-                                  bio={"Class of 2025, Computer Science and IMGD"}
-                                  image={"public/teamImages/TanyaKhan.jpg"}>
-                        </TeamCard>
-                    </div>
+                <motion.div variants={cardVariants} initial="hidden" animate={controls} className="col mb-4">
+                    <Row>
+                        <div className="col mb-4">
+                            <TeamCard name={"Shivank Gupta"} role={"Scrum Master"}
+                                      bio={"Class of 2024, Mechanical and Robotics Engineering"}
+                                      image={"public/teamImages/Shivank.jpeg"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
 
-                    <div className="col mb-4">
-                        <TeamCard name={"Aiden Deady"} role={"Documentation Analyst"}
-                                  bio={"Class of 2024, Robotics Engineering"}
-                                  image={"public/teamImages/Aiden.JPG"}>
-                        </TeamCard>
-                    </div>
+                        <div className="col mb-4">
+                            <TeamCard name={"Tanya Khan"} role={"Product Owner"}
+                                      bio={"Class of 2025, Computer Science and IMGD"}
+                                      image={"public/teamImages/TanyaKhan.jpg"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
 
-                    <div className="col mb-4">
-                        <TeamCard name={"William Smith"} role={"Project Manager"}
-                                  bio={"Class of 2025, Interactive Media and Game Development"}
-                                  image={"public/teamImages/WilliamSmith.jpg"}>
-                        </TeamCard>
-                    </div>
+                        <div className="col mb-4">
+                            <TeamCard name={"Aiden Deady"} role={"Documentation Analyst"}
+                                      bio={"Class of 2024, Robotics Engineering"}
+                                      image={"public/teamImages/Aiden.JPG"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
 
-                </Row>
+                        <div className="col mb-4">
+                            <TeamCard name={"William Smith"} role={"Project Manager"}
+                                      bio={"Class of 2025, Interactive Media and Game Development"}
+                                      image={"public/teamImages/WilliamSmith.jpg"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
 
-                <Row>
+                    </Row>
+                </motion.div>
 
-                    <div className="col mb-4">
-                        <TeamCard name={"Minh Bui"} role={"Full-Time Software Engineer"}
-                                  bio={"Class of 2026, Computer Science"}
-                                  image={"public/teamImages/Minh_Bui.JPG"}>
-                        </TeamCard>
-                    </div>
+                <motion.div variants={cardVariants} initial="hidden" animate={controls} className="col mb-4">
+                    <Row>
 
-
-                    <div className="col mb-4">
-                        <TeamCard name={"Ceci Herriman"} role={"Full-Time Software Engineer"}
-                                  bio={"Class of 2026, Computer Science"}
-                                  image={"public/teamImages/Ceci.jpeg"}>
-                        </TeamCard>
-                    </div>
-
-                    <div className="col mb-4">
-                        <TeamCard name={"James Walden"} role={"Full-Time Software Engineer"}
-                                  bio={"Class of 2026, Computer Science"}
-                                  image={"public/teamImages/James.jpeg"}>
-                        </TeamCard>
-                    </div>
-                    <div className="col mb-4">
-                        <TeamCard name={"Steven Gao"} role={"Full-Time Software Engineer"}
-                                  bio={"Class of 2026, Computer Science"}
-                                  image={"public/teamImages/Steven.png"}>
-                        </TeamCard>
-                    </div>
-
-                </Row>
-
-                <br/>
-
-                <Row>
-                    <Card className={"text-center"}>
-                        <p>Thank You To Brigham and Women’s Hospital and our representative, Andrew Shinn</p>
-
-                        <p>The Brigham & Women’s Hospital maps and data used in this application are copyrighted and
-                            provided for
-                            the sole use of educational purposes.</p>
-                    </Card>
-                </Row>
+                        <div className="col mb-4">
+                            <TeamCard name={"Minh Bui"} role={"Full-Time Software Engineer"}
+                                      bio={"Class of 2026, Computer Science"}
+                                      image={"public/teamImages/Minh_Bui.JPG"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
 
 
-                <GlobalFooter></GlobalFooter>
+                        <div className="col mb-4">
+                            <TeamCard name={"Ceci Herriman"} role={"Full-Time Software Engineer"}
+                                      bio={"Class of 2026, Computer Science"}
+                                      image={"public/teamImages/Ceci.jpeg"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
+
+                        <div className="col mb-4">
+                            <TeamCard name={"James Walden"} role={"Full-Time Software Engineer"}
+                                      bio={"Class of 2026, Computer Science"}
+                                      image={"public/teamImages/James.jpeg"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
+                        <div className="col mb-4">
+                            <TeamCard name={"Steven Gao"} role={"Full-Time Software Engineer"}
+                                      bio={"Class of 2026, Computer Science"}
+                                      image={"public/teamImages/Steven.png"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
+
+                    </Row>
+                </motion.div>
+
+                    <br/>
+
+                    <Row>
+                        <Card className={"text-center"}>
+                            <p>Thank You To Brigham and Women’s Hospital and our representative, Andrew Shinn</p>
+
+                            <p>The Brigham & Women’s Hospital maps and data used in this application are copyrighted and
+                                provided for
+                                the sole use of educational purposes.</p>
+                        </Card>
+                    </Row>
+
+
+                    <GlobalFooter></GlobalFooter>
             </Container>
 
 
         </div>
-    );
+);
 };
 
 export default AboutPage;

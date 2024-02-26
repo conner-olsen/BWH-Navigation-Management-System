@@ -1,5 +1,5 @@
 import {FlowerServiceLogComponent} from "../../components/ServiceRequests/FlowerServiceLogComponent.tsx";
-import Global_Footer from "../../components/Global_Footer.tsx";
+import Global_Footer from "../../components/GlobalFooter.tsx";
 import {TabsContent, TabsList, TabsTrigger, Tabs} from "../../components/ui/tabs.tsx";
 import {ReligiousServiceLogComponent} from "../../components/ServiceRequests/ReligionServiceLogComponent.tsx";
 import {CleaningServiceLogComponent} from "../../components/ServiceRequests/CleaningServiceLogComponent.tsx";
@@ -9,7 +9,7 @@ import {ExternalTransportServiceLogComponent} from "../../components/ServiceRequ
 import CreateSRChart from "../../components/ServiceRequests/SRCountData.tsx";
 import CreateEmployeeChart from "../../components/ServiceRequests/EmployeeStats.tsx";
 import CompletionStats from "../../components/ServiceRequests/CompletionStats.tsx";
-import { Col, Row } from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 
 
 const ServiceLog = () => {
@@ -21,7 +21,7 @@ const ServiceLog = () => {
                     <h1>SERVICE LOG</h1>
                 </Col>
             </div>
-            <div className={"align-content-center container"}>
+            <Container className={"align-content-center container"}>
 
 
                 <Tabs defaultValue="Flower Service Request" className="align-content-center">
@@ -57,33 +57,33 @@ const ServiceLog = () => {
                         <LanguageServiceLogComponent></LanguageServiceLogComponent>
                     </TabsContent>
                     <TabsContent value={"Stats"}>
-                        <div>
+                        <Container>
                             <Row>
                                 <Col className={"h-full mb-4"}>
-                                    <div className="border-2 border-blue-950 rounded-lg p-4 h-full">
+                                    <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
                                         <p>Service Request Types</p>
                                         <CreateSRChart></CreateSRChart>
-                                    </div>
+                                    </Container>
                                 </Col>
                                 <Col className={"h-full"}>
-                                    <div className="border-2 border-blue-950 rounded-lg p-4 h-full">
+                                    <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
                                         <p>Employee Statistics</p>
                                         <CreateEmployeeChart></CreateEmployeeChart>
-                                    </div>
-                                    <br/>
-                                    <div className="border-2 border-blue-950 rounded-lg p-4 h-full">
+                                    </Container>
+
+                                    <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
                                         <p>Service Request Statuses</p>
                                         <CompletionStats></CompletionStats>
-                                    </div>
+                                    </Container>
                                 </Col>
                             </Row>
-                        </div>
+                        </Container>
                     </TabsContent>
 
 
                 </Tabs>
 
-            </div>
+            </Container>
             <Global_Footer/>
         </>
     );

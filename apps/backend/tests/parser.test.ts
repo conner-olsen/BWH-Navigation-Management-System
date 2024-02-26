@@ -1,5 +1,4 @@
 import {convertToJSON, parseCSV} from "common/src/parser.ts";
-import { expect, test, describe } from "vitest";
 
 // Type definition for the CSV row object for use in the tests
 type CSVRow = { [key: string]: string };
