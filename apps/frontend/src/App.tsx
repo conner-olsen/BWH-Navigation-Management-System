@@ -16,6 +16,7 @@ import ExternalTransportation from "./routes/ServiceRequests/ExternalTransportat
 import InternalTransportation from "./routes/ServiceRequests/InternalTransportation.tsx";
 import LanguageService from "./routes/ServiceRequests/LanguageService.tsx";
 import AboutPage from "./routes/AboutPage.tsx";
+import CreditPage from "./routes/CreditPage.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -82,6 +83,10 @@ function App() {
           {
               path: "/EmployeeManager",
               element: <EmployeeManager/>
+          },
+          {
+              path: "/CreditPage",
+              element: <CreditPage/>
           },
           {
               path: "/AboutPage",
