@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Graph, Node} from 'common/src/graph-structure.ts';
-import PathfindingRequest from "common/src/PathfindingRequest.ts";
+import {Node} from "common/src/node.ts";
+import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
 import axios from "axios";
 import ReactDOM from "react-dom";
 import Guideline from "./Guideline.tsx";
+import {Graph} from "common/src/graph.ts";
 
 interface MapDisplayProps {
     floorMap: string;
@@ -39,9 +40,6 @@ function MapDisplay3D({
     const [endNodeId, setEndNodeId] = useState<string | null>(null);
     const [path, setPath] = useState<string[]>([]);
 
-    //const [coordinates, setCoordinates] = useState({ x: 100, y: 0 });
-
-
 
     useEffect(() => {
         axios.get("/api/graph").then((res) => {
@@ -54,7 +52,7 @@ function MapDisplay3D({
     useEffect(() => {
         if (startNode && endNode && graph) {
             //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
-            graph.setPathfindingMethodStringRoute(pathFindingType);
+            graph.setPathfindingStrategy(pathFindingType);
 
             const pathString = graph.nodesToString(pathSent);
             //graph.runPathfinding(startNode, endNode);
@@ -166,13 +164,13 @@ function MapDisplay3D({
             div.id = `d${id}f${floor}`;
             div.style.position = 'absolute';
             div.style.top = `${coordinate.y + 5}px`;
-            div.style.left = `${coordinate.x + 10}px`;
+            div.style.left = `${coordinate.x + 8}px`;
 
             const indexFrom = filteredFloors.indexOf(coordinate.from);
             const indexTo = filteredFloors.indexOf(coordinate.to);
             const goingUp = indexFrom > indexTo;
             const floorsApart = Math.abs(indexFrom - indexTo);
-            if (goingUp) div.style.left = `${coordinate.x + 12}px`; // Slightly off
+            if (goingUp) div.style.left = `${coordinate.x + 10}px`; // Slightly off
 
             document.body.appendChild(div); // Append the div to the body
             // Render the MyComponent inside the dynamically created div
@@ -182,64 +180,6 @@ function MapDisplay3D({
         }
         return <></>;
     };
-
-    // function renderElivators(elivatorNode:Node[]) {
-    //     elivatorNode.map((node) => {
-    //         if(node.nodeType == "ELEV") {
-    //             console.log("test");
-    //             const div = document.createElement('div');
-    //             div.style.position = 'absolute';
-    //             div.style.top = `${node.xCoord + 6}px`;
-    //             div.style.left = `${node.yCoord + 10}px`;
-    //             document.body.appendChild(div); // Append the div to the body
-    //
-    //             // Render the MyComponent inside the dynamically created div
-    //             ReactDOM.render(<Guideline/>,
-    //                 div);
-    //         }
-    //     });
-    // }
-
-    // const [cords,setCords] = useState<{x: number, y: number}[]>([]);
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // useEffect(() => {
-    //     let id = 1;
-    //     const coordinateArr: {x: number, y: number}[] = [];
-    //     setTimeout(() => {
-    //         while (id) {
-    //             const element = document.getElementById(`c${id}f` + floor);
-    //             if (element) {
-    //                 const rect = element.getBoundingClientRect();
-    //                 coordinateArr.push({x: rect.x, y: rect.y});
-    //                 id++;
-    //             } else break;
-    //
-    //         }
-    //         setCords(coordinateArr);
-    //     },5000);
-    // }, [floor]);
-    //
-    // useEffect(() => {
-    //     for (let i = 0; i < cords.length; i++) {
-    //         const coordinate = cords[i];
-    //         const div = document.createElement('div');
-    //         div.style.position = 'absolute';
-    //         div.style.top = `${coordinate.y + 5}px`;
-    //         div.style.left = `${coordinate.x + 10}px`;
-    //         document.body.appendChild(div); // Append the div to the body
-    //
-    //         // Render the MyComponent inside the dynamically created div
-    //         ReactDOM.render(<Guideline goingUp={true} floorsApart={2}/>,
-    //             div);
-    //     }
-    //
-    //     // Cleanup function to remove the dynamically created div when the component unmounts
-    //     return () => {
-    //         // ReactDOM.unmountComponentAtNode(div);
-    //         // document.body.removeChild(div);
-    //     };
-    //
-    // }, [cords]);
 
     const displaySelectedNodes = (node: Node, type: 'start' | 'end') => {
         return (

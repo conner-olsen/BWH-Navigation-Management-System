@@ -17,6 +17,9 @@ import {
 import { Button } from "./ui/button.tsx";
 import { Node } from "common/src/node.ts";
 import { Switch } from "./ui/switch.tsx";
+import NavMapPage from "../routes/NavMapPage.tsx";
+import ReactDOM from "react-dom";
+import MapDisplay3D from "./maps/3DMapDisplay.tsx";
 
 
 export function MapComponent() {
@@ -28,6 +31,7 @@ export function MapComponent() {
   const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
   const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+  const [do3D, set3D] = useState<boolean>(false);
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
 
@@ -275,6 +279,120 @@ export function MapComponent() {
     return returnBooleans;
   };
 
+    // =============================== 3D PROTOTYPE =============================== //
+    const nodeFloorToURL = (floor: string) => {
+        if (floor === "3") return "public/maps/map-floor3-cropped.png";
+        else if (floor === "2") return "public/maps/map-floor2-cropped.png";
+        else if (floor === "1") return "public/maps/map-floor1-cropped.png";
+        else if (floor === "L1") return "public/maps/map-lowerlevel1-cropped.png";
+        else if (floor === "L2") return "public/maps/map-lowerlevel2-cropped.png";
+        else return "";
+    };
+    const clearGuidelines = () => {
+        // THIS WILL DELETE EVERY ELEMENT WITH ID STARTING WITH D
+        const elements = document.querySelectorAll('[id^="d"]');
+        const elementsArray = Array.from(elements);
+        elementsArray.forEach((element) => element.remove());
+        window.scrollTo({top: 0, behavior: "auto"});
+    };
+
+    useEffect(() => {
+        const handleBodyClass = () => {
+            if (do3D && startNode !== "" && endNode !== "") {
+                document.body.classList.add('threeD-on');
+            } else {
+                document.body.classList.remove('threeD-on');
+            }
+        };
+        handleBodyClass(); // Initial setup
+        return () => {
+            document.body.classList.remove('threeD-on'); // Cleanup on unmount
+        };
+    }, [do3D, startNode, endNode]);
+
+    // Force user to top of page on 3D rendering
+    // useEffect(() => {
+    //     if (do3D && startNode !== "" && endNode !== "") {
+    //         document.body.style.maxHeight = '100vh';
+    //         document.body.style.overflow = 'hidden';
+    //     } else {
+    //         document.body.style.maxHeight = '';
+    //         document.body.style.overflow = '';
+    //     }
+    //
+    //     // Cleanup function to reset styles when component unmounts
+    //     return () => {
+    //         document.body.style.maxHeight = '';
+    //         document.body.style.overflow = '';
+    //     };
+    // }, [do3D, startNode, endNode]);
+
+    useEffect(() => {
+        // Check which floor will be present in the path
+        function filterDuplicates(paths: Node[]) {
+            const uniqueFloor: string[] = [];
+            paths.forEach(obj => {
+                // Check if there's already an object with the same name in uniqueArray
+                if (!uniqueFloor.some(item => item === obj.floor)) {
+                    uniqueFloor.push(obj.floor);
+                }
+            });
+            return uniqueFloor;
+        }
+
+        const FloorComponent: React.FC<{ floor: string, marginTop: number, z_index: number }> = ({ floor, marginTop, z_index }) => {
+            return (
+                <div className={`flex justify-between items-center ${marginTop === 0? '' : 'relative'}`}
+                     style={{bottom: marginTop + 'px', zIndex: z_index}}>
+                    <h2 className="z-[2]">Floor {floor}</h2>
+                    <div>
+                        <MapDisplay3D key={mapKey} floorMap={nodeFloorToURL(floor)} floor={floor}
+                                      startNode={startNode} endNode={endNode}
+                                      pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                      pathSent={pathfindingResult}
+                                      mapChange={(mapID) => {setMap(nodeFloorToMapFloor(mapID)); set3D(false); setIsExpanded(true);}}/>
+                    </div>
+                </div>
+            );
+        };
+
+        function renderFloors(floorArray: string[]): void {
+            const floorOrder: string[] = ["3", "2", "1", "L1", "L2"];
+            const wrapper: HTMLElement | null = document.getElementById("3d-wrapper");
+            let marginTopOffset = 0;
+            let z_index = 9;
+
+            if (wrapper) {
+                // Remove existing floor elements
+                floorOrder.forEach(floor => {
+                    const existingFloorElement = document.getElementById(floor);
+                    if (existingFloorElement) {
+                        existingFloorElement.remove();
+                    }
+                });
+
+                // Create an array to hold all floor components
+                const floorComponents: JSX.Element[] = [];
+
+                // Render new floor components
+                floorOrder.forEach(floor => {
+                    if (floorArray.includes(floor)) {
+                        floorComponents.push(<FloorComponent key={floor} floor={floor} marginTop={marginTopOffset} z_index={z_index}/>);
+                        marginTopOffset += 200;
+                        z_index--;
+                    }
+                });
+
+                // Render all floor components inside the wrapper element
+                ReactDOM.render(floorComponents, wrapper);
+            } else {
+                console.error("Wrapper element '3d-wrapper' not found.");
+            }
+        }
+
+        renderFloors(filterDuplicates(pathfindingResult));
+    }, [mapKey, startNode, endNode, pathFindingType, pathfindingResult]);
+
   return (
     <div>
       <div className="fixed top-0 left-0 h-screen w-[80px] bg-neutral-500 bg-opacity-30 text-white z-20 px-4 pt-[100px]
@@ -350,7 +468,9 @@ export function MapComponent() {
               </div>
               <div className="flex flex-col grow justify-between pl-[2px] pr-2">
                 <Select value={startNode}
-                  onValueChange={(location: string) => setStartNode(location)}>
+                  onValueChange={(location: string) =>
+                  {setStartNode(location);
+                      clearGuidelines();}}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Location" />
                   </SelectTrigger>
@@ -359,7 +479,9 @@ export function MapComponent() {
                   </SelectContent>
                 </Select>
                 <Select value={endNode}
-                  onValueChange={(location: string) => setEndNode(location)}>
+                  onValueChange={(location: string) => {
+                      setEndNode(location);
+                      clearGuidelines();}}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Location" />
                   </SelectTrigger>
@@ -372,7 +494,9 @@ export function MapComponent() {
             </div>
             <div className="pt-4 pb-2 px-2">
               <Select value={pathFindingType} defaultValue={"A*"}
-                onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
+                onValueChange={(algorithm: string) =>
+                {setPathFindingType(algorithm);
+                    clearGuidelines();}}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -459,72 +583,87 @@ export function MapComponent() {
                 className="dark:brightness-75 group-hover:scale-[0.9] transition-all duration-200"></img>
               <p className="absolute bottom-[5px] text-[12px] font-bold m-0">Display</p>
             </HoverCardTrigger>
-            <HoverCardContent side="right" className="pb-2">
-              <form className="flex flex-row">
-                <div className="px-1">
-                  <input type="checkbox" id="display-edges-switch" name="display-edges-switch"
-                    className="hidden"
-                    onChange={() => setDoDisplayEdges(!doDisplayEdges)}
-                    checked={doDisplayEdges} />
-                  <label htmlFor="display-edges-switch"
-                    className="cursor-pointer flex flex-col justify-center">
-                    <img src="../../public/icon/map-edges-icon.png" alt="edge-bg"
-                      className="w-[50px] m-auto dark:brightness-75"></img>
-                    <p className="m-0 text-center text-xs">Edges</p>
-                  </label>
-                </div>
-                <div className="px-1">
-                  <input type="checkbox" id="display-nodes-switch" name="display-nodes-switch"
-                    className="hidden"
-                    onChange={() => setDoDisplayNodes(!doDisplayNodes)}
-                    checked={doDisplayNodes} />
-                  <label htmlFor="display-nodes-switch"
-                    className="cursor-pointer flex flex-col justify-center">
-                    <img src="../../public/icon/map-nodes-icon.png" alt="edge-bg"
-                      className="w-[50px] m-auto dark:brightness-75"></img>
-                    <p className="m-0 text-center text-xs">Nodes</p>
-                  </label>
-                </div>
-                <div className="px-1">
-                  <input type="checkbox" id="display-names-switch" name="display-names-switch"
-                    className="hidden"
-                    onChange={() => setDoDisplayNames(!doDisplayNames)}
-                    checked={doDisplayNames} />
-                  <label htmlFor="display-names-switch"
-                    className="cursor-pointer flex flex-col justify-center">
-                    <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
-                      className="w-[50px] m-auto dark:brightness-75"></img>
-                    <p className="m-0 text-center text-xs">Names</p>
-                  </label>
-                </div>
-              </form>
+            <HoverCardContent side="right" className="pb-2 z-40">
+                <form className="flex flex-row">
+                    <div className="px-1">
+                        <input type="checkbox" id="display-edges-switch" name="display-edges-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayEdges(!doDisplayEdges)}
+                               checked={doDisplayEdges}/>
+                        <label htmlFor="display-edges-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-edges-icon.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Edges</p>
+                        </label>
+                    </div>
+                    <div className="px-1">
+                        <input type="checkbox" id="display-nodes-switch" name="display-nodes-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayNodes(!doDisplayNodes)}
+                               checked={doDisplayNodes}/>
+                        <label htmlFor="display-nodes-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-nodes-icon.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Nodes</p>
+                        </label>
+                    </div>
+                    <div className="px-1">
+                        <input type="checkbox" id="display-names-switch" name="display-names-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayNames(!doDisplayNames)}
+                               checked={doDisplayNames}/>
+                        <label htmlFor="display-names-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Names</p>
+                        </label>
+                    </div>
+                    <div className="px-1">
+                        <input type="checkbox" id="display-3d-switch" name="display-3d-switch"
+                               className="hidden"
+                               onChange={() => {
+                                   if (!do3D) setIsExpanded(false);
+                                   set3D(!do3D);
+                               }}
+                               checked={do3D}/>
+                        <label htmlFor="display-3d-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">3D</p>
+                        </label>
+                    </div>
+                </form>
             </HoverCardContent>
           </HoverCard>
 
         </div>
       </div>
-      <div className={`absolute bottom-[10px] z-50 right-[10px]`}>
-        {showAlert && (
-          <Alert>
-            {/* Replace the Terminal component with an img tag */}
-            <span className="flex items-center">
+        <div className={`absolute bottom-[10px] z-50 right-[10px]`}>
+            {showAlert && (
+                <Alert>
+                    {/* Replace the Terminal component with an img tag */}
+                    <span className="flex items-center">
               <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon"
-                className="h-7 w-7 dark:invert mr-2" />
+                   className="h-7 w-7 dark:invert mr-2"/>
               <AlertTitle>Accessibility Alert!</AlertTitle>
             </span>
-            <AlertDescription>
-              This path contains stairs. If this is difficult, please request an accessible route with
-              the accessibility switch.
-            </AlertDescription>
-          </Alert>
-        )}
-      </div>
+                    <AlertDescription>
+                        This path contains stairs. If this is difficult, please request an accessible route with
+                        the accessibility switch.
+                    </AlertDescription>
+                </Alert>
+            )}
+        </div>
 
 
-      <div className="h-0">
-        <Drawer modal={false}>
-          <DrawerTrigger>
-            <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
+        <div className="h-0">
+            <Drawer modal={false}>
+                <DrawerTrigger>
+                    <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
                         rounded-md shadow-md sm:hidden flex items-center justify-center">
               <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon"
                 className="dark:invert w-[25px]"></img>
@@ -559,7 +698,9 @@ export function MapComponent() {
                   </div>
                   <div className="flex flex-col grow justify-between pl-[2px] pr-2">
                     <Select value={startNode}
-                      onValueChange={(location: string) => setStartNode(location)}>
+                      onValueChange={(location: string) => {
+                          setStartNode(location);
+                          clearGuidelines();}}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select Location" />
                       </SelectTrigger>
@@ -568,7 +709,9 @@ export function MapComponent() {
                       </SelectContent>
                     </Select>
                     <Select value={endNode}
-                      onValueChange={(location: string) => setEndNode(location)}>
+                      onValueChange={(location: string) => {
+                          setEndNode(location);
+                          clearGuidelines();}}>
                       <SelectTrigger>
                         <SelectValue placeholder="Select Location" />
                       </SelectTrigger>
@@ -580,13 +723,17 @@ export function MapComponent() {
                 </div>
                 <div className="py-4 px-2">
                   <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
-                    onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
+                    onValueChange={(algorithm: string) => {
+                        setPathFindingType(algorithm);
+                        clearGuidelines();}}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
-                      <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
+                        <SelectItem value={"A*"}>A* Searching</SelectItem>
+                        <SelectItem value={"BFS"}>BFS Searching</SelectItem>
+                        <SelectItem value={"DFS"}>DFS Searching</SelectItem>
+                        <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -657,7 +804,7 @@ export function MapComponent() {
       </div>
 
 
-      <div className="fixed w-screen max-w-full m-auto">
+        <div className={`fixed w-screen max-w-full m-auto ${!do3D? '': "hidden"}`}>
         <TransformWrapper
           initialScale={1}
           initialPositionX={0}
@@ -735,6 +882,18 @@ export function MapComponent() {
         </TransformWrapper>
       </div>
 
+        {/* ================================= 3D PROTOTYPE ================================= */}
+        {/* ================= SHOW 3D NAV WHEN NO PATH IS DISPLAYED */}
+        <div className={`absolute top-0 w-full
+                            ${(do3D && (startNode==="" || endNode===""))? '': 'hidden'}`}>
+            <NavMapPage onImageClick={(mapID: string) => {setMap(mapID); set3D(false); setIsExpanded(true);}}></NavMapPage>
+        </div>
+
+        {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
+        <div className={`max-w-[800px] m-auto
+                            ${(do3D && startNode !== "" && endNode !== "") ? '' : "relative z-[-1] max-h-[10px] overflow-hidden"}`}
+             id="3d-wrapper">
+        </div>
     </div>
 
   );
