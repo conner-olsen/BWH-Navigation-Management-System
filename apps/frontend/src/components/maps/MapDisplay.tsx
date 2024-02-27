@@ -6,6 +6,7 @@ import "./animation.css";
 import { Node } from "common/src/node.ts";
 import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
 import {iconPaths} from "./IconPath.tsx";
+import {NodeStyling} from "./NodeStyling.tsx";
 
 interface MapDisplayProps {
   floorMap: string;
@@ -29,8 +30,6 @@ interface AnimatedPathProps {
   x2: number;
   y2: number;
 }
-
-
 
 function MapDisplay({
   floorMap,
@@ -256,33 +255,14 @@ function MapDisplay({
                     const iconSize = hoverNodeId === node.id ? { width: 25, height: 25} : { width: 20, height: 20 };  // Example sizes, adjust as needed
 
                     return (
-                        <g key={node.id}>
-                            <rect className="fill-blue-100 dark:fill-blue-900"
-                                x={node.xCoord - iconSize.width / 2}
-                                y={node.yCoord - iconSize.height / 2}
-                                width={iconSize.width}
-                                height={iconSize.height}
-                                fill="white"
-                                style={{cursor: 'pointer'}}
-                            />
-                            <image
-                                href={iconPath}
-                                x={node.xCoord - iconSize.width / 2}
-                                y={node.yCoord - iconSize.height / 2}
-                                width={iconSize.width}
-                                height={iconSize.height}
-                                style={{cursor: 'pointer'}}
-                                onClick={() => handleNodeClick(node)}
-                                onMouseEnter={() => handleNodeHover(node)}
-                                onMouseLeave={() => handleNodeHoverLeave()}
-                            />
-                            {displayName(node)}
-                        </g>
+                        <NodeStyling key={node.id} node={node} iconSize={iconSize} href={iconPath}
+                                     onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)}
+                                     onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}/>
                     );
                 }
                 return null; // Return null for map elements that don't meet the condition
             }).filter(element => element !== null)); // Filter out null elements
-    };
+  };
 
 
     const displayHoverCards = (graph: Graph) => {
@@ -304,17 +284,17 @@ function MapDisplay({
                 if (node.floor === floor)
                     return (
                         <g>
-              {startNodeId === node.id && displaySelectedNodes(node, 'start')}
-              {endNodeId === node.id && displaySelectedNodes(node, 'end')}
-            </g>
-          );
-      })
-    );
-  };
+                            {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                            {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                        </g>
+                    );
+            })
+        );
+    };
 
-  const displayEdges = (graph: Graph) => {
-    if (doDisplayEdges) {
-      const edges: React.JSX.Element[] = [];
+    const displayEdges = (graph: Graph) => {
+        if (doDisplayEdges) {
+            const edges: React.JSX.Element[] = [];
       for (const [nodeId, node] of graph.nodes) {
         if (node.floor === floor) {
           node.edges.forEach(edgeNodeId => {
