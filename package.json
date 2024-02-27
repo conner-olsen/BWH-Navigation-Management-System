@@ -32,8 +32,8 @@
     "docker:upload": "turbo run docker:upload --concurrency=1",
     "depcheck": "depcheck",
     "setup": "yarn install && yarn build:dev",
-    "docker:backend": "cd $PROJECT_CWD && docker build --target prod-backend --tag maxgossselin/softeng-teamd:backend --platform linux/amd64 . && docker push maxgossselin/softeng-teamd:backend",
-    "docker:frontend": "cd $PROJECT_CWD && docker build --target prod-frontend --tag maxgossselin/softeng-teamd:frontend --platform linux/amd64 . && docker push maxgossselin/softeng-teamd:frontend"
+    "docker:backend": "docker build --target prod-backend --tag maxgossselin/softeng-teamd:backend --platform linux/amd64 . && docker push maxgossselin/softeng-teamd:backend",
+    "docker:frontend": "docker build --target prod-frontend --tag maxgossselin/softeng-teamd:frontend --platform linux/amd64 . && docker push maxgossselin/softeng-teamd:frontend"
   },
   "packageManager": "yarn@4.0.2",
   "devDependencies": {
