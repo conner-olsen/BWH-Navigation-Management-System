@@ -77,7 +77,11 @@ export function MapComponent() {
         console.log("data received");
         setBFSResult(response.data);
       }
-
+      await axios.post('/api/heat-map', response.data, {
+            headers: {
+                'Content-Type': "application/json"
+            }
+        });
       return response;
     } catch (error) {
       console.error("Error fetching pathFinding result:", (error as AxiosError).message);
