@@ -7,7 +7,6 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hovercard.tsx";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx";
 import { NodeServiceRequestComponent } from "./NodeServiceRequestComponent.tsx";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
 import {
   Drawer,
   DrawerClose,
@@ -17,6 +16,10 @@ import {
 import { Button } from "./ui/button.tsx";
 import { Node } from "common/src/node.ts";
 import { Switch } from "./ui/switch.tsx";
+import NavMapPage from "../routes/NavMapPage.tsx";
+import ReactDOM from "react-dom";
+import MapDisplay3D from "./maps/3DMapDisplay.tsx";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
 
 
 export function MapComponent() {
@@ -28,8 +31,11 @@ export function MapComponent() {
   const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
   const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+  const [do3D, set3D] = useState<boolean>(false);
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
+
+  const [showAlert, setShowAlert] = useState(false);
 
   const collectLongNames = useCallback(() => {
     return pathfindingResult.map(node => node.longName);
@@ -213,7 +219,6 @@ export function MapComponent() {
     setActiveTab(tabNumber);
   };
 
-  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     //looks to see if theres a floor change w/ stairs
@@ -275,6 +280,120 @@ export function MapComponent() {
     return returnBooleans;
   };
 
+    // =============================== 3D PROTOTYPE =============================== //
+    const nodeFloorToURL = (floor: string) => {
+        if (floor === "3") return "public/maps/map-floor3-cropped.png";
+        else if (floor === "2") return "public/maps/map-floor2-cropped.png";
+        else if (floor === "1") return "public/maps/map-floor1-cropped.png";
+        else if (floor === "L1") return "public/maps/map-lowerlevel1-cropped.png";
+        else if (floor === "L2") return "public/maps/map-lowerlevel2-cropped.png";
+        else return "";
+    };
+    const clearGuidelines = () => {
+        // THIS WILL DELETE EVERY ELEMENT WITH ID STARTING WITH D
+        const elements = document.querySelectorAll('[id^="d"]');
+        const elementsArray = Array.from(elements);
+        elementsArray.forEach((element) => element.remove());
+        window.scrollTo({top: 0, behavior: "auto"});
+    };
+
+    useEffect(() => {
+        const handleBodyClass = () => {
+            if (do3D && startNode !== "" && endNode !== "") {
+                document.body.classList.add('threeD-on');
+            } else {
+                document.body.classList.remove('threeD-on');
+            }
+        };
+        handleBodyClass(); // Initial setup
+        return () => {
+            document.body.classList.remove('threeD-on'); // Cleanup on unmount
+        };
+    }, [do3D, startNode, endNode]);
+
+    // Force user to top of page on 3D rendering
+    // useEffect(() => {
+    //     if (do3D && startNode !== "" && endNode !== "") {
+    //         document.body.style.maxHeight = '100vh';
+    //         document.body.style.overflow = 'hidden';
+    //     } else {
+    //         document.body.style.maxHeight = '';
+    //         document.body.style.overflow = '';
+    //     }
+    //
+    //     // Cleanup function to reset styles when component unmounts
+    //     return () => {
+    //         document.body.style.maxHeight = '';
+    //         document.body.style.overflow = '';
+    //     };
+    // }, [do3D, startNode, endNode]);
+
+    useEffect(() => {
+        // Check which floor will be present in the path
+        function filterDuplicates(paths: Node[]) {
+            const uniqueFloor: string[] = [];
+            paths.forEach(obj => {
+                // Check if there's already an object with the same name in uniqueArray
+                if (!uniqueFloor.some(item => item === obj.floor)) {
+                    uniqueFloor.push(obj.floor);
+                }
+            });
+            return uniqueFloor;
+        }
+
+        const FloorComponent: React.FC<{ floor: string, marginTop: number, z_index: number }> = ({ floor, marginTop, z_index }) => {
+            return (
+                <div className={`flex justify-between items-center ${marginTop === 0? '' : 'relative'}`}
+                     style={{bottom: marginTop + 'px', zIndex: z_index}}>
+                    <h2 className="z-[2]">Floor {floor}</h2>
+                    <div>
+                        <MapDisplay3D key={mapKey} floorMap={nodeFloorToURL(floor)} floor={floor}
+                                      startNode={startNode} endNode={endNode}
+                                      pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                      pathSent={pathfindingResult}
+                                      mapChange={(mapID) => {setMap(nodeFloorToMapFloor(mapID)); set3D(false); setIsExpanded(true);}}/>
+                    </div>
+                </div>
+            );
+        };
+
+        function renderFloors(floorArray: string[]): void {
+            const floorOrder: string[] = ["3", "2", "1", "L1", "L2"];
+            const wrapper: HTMLElement | null = document.getElementById("3d-wrapper");
+            let marginTopOffset = 0;
+            let z_index = 9;
+
+            if (wrapper) {
+                // Remove existing floor elements
+                floorOrder.forEach(floor => {
+                    const existingFloorElement = document.getElementById(floor);
+                    if (existingFloorElement) {
+                        existingFloorElement.remove();
+                    }
+                });
+
+                // Create an array to hold all floor components
+                const floorComponents: JSX.Element[] = [];
+
+                // Render new floor components
+                floorOrder.forEach(floor => {
+                    if (floorArray.includes(floor)) {
+                        floorComponents.push(<FloorComponent key={floor} floor={floor} marginTop={marginTopOffset} z_index={z_index}/>);
+                        marginTopOffset += 200;
+                        z_index--;
+                    }
+                });
+
+                // Render all floor components inside the wrapper element
+                ReactDOM.render(floorComponents, wrapper);
+            } else {
+                console.error("Wrapper element '3d-wrapper' not found.");
+            }
+        }
+
+        renderFloors(filterDuplicates(pathfindingResult));
+    }, [mapKey, startNode, endNode, pathFindingType, pathfindingResult]);
+
   return (
     <div>
 
@@ -322,69 +441,75 @@ export function MapComponent() {
         <div
             className={`fixed top-0 left-0 h-screen sm:w-[400px] bg-background text-foreground z-10 sm:pl-[80px] pt-[90px] sidebar
                 ${isExpanded ? 'sidebar-expanded' : 'sidebar-collapsed'} w-0 pl-0`}>
-            {/* Sidebar content */}
-            <div className="px-8 pb-2 sm:flex justify-between border-b-[1px] border-neutral-300 hidden">
-                <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
-                       onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
-                <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
-                <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
-                       onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
-                <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
-                <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
-                       onChange={handlePhotoChange} checked={map == "floor1"}/>
-                <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
-                <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
-                       onChange={handlePhotoChange} checked={map == "floor2"}/>
-                <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
-                <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
-                       onChange={handlePhotoChange} checked={map == "floor3"}/>
-                <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
-            </div>
-            {activeTab === 1 && (
-                <div className="hidden sm:block">
-                    <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
-                        <div className="flex flex-col items-center">
-                            <img src="../../public/icon/start.svg" alt="circle"
-                                 className="mb-[5px] mt-[11px] dark:invert"/>
-                            <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
-                            <img src="../../public/icon/location.svg" alt="pin"/>
-                        </div>
-                        <div className="flex flex-col grow justify-between pl-[2px] pr-2">
-                            <Select value={startNode}
-                                    onValueChange={(location: string) => setStartNode(location)}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select Location"/>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {currentFloorNames}
-                                </SelectContent>
-                            </Select>
-                            <Select value={endNode}
-                                    onValueChange={(location: string) => setEndNode(location)}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select Location"/>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {roomNames}
-                                </SelectContent>
-                            </Select>
-                        </div>
+        {/* Sidebar content */}
+        <div className="px-8 pb-2 sm:flex justify-between border-b-[1px] border-neutral-300 hidden">
+          <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+            onChange={handlePhotoChange} checked={map == "lowerLevel2"} />
+          <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
+          <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
+            onChange={handlePhotoChange} checked={map == "lowerLevel1"} />
+          <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
+          <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
+            onChange={handlePhotoChange} checked={map == "floor1"} />
+          <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
+          <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
+            onChange={handlePhotoChange} checked={map == "floor2"} />
+          <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
+          <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
+            onChange={handlePhotoChange} checked={map == "floor3"} />
+          <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
+        </div>
+        {activeTab === 1 && (
+          <div className="hidden sm:block">
+            <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
+              <div className="flex flex-col items-center">
+                <img src="../../public/icon/start.svg" alt="circle"
+                  className="mb-[5px] mt-[11px] dark:invert" />
+                <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert" />
+                <img src="../../public/icon/location.svg" alt="pin" />
+              </div>
+              <div className="flex flex-col grow justify-between pl-[2px] pr-2">
+                <Select value={startNode}
+                  onValueChange={(location: string) =>
+                  {setStartNode(location);
+                      clearGuidelines();}}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Location" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {currentFloorNames}
+                  </SelectContent>
+                </Select>
+                <Select value={endNode}
+                  onValueChange={(location: string) => {
+                      setEndNode(location);
+                      clearGuidelines();}}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Location" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {roomNames}
+                  </SelectContent>
+                </Select>
+              </div>
 
-                    </div>
-                    <div className="pt-4 pb-2 px-2">
-                        <Select value={pathFindingType} defaultValue={"A*"}
-                                onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
-                            <SelectTrigger>
-                                <SelectValue/>
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value={"A*"}>A* Searching</SelectItem>
-                                <SelectItem value={"BFS"}>BFS Searching</SelectItem>
-                                <SelectItem value={"DFS"}>DFS Searching</SelectItem>
-                                <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
+            </div>
+            <div className="pt-4 pb-2 px-2">
+              <Select value={pathFindingType} defaultValue={"A*"}
+                onValueChange={(algorithm: string) =>
+                {setPathFindingType(algorithm);
+                    clearGuidelines();}}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={"A*"}>A* Searching</SelectItem>
+                  <SelectItem value={"BFS"}>BFS Searching</SelectItem>
+                  <SelectItem value={"DFS"}>DFS Searching</SelectItem>
+                  <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
                     <div className="flex items-center justify-center ml-6 mb-3">
                         <div style={{marginTop: '1rem'}}>
@@ -461,129 +586,146 @@ export function MapComponent() {
                 <HoverCard openDelay={100}>
                     <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center
                                         no-underline text-foreground relative cursor-pointer group">
-                        <img src="../../public/icon/gmap-icon-bg.png" alt="map-bg"
-                             className="dark:brightness-75 group-hover:scale-[0.9] transition-all duration-200"></img>
-                        <p className="absolute bottom-[5px] text-[12px] font-bold m-0">Display</p>
-                    </HoverCardTrigger>
-                    <HoverCardContent side="right" className="pb-2">
-                        <form className="flex flex-row">
-                            <div className="px-1">
-                                <input type="checkbox" id="display-edges-switch" name="display-edges-switch"
-                                       className="hidden"
-                                       onChange={() => setDoDisplayEdges(!doDisplayEdges)}
-                                       checked={doDisplayEdges}/>
-                                <label htmlFor="display-edges-switch"
-                                       className="cursor-pointer flex flex-col justify-center">
-                                    <img src="../../public/icon/map-edges-icon.png" alt="edge-bg"
-                                         className="w-[50px] m-auto dark:brightness-75"></img>
-                                    <p className="m-0 text-center text-xs">Edges</p>
-                                </label>
-                            </div>
-                            <div className="px-1">
-                                <input type="checkbox" id="display-nodes-switch" name="display-nodes-switch"
-                                       className="hidden"
-                                       onChange={() => setDoDisplayNodes(!doDisplayNodes)}
-                                       checked={doDisplayNodes}/>
-                                <label htmlFor="display-nodes-switch"
-                                       className="cursor-pointer flex flex-col justify-center">
-                                    <img src="../../public/icon/map-nodes-icon.png" alt="edge-bg"
-                                         className="w-[50px] m-auto dark:brightness-75"></img>
-                                    <p className="m-0 text-center text-xs">Nodes</p>
-                                </label>
-                            </div>
-                            <div className="px-1">
-                                <input type="checkbox" id="display-names-switch" name="display-names-switch"
-                                       className="hidden"
-                                       onChange={() => setDoDisplayNames(!doDisplayNames)}
-                                       checked={doDisplayNames}/>
-                                <label htmlFor="display-names-switch"
-                                       className="cursor-pointer flex flex-col justify-center">
-                                    <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
-                                         className="w-[50px] m-auto dark:brightness-75"></img>
-                                    <p className="m-0 text-center text-xs">Names</p>
-                                </label>
-                            </div>
-                        </form>
-                    </HoverCardContent>
-                </HoverCard>
+              <img src="../../public/icon/gmap-icon-bg.png" alt="map-bg"
+                className="dark:brightness-75 group-hover:scale-[0.9] transition-all duration-200"></img>
+              <p className="absolute bottom-[5px] text-[12px] font-bold m-0">Display</p>
+            </HoverCardTrigger>
+            <HoverCardContent side="right" className="pb-2 z-40">
+                <form className="flex flex-row">
+                    <div className="px-1">
+                        <input type="checkbox" id="display-edges-switch" name="display-edges-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayEdges(!doDisplayEdges)}
+                               checked={doDisplayEdges}/>
+                        <label htmlFor="display-edges-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-edges-icon.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Edges</p>
+                        </label>
+                    </div>
+                    <div className="px-1">
+                        <input type="checkbox" id="display-nodes-switch" name="display-nodes-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayNodes(!doDisplayNodes)}
+                               checked={doDisplayNodes}/>
+                        <label htmlFor="display-nodes-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-nodes-icon.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Nodes</p>
+                        </label>
+                    </div>
+                    <div className="px-1">
+                        <input type="checkbox" id="display-names-switch" name="display-names-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayNames(!doDisplayNames)}
+                               checked={doDisplayNames}/>
+                        <label htmlFor="display-names-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Names</p>
+                        </label>
+                    </div>
+                    <div className="px-1">
+                        <input type="checkbox" id="display-3d-switch" name="display-3d-switch"
+                               className="hidden"
+                               onChange={() => {
+                                   if (!do3D) setIsExpanded(false);
+                                   set3D(!do3D);
+                               }}
+                               checked={do3D}/>
+                        <label htmlFor="display-3d-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-3d-icon.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">3D</p>
+                        </label>
+                    </div>
+                </form>
+            </HoverCardContent>
+          </HoverCard>
 
             </div>
 
-            <div className="h-0">
-                <Drawer modal={false}>
-                    <DrawerTrigger>
-                        <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
+        <div className="h-0">
+            <Drawer modal={false}>
+                <DrawerTrigger>
+                    <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
                         rounded-md shadow-md sm:hidden flex items-center justify-center">
-                            <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon"
-                                 className="dark:invert w-[25px]"></img>
-                        </div>
-                    </DrawerTrigger>
-                    <DrawerContent>
-                        <div className="overflow-y-auto">
-                            <div className="max-w-[400px] m-auto">
-                                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
-                                    <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
-                                           onChange={handlePhotoChange} checked={map == "lowerLevel2"}/>
-                                    <label htmlFor="l2"
-                                           className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
-                                    <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
-                                           onChange={handlePhotoChange} checked={map == "lowerLevel1"}/>
-                                    <label htmlFor="l1"
-                                           className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
-                                    <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
-                                           onChange={handlePhotoChange} checked={map == "floor1"}/>
-                                    <label htmlFor="f1"
-                                           className="font-bold hover:text-blue-500 cursor-pointer">1</label>
-                                    <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
-                                           onChange={handlePhotoChange} checked={map == "floor2"}/>
-                                    <label htmlFor="f2"
-                                           className="font-bold hover:text-blue-500 cursor-pointer">2</label>
-                                    <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
-                                           onChange={handlePhotoChange} checked={map == "floor3"}/>
-                                    <label htmlFor="f3"
-                                           className="font-bold hover:text-blue-500 cursor-pointer">3</label>
-                                </div>
-                                <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
-                                    <div className="flex flex-col items-center">
-                                        <img src="../../public/icon/start.svg" alt="circle"
-                                             className="mb-[5px] mt-[11px] dark:invert"/>
-                                        <img src="../../public/icon/dots.svg" alt="dots"
-                                             className="my-[10px] dark:invert"/>
-                                        <img src="../../public/icon/location.svg" alt="pin"/>
-                                    </div>
-                                    <div className="flex flex-col grow justify-between pl-[2px] pr-2">
-                                        <Select value={startNode}
-                                                onValueChange={(location: string) => setStartNode(location)}>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select Location"/>
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {currentFloorNames}
-                                            </SelectContent>
-                                        </Select>
-                                        <Select value={endNode}
-                                                onValueChange={(location: string) => setEndNode(location)}>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select Location"/>
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {roomNames}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                </div>
-                                <div className="py-4 px-2">
-                                    <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
-                                            onValueChange={(algorithm: string) => setPathFindingType(algorithm)}>
-                                        <SelectTrigger>
-                                            <SelectValue/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value={"/api/bfs-searching"}>BFS Searching</SelectItem>
-                                            <SelectItem value={"/api/bfsAstar-searching"}>A* Searching</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
+              <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon"
+                className="dark:invert w-[25px]"></img>
+            </div>
+          </DrawerTrigger>
+          <DrawerContent>
+            <div className="overflow-y-auto">
+              <div className="max-w-[400px] m-auto">
+                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                  <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+                    onChange={handlePhotoChange} checked={map == "lowerLevel2"} />
+                  <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
+                  <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
+                    onChange={handlePhotoChange} checked={map == "lowerLevel1"} />
+                  <label htmlFor="l1" className="font-bold hover:text-blue-500 cursor-pointer">L1</label>
+                  <input type="radio" id="f1" name="floor" value="floor1" className="hidden"
+                    onChange={handlePhotoChange} checked={map == "floor1"} />
+                  <label htmlFor="f1" className="font-bold hover:text-blue-500 cursor-pointer">1</label>
+                  <input type="radio" id="f2" name="floor" value="floor2" className="hidden"
+                    onChange={handlePhotoChange} checked={map == "floor2"} />
+                  <label htmlFor="f2" className="font-bold hover:text-blue-500 cursor-pointer">2</label>
+                  <input type="radio" id="f3" name="floor" value="floor3" className="hidden"
+                    onChange={handlePhotoChange} checked={map == "floor3"} />
+                  <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
+                </div>
+                <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
+                  <div className="flex flex-col items-center">
+                    <img src="../../public/icon/start.svg" alt="circle"
+                      className="mb-[5px] mt-[11px] dark:invert" />
+                    <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert" />
+                    <img src="../../public/icon/location.svg" alt="pin" />
+                  </div>
+                  <div className="flex flex-col grow justify-between pl-[2px] pr-2">
+                    <Select value={startNode}
+                      onValueChange={(location: string) => {
+                          setStartNode(location);
+                          clearGuidelines();}}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {currentFloorNames}
+                      </SelectContent>
+                    </Select>
+                    <Select value={endNode}
+                      onValueChange={(location: string) => {
+                          setEndNode(location);
+                          clearGuidelines();}}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {roomNames}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="py-4 px-2">
+                  <Select value={pathFindingType} defaultValue={"/api/bfsAstar-searching"}
+                    onValueChange={(algorithm: string) => {
+                        setPathFindingType(algorithm);
+                        clearGuidelines();}}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value={"A*"}>A* Searching</SelectItem>
+                        <SelectItem value={"BFS"}>BFS Searching</SelectItem>
+                        <SelectItem value={"DFS"}>DFS Searching</SelectItem>
+                        <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
                                 <div>
                                     <p className="font-bold text-center">Follow me</p>
@@ -653,7 +795,8 @@ export function MapComponent() {
 
         </div>
 
-        <div className="fixed w-screen max-w-full m-auto">
+
+        <div className={`fixed w-screen max-w-full m-auto ${!do3D ? '' : "hidden"}`}>
             <TransformWrapper
                 initialScale={1}
                 initialPositionX={0}
@@ -770,7 +913,23 @@ export function MapComponent() {
                     )}
                 </div>
             </div>
+        </div>
 
+        {/* ================================= 3D PROTOTYPE ================================= */}
+        {/* ================= SHOW 3D NAV WHEN NO PATH IS DISPLAYED */}
+        <div className={`absolute top-0 w-full
+                            ${(do3D && (startNode === "" || endNode === "")) ? '' : 'hidden'}`}>
+            <NavMapPage onImageClick={(mapID: string) => {
+                setMap(mapID);
+                set3D(false);
+                setIsExpanded(true);
+            }}></NavMapPage>
+        </div>
+
+        {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
+        <div className={`max-w-[800px] m-auto
+                            ${(do3D && startNode !== "" && endNode !== "") ? '' : "relative z-[-1] max-h-[10px] overflow-hidden"}`}
+             id="3d-wrapper">
         </div>
     </div>
 
