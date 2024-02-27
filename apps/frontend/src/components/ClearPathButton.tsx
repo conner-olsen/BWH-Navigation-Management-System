@@ -23,7 +23,7 @@ const ClearPathButton = ({sendClear}: Readonly<ClearPathButtonProps>) => {
                 onMouseLeave={handleMouseLeave}
                 style={{
                     color: 'white',
-                    backgroundColor: isHovered ? 'rgb(99,148,238)'  : 'rgba(134,130,130,0.75)', // Change background color to gray by default
+                    backgroundColor: isHovered ? 'rgb(99,148,238)'  : 'rgba(169,166,166,0.75)', // Change background color to gray by default
                     transition: 'background-color 0.5s ease', // Add a smooth transition effect
                 }}
             >
