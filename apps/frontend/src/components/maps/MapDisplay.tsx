@@ -7,7 +7,6 @@ import { Node } from "common/src/node.ts";
 import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
 import {iconPaths} from "./IconPath.tsx";
 import {NodeStyling} from "./NodeStyling.tsx";
-import { NodeComponent } from './NodeComponent.tsx';
 
 interface MapDisplayProps {
   floorMap: string;
