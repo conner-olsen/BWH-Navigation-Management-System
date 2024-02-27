@@ -34,7 +34,7 @@ function App() {
         <Route path="/ServiceList" element={<ServiceList />} />
         <Route path="/ServiceLog" element={<ServiceLog />} />
         <Route path="/UserPage" element={<UserPage />} />
-        <Route path="/EmployeeManager" element={<EmployeeManager />} />
+        <Route path="/DataManager" element={<EmployeeManager />} />
         <Route path="/AboutPage" element={<AboutPage />} />
         <Route path="*" element={<h1>Page not found</h1>} />
       </Routes>
