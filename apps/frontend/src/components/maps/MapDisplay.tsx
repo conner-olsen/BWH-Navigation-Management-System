@@ -53,9 +53,6 @@ function MapDisplay({
   const [path, setPath] = useState<string[]>([]);
   const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
   const [nodeCount, setNodeCount] = useState<string>("Error");
-
-
-
   useEffect(() => {
     axios.get("/api/graph").then((res) => {
       const populatedGraph = new Graph();
@@ -154,7 +151,6 @@ function MapDisplay({
       setHoverNodeId(null);
     }
   };
-
   const displayHoverInfo = (node: Node) => {
     getCount(node);
     return (
@@ -242,7 +238,7 @@ function MapDisplay({
                 if (node.floor == floor && doDisplayNodes) {
                     let iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
                     const iconSize = hoverNodeId === node.id ? { width: 25, height: 25} : { width: 20, height: 20 };  // Example sizes, adjust as needed
-
+                    const color = document.body.classList.contains('dark') ? "black" : "white";
                     return (
                         <g key={node.id}>
                             <rect
@@ -250,9 +246,10 @@ function MapDisplay({
                                 y={node.yCoord - iconSize.height / 2}
                                 width={iconSize.width}
                                 height={iconSize.height}
-                                fill="white"
                                 style={{cursor: 'pointer'}}
+                                fill={color}
                             />
+
                             <image
                                 href={iconPath}
                                 x={node.xCoord - iconSize.width / 2}
@@ -264,13 +261,21 @@ function MapDisplay({
                                 onMouseEnter={() => handleNodeHover(node)}
                                 onMouseLeave={() => handleNodeHoverLeave()}
                             />
+                            <circle
+                                cx={node.xCoord + iconSize.width/2}
+                                cy={node.yCoord - iconSize.height/2}
+                                r=  "6"
+                                fill="red"
+                                style={{cursor: 'pointer'}}
+
+                            />
                             {displayName(node)}
                         </g>
                     );
                 }
                 return null; // Return null for map elements that don't meet the condition
             }).filter(element => element !== null)); // Filter out null elements
-    };
+  };
 
 
     const displayHoverCards = (graph: Graph) => {
