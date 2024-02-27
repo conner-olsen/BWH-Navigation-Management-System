@@ -20,7 +20,7 @@ import NavMapPage from "../routes/NavMapPage.tsx";
 import ReactDOM from "react-dom";
 import MapDisplay3D from "./maps/3DMapDisplay.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
-import ClearPathButton from "./ClearPathButton.tsx";
+//import ClearPathButton from "./ClearPathButton.tsx";
 
 
 export function MapComponent() {
@@ -501,7 +501,10 @@ export function MapComponent() {
                     </div>
                 </div>
                 <div className={"dark: border-b-[1px] pb-2 pt-1"}>
-                    <ClearPathButton sendClear={sendClear}/>
+                    <Button variant="outline"
+                         className={"ClearPathButton"}
+                            onClick={() => sendClear()}>
+                        Clear Path</Button>
                 </div>
 
                 <div className="pt-4 pb-2 px-2">
