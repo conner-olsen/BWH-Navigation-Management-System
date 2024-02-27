@@ -64,7 +64,7 @@ export function NodeStyling(props: {
 
     return <g>
 
-        <rect className={HeatMap ? "" : "fill-blue-100 dark:fill-blue-900"}
+        <rect className={HeatMap ? "" : ""}
               x={props.node.xCoord - props.iconSize.width / 2}
               y={props.node.yCoord - props.iconSize.height / 2}
               width={props.iconSize.width}
