@@ -277,7 +277,7 @@ function MapDisplay({
                 }
                 return null; // Return null for map elements that don't meet the condition
             }).filter(element => element !== null)); // Filter out null elements
-    };
+  };
 
 
     const displayHoverCards = (graph: Graph) => {
@@ -299,17 +299,17 @@ function MapDisplay({
                 if (node.floor === floor)
                     return (
                         <g>
-              {startNodeId === node.id && displaySelectedNodes(node, 'start')}
-              {endNodeId === node.id && displaySelectedNodes(node, 'end')}
-            </g>
-          );
-      })
-    );
-  };
+                            {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                            {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                        </g>
+                    );
+            })
+        );
+    };
 
-  const displayEdges = (graph: Graph) => {
-    if (doDisplayEdges) {
-      const edges: React.JSX.Element[] = [];
+    const displayEdges = (graph: Graph) => {
+        if (doDisplayEdges) {
+            const edges: React.JSX.Element[] = [];
       for (const [nodeId, node] of graph.nodes) {
         if (node.floor === floor) {
           node.edges.forEach(edgeNodeId => {
