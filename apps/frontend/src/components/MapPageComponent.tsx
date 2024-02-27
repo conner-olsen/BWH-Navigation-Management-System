@@ -31,6 +31,7 @@ export function MapComponent() {
   const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
   const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
   const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
+  const [doDisplayHalls, setDoDisplayHalls] = useState<boolean>(true);
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
   const [do3D, set3D] = useState<boolean>(false);
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
@@ -631,6 +632,18 @@ export function MapComponent() {
                         </label>
                     </div>
                     <div className="px-1">
+                        <input type="checkbox" id="display-halls-switch" name="display-halls-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayHalls(!doDisplayHalls)}
+                               checked={doDisplayHalls}/>
+                        <label htmlFor="display-halls-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/halls.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Halls</p>
+                        </label>
+                    </div>
+                    <div className="px-1">
                         <input type="checkbox" id="display-names-switch" name="display-names-switch"
                                className="hidden"
                                onChange={() => setDoDisplayNames(!doDisplayNames)}
@@ -659,24 +672,24 @@ export function MapComponent() {
                     </div>
                 </form>
             </HoverCardContent>
-          </HoverCard>
+                </HoverCard>
 
             </div>
 
-        <div className="h-0">
-            <Drawer modal={false}>
-                <DrawerTrigger>
-                    <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
+            <div className="h-0">
+                <Drawer modal={false}>
+                    <DrawerTrigger>
+                        <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
                         rounded-md shadow-md sm:hidden flex items-center justify-center">
-              <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon"
-                className="dark:invert w-[25px]"></img>
-            </div>
-          </DrawerTrigger>
-          <DrawerContent>
-            <div className="overflow-y-auto">
-              <div className="max-w-[400px] m-auto">
-                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
-                  <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+                            <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon"
+                                 className="dark:invert w-[25px]"></img>
+                        </div>
+                    </DrawerTrigger>
+                    <DrawerContent>
+                        <div className="overflow-y-auto">
+                            <div className="max-w-[400px] m-auto">
+                                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                                    <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
                     onChange={handlePhotoChange} checked={map == "lowerLevel2"} />
                   <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
                   <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
@@ -849,6 +862,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {lowerLevel2ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
@@ -857,6 +871,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {floor1ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
@@ -865,6 +880,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {floor2ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
@@ -873,6 +889,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {floor3ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
@@ -881,6 +898,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                         </TransformComponent>
                     </React.Fragment>
