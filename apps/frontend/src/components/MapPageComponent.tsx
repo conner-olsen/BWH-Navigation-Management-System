@@ -34,6 +34,12 @@ export function MapComponent() {
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
 
+  const [showAlert, setShowAlert] = useState(false);
+
+    const collectLongNames = useCallback(() => {
+        return collectLongNamesDirections();
+    }, [collectLongNamesDirections]);
+
   const collectLongNamesDirections = useCallback((): string[] => {
       //y increases downwards, x increases to the right
         const longNamesDirections: string[] = [];
@@ -215,10 +221,6 @@ export function MapComponent() {
 
     }, [pathfindingResult]);
 
-    const collectLongNames = useCallback(() => {
-        return collectLongNamesDirections();
-    }, [collectLongNamesDirections]);
-
   const handleSpeakButtonClick = () => {
     const longNames = collectLongNames();
     const speech = new SpeechSynthesisUtterance();
@@ -397,7 +399,6 @@ export function MapComponent() {
     setActiveTab(tabNumber);
   };
 
-  const [, setShowAlert] = useState(false);
 
   useEffect(() => {
     //looks to see if theres a floor change w/ stairs
@@ -817,7 +818,7 @@ export function MapComponent() {
                                checked={do3D}/>
                         <label htmlFor="display-3d-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                            <img src="../../public/icon/map-3d-icon.png" alt="edge-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">3D</p>
                         </label>
@@ -976,20 +977,20 @@ export function MapComponent() {
         </div>
 
 
-        <div className={`fixed w-screen max-w-full m-auto ${!do3D? '': "hidden"}`}>
-        <TransformWrapper
-          initialScale={1}
-          initialPositionX={0}
-          initialPositionY={0}
-          wheel={{ step: 0.1, smoothStep: 0.01 }}
-          centerZoomedOut={true}
-        >
-          {({ zoomIn, zoomOut, resetTransform }) => (
-            <React.Fragment>
-              <div
-                className="tools flex flex-col absolute right-2 top-2 z-10 rounded-lg">
-                <button onClick={() => zoomIn()}
-                  className="w-8 h-8 rounded-md bg-background flex items-center justify-center
+        <div className={`fixed w-screen max-w-full m-auto ${!do3D ? '' : "hidden"}`}>
+            <TransformWrapper
+                initialScale={1}
+                initialPositionX={0}
+                initialPositionY={0}
+                wheel={{step: 0.1, smoothStep: 0.01}}
+                centerZoomedOut={true}
+            >
+                {({zoomIn, zoomOut, resetTransform}) => (
+                    <React.Fragment>
+                        <div
+                            className="tools flex flex-col absolute right-2 top-2 z-10 rounded-lg">
+                            <button onClick={() => zoomIn()}
+                                    className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">
                                 <img src="../../public/icon/zoom-in-icon.png" alt="zoom-in"
                                      className="w-[30%] dark:invert"></img>
@@ -1003,62 +1004,107 @@ export function MapComponent() {
                             <button onClick={() => resetTransform()}
                                     className="w-8 h-8 rounded-md bg-background flex items-center justify-center
                                         text-2xl shadow-md m-0.5">
-                  <img src="../../public/icon/reset-icon.png" alt="zoom-in"
-                    className="w-[40%] dark:invert"></img>
-                </button>
-              </div>
-              <TransformComponent wrapperClass={"max-h-screen"}>
-                {lowerLevel1ContentVisible &&
-                  <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"}
-                    startNode={startNode} endNode={endNode}
-                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                    sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
-                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                    doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
-                {lowerLevel2ContentVisible &&
-                  <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
-                    startNode={startNode} endNode={endNode}
-                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                    sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
-                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                    doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
-                {floor1ContentVisible &&
-                  <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
-                    startNode={startNode} endNode={endNode}
-                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                    sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
-                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                    doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
-                {floor2ContentVisible &&
-                  <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
-                    startNode={startNode} endNode={endNode}
-                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                    sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
-                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                    doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
-                {floor3ContentVisible &&
-                  <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
-                    startNode={startNode} endNode={endNode}
-                    pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                    sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
-                    doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
-                    doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
-              </TransformComponent>
-            </React.Fragment>
-          )}
-        </TransformWrapper>
-      </div>
+                                <img src="../../public/icon/reset-icon.png" alt="zoom-in"
+                                     className="w-[40%] dark:invert"></img>
+                            </button>
+                        </div>
+                        <TransformComponent wrapperClass={"max-h-screen"}>
+                            {lowerLevel1ContentVisible &&
+                                <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel1.png"} floor={"L1"}
+                                            startNode={startNode} endNode={endNode}
+                                            pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                            sendClear={sendClear} pathSent={pathfindingResult}
+                                            accessibilityRoute={accessibilityRoute}
+                                            doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                            {lowerLevel2ContentVisible &&
+                                <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
+                                            startNode={startNode} endNode={endNode}
+                                            pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                            sendClear={sendClear} pathSent={pathfindingResult}
+                                            accessibilityRoute={accessibilityRoute}
+                                            doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                            {floor1ContentVisible &&
+                                <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
+                                            startNode={startNode} endNode={endNode}
+                                            pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                            sendClear={sendClear} pathSent={pathfindingResult}
+                                            accessibilityRoute={accessibilityRoute}
+                                            doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                            {floor2ContentVisible &&
+                                <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
+                                            startNode={startNode} endNode={endNode}
+                                            pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                            sendClear={sendClear} pathSent={pathfindingResult}
+                                            accessibilityRoute={accessibilityRoute}
+                                            doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                            {floor3ContentVisible &&
+                                <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
+                                            startNode={startNode} endNode={endNode}
+                                            pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
+                                            sendClear={sendClear} pathSent={pathfindingResult}
+                                            accessibilityRoute={accessibilityRoute}
+                                            doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                        </TransformComponent>
+                    </React.Fragment>
+                )}
+            </TransformWrapper>
+            <div className="relative"> {/* Ensure the parent has relative positioning */}
+                <div className={`absolute bottom-[75px] z-50 right-[10px]`}>
+                    {showAlert && (
+                        <Alert>
+                            {/* Close button */}
+                            <button
+                                className="absolute top-0 right-0 p-1 m-1 text-gray-500 hover:text-gray-800"
+                                onClick={() => setShowAlert(false)}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                            {/* Content */}
+                            <span className="flex items-center">
+                    <img
+                        src="../../public/icon/wheelchair-icon.png"
+                        alt="wheelchair-icon"
+                        className="h-5 w-5 dark:invert mr-2"
+                    />
+                    <AlertTitle>Accessibility Alert!</AlertTitle>
+                </span>
+                            <AlertDescription>
+                                This path contains stairs. If this is difficult, please request an accessible route with
+                                the accessibility switch.
+                            </AlertDescription>
+                        </Alert>
+                    )}
+                </div>
+            </div>
+        </div>
 
         {/* ================================= 3D PROTOTYPE ================================= */}
         {/* ================= SHOW 3D NAV WHEN NO PATH IS DISPLAYED */}
         <div className={`absolute top-0 w-full
-                            ${(do3D && (startNode==="" || endNode===""))? '': 'hidden'}`}>
-            <NavMapPage onImageClick={(mapID: string) => {setMap(mapID); set3D(false); setIsExpanded(true);}}></NavMapPage>
+                            ${(do3D && (startNode === "" || endNode === "")) ? '' : 'hidden'}`}>
+            <NavMapPage onImageClick={(mapID: string) => {
+                setMap(mapID);
+                set3D(false);
+                setIsExpanded(true);
+            }}></NavMapPage>
         </div>
 
         {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}

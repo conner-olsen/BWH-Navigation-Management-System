@@ -252,7 +252,7 @@ function MapDisplay({
 
                     return (
                         <g key={node.id}>
-                            <rect
+                            <rect className="fill-blue-100 dark:fill-blue-900"
                                 x={node.xCoord - iconSize.width / 2}
                                 y={node.yCoord - iconSize.height / 2}
                                 width={iconSize.width}
@@ -342,7 +342,7 @@ function MapDisplay({
                 //update previous node in array to have string announcing floor change
                 //to current... update previous floor to be current for next loop
                 returnStrings[i] = "";
-                returnStrings[i - 1] = "Go to floor " + currentFloor;
+                returnStrings[i - 1] = "Go to Floor " + currentFloor;
                 previousFloor = currentFloor;
             }
             else {
@@ -364,7 +364,7 @@ function MapDisplay({
                 if(node.floor == floor && !(floorChanges[index] == "")) {
                     return (
                         <g>
-                            <rect className="dark:fill-white z-20 fill-indigo-400" x={node.xCoord - 64}
+                            <rect className="dark:fill-indigo-800 z-20 fill-indigo-400" x={node.xCoord - 64}
                                   y={node.yCoord - 48}
                                   width="125" height="28" rx="1" stroke="black" stroke-width="4">
                                 <animate
