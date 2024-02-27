@@ -461,62 +461,65 @@ export function MapComponent() {
           <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
         </div>
         {activeTab === 1 && (
-          <div className="hidden sm:block">
-            <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
-              <div className="flex flex-col items-center">
-                <img src="../../public/icon/start.svg" alt="circle"
-                  className="mb-[5px] mt-[11px] dark:invert" />
-                <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert" />
-                <img src="../../public/icon/location.svg" alt="pin" />
-              </div>
-              <div className="flex flex-col grow justify-between pl-[2px] pr-2">
-                <Select value={startNode}
-                  onValueChange={(location: string) =>
-                  {setStartNode(location);
-                      clearGuidelines();}}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {currentFloorNames}
-                  </SelectContent>
-                </Select>
-                <Select value={endNode}
-                  onValueChange={(location: string) => {
-                      setEndNode(location);
-                      clearGuidelines();}}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {roomNames}
-                  </SelectContent>
-                </Select>
-              </div>
-                <div className="flex flex-col">
+            <div className="hidden sm:block">
+                <div className="flex pl-2 pt-4 pb-2 border-neutral-300">
+                    <div className="flex flex-col items-center">
+                        <img src="../../public/icon/start.svg" alt="circle"
+                             className="mb-[5px] mt-[11px] dark:invert"/>
+                        <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
+                        <img src="../../public/icon/location.svg" alt="pin"/>
+                    </div>
+                    <div className="flex flex-col grow justify-between pl-[2px] pr-2">
+                        <Select value={startNode}
+                                onValueChange={(location: string) => {
+                                    setStartNode(location);
+                                    clearGuidelines();
+                                }}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Location"/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                {currentFloorNames}
+                            </SelectContent>
+                        </Select>
+                        <Select value={endNode}
+                                onValueChange={(location: string) => {
+                                    setEndNode(location);
+                                    clearGuidelines();
+                                }}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Location"/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                {roomNames}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                <div className={"dark: border-b-[1px] pb-2 pt-1"}>
                     <ClearPathButton sendClear={sendClear}/>
                 </div>
 
-            </div>
-            <div className="pt-4 pb-2 px-2">
-              <Select value={pathFindingType} defaultValue={"A*"}
-                onValueChange={(algorithm: string) =>
-                {setPathFindingType(algorithm);
-                    clearGuidelines();}}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={"A*"}>A* Searching</SelectItem>
-                  <SelectItem value={"BFS"}>BFS Searching</SelectItem>
-                  <SelectItem value={"DFS"}>DFS Searching</SelectItem>
-                  <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+                <div className="pt-4 pb-2 px-2">
+                    <Select value={pathFindingType} defaultValue={"A*"}
+                            onValueChange={(algorithm: string) => {
+                                setPathFindingType(algorithm);
+                                clearGuidelines();
+                            }}>
+                        <SelectTrigger>
+                            <SelectValue/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value={"A*"}>A* Searching</SelectItem>
+                            <SelectItem value={"BFS"}>BFS Searching</SelectItem>
+                            <SelectItem value={"DFS"}>DFS Searching</SelectItem>
+                            <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
 
-                    <div className="flex items-center justify-center ml-6 mb-3">
-                        <div style={{marginTop: '1rem'}}>
+                <div className="flex items-center justify-center ml-6 mb-3">
+                    <div style={{marginTop: '1rem'}}>
                   <span className="flex items-center">
                       <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon"
                            className="h-5 w-5 dark:invert mr-2"/>
@@ -524,48 +527,48 @@ export function MapComponent() {
                               defaultChecked={false}>
                       </Switch>
                   </span>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <div className="flex items-center justify-center ml-6 mb-3">
+                            <p className="font-bold mb-0">Follow Me</p>
+                            <button onClick={handleSpeakButtonClick}>
+                                <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
+                                     className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
+                            </button>
                         </div>
                     </div>
-
-                    <div>
-                        <div>
-                            <div className="flex items-center justify-center ml-6 mb-3">
-                                <p className="font-bold mb-0">Follow Me</p>
-                                <button onClick={handleSpeakButtonClick}>
-                                    <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
-                                         className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
-                                </button>
-                            </div>
-                        </div>
-                        <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
-                            {/* Render the list of long names and node names with icons */}
-                            {pathfindingResult.map((node, index) => (
-                                <li key={index}>
-                                    {/* Check the node type and render the appropriate icon */}
-                                    <span className="flex items-center">
+                    <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
+                        {/* Render the list of long names and node names with icons */}
+                        {pathfindingResult.map((node, index) => (
+                            <li key={index}>
+                                {/* Check the node type and render the appropriate icon */}
+                                <span className="flex items-center">
                       {node.nodeType === "STAI" && (
                           <img src="../../public/icon/stairs.png" alt="stair-icon"
                                className="h-3 w-3 mr-1 dark:invert"/>
                       )}
-                                        {node.nodeType === "ELEV" && (
-                                            <img src="../../public/icon/elevator.png" alt="elevator-icon"
-                                                 className="w-4 h-4 mr-1 dark:invert"/>
-                                        )}
-                                        <span
-                                            className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
+                                    {node.nodeType === "ELEV" && (
+                                        <img src="../../public/icon/elevator.png" alt="elevator-icon"
+                                             className="w-4 h-4 mr-1 dark:invert"/>
+                                    )}
+                                    <span
+                                        className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
                         {node.longName}
                       </span>
                     </span>
-                                </li>
-                            ))}
-                        </ol>
-                    </div>
-
+                            </li>
+                        ))}
+                    </ol>
                 </div>
-            )}
+
+            </div>
+        )}
             {activeTab === 2 && !currentNode && (
                 <div className="hidden sm:block mt-4">
-                    <p className="font-bold mb-0">Select a location</p>
+                <p className="font-bold mb-0">Select a location</p>
                     <p className="font-bold">to display its information</p>
                     <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
                 </div>

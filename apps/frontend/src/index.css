@@ -289,8 +289,9 @@ body.threeD-on > div[id^="d"] > .guideline {
 .ClearPathButton {
     color: #fff;
     font-family: sans-serif;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     width: 115px; /* Increase width, adjust the value as needed */
     padding: 10px; /* Reduce padding for height */
     padding-left: 15px;
