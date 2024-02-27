@@ -399,15 +399,18 @@ function MapDisplay({
                         <g>
                             <rect className="dark:fill-white z-20 fill-indigo-400" x={node.xCoord - 64}
                                   y={node.yCoord - 48}
-                                  width="125" height="28" rx="1" stroke="black" strokeWidth="4">
+                                  width="125" height="28" rx="1" stroke="black" strokeWidth="4"
+                                  onClick={() => handleNodeClick(node)}>
                                 <animate
                                     attributeName="rx"
                                     values="0;13;0"
                                     dur="2s"
                                     repeatCount="indefinite"/>
+
                             </rect>
                             <text className="font-bold dark:invert" x={node.xCoord - 59}
-                                  y={node.yCoord - 28} fill="black">
+                                  y={node.yCoord - 28} fill="black"
+                                  onClick={() => handleNodeClick(node)}>
                                  {floorChanges[index]}
                      </text>
                     </g>
