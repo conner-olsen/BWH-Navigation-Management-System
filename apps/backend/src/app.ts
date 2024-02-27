@@ -19,6 +19,7 @@ import getStats from "./routes/count-service-requests";
 import getEmployeeStats from "./routes/count-employee-service-requests";
 import pathfindingRoute from "./routes/pathfinding-route";
 import totalDataImport from "./routes/single-button-import.ts";
+import heatMap from "./routes/heat-map.ts";
 
 
 
@@ -56,6 +57,7 @@ app.use("/api/get-stats", getStats);
 app.use("/api/get-employee-stats", getEmployeeStats);
 app.use("/api/pathfinding", pathfindingRoute);
 app.use("/api/single-button-import", totalDataImport);
+app.use("/api/heat-map", heatMap);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

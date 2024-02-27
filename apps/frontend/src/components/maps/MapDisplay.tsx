@@ -5,6 +5,8 @@ import axios   from "axios";
 import "./animation.css";
 import { Node } from "common/src/node.ts";
 import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
+import {iconPaths} from "./IconPath.tsx";
+import {NodeStyling} from "./NodeStyling.tsx";
 import { NodeComponent } from './NodeComponent.tsx';
 
 interface MapDisplayProps {
@@ -29,8 +31,6 @@ interface AnimatedPathProps {
   x2: number;
   y2: number;
 }
-
-
 
 function MapDisplay({
   floorMap,
@@ -119,9 +119,16 @@ function MapDisplay({
     return pathElements;
   };
 
+    const clearGuidelines = () => {
+        // THIS WILL DELETE EVERY ELEMENT WITH ID STARTING WITH D
+        const elements = document.querySelectorAll('[id^="d"]');
+        const elementsArray = Array.from(elements);
+        elementsArray.forEach((element) => element.remove());
+    };
 
   const handleNodeClick = (node: Node) => {
     setChosenNode(node);
+    clearGuidelines();
 
     if (!startNodeId) {
       setStartNodeId(node.id);
@@ -221,22 +228,28 @@ function MapDisplay({
     );
   };
 
+  const displayName = (node: Node) => {
+    if ((doDisplayNames && (node.floor == floor)) && !(node.nodeType == "HALL")) {
+      return (
+        <text className="font-bold dark:invert" x={node.xCoord - 65} y={node.yCoord - 20} fill="black">
+          {node.shortName}
+        </text>
+      );
+    }
+  };
+
 
   const displayNodes = (graph: Graph) => {
         return (
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes) {
+                    let iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
+                    const iconSize = hoverNodeId === node.id ? { width: 25, height: 25} : { width: 20, height: 20 };  // Example sizes, adjust as needed
+
                     return (
-                        <NodeComponent
-                            key={node.id}
-                            node={node}
-                            hoverNodeId={hoverNodeId}
-                            handleNodeClick={handleNodeClick}
-                            handleNodeHover={handleNodeHover}
-                            handleNodeHoverLeave={handleNodeHoverLeave}
-                            doDisplayNames={doDisplayNames}
-                            floor={floor}
-                        />
+                        <NodeStyling key={node.id} node={node} iconSize={iconSize} href={iconPath}
+                                     onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)}
+                                     onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}/>
                     );
                 }
                 return null; // Return null for map elements that don't meet the condition
@@ -263,17 +276,17 @@ function MapDisplay({
                 if (node.floor === floor)
                     return (
                         <g>
-              {startNodeId === node.id && displaySelectedNodes(node, 'start')}
-              {endNodeId === node.id && displaySelectedNodes(node, 'end')}
-            </g>
-          );
-      })
-    );
-  };
+                            {startNodeId === node.id && displaySelectedNodes(node, 'start')}
+                            {endNodeId === node.id && displaySelectedNodes(node, 'end')}
+                        </g>
+                    );
+            })
+        );
+    };
 
-  const displayEdges = (graph: Graph) => {
-    if (doDisplayEdges) {
-      const edges: React.JSX.Element[] = [];
+    const displayEdges = (graph: Graph) => {
+        if (doDisplayEdges) {
+            const edges: React.JSX.Element[] = [];
       for (const [nodeId, node] of graph.nodes) {
         if (node.floor === floor) {
           node.edges.forEach(edgeNodeId => {
@@ -306,7 +319,7 @@ function MapDisplay({
                 //update previous node in array to have string announcing floor change
                 //to current... update previous floor to be current for next loop
                 returnStrings[i] = "";
-                returnStrings[i - 1] = "Go to floor " + currentFloor;
+                returnStrings[i - 1] = "Go to Floor " + currentFloor;
                 previousFloor = currentFloor;
             }
             else {
@@ -328,7 +341,7 @@ function MapDisplay({
                 if(node.floor == floor && !(floorChanges[index] == "")) {
                     return (
                         <g>
-                            <rect className="dark:fill-white z-20 fill-indigo-400" x={node.xCoord - 64}
+                            <rect className="dark:fill-indigo-800 z-20 fill-indigo-400" x={node.xCoord - 64}
                                   y={node.yCoord - 48}
                                   width="125" height="28" rx="1" stroke="black" stroke-width="4">
                                 <animate

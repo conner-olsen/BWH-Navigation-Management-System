@@ -60,6 +60,7 @@
 
 
 :root {
+  scroll-behavior: auto!important;
   /*font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/
   background-color: #ffffff;
   font-size: 18px;
@@ -191,7 +192,50 @@ textarea{
     height: 100%;
 }
 
-/* ============= MAP ========= */
+/* ============= 3D MAP ========= */
+.img-rotate {
+    max-width: 300px;
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
+    filter: grayscale(100%);
+    transition: all;
+    transition-duration: 300ms;
+}
+.map-rotate {
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
+}
+.map-rotate image {
+    filter: drop-shadow(100px 121px 1px #000000);
+}
+body.dark .map-rotate image {
+    filter: drop-shadow(100px 121px 1px #FFFFFF);
+}
+.img-rotate:hover {
+    filter: none;
+}
+.cancel-rotate {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(-40deg) scaleY(175%);
+}
+body.threeD-on > div[id^="d"] > .guideline {
+    display: block;
+}
+.guideline {
+    display: none;
+    position: absolute;
+    width: 1px;
+    height: 286px;
+    background-color: #0d6efd;
+    z-index: 10;
+}
+.guideline-up {
+    background-color: orange;
+    transform: rotate(180deg);
+    transform-origin: top;
+}
+
+/* ============= 3D MAP END ========= */
+
+
+
 .testClass {
   display: flex;
   align-items: center;

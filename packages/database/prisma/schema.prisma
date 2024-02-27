@@ -118,3 +118,8 @@ model religiousServiceRequest {
     religion       String
     note           String
 }
+
+model nodeVisit {
+  nodeId  String @id
+  count   Int
+}
