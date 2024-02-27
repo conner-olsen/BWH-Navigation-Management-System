@@ -543,3 +543,15 @@ body.dark g circle {
         transform: scale(1);
     }
 }
+
+/* ====== Scroll bar ======= */
+.progress {
+    position: fixed;
+    z-index: 1000;
+    top: 67.33px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: var(--light-blue)!important;
+    transform-origin: 0%;
+}

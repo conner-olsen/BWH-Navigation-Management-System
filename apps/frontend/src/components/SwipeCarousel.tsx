@@ -32,10 +32,11 @@ export const SwipeCarousel = () => {
         }
     };
 
+
     console.log(dragging);
 
     return (
-        <div className={"relative min-h-screen overflow-hidden bg-neutral-950"}>
+        <div className={"relative min-h-screen overflow-hidden"}>
             <motion.div
                 drag={"x"}
                 dragConstraints={{left: 0, right: 0}}
@@ -62,7 +63,7 @@ const Images = () => {
                              backgroundSize: "cover",
                              backgroundPosition: "center"
                          }}
-                        className={"aspect-video w-screen shrink-0 rounded-xl bg-neutral-850 object-cover"}
+                        className={"aspect-video w-screen shrink-0 bg-neutral-850 object-cover"}
                          />
                 );
             }
