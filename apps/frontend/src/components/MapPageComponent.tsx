@@ -33,6 +33,7 @@ export function MapComponent() {
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
   const [do3D, set3D] = useState<boolean>(false);
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
+  const [animationOn, setAnimationOn] = useState(true);
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
 
   const [showAlert, setShowAlert] = useState(false);
@@ -50,6 +51,7 @@ export function MapComponent() {
 
   const handleAccessibilityToggle = () => {
     setAccessibilityRoute(doAccessible => !doAccessible);
+    clearGuidelines();
     console.log("do accessible to " + accessibilityRoute);
   };
 
@@ -354,7 +356,7 @@ export function MapComponent() {
                         <MapDisplay3D key={mapKey} floorMap={nodeFloorToURL(floor)} floor={floor}
                                       startNode={startNode} endNode={endNode}
                                       pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                      pathSent={pathfindingResult}
+                                      pathSent={pathfindingResult} animationOn={animationOn}
                                       mapChange={(mapID) => {setMap(nodeFloorToMapFloor(mapID)); set3D(false); setIsExpanded(true);}}/>
                     </div>
                 </div>
@@ -363,11 +365,15 @@ export function MapComponent() {
 
         function renderFloors(floorArray: string[]): void {
             const floorOrder: string[] = ["3", "2", "1", "L1", "L2"];
+            // const numberOfFloors = floorArray.length;
+            const offset = 400;
+
             const wrapper: HTMLElement | null = document.getElementById("3d-wrapper");
             let marginTopOffset = 0;
             let z_index = 9;
 
             if (wrapper) {
+
                 // Remove existing floor elements
                 floorOrder.forEach(floor => {
                     const existingFloorElement = document.getElementById(floor);
@@ -383,7 +389,7 @@ export function MapComponent() {
                 floorOrder.forEach(floor => {
                     if (floorArray.includes(floor)) {
                         floorComponents.push(<FloorComponent key={floor} floor={floor} marginTop={marginTopOffset} z_index={z_index}/>);
-                        marginTopOffset += 400;
+                        marginTopOffset += offset;
                         z_index--;
                     }
                 });
@@ -396,13 +402,14 @@ export function MapComponent() {
         }
 
         renderFloors(filterDuplicates(pathfindingResult));
-    }, [mapKey, startNode, endNode, pathFindingType, pathfindingResult]);
+    }, [mapKey, startNode, endNode, pathFindingType, pathfindingResult, animationOn]);
 
   return (
     <div>
 
       <div className="fixed top-0 left-0 h-screen w-[80px] bg-neutral-500 bg-opacity-30 text-white z-20 px-4 pt-[100px]
                       flex-col hidden sm:flex">
+          <button onClick={() => {setAnimationOn(!animationOn); clearGuidelines();}}>Test</button>
         <button onClick={toggleSidebar} className="text-xl text-white focus:outline-none">
           {isExpanded ? (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -931,7 +938,7 @@ export function MapComponent() {
         </div>
 
         {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
-        <div className={`max-w-[1000px] m-auto
+        <div className={`max-w-[1000px] m-auto relative top-[-100px] overflow-hidden max-h-[1300px]
                             ${(do3D && startNode !== "" && endNode !== "") ? '' : "relative z-[-1] max-h-[10px] overflow-hidden"}`}
              id="3d-wrapper">
         </div>

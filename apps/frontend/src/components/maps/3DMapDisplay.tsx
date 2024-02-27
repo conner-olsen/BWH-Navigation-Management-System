@@ -14,6 +14,7 @@ interface MapDisplayProps {
     sendHoverMapPath: (path: PathfindingRequest) => void;
     pathSent: Node[];
     pathFindingType: string;
+    animationOn: boolean;
     mapChange: (mapID: string) => void;
 }
 
@@ -33,6 +34,7 @@ function MapDisplay3D({
                         sendHoverMapPath,
                         pathFindingType,
                         pathSent,
+                        animationOn,
                         mapChange,
                     }: MapDisplayProps) {
     const [graph, setGraph] = useState<Graph>(new Graph());
@@ -84,7 +86,7 @@ function MapDisplay3D({
     }
 
     const StrokePath: React.FC<StrokePathProps> = ({ x1, y1, x2, y2, color, style }) => (
-        <line className={`${style} solid-animation`}
+        <line className={`${style} ${animationOn? "solid-animation" : ''}`}
             x1={x1} y1={y1} x2={x2} y2={y2}
             stroke={color} strokeWidth="50"/>
     );
@@ -174,7 +176,7 @@ function MapDisplay3D({
 
             document.body.appendChild(div); // Append the div to the body
             // Render the MyComponent inside the dynamically created div
-            ReactDOM.render(<Guideline goingUp={goingUp} floorsApart={floorsApart}/>, div);
+            ReactDOM.render(<Guideline goingUp={goingUp} floorsApart={floorsApart} animationOn={animationOn}/>, div);
             // Allow user to scroll once it's finished rendering
             document.body.style.overflow = '';
         }
