@@ -50,7 +50,7 @@ FROM installer AS prod-frontend-builder
 WORKDIR /$WORKDIR
 
 # Build the unplugged files and cache stuff for this specific OS
-RUN yarn install --immutable --immutable-cache --check-cache
+RUN yarn install --immutable --check-cache
 
 # This creates a trimmed image that is frontend and its dependencies only
 RUN yarn turbo prune --scope=frontend --docker
@@ -64,7 +64,7 @@ WORKDIR /$WORKDIR
 RUN rm -r apps/backend/tests
 
 # Build the unplugged files and cache stuff for this specific OS
-RUN yarn install --immutable --immutable-cache --check-cache
+RUN yarn install --immutable --check-cache
 
 # This creates a trimmed image that is frontend and its dependencies only
 RUN yarn turbo prune --scope=backend --docker
@@ -108,14 +108,14 @@ ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 ENV POSTGRES_DB=$POSTGRES_DB
 ENV POSTGRES_CONTAINER=$POSTGRES_CONTAINER
 ENV POSTGRES_PORT=$POSTGRES_PORT
-ENV POSTGRES_URL="postgresql://teamd:teamd50@database.cs.wpi.edu:5432/postgres?schema=public"
+ENV POSTGRES_URL="postgresql://teamD:teamD500@team-d-prod.cxceq2y8wkrm.us-east-2.rds.amazonaws.com:5432/postgres?schema=public"
 
 # Copy the packages from production to our working directory
 COPY --from=prod-backend-builder ["/$WORKDIR/out/json", "/$WORKDIR/out/yarn.lock", "/$WORKDIR/out/full", "./"]
 
 # Validate the install
 RUN yarn install --immutable
-
+RUN ls
 # Run the build task
 RUN yarn turbo run build
 

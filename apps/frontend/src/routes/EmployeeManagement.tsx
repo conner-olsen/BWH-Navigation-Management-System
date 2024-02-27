@@ -15,6 +15,8 @@ import ExportNodeDataToCSVButton from "../components/ExportNodeDataButton.tsx";
 import ExportAllDataToCSVButton from "../components/ExportAllButton.tsx";
 import ExportEdgeDataToCSVButton from "../components/ExportEdgeDataButton.tsx";
 import {GetDataEdges} from "../components/EdgesDataBaseTableDisplay.tsx";
+
+
 export const EmployeeManager = () => {
 
     const [formData, setFormData] = useState({
@@ -47,7 +49,13 @@ export const EmployeeManager = () => {
         } catch (error) {
             console.error({error});
         }
+        setFormData( {
+            username: '',
+            firstName: '',
+            lastName: '',
+            email: ''});
     };
+
 
     const handleUpdateEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -69,6 +77,11 @@ export const EmployeeManager = () => {
             } catch (error) {
                 console.error({error});
             }
+        setFormData( {
+            username: '',
+            firstName: '',
+            lastName: '',
+            email: ''});
         };
 
     const handleDeleteEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -91,6 +104,11 @@ export const EmployeeManager = () => {
         } catch (error) {
             console.error({error});
         }
+        setFormData( {
+            username: '',
+            firstName: '',
+            lastName: '',
+            email: ''});
     };
 
     const handleFileDrop = async(file: File) => {
@@ -209,75 +227,101 @@ export const EmployeeManager = () => {
                             <TabsTrigger value="Delete Employee">Delete Employee</TabsTrigger>
                             <TabsTrigger value="Node Data">Node Data</TabsTrigger>
                             <TabsTrigger value="Edge Data">Edge Data</TabsTrigger>
-                            <ExportAllDataToCSVButton></ExportAllDataToCSVButton>
-                            <SendAllDataButton></SendAllDataButton>
 
 
                         </TabsList>
+
+                        <br/>
+                        <br/>
 
                         <TabsContent value="Create Employee">
 
                                             <Row>
                                                 <Col>
-                                            <div className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
-                                                <form onSubmit={handleCreateEmployee}>
-                                                    <div className="mb-4">
-                                                        <Label htmlFor="username">Username</Label>
-                                                        <Input id="username" type="text" placeholder="Username" name="username"
-                                                            value={formData.username}
-                                                            onChange={(e) => setFormData({
-                                                                ...formData,
-                                                                username: e.target.value
-                                                            })}
-                                                        />
+
+                                                    <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+
+                                                        <p className="font-roboto text-neutral-500 italic font-light dark:text-neutral-300 ml-1">
+                                                              Export or Import Node, Edge, and Employee Data
+                                                        </p>
+                                                        <SendAllDataButton></SendAllDataButton>
+                                                        <br/>
+                                                        <ExportAllDataToCSVButton></ExportAllDataToCSVButton>
+
+                                                    </Container>
+
+                                                    <div
+                                                        className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+
+                                                        <p className="font-roboto text-neutral-500 italic font-light dark:text-neutral-300 ml-1">
+                                                            Add Employee to Database
+                                                        </p>
+                                                        <form onSubmit={handleCreateEmployee}>
+                                                            <div className="mb-4">
+                                                                <Label htmlFor="username">Username</Label>
+                                                                <Input id="username" type="text" placeholder="Username"
+                                                                       name="username"
+                                                                       value={formData.username}
+                                                                       onChange={(e) => setFormData({
+                                                                           ...formData,
+                                                                           username: e.target.value
+                                                                       })}
+                                                                />
+                                                            </div>
+                                                            <div className="mb-4">
+                                                                <Label htmlFor="firstName">First Name</Label>
+                                                                <Input id="firstName" type="text"
+                                                                       placeholder="First Name" name="firstName"
+                                                                       value={formData.firstName}
+                                                                       onChange={(e) => setFormData({
+                                                                           ...formData,
+                                                                           firstName: e.target.value
+                                                                       })}
+                                                                />
+                                                            </div>
+                                                            <div className="mb-4">
+                                                                <Label htmlFor="lastName">Last Name</Label>
+                                                                <Input id="lastName" type="text" placeholder="Last Name"
+                                                                       name="lastName"
+                                                                       value={formData.lastName}
+                                                                       onChange={(e) => setFormData({
+                                                                           ...formData,
+                                                                           lastName: e.target.value
+                                                                       })}
+                                                                />
+                                                            </div>
+                                                            <div className="mb-6">
+                                                                <Label htmlFor="email">
+                                                                    Email
+                                                                </Label>
+                                                                <Input id="email" type="email" placeholder="Email"
+                                                                       name="email"
+                                                                       value={formData.email}
+                                                                       onChange={(e) => setFormData({
+                                                                           ...formData,
+                                                                           email: e.target.value
+                                                                       })}
+                                                                />
+                                                            </div>
+                                                            <Button variant={"default"}>Create</Button>
+                                                        </form>
                                                     </div>
-                                                    <div className="mb-4">
-                                                        <Label htmlFor="firstName">First Name</Label>
-                                                        <Input id="firstName" type="text" placeholder="First Name" name="firstName"
-                                                            value={formData.firstName}
-                                                            onChange={(e) => setFormData({
-                                                                ...formData,
-                                                                firstName: e.target.value
-                                                            })}
-                                                        />
-                                                    </div>
-                                                    <div className="mb-4">
-                                                        <Label htmlFor="lastName">Last Name</Label>
-                                                        <Input id="lastName" type="text" placeholder="Last Name" name="lastName"
-                                                            value={formData.lastName}
-                                                            onChange={(e) => setFormData({
-                                                                ...formData,
-                                                                lastName: e.target.value
-                                                            })}
-                                                        />
-                                                    </div>
-                                                    <div className="mb-6">
-                                                        <Label htmlFor="email">
-                                                            Email
-                                                        </Label>
-                                                        <Input id="email" type="email" placeholder="Email" name="email"
-                                                            value={formData.email}
-                                                            onChange={(e) => setFormData({
-                                                                ...formData,
-                                                                email: e.target.value
-                                                            })}
-                                                        />
-                                                    </div>
-                                                    <Button variant={"default"}>Create</Button>
-                                                </form>
-                                            </div>
                                                 </Col>
 
-                                {/*This is the delete employee functionality*/}
+                                                {/*This is the delete employee functionality*/}
 
                                                 <Col>
-                                                    <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
-                                                    <p></p>
-                                                    <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
-                                            <GetDataEmployees></GetDataEmployees>
+                                                    <div
+                                                        className="bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+
+                                                        <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
+                                                        <p></p>
+                                                        <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
+
+                                                        <GetDataEmployees></GetDataEmployees>
+                                                    </div>
 
                                                 </Col>
-
 
 
                                             </Row>
@@ -286,8 +330,19 @@ export const EmployeeManager = () => {
 
 
                         <TabsContent value="Update Employee">
-                                <Row>
-                                    <Col>
+                            <Row>
+                                <Col>
+
+                                    <Container
+                                        className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+
+                                        <p className="font-roboto text-neutral-500 italic font-light dark:text-neutral-300 ml-1">
+                                                Export or Import Node, Edge, and Employee Data
+                                            </p>
+                                            <SendAllDataButton></SendAllDataButton>
+                                            <br/>
+                                            <ExportAllDataToCSVButton></ExportAllDataToCSVButton>
+                                        </Container>
 
                                 <div className="bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
                                     <form onSubmit={handleUpdateEmployee}>
@@ -350,17 +405,34 @@ export const EmployeeManager = () => {
                                     </div>
                                     </Col>
                                 <Col>
-                                    <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
-                                    <p></p>
-                                    <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
-                                    <GetDataEmployees></GetDataEmployees>
+                                    <div
+                                        className="bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+
+                                        <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
+                                        <p></p>
+                                        <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
+
+                                        <GetDataEmployees></GetDataEmployees>
+                                    </div>
                                 </Col>
-                                </Row>
+                            </Row>
                         </TabsContent>
 
                         <TabsContent value="Delete Employee">
-                                <Row>
-                                    <Col>
+                            <Row>
+                                <Col>
+
+                                    <Container
+                                        className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+
+                                        <p className="font-roboto text-neutral-500 italic font-light dark:text-neutral-300 ml-1">
+                                        Export or Import Node, Edge, and Employee Data
+                                            </p>
+                                            <SendAllDataButton></SendAllDataButton>
+                                            <br/>
+                                            <ExportAllDataToCSVButton></ExportAllDataToCSVButton>
+                                        </Container>
+
                                 <div className=" border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
                                     <form onSubmit={handleDeleteEmployee}>
                                         <div className="mb-4">
@@ -378,22 +450,27 @@ export const EmployeeManager = () => {
                                             />
                                         </div>
                                         <Button variant={"destructive"}>Delete</Button>
-
                                     </form>
                                 </div>
                                     </Col>
                                     <Col>
-                                        <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
-                                        <p></p>
-                                        <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
-                                        <GetDataEmployees></GetDataEmployees>
+                                        <div
+                                            className="bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+
+                                            <ExportEmployeeCSVButton></ExportEmployeeCSVButton>
+                                            <p></p>
+                                            <DragNDrop onFileDrop={handleFileDrop}></DragNDrop>
+
+                                            <GetDataEmployees></GetDataEmployees>
+                                        </div>
                                     </Col>
                                 </Row>
                         </TabsContent>
 
-                    {/* Node and Edge Data */}
+                        {/* Node and Edge Data */}
                         <TabsContent value="Node Data">
-                            <Container>
+                            <Container className="bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+
                                 <div className="container flex max-[576px]:justify-center">
                                     <ExportNodeDataToCSVButton></ExportNodeDataToCSVButton>
                                 </div>
@@ -403,8 +480,8 @@ export const EmployeeManager = () => {
                             </Container>
                         </TabsContent>
                         <TabsContent value="Edge Data">
-                            <Container>
-                                <div className="container flex max-[576px]:justify-center">
+                            <Container className="bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+                            <div className="container flex max-[576px]:justify-center">
                                     <ExportEdgeDataToCSVButton></ExportEdgeDataToCSVButton>
                                 </div>
                                 <br/>

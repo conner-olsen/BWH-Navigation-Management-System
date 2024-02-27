@@ -57,6 +57,11 @@ app.use("/api/get-employee-stats", getEmployeeStats);
 app.use("/api/pathfinding", pathfindingRoute);
 app.use("/api/single-button-import", totalDataImport);
 
+app.use("/healhcheck", function (req: Request, res: Response): void {
+  res.status(200);
+});
+
+
 /**
  * Catch all 404 errors, and forward them to the error handler
  */

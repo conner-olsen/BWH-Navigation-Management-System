@@ -31,7 +31,9 @@
     "build": "turbo run build",
     "docker:upload": "turbo run docker:upload --concurrency=1",
     "depcheck": "depcheck",
-    "setup": "yarn install && yarn build:dev"
+    "setup": "yarn install && yarn build:dev",
+    "docker:backend": "docker build --target prod-backend --tag maxgossselin/softeng-teamd:backend --platform linux/amd64 . && docker push maxgossselin/softeng-teamd:backend",
+    "docker:frontend": "docker build --target prod-frontend --tag maxgossselin/softeng-teamd:frontend --platform linux/amd64 . && docker push maxgossselin/softeng-teamd:frontend"
   },
   "packageManager": "yarn@4.0.2",
   "devDependencies": {
@@ -76,6 +78,7 @@
     "bootstrap": "^5.3.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "framer-motion": "^11.0.6",
     "jest-fetch-mock": "^3.0.3",
     "lucide-react": "^0.323.0",
     "morgan": "^1.10.0",

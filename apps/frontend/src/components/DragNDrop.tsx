@@ -63,20 +63,23 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
   }, []);
 
   return (
+      <div>
       <Container
-          className={`border-border ${dragging ? 'DragDropBoxOn' : 'DragDropBox'} ${dragging ? 'dragging' : ''}`}
+          className={`border-border ${dragging ? 'DragDropBoxOn' : 'DragDropBox'} ${dragging ? 'dragging' : ''} 
+           border-2 border-gray-600 border-dashed rounded-lg p-3 text-center relative cursor-pointer
+          hover:border-blue-600 hover:bg-primary hover:text-blue-500 transition-all duration-300 ease-in-out w-fit h-1/8`}
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
       >
-          <img className="h-4" src="../public/icon/csv_drop.svg"/>
-          <h3>Select a CSV file to upload</h3>
           <label htmlFor="csv-upload"
                  className="absolute top-0 left-0 w-full h-full cursor-pointer"></label>
           <input id="csv-upload" type="file" onChange={handleUpload}
                 className="hidden"/>
-          {dragging ? <div>Drop your file here</div> : <div>Drag and drop a file here</div>}
+          {dragging ? <div>Click or Drop CSV File Here</div> : <div>Drag and Drop a File Here</div>}
       </Container>
+          <br/>
+      </div>
   );
 };
 
