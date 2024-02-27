@@ -19,6 +19,7 @@ import { Switch } from "./ui/switch.tsx";
 import NavMapPage from "../routes/NavMapPage.tsx";
 import ReactDOM from "react-dom";
 import MapDisplay3D from "./maps/3DMapDisplay.tsx";
+import Alert, {AlertDescription, AlertTitle} from "./ui/alert.tsx";
 
 
 export function MapComponent() {
@@ -35,10 +36,6 @@ export function MapComponent() {
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
 
   const [showAlert, setShowAlert] = useState(false);
-
-    const collectLongNames = useCallback(() => {
-        return collectLongNamesDirections();
-    }, [collectLongNamesDirections]);
 
   const collectLongNamesDirections = useCallback((): string[] => {
       //y increases downwards, x increases to the right
@@ -220,6 +217,10 @@ export function MapComponent() {
         return longNamesDirections;
 
     }, [pathfindingResult]);
+
+    const collectLongNames = useCallback(() => {
+        return collectLongNamesDirections();
+    }, [collectLongNamesDirections]);
 
   const handleSpeakButtonClick = () => {
     const longNames = collectLongNames();
