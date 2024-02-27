@@ -4,6 +4,25 @@
     animation: moveLine 1s infinite linear, changeColor 2s infinite linear;
 }
 
+.solid-animation {
+    stroke-dasharray: 20;
+    stroke-dashoffset: 30;
+    animation: moveLine 1s infinite linear;
+}
+
+.elevator-animation {
+    animation: goingUp 6s infinite ease-in-out;
+}
+
+@keyframes goingUp {
+    from {
+        top: 0;
+    }
+    to {
+        top: calc(100% - 30px);
+    }
+}
+
 @keyframes moveLine {
     to {
         stroke-dashoffset: -50;
