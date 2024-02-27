@@ -135,7 +135,8 @@ function MapDisplay3D({
             }
             if (node && nextNode && node.floor !== nextNode.floor && node.floor === floor) {
                 // Yellow indicates stairs, while blue indicates elevator (accessible) to a DIFFERENT floor
-                pathElements.push(<circle id={"c" + stairsCounter + "f" + floor + "t" + nextNode.floor} cx={node.xCoord} cy={node.yCoord} r="50"
+                pathElements.push(<circle id={"c" + stairsCounter + "f" + floor + "t" + nextNode.floor}
+                                          cx={node.xCoord} cy={node.yCoord} r="50"
                                           fill={node.nodeType === "STAI"? 'yellow' : 'blue'} stroke="black" stroke-width="10"/>
                 );
                 stairsCounter++;
