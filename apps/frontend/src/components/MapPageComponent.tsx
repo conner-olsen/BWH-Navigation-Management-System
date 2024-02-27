@@ -20,6 +20,7 @@ import NavMapPage from "../routes/NavMapPage.tsx";
 import ReactDOM from "react-dom";
 import MapDisplay3D from "./maps/3DMapDisplay.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+import Legend from "./maps/3DLegend.tsx";
 
 
 export function MapComponent() {
@@ -409,7 +410,6 @@ export function MapComponent() {
 
       <div className="fixed top-0 left-0 h-screen w-[80px] bg-neutral-500 bg-opacity-30 text-white z-20 px-4 pt-[100px]
                       flex-col hidden sm:flex">
-          <button onClick={() => {setAnimationOn(!animationOn); clearGuidelines();}}>Test</button>
         <button onClick={toggleSidebar} className="text-xl text-white focus:outline-none">
           {isExpanded ? (
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -938,7 +938,15 @@ export function MapComponent() {
         </div>
 
         {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
-        <div className={`max-w-[1000px] m-auto relative top-[-100px] overflow-hidden max-h-[1300px]
+        <div className={`${(do3D && startNode !== "" && endNode !== "") ? '' : "hidden"} relative`}>
+            <Legend></Legend>
+            <div className={"fixed w-[250px] right-[20px] top-[350px] flex py-2 px-4 justify-between z-40 border-2 border-neutral-500 rounded-md bg-background"}>
+                <span>Show Animation</span>
+                <Switch defaultChecked={animationOn}
+                onCheckedChange={() => {setAnimationOn(!animationOn);clearGuidelines();}}></Switch>
+            </div>
+        </div>
+        <div className={`max-w-[1000px] m-auto relative overflow-hidden max-h-[1400px]
                             ${(do3D && startNode !== "" && endNode !== "") ? '' : "relative z-[-1] max-h-[10px] overflow-hidden"}`}
              id="3d-wrapper">
         </div>
