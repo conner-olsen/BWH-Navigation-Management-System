@@ -78,6 +78,7 @@
     "bootstrap": "^5.3.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "framer-motion": "^11.0.6",
     "jest-fetch-mock": "^3.0.3",
     "lucide-react": "^0.323.0",
     "morgan": "^1.10.0",
