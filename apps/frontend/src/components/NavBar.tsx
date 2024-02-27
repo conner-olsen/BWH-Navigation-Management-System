@@ -67,7 +67,7 @@ return (
             </Link>
 
             {isAuthenticated && (
-                <Link to="/EmployeeManager" className="no-underline p-2 text-white hidden xl:block text-[17px]">
+                <Link to="/DataManager" className="no-underline p-2 text-white hidden xl:block text-[17px]">
                     <div className={"hover:text-blue-500"}>Data Manager</div>
                 </Link>
             )}
@@ -199,7 +199,7 @@ return (
                         <div className={"hover:text-blue-500"}>Map</div></Link>
                     {isAuthenticated && (
                         <>
-                            <Link to="/EmployeeManager" onClick={toggleMobileMenu}
+                            <Link to="/DataManager" onClick={toggleMobileMenu}
                                   className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
                                 <div className={"hover:text-blue-500"}>Data Manager</div></Link>
                         </>
