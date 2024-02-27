@@ -14,6 +14,7 @@ interface MapDisplayProps {
   endNode?: string;
   sendHoverMapPath: (path: PathfindingRequest) => void;
   sendClear: () => void;
+  sendMap: (mapID: string) => void;
   pathSent: Node[];
   doDisplayEdges: boolean;
   doDisplayNodes: boolean;
@@ -39,6 +40,7 @@ function MapDisplay({
   endNode,
   sendHoverMapPath,
   sendClear,
+    sendMap,
   pathFindingType,
   doDisplayEdges,
   doDisplayNodes,
@@ -130,6 +132,7 @@ function MapDisplay({
     };
 
   const handleNodeClick = (node: Node) => {
+      console.log("clicked", startNodeId, endNodeId);
     setChosenNode(node);
     clearGuidelines();
 
@@ -147,6 +150,16 @@ function MapDisplay({
         const path: PathfindingRequest = { startId: startNodeId, endId: node.id, strategy: pathFindingType, accessibilityRoute: doAccessible };
         sendHoverMapPath(path);
       }
+    }
+
+    if(startNodeId && endNodeId) {
+        let floorChanges = gatherFloorChangeNodes();
+        //if node clicked is involved in a floor change, change map to its
+        //associated floor (where it is going / came from)
+
+        if(floorChanges.has(node.id)) {
+            sendMap((floorChanges.get(node.id)) as string);
+        }
     }
   };
 
@@ -330,6 +343,26 @@ function MapDisplay({
       return edges;
     }
   };
+    const gatherFloorChangeNodes = (): Map<string, string> => {
+        let returnNodes: Map<string, string> = new Map<string, string>();
+        let previousFloor = pathSent[0].floor;
+
+        for(let i = 1; i < pathSent.length; i++) {
+            const currentFloor = pathSent[i].floor;
+
+            if (!(currentFloor == previousFloor)) {
+                //update map -- current node is linked to previous floor
+                //previous node is linked to current floor
+                returnNodes.set(pathSent[i].id, previousFloor);
+                returnNodes.set(pathSent[i - 1].id, currentFloor);
+                previousFloor = currentFloor;
+            }
+            else {
+                previousFloor = currentFloor;
+            }
+        };
+        return returnNodes;
+    };
 
     const gatherFloorChangeStrings = (): string[] => {
         const returnStrings: string[] = [];

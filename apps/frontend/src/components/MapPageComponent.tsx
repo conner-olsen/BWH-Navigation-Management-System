@@ -133,6 +133,11 @@ export function MapComponent() {
     setEndNode("");
   };
 
+  const sendMap = (mapID: string) => {
+      setMap(nodeFloorToMapFloor(mapID));
+      console.log("map sent", map);
+  };
+
   const [map, setMap] = useState("lowerLevel1");
 
   // const [groundFloorContentVisible, setGroundFloorContentVisible] = useState(false);
@@ -831,7 +836,7 @@ export function MapComponent() {
                     startNode={startNode} endNode={endNode}
                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                     sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
+                    accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                     doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
                 {lowerLevel2ContentVisible &&
@@ -839,7 +844,7 @@ export function MapComponent() {
                     startNode={startNode} endNode={endNode}
                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                     sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
+                    accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                     doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
                 {floor1ContentVisible &&
@@ -847,7 +852,7 @@ export function MapComponent() {
                     startNode={startNode} endNode={endNode}
                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                     sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
+                    accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                     doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
                 {floor2ContentVisible &&
@@ -855,7 +860,7 @@ export function MapComponent() {
                     startNode={startNode} endNode={endNode}
                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                     sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
+                    accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                     doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
                 {floor3ContentVisible &&
@@ -863,7 +868,7 @@ export function MapComponent() {
                     startNode={startNode} endNode={endNode}
                     pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                     sendClear={sendClear} pathSent={pathfindingResult}
-                    accessibilityRoute={accessibilityRoute}
+                    accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                     doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                     doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode} />}
               </TransformComponent>
