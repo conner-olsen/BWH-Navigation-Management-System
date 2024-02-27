@@ -81,7 +81,7 @@ export function NodeStyling(props: {
 
     const boxShadowColor = getNodeCount(props.node);
 
-    return <g>
+    return( <g>
 
         <rect className={HeatMap ? "" : "fill-blue-100 dark:fill-blue-900"}
               x={props.node.xCoord - props.iconSize.width / 2}
@@ -112,6 +112,6 @@ export function NodeStyling(props: {
             />
         )}
         {props.element}
-    </g>;
+    </g>);
 }
 
