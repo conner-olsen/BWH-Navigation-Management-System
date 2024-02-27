@@ -84,9 +84,9 @@ function MapDisplay3D({
     }
 
     const StrokePath: React.FC<StrokePathProps> = ({ x1, y1, x2, y2, color, style }) => (
-        <line className={style}
+        <line className={`${style} solid-animation`}
             x1={x1} y1={y1} x2={x2} y2={y2}
-            stroke={color} strokeWidth="40"/>
+            stroke={color} strokeWidth="50"/>
     );
     const displayPath = (graph: Graph, path: string[]) => {
         const pathElements: React.JSX.Element[] = [];
