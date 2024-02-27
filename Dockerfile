@@ -152,7 +152,7 @@ ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 ENV POSTGRES_DB=$POSTGRES_DB
 ENV POSTGRES_CONTAINER=$POSTGRES_CONTAINER
 ENV POSTGRES_PORT=$POSTGRES_PORT
-ENV POSTGRES_URL="postgresql://teamD:teamD500@team-d-prod.cxceq2y8wkrm.us-east-2.rds.amazonaws.com:5432/postgres?schema=public"
+ENV POSTGRES_URL="postgresql://teamd:teamd50@database.cs.wpi.edu:5432/postgres?schema=public"
 
 # Run with CMD, since dev may want to use other commands
 CMD ["yarn", "turbo", "run", "dev", "--filter=backend"]
@@ -174,7 +174,7 @@ ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 ENV POSTGRES_DB=$POSTGRES_DB
 ENV POSTGRES_CONTAINER=$POSTGRES_CONTAINER
 ENV POSTGRES_PORT=$POSTGRES_PORT
-ENV POSTGRES_URL="postgresql://teamD:teamD500@team-d-prod.cxceq2y8wkrm.us-east-2.rds.amazonaws.com:5432/postgres?schema=public"
+ENV POSTGRES_URL="postgresql://teamd:teamd50@database.cs.wpi.edu:5432/teamddb?schema=teamdschema"
 
 # Run with CMD, since dev may want to use other commands
 CMD ["yarn", "turbo", "run", "dev", "--filter=backend"]
