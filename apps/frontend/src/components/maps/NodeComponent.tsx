@@ -1,12 +1,13 @@
 // NodeComponent.tsx
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Node } from "common/src/node.ts";
+import axios from "axios";
+import {iconPaths} from "./IconPath.tsx";
 
 
 interface NodeComponentProps {
     node: Node;
     hoverNodeId: string | null;
-    iconPaths: { [key: string]: string };
     handleNodeClick: (node: Node) => void;
     handleNodeHover: (node: Node) => void;
     handleNodeHoverLeave: () => void;
@@ -17,13 +18,32 @@ interface NodeComponentProps {
 export const NodeComponent: React.FC<NodeComponentProps> = ({
     node,
     hoverNodeId,
-    iconPaths,
     handleNodeClick,
     handleNodeHover,
     handleNodeHoverLeave,
     doDisplayNames,
     floor
 }) => {
+    const [showServiceIndicator, setShowServiceIndicator] = useState(false);
+
+    useEffect(() => {
+        const fetchServiceData = async () => {
+            try {
+                const response = await axios.post("/api/get-stats", node); // Pass the entire node object
+                if (response.status === 200 && response.data > 0) {
+                    setShowServiceIndicator(true);
+                } else {
+                    setShowServiceIndicator(false);
+                }
+            } catch (error) {
+                console.error("error getting count", error);
+                setShowServiceIndicator(false);
+            }
+        };
+
+        fetchServiceData();
+    }, [node]);
+
     let iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
     const iconSize = hoverNodeId === node.id ? { width: 25, height: 25} : { width: 20, height: 20 };
     const color = document.body.classList.contains('dark') ? "black" : "white";
@@ -61,13 +81,14 @@ export const NodeComponent: React.FC<NodeComponentProps> = ({
                 onMouseLeave={handleNodeHoverLeave}
             />
 
-            <circle
-                cx={node.xCoord + iconSize.width / 2}
-                cy={node.yCoord - iconSize.height / 2}
-                r="6"
-                fill="red"
-                style={{cursor: 'pointer'}}
-            />
+            {showServiceIndicator && (
+                <circle
+                    cx={node.xCoord + iconSize.width / 2}
+                    cy={node.yCoord - iconSize.height / 2}
+                    r="6"
+                    fill="red"
+                />
+            )}
             {displayName(node)}
         </g>
     );

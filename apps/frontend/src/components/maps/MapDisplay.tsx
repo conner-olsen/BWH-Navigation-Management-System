@@ -5,7 +5,6 @@ import axios   from "axios";
 import "./animation.css";
 import { Node } from "common/src/node.ts";
 import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
-import {iconPaths} from "./IconPath.tsx";
 import { NodeComponent } from './NodeComponent.tsx';
 
 interface MapDisplayProps {
@@ -232,7 +231,6 @@ function MapDisplay({
                             key={node.id}
                             node={node}
                             hoverNodeId={hoverNodeId}
-                            iconPaths={iconPaths}
                             handleNodeClick={handleNodeClick}
                             handleNodeHover={handleNodeHover}
                             handleNodeHoverLeave={handleNodeHoverLeave}
