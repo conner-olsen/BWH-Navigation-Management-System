@@ -85,7 +85,7 @@ export interface employee {
   email: string;
 }
 
-interface NodeVisit {
+export interface NodeVisit {
   nodeId: string;
   count: number;
 }

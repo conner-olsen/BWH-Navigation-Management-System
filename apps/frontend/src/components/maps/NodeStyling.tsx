@@ -1,37 +1,79 @@
-import React, {useEffect, useState} from 'react';
-import {Graph} from 'common/src/graph.ts';
-//import {PathfindingStrategy} from "common/src/pathfinding-strategy.ts";
-import axios   from "axios";
+import React, {ReactNode, useEffect, useState} from 'react';
+
 import "./animation.css";
-import { Node } from "common/src/node.ts";
-import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
-import {iconPaths} from "./IconPath.tsx";
+import {Node} from "common/src/node.ts";
+import {NodeVisit} from "common/src/interfaces/interfaces.ts";
+import axios from "axios";
 
-export default function nodeStyling({}){
+export function NodeStyling(props: {
+    node: Node,
+    iconSize: { width: number; height: number },
+    href: string,
+    onClick: () => void,
+    onMouseEnter: () => void,
+    onMouseLeave: () => void,
+    element: ReactNode
+}) {
+    const [nodeArray, setNodeArray] = useState<NodeVisit[] | null>(null);
+    const [HeatMap, ] = useState<boolean>(false);
+    useEffect(() => {
+        // Fetch node data from API
+        axios.get('/api/heat-map')
+            .then(res => {
+                setNodeArray(res.data);
+            })
+            .catch(error => {
+                console.error('Error fetching node data:', error);
+            });
+    }, []); // Run once when component mounts
 
-    return (
-        <g key={node.id}>
-        <rect
-            x={node.xCoord - iconSize.width / 2}
-            y={node.yCoord - iconSize.height / 2}
-            width={iconSize.width}
-            height={iconSize.height}
-            fill="white"
-            style={{cursor: 'pointer'}}
+    // Function to calculate box shadow color based on count
+    const getBoxShadowColor = (count: number): string => {
+        if (count >= 10) {
+            return 'red';
+        } else if (count >= 5) {
+            return 'orange';
+        } else {
+            return 'green';
+        }
+    };
+
+    // Function to get count for the current node from nodeArray
+    const getNodeCount = (node: Node): number | undefined => {
+        if (nodeArray) {
+            const nodeVisit = nodeArray.find(nodeVisit => nodeVisit.nodeId === node.id);
+            if (nodeVisit) {
+                return nodeVisit.count;
+            }
+        }
+        return undefined;
+    };
+
+    const boxShadowColor = getNodeCount(props.node);
+
+    return <g>
+
+        <rect className={HeatMap ? "" : "fill-blue-100 dark:fill-blue-900"}
+              x={props.node.xCoord - props.iconSize.width / 2}
+              y={props.node.yCoord - props.iconSize.height / 2}
+              width={props.iconSize.width}
+              height={props.iconSize.height}
+              fill={boxShadowColor ? getBoxShadowColor(boxShadowColor) : 'green'}
+              rx="3"
+              style={{cursor: "pointer"}}
         />
         <image
-            href={iconPath}
-            x={node.xCoord - iconSize.width / 2}
-            y={node.yCoord - iconSize.height / 2}
-            width={iconSize.width}
-            height={iconSize.height}
-            style={{cursor: 'pointer'}}
-            onClick={() => handleNodeClick(node)}
-            onMouseEnter={() => handleNodeHover(node)}
-            onMouseLeave={() => handleNodeHoverLeave()}
+            href={props.href}
+            x={props.node.xCoord - props.iconSize.width / 2}
+            y={props.node.yCoord - props.iconSize.height / 2}
+            width={props.iconSize.width}
+            height={props.iconSize.height}
+            style={{cursor: "pointer"}}
+            onClick={props.onClick}
+            onMouseEnter={props.onMouseEnter}
+            onMouseLeave={props.onMouseLeave}
         />
-        {displayName(node)}
-    </g>);
-
-};
+        {props.element}
+    </g>;
+}
 
