@@ -9,7 +9,7 @@ generator client {
 
 datasource db {
     provider = "postgresql"
-    url      = "postgresql://teamD:teamD500@team-d-prod.cxceq2y8wkrm.us-east-2.rds.amazonaws.com:5432/postgres?schema=public"
+    url      = "postgresql://teamd:teamd50@database.cs.wpi.edu:5432/teamddb?schema=teamdschema"
 }
 
 //Node Table
