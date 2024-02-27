@@ -628,7 +628,7 @@ export function MapComponent() {
                                checked={doDisplayHalls}/>
                         <label htmlFor="display-halls-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-nodes-icon.png" alt="edge-bg"
+                            <img src="../../public/icon/halls.png" alt="edge-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Halls</p>
                         </label>
