@@ -20,7 +20,7 @@ import NavMapPage from "../routes/NavMapPage.tsx";
 import ReactDOM from "react-dom";
 import MapDisplay3D from "./maps/3DMapDisplay.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
-//import ClearPathButton from "./ClearPathButton.tsx";
+import Legend from "./maps/3DLegend.tsx";
 
 
 export function MapComponent() {
@@ -35,6 +35,7 @@ export function MapComponent() {
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
   const [do3D, set3D] = useState<boolean>(false);
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
+  const [animationOn, setAnimationOn] = useState(true);
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
 
   const [showAlert, setShowAlert] = useState(false);
@@ -52,6 +53,7 @@ export function MapComponent() {
 
   const handleAccessibilityToggle = () => {
     setAccessibilityRoute(doAccessible => !doAccessible);
+    clearGuidelines();
     console.log("do accessible to " + accessibilityRoute);
   };
 
@@ -356,7 +358,7 @@ export function MapComponent() {
                         <MapDisplay3D key={mapKey} floorMap={nodeFloorToURL(floor)} floor={floor}
                                       startNode={startNode} endNode={endNode}
                                       pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                      pathSent={pathfindingResult}
+                                      pathSent={pathfindingResult} animationOn={animationOn}
                                       mapChange={(mapID) => {setMap(nodeFloorToMapFloor(mapID)); set3D(false); setIsExpanded(true);}}/>
                     </div>
                 </div>
@@ -365,11 +367,15 @@ export function MapComponent() {
 
         function renderFloors(floorArray: string[]): void {
             const floorOrder: string[] = ["3", "2", "1", "L1", "L2"];
+            // const numberOfFloors = floorArray.length;
+            const offset = 400;
+
             const wrapper: HTMLElement | null = document.getElementById("3d-wrapper");
             let marginTopOffset = 0;
             let z_index = 9;
 
             if (wrapper) {
+
                 // Remove existing floor elements
                 floorOrder.forEach(floor => {
                     const existingFloorElement = document.getElementById(floor);
@@ -385,7 +391,7 @@ export function MapComponent() {
                 floorOrder.forEach(floor => {
                     if (floorArray.includes(floor)) {
                         floorComponents.push(<FloorComponent key={floor} floor={floor} marginTop={marginTopOffset} z_index={z_index}/>);
-                        marginTopOffset += 400;
+                        marginTopOffset += offset;
                         z_index--;
                     }
                 });
@@ -398,7 +404,7 @@ export function MapComponent() {
         }
 
         renderFloors(filterDuplicates(pathfindingResult));
-    }, [mapKey, startNode, endNode, pathFindingType, pathfindingResult]);
+    }, [mapKey, startNode, endNode, pathFindingType, pathfindingResult, animationOn]);
 
   return (
     <div>
@@ -959,7 +965,15 @@ export function MapComponent() {
         </div>
 
         {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
-        <div className={`max-w-[1000px] m-auto
+        <div className={`${(do3D && startNode !== "" && endNode !== "") ? '' : "hidden"} relative`}>
+            <Legend></Legend>
+            <div className={"fixed w-[250px] right-[20px] top-[350px] flex py-2 px-4 justify-between z-40 border-2 border-neutral-500 rounded-md bg-background"}>
+                <span>Show Animation</span>
+                <Switch defaultChecked={animationOn}
+                onCheckedChange={() => {setAnimationOn(!animationOn);clearGuidelines();}}></Switch>
+            </div>
+        </div>
+        <div className={`max-w-[1000px] m-auto relative overflow-hidden max-h-[1400px]
                             ${(do3D && startNode !== "" && endNode !== "") ? '' : "relative z-[-1] max-h-[10px] overflow-hidden"}`}
              id="3d-wrapper">
         </div>
