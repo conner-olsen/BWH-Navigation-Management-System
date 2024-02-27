@@ -16,8 +16,19 @@ export function NodeStyling(props: {
 }) {
     const [nodeArray, setNodeArray] = useState<NodeVisit[] | null>(null);
     const [HeatMap, ] = useState<boolean>(false);
+
     useEffect(() => {
-        // Fetch node data from API
+        // Fetch node data from API initially
+        fetchData();
+
+        // Fetch node data every 5 seconds
+        const intervalId = setInterval(fetchData, 5000);
+
+        // Clear interval on component unmount
+        return () => clearInterval(intervalId);
+    }, []); // Run once when component mounts
+
+    const fetchData = () => {
         axios.get('/api/heat-map')
             .then(res => {
                 setNodeArray(res.data);
@@ -25,7 +36,7 @@ export function NodeStyling(props: {
             .catch(error => {
                 console.error('Error fetching node data:', error);
             });
-    }, []); // Run once when component mounts
+    };
 
     // Function to calculate box shadow color based on count
     const getBoxShadowColor = (count: number): string => {
@@ -53,7 +64,7 @@ export function NodeStyling(props: {
 
     return <g>
 
-        <rect className={HeatMap ? "" : "fill-blue-100 dark:fill-blue-900"}
+        <rect className={HeatMap ? "" : ""}
               x={props.node.xCoord - props.iconSize.width / 2}
               y={props.node.yCoord - props.iconSize.height / 2}
               width={props.iconSize.width}
