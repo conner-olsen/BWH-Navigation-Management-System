@@ -5,7 +5,8 @@ import TeamCard from "../components/TeamCard.tsx";
 import { Card } from "../components/ui/card.tsx";
 import GlobalFooter from "../components/GlobalFooter.tsx";
 import { useEffect } from "react";
-// import {SwipeCarousel} from "../components/SwipeCarousel.tsx";
+import {SwipeCarousel} from "../components/SwipeCarousel.tsx";
+import {Carousel, CarouselItem, CarouselContent} from "../components/ui/carousel.tsx";
 const AboutPage = () => {
 
     const controls = useAnimation(); // Initialize animation controls
@@ -22,8 +23,124 @@ const AboutPage = () => {
     }, [controls]);
 
     return (
-        <div>
-            {/*<SwipeCarousel></SwipeCarousel>*/}
+        <>
+            <SwipeCarousel></SwipeCarousel>
+
+            <div className="flex justify-center items-center overflow-hidden">
+                <Carousel className={"max-w-screen justify-content-center align-items-center"}>
+                    <CarouselContent className={"-ml-5"}>
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                                <TeamCard name={"Conner Olsen"} role={"Lead Software Engineer"}
+                                          bio={"Class of 2026, Computer Science & Mathematics"}
+                                          image={"public/teamImages/Conner_Olsen.png"}>
+                                </TeamCard>
+                            </div>
+                        </CarouselItem>
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                                <TeamCard name={"Karish Gupta"} role={"Assistant Team Lead"}
+                                          bio={"Class of 2026, Computer Science & Data Science"}
+                                          image={"public/teamImages/KARISH_GUPTA.jpg"}>
+                                </TeamCard>
+                            </div>
+                        </CarouselItem>
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                                <TeamCard name={"Max Gosselin"} role={"Assistant Team Lead"}
+                                          bio={"Class of 2026, Computer Science & Data  Science"}
+                                          image={"public/teamImages/Max.png"}>
+                                </TeamCard>
+                            </div>
+                        </CarouselItem>
+
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                                <TeamCard name={"Shivank Gupta"} role={"Scrum Master"}
+                                          bio={"Class of 2024, Mechanical and Robotics Engineering"}
+                                          image={"public/teamImages/Shivank.jpeg"}>
+                                </TeamCard>
+                            </div>
+                        </CarouselItem>
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                                <TeamCard name={"Tanya Khan"} role={"Product Owner"}
+                                          bio={"Class of 2025, Computer Science and IMGD"}
+                                          image={"public/teamImages/TanyaKhan.jpg"}>
+                                </TeamCard>
+                            </div>
+                        </CarouselItem>
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                                <TeamCard name={"Aiden Deady"} role={"Documentation Analyst"}
+                                          bio={"Class of 2024, Robotics Engineering"}
+                                          image={"public/teamImages/Aiden.JPG"}>
+                                </TeamCard>
+                            </div>
+                        </CarouselItem>
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                            <TeamCard name={"William Smith"} role={"Project Manager"}
+                                      bio={"Class of 2025, Interactive Media and Game Development"}
+                                      image={"public/teamImages/WilliamSmith.jpg"}
+                                      quote={'"'}>
+                            </TeamCard>
+                            </div>
+                        </CarouselItem>
+
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                            <TeamCard name={"Minh Bui"} role={"Full-Time Software Engineer"}
+                                      bio={"Class of 2026, Computer Science"}
+                                      image={"public/teamImages/Minh_Bui.JPG"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
+                        </CarouselItem>
+
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                            <TeamCard name={"Ceci Herriman"} role={"Full-Time Software Engineer"}
+                                      bio={"Class of 2026, Computer Science"}
+                                      image={"public/teamImages/Ceci.jpeg"}
+                                      quote={'"'}>
+                            </TeamCard>
+                            </div>
+                        </CarouselItem>
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                                <TeamCard name={"James Walden"} role={"Full-Time Software Engineer"}
+                                      bio={"Class of 2026, Computer Science"}
+                                      image={"public/teamImages/James.jpeg"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
+                        </CarouselItem>
+
+                        <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                            <div className="p-1">
+                            <TeamCard name={"Steven Gao"} role={"Full-Time Software Engineer"}
+                                      bio={"Class of 2026, Computer Science"}
+                                      image={"public/teamImages/Steven.png"}
+                                      quote={'"'}>
+                            </TeamCard>
+                        </div>
+                        </CarouselItem>
+
+                    </CarouselContent>
+                </Carousel>
+            </div>
+
+
 
             <div className="container text-center">
                 <Row>
@@ -170,7 +287,7 @@ const AboutPage = () => {
             </Container>
 
 
-        </div>
+        </>
 );
 };
 

@@ -1,61 +1,12 @@
 import {motion, useMotionValue} from "framer-motion";
 import {useState} from "react";
-import TeamCard from "./TeamCard.tsx";
-import {Container, Row} from "react-bootstrap";
 
-const sets = [
-    () => (
-        <Container>
-            <Row>
-                <div className="col mb-4">
-                    <TeamCard name={"Conner Olsen"} role={"Lead Software Engineer"}
-                              bio={"Class of 2026, Computer Science & Mathematics"}
-                              image={"public/teamImages/Conner_Olsen.png"}>
-                    </TeamCard>
-                </div>
-
-                <div className="col mb-4">
-                    <TeamCard name={"Karish Gupta"} role={"Assistant Team Lead"}
-                              bio={"Class of 2026, Computer Science & Data Science"}
-                              image={"public/teamImages/KARISH_GUPTA.jpg"}>
-                    </TeamCard>
-                </div>
-
-                <div className="col mb-4">
-                    <TeamCard name={"Max Gosselin"} role={"Assistant Team Lead"}
-                              bio={"Class of 2026, Computer Science & Data  Science"}
-                              image={"public/teamImages/Max.png"}>
-                    </TeamCard>
-                </div>
-            </Row>
-        </Container>
-    ),
-    () => (
-        <Container>
-            <Row>
-                <div className="col mb-4">
-                    <TeamCard name={"Shivank Gupta"} role={"Scrum Master"}
-                              bio={"Class of 2024, Mechanical and Robotics Engineering"}
-                              image={"public/teamImages/Shivank.jpeg"}>
-                    </TeamCard>
-                </div>
-
-                <div className="col mb-4">
-                    <TeamCard name={"Tanya Khan"} role={"Product Owner"}
-                              bio={"Class of 2025, Computer Science and IMGD"}
-                              image={"public/teamImages/TanyaKhan.jpg"}>
-                    </TeamCard>
-                </div>
-
-                <div className="col mb-4">
-                    <TeamCard name={"Aiden Deady"} role={"Documentation Analyst"}
-                              bio={"Class of 2024, Robotics Engineering"}
-                              image={"public/teamImages/Aiden.JPG"}>
-                    </TeamCard>
-                </div>
-            </Row>
-        </Container>
-    )
+const sources = [
+    "public/carousel/building.jpeg",
+    "public/carousel/caring.jpeg",
+    "public/carousel/dystopian.jpg",
+    "public/carousel/oppenheimer.jpg",
+    "public/carousel/stretcher.jpg",
 ];
 
 const DRAG_BUFFER = 50;
@@ -74,7 +25,7 @@ export const SwipeCarousel = () => {
 
         const x = dragX.get();
 
-        if (x <= -DRAG_BUFFER && imgIndex < sets.length - 1) {
+        if (x <= -DRAG_BUFFER && imgIndex < sources.length - 1) {
             setImgIndex((pv) => pv + 1);
         } else if (x >= DRAG_BUFFER && imgIndex > 0) {
             setImgIndex((pv) => pv - 1);
@@ -94,9 +45,28 @@ export const SwipeCarousel = () => {
                 onDragEnd={onDragEnd}
                 className={"flex items-center cursor-grab active:cursor-grabbing "}>
 
-                {sets[imgIndex]()}
-
+                <Images />
             </motion.div>
         </div>
+    );
+};
+
+const Images = () => {
+    return (
+        <>
+            {sources.map((image, index) => {
+                return (
+                    <div key={index}
+                         style={{
+                             backgroundImage: `url(${image})`,
+                             backgroundSize: "cover",
+                             backgroundPosition: "center"
+                         }}
+                        className={"aspect-video w-screen shrink-0 rounded-xl bg-neutral-850 object-cover"}
+                         />
+                );
+            }
+            )}
+        </>
     );
 };
