@@ -384,7 +384,7 @@ export function MapComponent() {
                 floorOrder.forEach(floor => {
                     if (floorArray.includes(floor)) {
                         floorComponents.push(<FloorComponent key={floor} floor={floor} marginTop={marginTopOffset} z_index={z_index}/>);
-                        marginTopOffset += 200;
+                        marginTopOffset += 400;
                         z_index--;
                     }
                 });
@@ -941,7 +941,7 @@ export function MapComponent() {
         </div>
 
         {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
-        <div className={`max-w-[800px] m-auto
+        <div className={`max-w-[1000px] m-auto
                             ${(do3D && startNode !== "" && endNode !== "") ? '' : "relative z-[-1] max-h-[10px] overflow-hidden"}`}
              id="3d-wrapper">
         </div>
