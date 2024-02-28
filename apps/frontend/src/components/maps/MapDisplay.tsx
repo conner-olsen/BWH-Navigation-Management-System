@@ -7,6 +7,7 @@ import { Node } from "common/src/node.ts";
 import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
 import {iconPaths} from "./IconPath.tsx";
 import {NodeStyling} from "./NodeStyling.tsx";
+import {NodeVisit} from "common/src/interfaces/interfaces.ts";
 
 interface MapDisplayProps {
   floorMap: string;
@@ -47,6 +48,7 @@ function MapDisplay({
   setChosenNode
 }: Readonly<MapDisplayProps>) {
   const [graph, setGraph] = useState<Graph>(new Graph());
+  const [heatmap, setHeatmap] = useState<NodeVisit[]>([]);
   const [startNodeId, setStartNodeId] = useState<string | null>(null);
   const [endNodeId, setEndNodeId] = useState<string | null>(null);
   const [path, setPath] = useState<string[]>([]);
@@ -56,6 +58,16 @@ function MapDisplay({
 
 
   useEffect(() => {
+      axios.get('/api/heat-map')
+          .then(res => {
+              const tempHeatmap = res.data;
+              if (tempHeatmap) {
+                  setHeatmap(res.data);
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching node data:', error);
+          });
     axios.get("/api/graph").then((res) => {
       const populatedGraph = new Graph();
       populatedGraph.populateGraph(res.data.nodes, res.data.edges);
@@ -246,13 +258,13 @@ function MapDisplay({
         return (
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes) {
-                    let iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
+                    const iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
                     const iconSize = hoverNodeId === node.id ? { width: 25, height: 25} : { width: 20, height: 20 };  // Example sizes, adjust as needed
 
                     return (
                         <NodeStyling key={node.id} node={node} iconSize={iconSize} href={iconPath}
                                      onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)}
-                                     onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}/>
+                                     onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)} heatmap={heatmap} useHeatMap={true}/>
                     );
                 }
                 return null; // Return null for map elements that don't meet the condition

@@ -6,7 +6,6 @@ const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
   const path = req.body;
-  console.log("THIS IS WHAT PATH IS: " + JSON.stringify(path));
   try {
     for (const item of path) {
       const existingNodeVisit = await PrismaClient.nodeVisit.findFirst({
