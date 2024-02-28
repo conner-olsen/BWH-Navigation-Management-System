@@ -11,6 +11,7 @@ export class Node {
   readonly longName: string; // Long name of the node
   readonly shortName: string; // Short name of the node
   private _edges: Set<string>; // Set of node IDs that this node is connected to
+  heatIndex: number = 1;
   
 
   /**

@@ -45,7 +45,15 @@ export abstract class PathfindingStrategy {
         floorChangeCost = averageDistance * floorDifference * elevatorMultiplier;
       }
     }
-    return baseCost + floorChangeCost;
+
+    const averageHeatIndex = graph.getAverageHeatIndex();
+    let heatIndex = 1;
+    heatIndex = nodeB.heatIndex;
+    
+    const heatIndexMultiplier = (heatIndex / averageHeatIndex)*0.1;
+
+
+    return baseCost + floorChangeCost + heatIndexMultiplier;
   }
 
   isAccessible(currentNodeId: string, neighborId: string, graph: Graph): boolean {

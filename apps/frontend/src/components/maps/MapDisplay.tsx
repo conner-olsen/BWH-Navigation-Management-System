@@ -7,6 +7,7 @@ import { Node } from "common/src/node.ts";
 import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
 import {iconPaths} from "./IconPath.tsx";
 import {NodeStyling} from "./NodeStyling.tsx";
+import {NodeVisit} from "common/src/interfaces/interfaces.ts";
 
 interface MapDisplayProps {
   floorMap: string;
@@ -15,11 +16,13 @@ interface MapDisplayProps {
   endNode?: string;
   sendHoverMapPath: (path: PathfindingRequest) => void;
   sendClear: () => void;
+  sendMap: (mapID: string) => void;
   pathSent: Node[];
   doDisplayEdges: boolean;
   doDisplayNodes: boolean;
   doDisplayNames: boolean;
   doDisplayHalls: boolean;
+  doDisplayHeatMap: boolean;
   accessibilityRoute: boolean;
   pathFindingType: string;
   setChosenNode: (currentNode: Node) => void;
@@ -39,30 +42,57 @@ function MapDisplay({
   endNode,
   sendHoverMapPath,
   sendClear,
+    sendMap,
   pathFindingType,
   doDisplayEdges,
   doDisplayNodes,
   doDisplayNames,
     doDisplayHalls,
+    doDisplayHeatMap,
   pathSent,
   accessibilityRoute: doAccessible,
   setChosenNode
 }: Readonly<MapDisplayProps>) {
   const [graph, setGraph] = useState<Graph>(new Graph());
+  const [heatmap, setHeatmap] = useState<NodeVisit[]>([]);
   const [startNodeId, setStartNodeId] = useState<string | null>(null);
   const [endNodeId, setEndNodeId] = useState<string | null>(null);
   const [path, setPath] = useState<string[]>([]);
   const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
   const [nodeCount, setNodeCount] = useState<string>("Error");
+  const [averageHeatIndex, setAverageHeatIndex] = useState<number>(100);
+
+    useEffect(() => {
+        axios.get('/api/heat-map')
+            .then(res => {
+                const tempHeatmap = res.data;
+                if (tempHeatmap) {
+                    setHeatmap(res.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching node data:', error);
+            });
+    }, []);
   const [serviceRequest, setServiceRequest] = useState<string[]>([""]);
 
     useEffect(() => {
     axios.get("/api/graph").then((res) => {
       const populatedGraph = new Graph();
       populatedGraph.populateGraph(res.data.nodes, res.data.edges);
+        let average = 0;
+        for(const item of heatmap){
+            const node = populatedGraph.getNode(item.nodeId);
+            if (node) {
+                node.heatIndex = item.count;
+            }
+            average = item.count + average;
+        }
+        average = average / heatmap.length;
+        setAverageHeatIndex(average);
       setGraph(populatedGraph);
     });
-  }, []);
+  }, [heatmap]);
 
   useEffect(() => {
     if (startNode && endNode && graph) {
@@ -134,28 +164,49 @@ function MapDisplay({
         elementsArray.forEach((element) => element.remove());
     };
 
-  const handleNodeClick = (node: Node) => {
-    setChosenNode(node);
-    clearGuidelines();
+    const handleNodeClick = (node: Node) => {
+        // Clear the path if there is one
+        if (path.length > 0) {
+            setPath([]);
+        }
 
-    if (!startNodeId) {
-      setStartNodeId(node.id);
-      const path: PathfindingRequest = { startId: node.id, endId: "", strategy: pathFindingType, accessibilityRoute: doAccessible };
-      sendHoverMapPath(path);
-    } else if (node.id == startNodeId) {
-      clearSelection();
-    } else if (!endNodeId) {
-      setEndNodeId(node.id);
-      if (graph && startNodeId) {
-        setStartNodeId(startNodeId);
-        setEndNodeId(node.id);
-        const path: PathfindingRequest = { startId: startNodeId, endId: node.id, strategy: pathFindingType, accessibilityRoute: doAccessible };
-        sendHoverMapPath(path);
-      }
-    }
-  };
+        setChosenNode(node);
+        clearGuidelines();
 
-  const handleNodeHover = (node: Node) => {
+        if (!startNodeId) {
+            setStartNodeId(node.id);
+            const path: PathfindingRequest = { startId: node.id, endId: "", strategy: pathFindingType, accessibilityRoute: doAccessible };
+            sendHoverMapPath(path);
+        } else if (node.id === startNodeId) {
+            clearSelection();
+        } else if (!endNodeId) {
+            setEndNodeId(node.id);
+            if (graph && startNodeId) {
+                setStartNodeId(startNodeId);
+                setEndNodeId(node.id);
+                const path: PathfindingRequest = { startId: startNodeId, endId: node.id, strategy: pathFindingType, accessibilityRoute: doAccessible };
+                sendHoverMapPath(path);
+            }
+        }
+
+        if(startNodeId && endNodeId) {
+            let floorChanges = gatherFloorChangeNodes();
+            //if node clicked is involved in a floor change, change map to its
+            //associated floor (where it is going / came from)
+
+            if(floorChanges.has(node.id)) {
+                sendMap((floorChanges.get(node.id)) as string);
+            }
+
+            // Clear any existing selection if a different node is clicked
+            else if (startNodeId && startNodeId !== node.id) {
+                clearSelection();
+            }
+        }
+    };
+
+
+    const handleNodeHover = (node: Node) => {
     if (!hoverNodeId) {
       setHoverNodeId(node.id);
     }
@@ -166,6 +217,7 @@ function MapDisplay({
       setHoverNodeId(null);
     }
   };
+
   const displayHoverInfo = (node: Node) => {
     getCount(node);
     return (
@@ -272,6 +324,10 @@ function MapDisplay({
                                          onClick={() => handleNodeClick(node)}
                                          onMouseEnter={() => handleNodeHover(node)}
                                          onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}
+                                         heatmap={heatmap} useHeatMap={doDisplayHeatMap}
+                                         averageHeatIndex={averageHeatIndex}
+                            />
+                                         onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}
                                          nodesList={serviceRequest}/>
                         );
                     }
@@ -331,6 +387,26 @@ function MapDisplay({
       return edges;
     }
   };
+    const gatherFloorChangeNodes = (): Map<string, string> => {
+        let returnNodes: Map<string, string> = new Map<string, string>();
+        let previousFloor = pathSent[0].floor;
+
+        for(let i = 1; i < pathSent.length; i++) {
+            const currentFloor = pathSent[i].floor;
+
+            if (!(currentFloor == previousFloor)) {
+                //update map -- current node is linked to previous floor
+                //previous node is linked to current floor
+                returnNodes.set(pathSent[i].id, previousFloor);
+                returnNodes.set(pathSent[i - 1].id, currentFloor);
+                previousFloor = currentFloor;
+            }
+            else {
+                previousFloor = currentFloor;
+            }
+        };
+        return returnNodes;
+    };
 
     const gatherFloorChangeStrings = (): string[] => {
         const returnStrings: string[] = [];
@@ -367,15 +443,18 @@ function MapDisplay({
                         <g>
                             <rect className="dark:fill-indigo-800 z-20 fill-indigo-400" x={node.xCoord - 64}
                                   y={node.yCoord - 48}
-                                  width="125" height="28" rx="1" stroke="black" stroke-width="4">
+                                  width="125" height="28" rx="1" stroke="black" strokeWidth="4"
+                                  onClick={() => handleNodeClick(node)}>
                                 <animate
                                     attributeName="rx"
                                     values="0;13;0"
                                     dur="2s"
                                     repeatCount="indefinite"/>
+
                             </rect>
                             <text className="font-bold dark:invert" x={node.xCoord - 59}
-                                  y={node.yCoord - 28} fill="black">
+                                  y={node.yCoord - 28} fill="black"
+                                  onClick={() => handleNodeClick(node)}>
                                  {floorChanges[index]}
                      </text>
                     </g>

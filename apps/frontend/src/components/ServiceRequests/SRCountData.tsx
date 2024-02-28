@@ -1,77 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
 
-
-let countFlower: number = 0;
-let countCleaning: number = 0;
-let countExternal: number = 0;
-let countInternal: number = 0;
-let countLanguage: number = 0;
-let countReligious: number = 0;
 const CreateSRChart = () => {
+    const [counts, setCounts] = useState({
+        flower: 0,
+        religious: 0,
+        cleaning: 0,
+        internal: 0,
+        external: 0,
+        language: 0,
+    });
 
     useEffect(() => {
         const getCounts = async () => {
             try {
-                const responseFlower = await axios.get("/api/get-stats/type/flower", {
-                    headers: {
-                        "Content-Type": 'application/json'
-                    }
+                const responses = await Promise.all([
+                    axios.get("/api/get-stats/type/flower"),
+                    axios.get("/api/get-stats/type/religious"),
+                    axios.get("/api/get-stats/type/cleaning"),
+                    axios.get("/api/get-stats/type/internal-transportation"),
+                    axios.get("/api/get-stats/type/external-transportation"),
+                    axios.get("/api/get-stats/type/language"),
+                ]);
+
+                const counts = responses.map(response => response.data);
+                setCounts({
+                    flower: counts[0],
+                    religious: counts[1],
+                    cleaning: counts[2],
+                    internal: counts[3],
+                    external: counts[4],
+                    language: counts[5],
                 });
-                //console.log(responseFlower.data);
-                countFlower = responseFlower.data;
-
-                const responseReligious = await axios.get("/api/get-stats/type/religious", {
-                    headers: {
-                        "Content-Type": 'application/json'
-                    }
-                });
-                //console.log(responseReligious.data);
-                countReligious = responseReligious.data;
-
-
-                const responseCleaning = await axios.get("/api/get-stats/type/cleaning", {
-                    headers: {
-                        "Content-Type": 'application/json'
-                    }
-                });
-                //console.log(responseCleaning.data);
-                countCleaning = responseCleaning.data;
-
-                const responseInternal = await axios.get("/api/get-stats/type/internal-transportation", {
-                    headers: {
-                        "Content-Type": 'application/json'
-                    }
-                });
-                //console.log(responseInternal.data);
-                countInternal = responseInternal.data;
-
-                const responseExternal = await axios.get("/api/get-stats/type/external-transportation", {
-                    headers: {
-                        "Content-Type": 'application/json'
-                    }
-                });
-                //console.log(responseExternal.data);
-                countExternal = responseExternal.data;
-
-                const responseLanguage = await axios.get("/api/get-stats/type/language", {
-                    headers: {
-                        "Content-Type": 'application/json'
-                    }
-                });
-                //console.log(responseLanguage.data);
-                countLanguage = responseLanguage.data;
-
             } catch (error) {
                 console.error('Error getting data:', error);
             }
         };
 
-        getCounts().then();
-    }, []); // Empty dependency array to ensure the effect runs only once
-
+        getCounts();
+    }, []);
 
     // Create the chart data
     const statusData = {
@@ -79,7 +48,7 @@ const CreateSRChart = () => {
         datasets: [
             {
                 label: '# of Requests per Service',
-                data: [countFlower, countReligious, countCleaning, countInternal, countExternal, countLanguage],
+                data: [counts.flower, counts.religious, counts.cleaning, counts.internal, counts.external, counts.language],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
