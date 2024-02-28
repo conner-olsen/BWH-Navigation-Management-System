@@ -63,7 +63,9 @@ const AboutPage = () => {
                             <div className="p-1">
                                 <TeamCard name={"Conner Olsen"} role={"Lead Software Engineer"}
                                           bio={"Class of 2026, Computer Science & Mathematics"}
-                                          image={"public/teamImages/Conner_Olsen.png"}>
+                                          image={"public/teamImages/Conner_Olsen.png"}
+                                          quote={'"RUN yarn fix!!!"'}>
+
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -73,7 +75,7 @@ const AboutPage = () => {
                                 <TeamCard name={"Karish Gupta"} role={"Assistant Team Lead"}
                                           bio={"Class of 2026, Computer Science & Data Science"}
                                           image={"public/teamImages/KARISH_GUPTA.jpg"}
-                                          quote={' "People will forget what you said, people will forget what you did, but people will never forget how you made them feel" - Maya Angelou'}>
+                                          quote={'"People will forget what you said, people will forget what you did, but people will never forget how you made them feel" - Maya Angelou'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -82,7 +84,8 @@ const AboutPage = () => {
                             <div className="p-1">
                                 <TeamCard name={"Max Gosselin"} role={"Assistant Team Lead"}
                                           bio={"Class of 2026, Computer Science & Data  Science"}
-                                          image={"public/teamImages/Max.png"}>
+                                          image={"public/teamImages/Max.png"}
+                                          quote={'"Team first mentality"'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -92,7 +95,8 @@ const AboutPage = () => {
                             <div className="p-1">
                                 <TeamCard name={"Shivank Gupta"} role={"Scrum Master"}
                                           bio={"Class of 2024, Mechanical and Robotics Engineering"}
-                                          image={"public/teamImages/Shivank.jpeg"}>
+                                          image={"public/teamImages/Shivank.jpeg"}
+                                quote={'"It\'s scrum O\'Clock"'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -101,7 +105,8 @@ const AboutPage = () => {
                             <div className="p-1">
                                 <TeamCard name={"Tanya Khan"} role={"Product Owner"}
                                           bio={"Class of 2025, Computer Science and Interactive Media and Game Development"}
-                                          image={"public/teamImages/TanyaKhan.jpg"}>
+                                          image={"public/teamImages/TanyaKhan.jpg"}
+                                          quote={'"Sometimes all you can do is smile. Move on with your day, hold back the tears, and pretend you\'re ok"'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -110,7 +115,8 @@ const AboutPage = () => {
                             <div className="p-1">
                                 <TeamCard name={"Aiden Deady"} role={"Documentation Analyst"}
                                           bio={"Class of 2024, Robotics Engineering"}
-                                          image={"public/teamImages/Aiden.JPG"}>
+                                          image={"public/teamImages/Aiden.JPG"}
+                                quote={'"Of everyone on Golden State, open shot, the fate of the universe on the line, the Martians have the death beam pointed at earth, you better hit it, I WANT IGUODALA"'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -120,7 +126,7 @@ const AboutPage = () => {
                                 <TeamCard name={"William Smith"} role={"Project Manager"}
                                           bio={"Class of 2025, Interactive Media and Game Development"}
                                           image={"public/teamImages/WilliamSmith.jpg"}
-                                          quote={'"'}>
+                                          quote={'"Oh, that\'s funny. I never noticed that my name is Will Smith. Like the actor, yeah"'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -131,7 +137,7 @@ const AboutPage = () => {
                                 <TeamCard name={"Minh Bui"} role={"Full-Time Software Engineer"}
                                           bio={"Class of 2026, Computer Science"}
                                           image={"public/teamImages/Minh_Bui.JPG"}
-                                          quote={'"'}>
+                                          quote={'"TEAAAAAMMMM DDDDDDD"'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -142,7 +148,7 @@ const AboutPage = () => {
                                 <TeamCard name={"Ceci Herriman"} role={"Full-Time Software Engineer"}
                                           bio={"Class of 2026, Computer Science"}
                                           image={"public/teamImages/Ceci.jpeg"}
-                                          quote={'"'}>
+                                          quote={'"The inner-machinations of my mind are an enigma"'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -152,7 +158,7 @@ const AboutPage = () => {
                                 <TeamCard name={"James Walden"} role={"Full-Time Software Engineer"}
                                           bio={"Class of 2026, Computer Science"}
                                           image={"public/teamImages/James.jpeg"}
-                                          quote={'"'}>
+                                          quote={'"I\'m the Trash Man! I come out, I throw trash all over the- all over the ring! And then I start eatin\' garbage! And then I pick up the trash can, and I bash the guy on the head"'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -162,7 +168,7 @@ const AboutPage = () => {
                                 <TeamCard name={"Steven Gao"} role={"Full-Time Software Engineer"}
                                           bio={"Class of 2026, Computer Science"}
                                           image={"public/teamImages/Steven.png"}
-                                          quote={'"'}>
+                                          quote={'"Hello World"'}>
                                 </TeamCard>
                             </div>
                         </CarouselItem>
@@ -328,8 +334,8 @@ const AboutPage = () => {
                             <TeamCard name={"Conner Olsen"} role={"Lead Software Engineer"}
                                       bio={"Class of 2026, Computer Science & Mathematics"}
                                       image={"public/teamImages/Conner_Olsen.png"}
-                                      quote={' "The only way to do great work is to love what you do" Steve Jobs'}
-                            >
+                                      quote={'"RUN yarn fix!!!"'}>
+
                             </TeamCard>
                         </div>
 
@@ -337,7 +343,7 @@ const AboutPage = () => {
                             <TeamCard name={"Karish Gupta"} role={"Assistant Team Lead"}
                                       bio={"Class of 2026, Computer Science & Data Science"}
                                       image={"public/teamImages/KARISH_GUPTA.jpg"}
-                                      quote={' "People will forget what you said, people will forget what you did, but people will never forget how you made them feel" - Maya Angelou'}>
+                                      quote={'"People will forget what you said, people will forget what you did, but people will never forget how you made them feel" - Maya Angelou'}>
                             </TeamCard>
                         </div>
 
@@ -345,7 +351,7 @@ const AboutPage = () => {
                             <TeamCard name={"Max Gosselin"} role={"Assistant Team Lead"}
                                       bio={"Class of 2026, Computer Science & Data  Science"}
                                       image={"public/teamImages/Max.png"}
-                                      quote={' "The only way to do great work is to love what you do" Steve Jobs'}>
+                                      quote={'"Team first mentality"'}>
                             </TeamCard>
                         </div>
 
@@ -358,7 +364,7 @@ const AboutPage = () => {
                             <TeamCard name={"Shivank Gupta"} role={"Scrum Master"}
                                       bio={"Class of 2024, Mechanical and Robotics Engineering"}
                                       image={"public/teamImages/Shivank.jpeg"}
-                                      quote={'"'}>
+                                      quote={'"It\'s scrum O\'Clock"'}>
                             </TeamCard>
                         </div>
 
@@ -366,15 +372,15 @@ const AboutPage = () => {
                             <TeamCard name={"Tanya Khan"} role={"Product Owner"}
                                       bio={"Class of 2025, Computer Science and Interactive Media and Game Development"}
                                       image={"public/teamImages/TanyaKhan.jpg"}
-                                      quote={'"'}>
+                                      quote={'"Sometimes all you can do is smile. Move on with your day, hold back the tears, and pretend you\'re ok"'}>
                             </TeamCard>
                         </div>
 
                         <div className="col mb-4">
                             <TeamCard name={"Aiden Deady"} role={"Documentation Analyst"}
-                                      bio={"Class of 2024, Robotics Engineering and Mechanical Engineering"}
+                                      bio={"Class of 2024, Robotics Engineering"}
                                       image={"public/teamImages/Aiden.JPG"}
-                                      quote={'"'}>
+                                      quote={'"Of everyone on Golden State, open shot, the fate of the universe on the line, the Martians have the death beam pointed at earth, you better hit it, I WANT IGUODALA"'}>
                             </TeamCard>
                         </div>
 
@@ -382,7 +388,7 @@ const AboutPage = () => {
                             <TeamCard name={"William Smith"} role={"Project Manager"}
                                       bio={"Class of 2025, Interactive Media and Game Development"}
                                       image={"public/teamImages/WilliamSmith.jpg"}
-                                      quote={'"'}>
+                                      quote={'"Oh, that\'s funny. I never noticed that my name is Will Smith. Like the actor, yeah"'}>
                             </TeamCard>
                         </div>
 
@@ -396,7 +402,7 @@ const AboutPage = () => {
                             <TeamCard name={"Minh Bui"} role={"Full-Time Software Engineer"}
                                       bio={"Class of 2026, Computer Science"}
                                       image={"public/teamImages/Minh_Bui.JPG"}
-                                      quote={'"'}>
+                                      quote={'"TEAAAAAMMMM DDDDDDD"'}>
                             </TeamCard>
                         </div>
 
@@ -405,7 +411,7 @@ const AboutPage = () => {
                             <TeamCard name={"Ceci Herriman"} role={"Full-Time Software Engineer"}
                                       bio={"Class of 2026, Computer Science"}
                                       image={"public/teamImages/Ceci.jpeg"}
-                                      quote={'"'}>
+                                      quote={'"The inner-machinations of my mind are an enigma"'}>
                             </TeamCard>
                         </div>
 
@@ -413,14 +419,14 @@ const AboutPage = () => {
                             <TeamCard name={"James Walden"} role={"Full-Time Software Engineer"}
                                       bio={"Class of 2026, Computer Science"}
                                       image={"public/teamImages/James.jpeg"}
-                                      quote={'"'}>
+                                      quote={'"I\'m the Trash Man! I come out, I throw trash all over the ring! And then I start eatin\' garbage! And then I pick up the trash can, and I bash the guy on the head"'}>
                             </TeamCard>
                         </div>
                         <div className="col mb-4">
                             <TeamCard name={"Steven Gao"} role={"Full-Time Software Engineer"}
                                       bio={"Class of 2026, Computer Science"}
                                       image={"public/teamImages/Steven.png"}
-                                      quote={'"'}>
+                                      quote={'"Hello World"'}>
                             </TeamCard>
                         </div>
 
