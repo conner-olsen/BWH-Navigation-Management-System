@@ -6,8 +6,11 @@ const MapLegend = () => {
         <div
             className={`fixed bottom-[0px] mb-2.5 mr-2.5 right-[0px] flex flex-col bg-background rounded-xl z-10`}>
             <HoverCard openDelay={100}>
-                <HoverCardTrigger className="w-[80px] h-[80px] flex justify-center items-center no-underline text-foreground relative cursor-pointer group">
-                    <p className="absolute bottom-[5px] text-[12px] font-bold m-0">Legend</p>
+                <HoverCardTrigger
+                    className="w-[80px] h-[80px] flex justify-center items-center no-underline text-foreground relative cursor-pointer group">
+                    <p className="absolute bottom-[5px] text-[12px] font-bold m-0 z-10">Legend</p>
+                    <img src="public/map-legend-bg.png" alt="map-bg"
+                         className="dark:brightness-75 group-hover:scale-[0.9] transition-all duration-200"></img>
                 </HoverCardTrigger>
 
                 <HoverCardContent side="right" className="pb-2 z-40">
