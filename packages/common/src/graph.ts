@@ -9,6 +9,7 @@ export class Graph {
   nodes: Map<string, Node>; // Map of node IDs to Node objects
   private pathfindingStrategy: PathfindingStrategy;
   private averageDistance: number | null = null; // Store the average distance
+  private averageHeatIndex: number = 1;
 
   /**
    * Create a new Graph, optionally with a custom pathfinding strategy.
@@ -179,5 +180,13 @@ export class Graph {
     });
   
     return edgeCount > 0 ? Math.round(totalDistance / edgeCount) : 0;
+  }
+
+  setAverageHeatIndex(heatIndex: number) {
+    this.averageHeatIndex = heatIndex;
+  }
+
+  getAverageHeatIndex(): number {
+    return this.averageHeatIndex;
   }
 }

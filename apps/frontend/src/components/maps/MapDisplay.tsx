@@ -7,6 +7,7 @@ import { Node } from "common/src/node.ts";
 import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
 import {iconPaths} from "./IconPath.tsx";
 import {NodeStyling} from "./NodeStyling.tsx";
+import {NodeVisit} from "common/src/interfaces/interfaces.ts";
 
 interface MapDisplayProps {
   floorMap: string;
@@ -21,6 +22,7 @@ interface MapDisplayProps {
   doDisplayNodes: boolean;
   doDisplayNames: boolean;
   doDisplayHalls: boolean;
+  doDisplayHeatMap: boolean;
   accessibilityRoute: boolean;
   pathFindingType: string;
   setChosenNode: (currentNode: Node) => void;
@@ -46,26 +48,47 @@ function MapDisplay({
   doDisplayNodes,
   doDisplayNames,
     doDisplayHalls,
+    doDisplayHeatMap,
   pathSent,
   accessibilityRoute: doAccessible,
   setChosenNode
 }: Readonly<MapDisplayProps>) {
   const [graph, setGraph] = useState<Graph>(new Graph());
+  const [heatmap, setHeatmap] = useState<NodeVisit[]>([]);
   const [startNodeId, setStartNodeId] = useState<string | null>(null);
   const [endNodeId, setEndNodeId] = useState<string | null>(null);
   const [path, setPath] = useState<string[]>([]);
   const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
   const [nodeCount, setNodeCount] = useState<string>("Error");
+  const [averageHeatIndex, setAverageHeatIndex] = useState<number>(100);
 
-
+    useEffect(() => {
+        axios.get('/api/heat-map')
+            .then(res => {
+                const tempHeatmap = res.data;
+                if (tempHeatmap) {
+                    setHeatmap(res.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching node data:', error);
+            });
+    }, []);
 
   useEffect(() => {
     axios.get("/api/graph").then((res) => {
       const populatedGraph = new Graph();
       populatedGraph.populateGraph(res.data.nodes, res.data.edges);
+        let average = 0;
+        for(const item of heatmap){
+            populatedGraph.getNode(item.nodeId)?.setHeatIndex(item.count);
+            average = item.count + average;
+        }
+        average = average / heatmap.length;
+        setAverageHeatIndex(average);
       setGraph(populatedGraph);
     });
-  }, []);
+  }, [heatmap]);
 
   useEffect(() => {
     if (startNode && endNode && graph) {
@@ -277,14 +300,17 @@ function MapDisplay({
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes) {
                     if(!(node.nodeType == "HALL") || (node.nodeType == "HALL" && doDisplayHalls)) {
-                        let iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
+                        const iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
                         const iconSize = hoverNodeId === node.id ? {width: 25, height: 25} : {width: 20, height: 20};  // Example sizes, adjust as needed
 
                         return (
                             <NodeStyling key={node.id} node={node} iconSize={iconSize} href={iconPath}
                                          onClick={() => handleNodeClick(node)}
                                          onMouseEnter={() => handleNodeHover(node)}
-                                         onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}/>
+                                         onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}
+                                         heatmap={heatmap} useHeatMap={doDisplayHeatMap}
+                                         averageHeatIndex={averageHeatIndex}
+                            />
                         );
                     }
                 }
