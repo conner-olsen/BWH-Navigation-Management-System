@@ -115,7 +115,7 @@ const AboutPage = () => {
                             <div className="p-1">
                                 <TeamCard name={"Aiden Deady"} role={"Documentation Analyst"}
                                           bio={"Class of 2024, Robotics Engineering"}
-                                          image={"public/teamImages/Aiden.JPG"}
+                                          image={"public/teamImages/Aiden.png"}
                                 quote={'"Of everyone on Golden State, open shot, the fate of the universe on the line, the Martians have the death beam pointed at earth, you better hit it, I WANT IGUODALA"'}>
                                 </TeamCard>
                             </div>
@@ -136,7 +136,7 @@ const AboutPage = () => {
                             <div className="p-1">
                                 <TeamCard name={"Minh Bui"} role={"Full-Time Software Engineer"}
                                           bio={"Class of 2026, Computer Science"}
-                                          image={"public/teamImages/Minh_Bui.JPG"}
+                                          image={"public/teamImages/Minh_Bui.png"}
                                           quote={'"TEAAAAAMMMM DDDDDDD"'}>
                                 </TeamCard>
                             </div>

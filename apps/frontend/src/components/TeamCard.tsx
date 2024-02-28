@@ -29,7 +29,7 @@ const TeamCard = (props: { name: string, role: string, bio?: string, image: stri
                          alt={props.name}
                          className="object-cover w-48 h-48 block mx-auto rounded-full border-4 border-blue-900 shadow-md" />
                 </CardContent>
-                <CardDescription className={"text-center"}>
+                <CardDescription className={"text-center dark:text-neutral-200"}>
                     {props.bio}
                 </CardDescription>
                 <CardFooter>{props.role}</CardFooter>
