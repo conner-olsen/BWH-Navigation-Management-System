@@ -20,6 +20,7 @@ interface MapDisplayProps {
   doDisplayEdges: boolean;
   doDisplayNodes: boolean;
   doDisplayNames: boolean;
+  doDisplayHalls: boolean;
   accessibilityRoute: boolean;
   pathFindingType: string;
   setChosenNode: (currentNode: Node) => void;
@@ -44,6 +45,7 @@ function MapDisplay({
   doDisplayEdges,
   doDisplayNodes,
   doDisplayNames,
+    doDisplayHalls,
   pathSent,
   accessibilityRoute: doAccessible,
   setChosenNode
@@ -74,6 +76,11 @@ function MapDisplay({
       setPath(pathString);
       setStartNodeId(startNode);
       setEndNodeId(endNode);
+    }
+    else if(startNode == "" && endNode == "") {
+        setStartNodeId(null);
+        setEndNodeId(null);
+        setPath([]);
     }
   }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
 
@@ -259,14 +266,17 @@ function MapDisplay({
         return (
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes) {
-                    let iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
-                    const iconSize = hoverNodeId === node.id ? { width: 25, height: 25} : { width: 20, height: 20 };  // Example sizes, adjust as needed
+                    if(!(node.nodeType == "HALL") || (node.nodeType == "HALL" && doDisplayHalls)) {
+                        let iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
+                        const iconSize = hoverNodeId === node.id ? {width: 25, height: 25} : {width: 20, height: 20};  // Example sizes, adjust as needed
 
-                    return (
-                        <NodeStyling key={node.id} node={node} iconSize={iconSize} href={iconPath}
-                                     onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)}
-                                     onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}/>
-                    );
+                        return (
+                            <NodeStyling key={node.id} node={node} iconSize={iconSize} href={iconPath}
+                                         onClick={() => handleNodeClick(node)}
+                                         onMouseEnter={() => handleNodeHover(node)}
+                                         onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}/>
+                        );
+                    }
                 }
                 return null; // Return null for map elements that don't meet the condition
             }).filter(element => element !== null)); // Filter out null elements
