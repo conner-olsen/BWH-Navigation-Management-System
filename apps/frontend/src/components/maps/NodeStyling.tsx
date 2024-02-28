@@ -15,7 +15,6 @@ export function NodeStyling(props: {
     heatmap: NodeVisit[]
     useHeatMap: boolean;
 }) {
-    const [HeatMap ] = useState<boolean>(false);
     const [nodeVisit, setNodeVisit] = useState<number>();
 
     useEffect(() => {
@@ -29,24 +28,22 @@ export function NodeStyling(props: {
 
     // Function to calculate box shadow color based on count
     const getBoxShadowColor = (count: number): string => {
-        if (count >= 100) {
-            return 'red';
-        } else if (count >= 80) {
-            return 'lightcoral';
-        } else if (count >= 60){
-            return 'orange';
-        } else if (count >= 40){
-            return 'lightsalmon';
-        } else if (count >= 20){
-            return 'green';
-        } else {
-            return 'lightgreen';
-        }
+        const average = 100;
+        const distance = Math.abs(count - average);
+        const maxDistance = 100; // Maximum distance from the average
+        const normalizedDistance = Math.min(distance / maxDistance, 1);
+
+        // Calculate RGB values based on the normalized distance
+        const r = Math.floor(255 * (1 - normalizedDistance));
+        const g = Math.floor(255 * normalizedDistance);
+        const b = 0;
+
+        return `rgb(${r},${g},${b})`;
     };
 
     return <g>
 
-        <rect className={HeatMap ? "" : ""}
+        <rect className={props.useHeatMap ? "" : "fill-blue-100 dark:fill-blue-900"}
               x={props.node.xCoord - props.iconSize.width / 2}
               y={props.node.yCoord - props.iconSize.height / 2}
               width={props.iconSize.width}
