@@ -657,7 +657,7 @@ export function MapComponent() {
                                checked={doDisplayNodes}/>
                         <label htmlFor="display-nodes-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-nodes-icon.png" alt="edge-bg"
+                            <img src="../../public/icon/map-nodes-icon.png" alt="node-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Nodes</p>
                         </label>
@@ -669,7 +669,7 @@ export function MapComponent() {
                                checked={doDisplayHalls}/>
                         <label htmlFor="display-halls-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/halls.png" alt="edge-bg"
+                            <img src="../../public/icon/map-halls-icon.png" alt="hall-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Halls</p>
                         </label>
@@ -681,7 +681,7 @@ export function MapComponent() {
                                checked={doDisplayNames}/>
                         <label htmlFor="display-names-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                            <img src="../../public/icon/map-names-icons.png" alt="name-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Names</p>
                         </label>
@@ -696,7 +696,7 @@ export function MapComponent() {
                                checked={do3D}/>
                         <label htmlFor="display-3d-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-3d-icon.png" alt="edge-bg"
+                            <img src="../../public/icon/map-3d-icon.png" alt="3d-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">3D</p>
                         </label>
