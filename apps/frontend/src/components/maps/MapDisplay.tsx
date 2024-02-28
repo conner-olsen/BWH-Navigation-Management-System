@@ -81,7 +81,10 @@ function MapDisplay({
       populatedGraph.populateGraph(res.data.nodes, res.data.edges);
         let average = 0;
         for(const item of heatmap){
-            populatedGraph.getNode(item.nodeId)?.setHeatIndex(item.count);
+            const node = populatedGraph.getNode(item.nodeId);
+            if (node) {
+                node.heatIndex = item.count;
+            }
             average = item.count + average;
         }
         average = average / heatmap.length;

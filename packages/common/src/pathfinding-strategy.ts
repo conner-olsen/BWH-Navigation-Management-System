@@ -47,7 +47,13 @@ export abstract class PathfindingStrategy {
     }
 
     const averageHeatIndex = graph.getAverageHeatIndex();
-    const heatIndex = nodeB.getHeatIndex();
+    let heatIndex = 1;
+    if (nodeB) {
+      heatIndex = nodeB.heatIndex;
+    } else {
+      heatIndex = 1;
+    }
+    
     const heatIndexMultiplier = (heatIndex / averageHeatIndex)*0.1;
 
 
