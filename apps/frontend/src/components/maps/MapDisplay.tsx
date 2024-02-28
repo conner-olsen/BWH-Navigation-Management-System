@@ -16,6 +16,7 @@ interface MapDisplayProps {
   endNode?: string;
   sendHoverMapPath: (path: PathfindingRequest) => void;
   sendClear: () => void;
+  sendMap: (mapID: string) => void;
   pathSent: Node[];
   doDisplayEdges: boolean;
   doDisplayNodes: boolean;
@@ -41,6 +42,7 @@ function MapDisplay({
   endNode,
   sendHoverMapPath,
   sendClear,
+    sendMap,
   pathFindingType,
   doDisplayEdges,
   doDisplayNodes,
@@ -79,7 +81,10 @@ function MapDisplay({
       populatedGraph.populateGraph(res.data.nodes, res.data.edges);
         let average = 0;
         for(const item of heatmap){
-            populatedGraph.getNode(item.nodeId)?.setHeatIndex(item.count);
+            const node = populatedGraph.getNode(item.nodeId);
+            if (node) {
+                node.heatIndex = item.count;
+            }
             average = item.count + average;
         }
         average = average / heatmap.length;
@@ -164,11 +169,6 @@ function MapDisplay({
             setPath([]);
         }
 
-        // Clear any existing selection if a different node is clicked
-        if (startNodeId && startNodeId !== node.id) {
-            clearSelection();
-        }
-
         setChosenNode(node);
         clearGuidelines();
 
@@ -185,6 +185,21 @@ function MapDisplay({
                 setEndNodeId(node.id);
                 const path: PathfindingRequest = { startId: startNodeId, endId: node.id, strategy: pathFindingType, accessibilityRoute: doAccessible };
                 sendHoverMapPath(path);
+            }
+        }
+
+        if(startNodeId && endNodeId) {
+            let floorChanges = gatherFloorChangeNodes();
+            //if node clicked is involved in a floor change, change map to its
+            //associated floor (where it is going / came from)
+
+            if(floorChanges.has(node.id)) {
+                sendMap((floorChanges.get(node.id)) as string);
+            }
+
+            // Clear any existing selection if a different node is clicked
+            else if (startNodeId && startNodeId !== node.id) {
+                clearSelection();
             }
         }
     };
@@ -357,6 +372,26 @@ function MapDisplay({
       return edges;
     }
   };
+    const gatherFloorChangeNodes = (): Map<string, string> => {
+        let returnNodes: Map<string, string> = new Map<string, string>();
+        let previousFloor = pathSent[0].floor;
+
+        for(let i = 1; i < pathSent.length; i++) {
+            const currentFloor = pathSent[i].floor;
+
+            if (!(currentFloor == previousFloor)) {
+                //update map -- current node is linked to previous floor
+                //previous node is linked to current floor
+                returnNodes.set(pathSent[i].id, previousFloor);
+                returnNodes.set(pathSent[i - 1].id, currentFloor);
+                previousFloor = currentFloor;
+            }
+            else {
+                previousFloor = currentFloor;
+            }
+        };
+        return returnNodes;
+    };
 
     const gatherFloorChangeStrings = (): string[] => {
         const returnStrings: string[] = [];
@@ -393,15 +428,18 @@ function MapDisplay({
                         <g>
                             <rect className="dark:fill-indigo-800 z-20 fill-indigo-400" x={node.xCoord - 64}
                                   y={node.yCoord - 48}
-                                  width="125" height="28" rx="1" stroke="black" stroke-width="4">
+                                  width="125" height="28" rx="1" stroke="black" strokeWidth="4"
+                                  onClick={() => handleNodeClick(node)}>
                                 <animate
                                     attributeName="rx"
                                     values="0;13;0"
                                     dur="2s"
                                     repeatCount="indefinite"/>
+
                             </rect>
                             <text className="font-bold dark:invert" x={node.xCoord - 59}
-                                  y={node.yCoord - 28} fill="black">
+                                  y={node.yCoord - 28} fill="black"
+                                  onClick={() => handleNodeClick(node)}>
                                  {floorChanges[index]}
                      </text>
                     </g>
