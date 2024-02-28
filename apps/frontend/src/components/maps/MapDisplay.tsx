@@ -52,7 +52,9 @@ function MapDisplay({
   const [path, setPath] = useState<string[]>([]);
   const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
   const [nodeCount, setNodeCount] = useState<string>("Error");
-  useEffect(() => {
+  const [serviceRequest, setServiceRequest] = useState<string[]>([""]);
+
+    useEffect(() => {
     axios.get("/api/graph").then((res) => {
       const populatedGraph = new Graph();
       populatedGraph.populateGraph(res.data.nodes, res.data.edges);
@@ -237,18 +239,31 @@ function MapDisplay({
     }
   };
 
-
+  const haveServiceRequest = async () => {
+      const nodesList = [""];
+      try {
+          const response = await axios.get("/api/service-request/all"); // Pass the entire node object
+          response.data.forEach((element: { nodeId: string; }) => {
+              nodesList.push(element.nodeId);
+          });
+      } catch (error) {
+          console.error("error getting count", error);
+          return [""];
+      }
+      setServiceRequest(nodesList);
+  };
   const displayNodes = (graph: Graph) => {
+      haveServiceRequest();
         return (
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes) {
-                    let iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
+                    const iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
                     const iconSize = hoverNodeId === node.id ? { width: 25, height: 25} : { width: 20, height: 20 };  // Example sizes, adjust as needed
 
                     return (
                         <NodeStyling key={node.id} node={node} iconSize={iconSize} href={iconPath}
                                      onClick={() => handleNodeClick(node)} onMouseEnter={() => handleNodeHover(node)}
-                                     onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}/>
+                                     onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)} nodesList = {serviceRequest}/>
                     );
                 }
                 return null; // Return null for map elements that don't meet the condition

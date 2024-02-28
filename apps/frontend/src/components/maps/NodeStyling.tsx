@@ -13,28 +13,10 @@ export function NodeStyling(props: {
     onMouseEnter: () => void,
     onMouseLeave: () => void,
     element: ReactNode
+    nodesList: string[];
 }) {
     const [nodeArray, setNodeArray] = useState<NodeVisit[] | null>(null);
     const [HeatMap ] = useState<boolean>(false);
-    const [showServiceIndicator, setShowServiceIndicator] = useState(false);
-
-    useEffect(() => {
-        const fetchServiceData = async () => {
-            try {
-                const response = await axios.post("/api/get-stats", props.node); // Pass the entire node object
-                if (response.status === 200 && response.data > 0) {
-                    setShowServiceIndicator(true);
-                } else {
-                    setShowServiceIndicator(false);
-                }
-            } catch (error) {
-                console.error("error getting count", error);
-                setShowServiceIndicator(false);
-            }
-        };
-
-        fetchServiceData();
-    }, [props.node]);
 
     useEffect(() => {
         // Fetch node data from API initially
@@ -103,7 +85,7 @@ export function NodeStyling(props: {
             onMouseEnter={props.onMouseEnter}
             onMouseLeave={props.onMouseLeave}
         />
-        {showServiceIndicator && (
+        {props.nodesList.includes(props.node.id)&& (
             <circle
                 cx={props.node.xCoord + props.iconSize.width / 2}
                 cy={props.node.yCoord - props.iconSize.height / 2}
@@ -113,5 +95,9 @@ export function NodeStyling(props: {
         )}
         {props.element}
     </g>);
+}
+
+export function fasterData(){
+
 }
 
