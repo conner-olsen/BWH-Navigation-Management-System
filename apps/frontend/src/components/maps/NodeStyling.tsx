@@ -33,12 +33,32 @@ export function NodeStyling(props: {
         const maxDistance = 100; // Maximum distance from the average
         const normalizedDistance = Math.min(distance / maxDistance, 1);
 
-        // Calculate RGB values based on the normalized distance
-        const r = Math.floor(255 * (1 - normalizedDistance));
-        const g = Math.floor(255 * normalizedDistance);
-        const b = 0;
+        // Interpolate between green (120 degrees) and red (0 degrees) in the HSL color space
+        const hue = normalizedDistance * (120 / 360); // 120 degrees for green, 0 degrees for red
+        const saturation = 1; // Full saturation
+        const lightness = 0.5; // Middle lightness
 
-        return `rgb(${r},${g},${b})`;
+        // Convert HSL to RGB
+        const c = (1 - Math.abs(2 * lightness - 1)) * saturation;
+        const x = c * (1 - Math.abs((hue * 6) % 2 - 1));
+        const m = lightness - c / 2;
+        let r, g, b;
+        if (0 <= hue && hue < 1 / 6) {
+            [r, g, b] = [c, x, 0];
+        } else if (1 / 6 <= hue && hue < 2 / 6) {
+            [r, g, b] = [x, c, 0];
+        } else if (2 / 6 <= hue && hue < 3 / 6) {
+            [r, g, b] = [0, c, x];
+        } else if (3 / 6 <= hue && hue < 4 / 6) {
+            [r, g, b] = [0, x, c];
+        } else if (4 / 6 <= hue && hue < 5 / 6) {
+            [r, g, b] = [x, 0, c];
+        } else {
+            [r, g, b] = [c, 0, x];
+        }
+
+        // Adjust RGB values to 0-255 range and return color string
+        return `rgb(${Math.floor((r + m) * 255)},${Math.floor((g + m) * 255)},${Math.floor((b + m) * 255)})`;
     };
 
     return <g>
