@@ -71,7 +71,7 @@ const AboutPage = () => {
                         </CarouselItem>
 
                         <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                            <div className="p-1">
+                            <div className="p-1 flex:grow-1">
                                 <TeamCard name={"Karish Gupta"} role={"Assistant Team Lead"}
                                           bio={"Class of 2026, Computer Science & Data Science"}
                                           image={"public/teamImages/KARISH_GUPTA.jpg"}
@@ -84,7 +84,7 @@ const AboutPage = () => {
                             <div className="p-1">
                                 <TeamCard name={"Max Gosselin"} role={"Assistant Team Lead"}
                                           bio={"Class of 2026, Computer Science & Data  Science"}
-                                          image={"public/teamImages/Max.png"}
+                                          image={"public/teamImages/max-updated.png"}
                                           quote={'"Team first mentality"'}>
                                 </TeamCard>
                             </div>

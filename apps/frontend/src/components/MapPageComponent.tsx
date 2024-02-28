@@ -44,12 +44,34 @@ export function MapComponent() {
     return pathfindingResult.map(node => node.longName);
   }, [pathfindingResult]);
 
-  const handleSpeakButtonClick = () => {
-    const longNames = collectLongNames();
-    const speech = new SpeechSynthesisUtterance();
-    speech.text = longNames.join(', ');
-    window.speechSynthesis.speak(speech);
-  };
+    const [isPaused, setIsPaused] = useState(false);
+
+    const handleSpeakButtonClick = () => {
+        const longNames = collectLongNames();
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = longNames.join(', ');
+        window.speechSynthesis.speak(speech);
+    };
+
+    const handlePause = () => {
+        const synth = window.speechSynthesis;
+
+        // Check if speech synthesis is speaking
+        if (synth.speaking) {
+            synth.pause();
+            setIsPaused(true);
+        }
+    };
+
+    const handleResume = () => {
+        const synth = window.speechSynthesis;
+
+        // Check if speech synthesis is paused
+        if (synth.paused) {
+            synth.resume();
+            setIsPaused(false);
+        }
+    };
 
   const handleAccessibilityToggle = () => {
     setAccessibilityRoute(doAccessible => !doAccessible);
@@ -549,8 +571,13 @@ export function MapComponent() {
                             <p className="font-bold mb-0">Follow Me</p>
                             <button onClick={handleSpeakButtonClick}>
                                 <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
+                                     className="h-6 w-6 ml-2 pd-0 dark:invert"></img>
+                            </button>
+                            <button onClick={handlePause}>
+                                <img src="../../public/icon/cancel-speech.svg" alt="text-icon"
                                      className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
                             </button>
+                            {isPaused && <button onClick={handleResume}>Resume</button>}
                         </div>
                     </div>
                     <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
@@ -631,7 +658,7 @@ export function MapComponent() {
                                checked={doDisplayNodes}/>
                         <label htmlFor="display-nodes-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-nodes-icon.png" alt="edge-bg"
+                            <img src="../../public/icon/map-nodes-icon.png" alt="node-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Nodes</p>
                         </label>
@@ -643,7 +670,7 @@ export function MapComponent() {
                                checked={doDisplayHalls}/>
                         <label htmlFor="display-halls-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/halls.png" alt="edge-bg"
+                            <img src="../../public/icon/map-halls-icon.png" alt="hall-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Halls</p>
                         </label>
@@ -655,7 +682,7 @@ export function MapComponent() {
                                checked={doDisplayNames}/>
                         <label htmlFor="display-names-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                            <img src="../../public/icon/map-names-icons.png" alt="name-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Names</p>
                         </label>
@@ -670,7 +697,7 @@ export function MapComponent() {
                                checked={do3D}/>
                         <label htmlFor="display-3d-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-3d-icon.png" alt="edge-bg"
+                            <img src="../../public/icon/map-3d-icon.png" alt="3d-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">3D</p>
                         </label>
