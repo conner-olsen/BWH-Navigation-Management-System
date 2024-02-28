@@ -33,6 +33,7 @@ export function MapComponent() {
   const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
   const [doDisplayHalls, setDoDisplayHalls] = useState<boolean>(true);
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+  const [doTextDirections, setDoTextDirections] = useState<boolean>(false);
   const [doDisplayHeatMap, setDoDisplayHeatMap] = useState<boolean>(false);
   const [do3D, set3D] = useState<boolean>(false);
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
@@ -40,9 +41,205 @@ export function MapComponent() {
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  const collectLongNames = useCallback(() => {
-    return pathfindingResult.map(node => node.longName);
-  }, [pathfindingResult]);
+  //function for the text directions
+  const collectLongNamesDirections = useCallback((): string[] => {
+      //y increases downwards, x increases to the right
+        const longNamesDirections: string[] = [];
+
+        let facingUp = false;
+        let facingDown = false;
+        let facingLeft = false;
+        let facingRight = true;
+
+        //find where first facing (depend on OG spot?)
+
+        for(let i = 0; i < pathfindingResult.length; i++) {
+            if(i == 0) {
+                longNamesDirections[0] = "Start at " + pathfindingResult[0].longName;
+            }
+
+            else {
+                const pastX = pathfindingResult[i - 1].xCoord;
+                const pastY = pathfindingResult[i - 1].yCoord;
+                const currentX = pathfindingResult[i].xCoord;
+                const currentY = pathfindingResult[i].yCoord;
+
+                //if going up/down floor by elevator
+                if((pathfindingResult[i].nodeType == "ELEV") && (pathfindingResult[i - 1].nodeType == "ELEV")) {
+                    longNamesDirections[i] = "Take elevator to floor " + pathfindingResult[i].floor;
+                }
+
+                //if going up/down floor by stair
+                else if((pathfindingResult[i].nodeType == "STAI") && (pathfindingResult[i - 1].nodeType == "STAI")) {
+                    longNamesDirections[i] = "Take stairs to floor " + pathfindingResult[i].floor;
+                }
+
+                //if facing in the Y direction
+                else if(facingUp || facingDown) {
+                    //going solely upwards or downwards, X not changing with MOE of 5
+                    //and you were previously facing in the Y
+                    if((Math.abs(pastX - currentX) <= 5)) {
+                        //dont add if hallway unless last node, still do functionality
+                        if(pathfindingResult[i].nodeType != "HALL" || i == pathfindingResult.length - 1) {
+                            longNamesDirections[i] = "Continue to " + pathfindingResult[i].longName;
+                        }
+                        if(pastY < currentY) {
+                            facingUp = false;
+                            facingDown = true;
+                        }
+                        else {
+                            facingUp = true;
+                            facingDown = false;
+                        }
+                        facingLeft = false;
+                        facingRight = false;
+                    }
+
+                    //end up facing right
+                    else if(pastX < currentX) {
+                        //going right if facing up
+                        if(facingUp) {
+                           // if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                                longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
+                        //    }
+                            facingLeft = false;
+                            facingRight = true;
+                            facingDown = false;
+                            facingUp = false;
+                        }
+
+                        //going left if facing down
+                        else {
+                           // if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                                longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
+                           // }
+                            facingLeft = false;
+                            facingRight = true;
+                            facingDown = false;
+                            facingUp = false;
+                        }
+                    }
+
+                    //end up facing left
+                    else if(pastX > currentX) {
+                        //going left if facing up
+                        if(facingUp) {
+                         //   if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                                longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
+                           // }
+                            facingLeft = true;
+                            facingRight = false;
+                            facingDown = false;
+                            facingUp = false;
+                        }
+
+                        //going right if facing down
+                        else {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                                longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
+                          //  }
+                            facingLeft = true;
+                            facingRight = false;
+                            facingDown = false;
+                            facingUp = false;
+                        }
+                    }
+                }
+
+                //if facing in the X direction
+                else if (facingLeft || facingRight) {
+                    //going solely left or right, Y not changing with MOE of 5
+                    //and you were previously facing in the X
+                    if ((Math.abs(pastY - currentY) <= 5)) {
+                        if(pathfindingResult[i].nodeType != "HALL" || i == pathfindingResult.length - 1) {
+                            longNamesDirections[i] = "Continue to " + pathfindingResult[i].longName;
+                        }
+                        if(pastX > currentX) {
+                            facingLeft = true;
+                            facingRight = false;
+                        }
+                        else {
+                            facingLeft = false;
+                            facingRight = true;
+                        }
+                        facingUp = false;
+                        facingDown = false;
+                    }
+
+                    //end up facing down
+                    else if(pastY < currentY) {
+                        //going left if facing left
+                        if(facingLeft) {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                                longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
+                          //  }
+                            facingLeft = false;
+                            facingRight = false;
+                            facingDown = true;
+                            facingUp = false;
+                        }
+
+                        //going right if facing right
+                        else {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                                longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
+                          //  }
+                            facingLeft = false;
+                            facingRight = false;
+                            facingDown = true;
+                            facingUp = false;
+                        }
+                    }
+
+                    //end up facing up
+                    else if(pastY > currentY) {
+                        //going right if facing left
+                        if(facingLeft) {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                                longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
+                          //  }
+                            facingLeft = false;
+                            facingRight = false;
+                            facingDown = false;
+                            facingUp = true;
+                        }
+
+                        //going left if facing right
+                        else {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                                longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
+                           // }
+                            facingLeft = false;
+                            facingRight = false;
+                            facingDown = false;
+                            facingUp = true;
+                        }
+                    }
+                }
+            }
+        }
+       // console.log(longNamesDirections);
+        return longNamesDirections;
+
+    }, [pathfindingResult]);
+
+    const collectLongNames = useCallback(() => {
+        if(doTextDirections) {
+            return collectLongNamesDirections();
+        }
+        else {
+            let longNames: string[] = [];
+            pathfindingResult.map((node: Node, index: number) => {
+                if(node.nodeType != "HALL" || index == pathfindingResult.length - 1 || index == 0) {
+                    longNames.push(node.longName);
+                }
+                else {
+                    longNames.push("");
+                }
+            });
+            return longNames;
+        }
+    }, [collectLongNamesDirections, pathfindingResult, doTextDirections]);
 
     const [isPaused, setIsPaused] = useState(false);
 
@@ -76,8 +273,14 @@ export function MapComponent() {
   const handleAccessibilityToggle = () => {
     setAccessibilityRoute(doAccessible => !doAccessible);
     clearGuidelines();
-    console.log("do accessible to " + accessibilityRoute);
+    //console.log("do accessible to " + accessibilityRoute);
   };
+
+  const handleTextDirectionsToggle = () => {
+        setDoTextDirections(doTextDirections => !doTextDirections);
+        clearGuidelines();
+        //console.log("do accessible to " + accessibilityRoute);
+    };
 
   const updateCurrentNode = (currentNode: Node) => {
     setHasSeen(true);
@@ -164,6 +367,11 @@ export function MapComponent() {
   const sendClear = () => {
     setStartNode("");
     setEndNode("");
+  };
+
+  const sendMap = (mapID: string) => {
+      setMap(nodeFloorToMapFloor(mapID));
+      console.log("map sent", map);
   };
 
   const [map, setMap] = useState("lowerLevel1");
@@ -553,15 +761,25 @@ export function MapComponent() {
                     </Select>
                 </div>
 
-                <div className="flex items-center justify-center ml-6 mb-3">
+                <div className="flex items-center justify-center mb-3">
                     <div style={{marginTop: '1rem'}}>
-                  <span className="flex items-center">
+                  <span className="flex items-center pl-3 pr-3">
                       <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon"
                            className="h-5 w-5 dark:invert mr-2"/>
                       <Switch onCheckedChange={handleAccessibilityToggle}
                               defaultChecked={false}>
                       </Switch>
                   </span>
+                    </div>
+
+                    <div style={{marginTop: '1rem'}}>
+                         <span className="flex items-center pl-3 pr-3">
+                      <img src="../../public/icon/material-symbols_directions-outline.svg" alt="directions-icon"
+                           className="h-5 w-5 dark:invert mr-2"/>
+                         <Switch onCheckedChange={handleTextDirectionsToggle}
+                                 defaultChecked={false}>
+                         </Switch>
+                             </span>
                     </div>
                 </div>
 
@@ -577,11 +795,14 @@ export function MapComponent() {
                                 <img src="../../public/icon/cancel-speech.svg" alt="text-icon"
                                      className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
                             </button>
-                            {isPaused && <button onClick={handleResume}>Resume</button>}
+                            {isPaused && <button onClick={handleResume}>
+                                <img src="../../public/icon/material-symbols_resume.svg" alt="text-icon"
+                                     className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
+                            </button>}
                         </div>
                     </div>
                     <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
-                        {/* Render the list of long names and node names with icons */}
+                    {/* Render the list of long names and node names with icons */}
                         {pathfindingResult.map((node, index) => (
                             <li key={index}>
                                 {/* Check the node type and render the appropriate icon */}
@@ -590,13 +811,13 @@ export function MapComponent() {
                           <img src="../../public/icon/stairs.png" alt="stair-icon"
                                className="h-3 w-3 mr-1 dark:invert"/>
                       )}
-                                    {node.nodeType === "ELEV" && (
-                                        <img src="../../public/icon/elevator.png" alt="elevator-icon"
-                                             className="w-4 h-4 mr-1 dark:invert"/>
-                                    )}
-                                    <span
-                                        className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
-                        {node.longName}
+                                        {node.nodeType === "ELEV" && (
+                                            <img src="../../public/icon/elevator.png" alt="elevator-icon"
+                                                 className="w-4 h-4 mr-1 dark:invert"/>
+                                        )}
+                                        <span
+                                            className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
+                        {collectLongNames()[index]}
                       </span>
                     </span>
                             </li>
@@ -798,14 +1019,15 @@ export function MapComponent() {
                   </Select>
                 </div>
 
-                                <div>
-                                    <p className="font-bold text-center">Follow me</p>
-                                    <ol type="1" className={"overflow-y-auto h-[100px] px-2"}>
-                                        {collectLongNames().map((longName, index) => (
-                                            <li key={index}>{longName}</li>
-                                        ))}
-                                    </ol>
-                                </div>
+                                {/*path text display moved below*/}
+                                {/*<div>*/}
+                                {/*    <p className="font-bold text-center">Follow me</p>*/}
+                                {/*    <ol type="1" className={"overflow-y-auto h-[100px] px-2"}>*/}
+                                {/*        /!*{collectLongNames().map((string, index) => (*!/*/}
+                                {/*        /!*    <li key={index}>{string}</li>*!/*/}
+                                {/*        /!*))}*!/*/}
+                                {/*    </ol>*/}
+                                {/*</div>*/}
 
                                 <div className="flex justify-center">
                                     <DrawerClose>
@@ -906,7 +1128,7 @@ export function MapComponent() {
                                             startNode={startNode} endNode={endNode}
                                             pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                             sendClear={sendClear} pathSent={pathfindingResult}
-                                            accessibilityRoute={accessibilityRoute}
+                                            accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes}
@@ -917,7 +1139,7 @@ export function MapComponent() {
                                             startNode={startNode} endNode={endNode}
                                             pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                             sendClear={sendClear} pathSent={pathfindingResult}
-                                            accessibilityRoute={accessibilityRoute}
+                                            accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
                                             doDisplayHeatMap={doDisplayHeatMap}
@@ -927,7 +1149,7 @@ export function MapComponent() {
                                             startNode={startNode} endNode={endNode}
                                             pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                             sendClear={sendClear} pathSent={pathfindingResult}
-                                            accessibilityRoute={accessibilityRoute}
+                                            accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
                                             doDisplayHeatMap={doDisplayHeatMap}
@@ -937,7 +1159,7 @@ export function MapComponent() {
                                             startNode={startNode} endNode={endNode}
                                             pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                             sendClear={sendClear} pathSent={pathfindingResult}
-                                            accessibilityRoute={accessibilityRoute}
+                                            accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
                                             doDisplayHeatMap={doDisplayHeatMap}
@@ -947,7 +1169,7 @@ export function MapComponent() {
                                             startNode={startNode} endNode={endNode}
                                             pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
                                             sendClear={sendClear} pathSent={pathfindingResult}
-                                            accessibilityRoute={accessibilityRoute}
+                                            accessibilityRoute={accessibilityRoute} sendMap={sendMap}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
                                             doDisplayHeatMap={doDisplayHeatMap}
