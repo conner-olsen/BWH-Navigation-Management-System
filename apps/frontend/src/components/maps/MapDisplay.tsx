@@ -190,7 +190,7 @@ function MapDisplay({
         }
 
         if(startNodeId && endNodeId) {
-            let floorChanges = gatherFloorChangeNodes();
+            const floorChanges = gatherFloorChangeNodes();
             //if node clicked is involved in a floor change, change map to its
             //associated floor (where it is going / came from)
 
@@ -324,11 +324,10 @@ function MapDisplay({
                                          onClick={() => handleNodeClick(node)}
                                          onMouseEnter={() => handleNodeHover(node)}
                                          onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}
+                                         nodesList={serviceRequest}
                                          heatmap={heatmap} useHeatMap={doDisplayHeatMap}
                                          averageHeatIndex={averageHeatIndex}
                             />
-                                         onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}
-                                         nodesList={serviceRequest}/>
                         );
                     }
                 }
@@ -388,7 +387,7 @@ function MapDisplay({
     }
   };
     const gatherFloorChangeNodes = (): Map<string, string> => {
-        let returnNodes: Map<string, string> = new Map<string, string>();
+        const returnNodes: Map<string, string> = new Map<string, string>();
         let previousFloor = pathSent[0].floor;
 
         for(let i = 1; i < pathSent.length; i++) {
