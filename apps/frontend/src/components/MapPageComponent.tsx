@@ -754,7 +754,7 @@ export function MapComponent() {
 
                     <div style={{marginTop: '1rem'}}>
                          <span className="flex items-center pl-3 pr-3">
-                      <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon"
+                      <img src="../../public/icon/material-symbols_directions-outline.svg" alt="directions-icon"
                            className="h-5 w-5 dark:invert mr-2"/>
                          <Switch onCheckedChange={handleTextDirectionsToggle}
                                  defaultChecked={false}>
