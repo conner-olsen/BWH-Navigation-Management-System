@@ -45,7 +45,10 @@ router.post("/", async (req: Request, res: Response) => {
       graph.populateGraph(nodes, edges);
       let average = 0;
       for(const item of heatmap){
-        graph.getNode(item.nodeId)?.setHeatIndex(item.count);
+        const node = graph.getNode(item.nodeId);
+        if (node) {
+          node.heatIndex = item.count;
+        }
         average = item.count + average;
       }
       average = average / heatmap.length;
