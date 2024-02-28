@@ -37,9 +37,19 @@ router.post("/", async (req: Request, res: Response) => {
       // Fetch nodes and edges from the database
       const nodes = await client.node.findMany();
       const edges = await client.edge.findMany();
+      const heatmap = await client.nodeVisit.findMany();
+
+
 
       // Populate the graph with nodes and edges
       graph.populateGraph(nodes, edges);
+      let average = 0;
+      for(const item of heatmap){
+        graph.getNode(item.nodeId)?.setHeatIndex(item.count);
+        average = item.count + average;
+      }
+      average = average / heatmap.length;
+      graph.setAverageHeatIndex(average);
     } catch (error) {
       console.error('Error fetching data from the database:', error);
       return res.status(500).json({ error: 'Error fetching data from the database' });
