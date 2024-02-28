@@ -226,7 +226,13 @@ export function MapComponent() {
             return collectLongNamesDirections();
         }
         else {
-            return pathfindingResult.map(node => node.longName);
+            let longNames: string[] = [];
+            pathfindingResult.map((node: Node, index: number) => {
+                if(node.nodeType != "HALL" || index == pathfindingResult.length - 1) {
+                    longNames.push(node.longName);
+                }
+            });
+            return longNames;
         }
     }, [collectLongNamesDirections, pathfindingResult, doTextDirections]);
 
