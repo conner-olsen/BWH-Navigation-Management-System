@@ -243,27 +243,6 @@ export function MapComponent() {
 
     const [isPaused, setIsPaused] = useState(false);
 
-    useEffect(() => {
-        // Cleanup function to pause and cancel any ongoing speech synthesis
-        const cleanupSpeechSynthesis = () => {
-            if (window.speechSynthesis) {
-                const synth = window.speechSynthesis;
-                if (synth.speaking) {
-                    synth.cancel();
-                }
-            }
-        };
-
-        // Add event listener for beforeunload to trigger cleanup on page reload
-        window.addEventListener('beforeunload', cleanupSpeechSynthesis);
-
-        // Return cleanup function to remove event listener
-        return () => {
-            window.removeEventListener('beforeunload', cleanupSpeechSynthesis);
-            cleanupSpeechSynthesis();
-        };
-    }, []);
-
     const handleSpeakButtonClick = () => {
         const longNames = collectLongNames();
         const speech = new SpeechSynthesisUtterance();
