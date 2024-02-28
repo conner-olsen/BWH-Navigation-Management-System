@@ -33,6 +33,7 @@ export function MapComponent() {
   const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
   const [doDisplayHalls, setDoDisplayHalls] = useState<boolean>(true);
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+  const [doTextDirections, setDoTextDirections] = useState<boolean>(false);
   const [do3D, set3D] = useState<boolean>(false);
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
   const [animationOn, setAnimationOn] = useState(true);
@@ -77,7 +78,7 @@ export function MapComponent() {
                     //and you were previously facing in the Y
                     if((Math.abs(pastX - currentX) <= 5)) {
                         //dont add if hallway unless last node, still do functionality
-                        if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                        if(pathfindingResult[i].nodeType != "HALL" || i == pathfindingResult.length - 1) {
                             longNamesDirections[i] = "Continue to " + pathfindingResult[i].longName;
                         }
                         if(pastY < currentY) {
@@ -148,7 +149,7 @@ export function MapComponent() {
                     //going solely left or right, Y not changing with MOE of 5
                     //and you were previously facing in the X
                     if ((Math.abs(pastY - currentY) <= 5)) {
-                        if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                        if(pathfindingResult[i].nodeType != "HALL" || i == pathfindingResult.length - 1) {
                             longNamesDirections[i] = "Continue to " + pathfindingResult[i].longName;
                         }
                         if(pastX > currentX) {
@@ -221,8 +222,13 @@ export function MapComponent() {
     }, [pathfindingResult]);
 
     const collectLongNames = useCallback(() => {
-        return collectLongNamesDirections();
-    }, [collectLongNamesDirections]);
+        if(doTextDirections) {
+            return collectLongNamesDirections();
+        }
+        else {
+            return pathfindingResult.map(node => node.longName);
+        }
+    }, [collectLongNamesDirections, pathfindingResult, doTextDirections]);
 
     const [showAlert, setShowAlert] = useState(false);
 
@@ -239,6 +245,12 @@ export function MapComponent() {
     clearGuidelines();
     //console.log("do accessible to " + accessibilityRoute);
   };
+
+  const handleTextDirectionsToggle = () => {
+        setDoTextDirections(doTextDirections => !doTextDirections);
+        clearGuidelines();
+        //console.log("do accessible to " + accessibilityRoute);
+    };
 
   const updateCurrentNode = (currentNode: Node) => {
     setHasSeen(true);
@@ -720,15 +732,25 @@ export function MapComponent() {
                     </Select>
                 </div>
 
-                <div className="flex items-center justify-center ml-6 mb-3">
+                <div className="flex items-center justify-center mb-3">
                     <div style={{marginTop: '1rem'}}>
-                  <span className="flex items-center">
+                  <span className="flex items-center pl-3 pr-3">
                       <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon"
                            className="h-5 w-5 dark:invert mr-2"/>
                       <Switch onCheckedChange={handleAccessibilityToggle}
                               defaultChecked={false}>
                       </Switch>
                   </span>
+                    </div>
+
+                    <div style={{marginTop: '1rem'}}>
+                         <span className="flex items-center pl-3 pr-3">
+                      <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon"
+                           className="h-5 w-5 dark:invert mr-2"/>
+                         <Switch onCheckedChange={handleTextDirectionsToggle}
+                                 defaultChecked={false}>
+                         </Switch>
+                             </span>
                     </div>
                 </div>
 
