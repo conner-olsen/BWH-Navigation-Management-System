@@ -21,7 +21,7 @@ import ReactDOM from "react-dom";
 import MapDisplay3D from "./maps/3DMapDisplay.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
 import Legend from "./maps/3DLegend.tsx";
-
+import MapLegend from "./MapLegend.tsx";
 
 export function MapComponent() {
   const [pathfindingResult, setBFSResult] = useState<Node[]>([]);
@@ -430,7 +430,6 @@ export function MapComponent() {
 
   return (
     <div>
-
       <div className="fixed top-0 left-0 h-screen w-[80px] bg-neutral-500 bg-opacity-30 text-white z-20 px-4 pt-[100px]
                       flex-col hidden sm:flex">
         <button onClick={toggleSidebar} className="text-xl text-white focus:outline-none">
@@ -809,6 +808,7 @@ export function MapComponent() {
                 </Drawer>
             </div>
 
+
             <div className="h-0">
                 <Drawer modal={false}>
                     <DrawerTrigger>
@@ -855,6 +855,8 @@ export function MapComponent() {
 
         </div>
 
+
+        <MapLegend></MapLegend>
 
         <div className={`fixed w-screen max-w-full m-auto ${!do3D ? '' : "hidden"}`}>
             <TransformWrapper
@@ -1004,6 +1006,8 @@ export function MapComponent() {
                             ${(do3D && startNode !== "" && endNode !== "") ? '' : "relative z-[-1] max-h-[10px] overflow-hidden"}`}
              id="3d-wrapper">
         </div>
+
+
     </div>
 
   );
