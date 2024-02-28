@@ -31,7 +31,7 @@ export function MapComponent() {
   const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
   const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
   const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
-  const [doDisplayHalls, setDoDisplayHalls] = useState<boolean>(true);
+  const [doDisplayHalls, setDoDisplayHalls] = useState<boolean>(false);
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
   const [doTextDirections, setDoTextDirections] = useState<boolean>(false);
   const [doDisplayHeatMap, setDoDisplayHeatMap] = useState<boolean>(false);
