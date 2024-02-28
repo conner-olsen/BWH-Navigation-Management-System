@@ -59,24 +59,33 @@ function MapDisplay({
   const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
   const [nodeCount, setNodeCount] = useState<string>("Error");
 
+    useEffect(() => {
+        axios.get('/api/heat-map')
+            .then(res => {
+                const tempHeatmap = res.data;
+                if (tempHeatmap) {
+                    setHeatmap(res.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching node data:', error);
+            });
+    }, []);
 
   useEffect(() => {
-      axios.get('/api/heat-map')
-          .then(res => {
-              const tempHeatmap = res.data;
-              if (tempHeatmap) {
-                  setHeatmap(res.data);
-              }
-          })
-          .catch(error => {
-              console.error('Error fetching node data:', error);
-          });
     axios.get("/api/graph").then((res) => {
       const populatedGraph = new Graph();
       populatedGraph.populateGraph(res.data.nodes, res.data.edges);
+        let average = 0;
+        for(const item of heatmap){
+            populatedGraph.getNode(item.nodeId)?.setHeatIndex(item.count);
+            average = item.count + average;
+        }
+        average = average / heatmap.length;
+        populatedGraph.setAverageHeatIndex(average);
       setGraph(populatedGraph);
     });
-  }, []);
+  }, [heatmap]);
 
   useEffect(() => {
     if (startNode && endNode && graph) {
