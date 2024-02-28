@@ -179,7 +179,7 @@ function MapDisplay({
             "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 " +
             "data-[side=top]:slide-in-from-bottom-2 z-50"}>
           <g>
-            <img src={'../../../public/room-types/nodeType-' + node.nodeType + ".png"}></img>
+            <img src={'../../../public/room-types/nodeType-' + node.nodeType + ".png"} className="m-auto w-full"></img>
             <div>
               <p>Type: {node.nodeType}</p>
             </div>
