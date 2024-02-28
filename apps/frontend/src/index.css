@@ -80,7 +80,7 @@ body {
   --red: #bd0000;
   --light-blue: #3382fe;
   --medium-blue: #0047b7;
-  --dark-blue: #012d5a;
+  --dark-blue: #e8b313;
   --white: #f5f5f5;
   --gray: #d9d9d9;
 
@@ -556,4 +556,16 @@ body.dark g circle {
     100% {
         transform: scale(1);
     }
+}
+
+/* ====== Scroll bar ======= */
+.progress {
+    position: fixed;
+    z-index: 1000;
+    top: 75px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background:  linear-gradient(to right, #ff0000, #0000ff)!important;
+    transform-origin: 0%;
 }
