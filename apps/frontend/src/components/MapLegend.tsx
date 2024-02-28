@@ -13,7 +13,7 @@ const MapLegend = () => {
                          className="dark:brightness-75 group-hover:scale-[0.9] transition-all duration-200"></img>
                 </HoverCardTrigger>
 
-                <HoverCardContent side="right" className="pb-2 z-40">
+                <HoverCardContent side="right" className="p-4 z-40">
                     <p className="text-xs text-center">Legend</p>
 
                     <div className="flex items-center">
