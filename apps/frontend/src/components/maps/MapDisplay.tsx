@@ -143,11 +143,6 @@ function MapDisplay({
             setPath([]);
         }
 
-        // Clear any existing selection if a different node is clicked
-        if (startNodeId && startNodeId !== node.id) {
-            clearSelection();
-        }
-
         setChosenNode(node);
         clearGuidelines();
 
@@ -174,6 +169,11 @@ function MapDisplay({
 
             if(floorChanges.has(node.id)) {
                 sendMap((floorChanges.get(node.id)) as string);
+            }
+
+            // Clear any existing selection if a different node is clicked
+            else if (startNodeId && startNodeId !== node.id) {
+                clearSelection();
             }
         }
     };

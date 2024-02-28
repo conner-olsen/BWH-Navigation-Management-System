@@ -797,11 +797,14 @@ export function MapComponent() {
                                 <img src="../../public/icon/cancel-speech.svg" alt="text-icon"
                                      className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
                             </button>
-                            {isPaused && <button onClick={handleResume}>Resume</button>}
+                            {isPaused && <button onClick={handleResume}>
+                                <img src="../../public/icon/material-symbols_resume.svg" alt="text-icon"
+                                     className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
+                            </button>}
                         </div>
                     </div>
                     <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
-                        {/* Render the list of long names and node names with icons */}
+                    {/* Render the list of long names and node names with icons */}
                         {pathfindingResult.map((node, index) => (
                             <li key={index}>
                                 {/* Check the node type and render the appropriate icon */}
