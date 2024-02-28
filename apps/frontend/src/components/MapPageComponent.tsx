@@ -688,6 +688,18 @@ export function MapComponent() {
                         </label>
                     </div>
                     <div className="px-1">
+                        <input type="checkbox" id="display-heatmap-switch" name="display-heatmap-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayHeatMap(!doDisplayHeatMap)}
+                               checked={doDisplayHeatMap}/>
+                        <label htmlFor="display-heatmap-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-heatmap-icon.png" alt="heatmap-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Heat Map</p>
+                        </label>
+                    </div>
+                    <div className="px-1">
                         <input type="checkbox" id="display-3d-switch" name="display-3d-switch"
                                className="hidden"
                                onChange={() => {
@@ -700,18 +712,6 @@ export function MapComponent() {
                             <img src="../../public/icon/map-3d-icon.png" alt="3d-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">3D</p>
-                        </label>
-                    </div>
-                    <div className="px-1">
-                        <input type="checkbox" id="display-heatmap-switch" name="display-heatmap-switch"
-                               className="hidden"
-                               onChange={() => setDoDisplayHeatMap(!doDisplayHeatMap)}
-                               checked={doDisplayHeatMap}/>
-                        <label htmlFor="display-heatmap-switch"
-                               className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-3d-icon.png" alt="edge-bg"
-                                 className="w-[50px] m-auto dark:brightness-75"></img>
-                            <p className="m-0 text-center text-xs">Heat Map</p>
                         </label>
                     </div>
                 </form>
@@ -732,7 +732,7 @@ export function MapComponent() {
                     <DrawerContent>
                         <div className="overflow-y-auto">
                             <div className="max-w-[400px] m-auto">
-                                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                            <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
                                     <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
                     onChange={handlePhotoChange} checked={map == "lowerLevel2"} />
                   <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
