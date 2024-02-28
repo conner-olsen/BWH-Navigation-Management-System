@@ -33,11 +33,11 @@ export function MapComponent() {
   const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
   const [doDisplayHalls, setDoDisplayHalls] = useState<boolean>(true);
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
+  const [doDisplayHeatMap, setDoDisplayHeatMap] = useState<boolean>(false);
   const [do3D, set3D] = useState<boolean>(false);
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
   const [animationOn, setAnimationOn] = useState(true);
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
-
   const [showAlert, setShowAlert] = useState(false);
 
   const collectLongNames = useCallback(() => {
@@ -702,6 +702,18 @@ export function MapComponent() {
                             <p className="m-0 text-center text-xs">3D</p>
                         </label>
                     </div>
+                    <div className="px-1">
+                        <input type="checkbox" id="display-heatmap-switch" name="display-heatmap-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayHeatMap(!doDisplayHeatMap)}
+                               checked={doDisplayHeatMap}/>
+                        <label htmlFor="display-heatmap-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/map-3d-icon.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Heat Map</p>
+                        </label>
+                    </div>
                 </form>
             </HoverCardContent>
                 </HoverCard>
@@ -852,7 +864,6 @@ export function MapComponent() {
                     </DrawerContent>
                 </Drawer>
             </div>
-
         </div>
 
 
@@ -898,7 +909,9 @@ export function MapComponent() {
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
-                                            doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
+                                            doDisplayNodes={doDisplayNodes}
+                                            doDisplayHeatMap={doDisplayHeatMap}
+                                            setChosenNode={updateCurrentNode}/>}
                             {lowerLevel2ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
                                             startNode={startNode} endNode={endNode}
@@ -907,6 +920,7 @@ export function MapComponent() {
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
+                                            doDisplayHeatMap={doDisplayHeatMap}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {floor1ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
@@ -916,6 +930,7 @@ export function MapComponent() {
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
+                                            doDisplayHeatMap={doDisplayHeatMap}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {floor2ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
@@ -925,6 +940,7 @@ export function MapComponent() {
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
+                                            doDisplayHeatMap={doDisplayHeatMap}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {floor3ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
@@ -934,6 +950,7 @@ export function MapComponent() {
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
                                             doDisplayHalls={doDisplayHalls}
+                                            doDisplayHeatMap={doDisplayHeatMap}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                         </TransformComponent>
                     </React.Fragment>
