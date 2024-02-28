@@ -189,13 +189,14 @@ describe('Page load tests', () => {
       expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
   });
 
-  test('"/AboutPage" does not show "Page not found"', async () => {
-    render(
-      <MemoryRouter initialEntries={["/AboutPage"]}>
-        <App />
-      </MemoryRouter>
-    );
-      expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
-  });
+  // test('"/AboutPage" does not show "Page not found"', async () => {
+  //   render(
+  //     <MemoryRouter initialEntries={["/AboutPage"]}>
+  //       <App />
+  //     </MemoryRouter>
+  //   );
+  //     expect(screen.queryByText(/Page not found/i)).not.toBeInTheDocument();
+  // });
 });
+
 

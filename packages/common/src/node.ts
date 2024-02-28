@@ -11,7 +11,7 @@ export class Node {
   readonly longName: string; // Long name of the node
   readonly shortName: string; // Short name of the node
   private _edges: Set<string>; // Set of node IDs that this node is connected to
-  private _heatIndex: number = 1;
+  heatIndex: number = 1;
   
 
   /**
@@ -92,13 +92,5 @@ export class Node {
       case "3": return 5;
       default: return 0;
     }
-  }
-
-  getHeatIndex() {
-    return this._heatIndex;
-  }
-
-  setHeatIndex(heatIndex: number) {
-    this._heatIndex = heatIndex;
   }
 }
