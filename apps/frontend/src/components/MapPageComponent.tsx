@@ -228,8 +228,11 @@ export function MapComponent() {
         else {
             let longNames: string[] = [];
             pathfindingResult.map((node: Node, index: number) => {
-                if(node.nodeType != "HALL" || index == pathfindingResult.length - 1) {
+                if(node.nodeType != "HALL" || index == pathfindingResult.length - 1 || index == 0) {
                     longNames.push(node.longName);
+                }
+                else {
+                    longNames.push("");
                 }
             });
             return longNames;
