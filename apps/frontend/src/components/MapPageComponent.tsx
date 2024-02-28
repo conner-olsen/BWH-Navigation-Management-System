@@ -802,34 +802,47 @@ export function MapComponent() {
                         </div>
                     </div>
                     <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
-                    {/* Render the list of long names and node names with icons */}
+                        {/* Render the list of long names and node names with icons */}
                         {pathfindingResult.map((node, index) => (
-                            <li key={index}>
-                                {/* Check the node type and render the appropriate icon */}
-                                <span className="flex items-center">
-                      {node.nodeType === "STAI" && (
-                          <img src="../../public/icon/stairs.png" alt="stair-icon"
-                               className="h-3 w-3 mr-1 dark:invert"/>
-                      )}
-                                        {node.nodeType === "ELEV" && (
-                                            <img src="../../public/icon/elevator.png" alt="elevator-icon"
-                                                 className="w-4 h-4 mr-1 dark:invert"/>
-                                        )}
-                                        <span
-                                            className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
+                            <React.Fragment key={index}>
+                                {/* Render the floor name if it's the first node or if the floor changes */}
+                                {index === 0 || node.floor !== pathfindingResult[index - 1].floor ? (
+                                    <React.Fragment>
+                                        <li className="font-bold mb-1">
+                                            <br></br>
+                                            Floor {node.floor}:
+                                        </li>
+                                        {/* Add an empty list item for additional new line */}
+                                    </React.Fragment>
+                                ) : null}
+                                {/* Render the list item with icon and long name */}
+                                <li>
+                <span className="flex items-center">
+                    {node.nodeType === "STAI" && (
+                        <img src="../../public/icon/stairs.png" alt="stair-icon"
+                             className="h-3 w-3 mr-1 dark:invert"/>
+                    )}
+                    {node.nodeType === "ELEV" && (
+                        <img src="../../public/icon/elevator.png" alt="elevator-icon"
+                             className="w-4 h-4 mr-1 dark:invert"/>
+                    )}
+                    <span className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
                         {collectLongNames()[index]}
-                      </span>
                     </span>
-                            </li>
+                </span>
+                                </li>
+                            </React.Fragment>
                         ))}
                     </ol>
+
+
                 </div>
 
             </div>
         )}
             {activeTab === 2 && !currentNode && (
                 <div className="hidden sm:block mt-4">
-                <p className="font-bold mb-0">Select a location</p>
+                    <p className="font-bold mb-0">Select a location</p>
                     <p className="font-bold">to display its information</p>
                     <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
                 </div>
@@ -1179,7 +1192,7 @@ export function MapComponent() {
                 )}
             </TransformWrapper>
             <div className="relative"> {/* Ensure the parent has relative positioning */}
-                <div className={`absolute bottom-[75px] z-50 right-[10px]`}>
+                <div className={`absolute bottom-[85px] z-50 right-[200px]`}>
                     {showAlert && (
                         <Alert>
                             {/* Close button */}
