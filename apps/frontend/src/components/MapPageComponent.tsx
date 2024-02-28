@@ -247,7 +247,7 @@ export function MapComponent() {
         // Cleanup function to pause and cancel any ongoing speech synthesis
         const cleanupSpeechSynthesis = () => {
             const synth = window.speechSynthesis;
-            if (synth.speaking) {
+            if (synth && synth.speaking) {
                 synth.cancel();
             }
         };
