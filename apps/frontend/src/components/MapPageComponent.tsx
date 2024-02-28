@@ -21,7 +21,7 @@ import ReactDOM from "react-dom";
 import MapDisplay3D from "./maps/3DMapDisplay.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
 import Legend from "./maps/3DLegend.tsx";
-
+import MapLegend from "./MapLegend.tsx";
 
 export function MapComponent() {
   const [pathfindingResult, setBFSResult] = useState<Node[]>([]);
@@ -44,12 +44,34 @@ export function MapComponent() {
     return pathfindingResult.map(node => node.longName);
   }, [pathfindingResult]);
 
-  const handleSpeakButtonClick = () => {
-    const longNames = collectLongNames();
-    const speech = new SpeechSynthesisUtterance();
-    speech.text = longNames.join(', ');
-    window.speechSynthesis.speak(speech);
-  };
+    const [isPaused, setIsPaused] = useState(false);
+
+    const handleSpeakButtonClick = () => {
+        const longNames = collectLongNames();
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = longNames.join(', ');
+        window.speechSynthesis.speak(speech);
+    };
+
+    const handlePause = () => {
+        const synth = window.speechSynthesis;
+
+        // Check if speech synthesis is speaking
+        if (synth.speaking) {
+            synth.pause();
+            setIsPaused(true);
+        }
+    };
+
+    const handleResume = () => {
+        const synth = window.speechSynthesis;
+
+        // Check if speech synthesis is paused
+        if (synth.paused) {
+            synth.resume();
+            setIsPaused(false);
+        }
+    };
 
   const handleAccessibilityToggle = () => {
     setAccessibilityRoute(doAccessible => !doAccessible);
@@ -408,7 +430,6 @@ export function MapComponent() {
 
   return (
     <div>
-
       <div className="fixed top-0 left-0 h-screen w-[80px] bg-neutral-500 bg-opacity-30 text-white z-20 px-4 pt-[100px]
                       flex-col hidden sm:flex">
         <button onClick={toggleSidebar} className="text-xl text-white focus:outline-none">
@@ -550,8 +571,13 @@ export function MapComponent() {
                             <p className="font-bold mb-0">Follow Me</p>
                             <button onClick={handleSpeakButtonClick}>
                                 <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
+                                     className="h-6 w-6 ml-2 pd-0 dark:invert"></img>
+                            </button>
+                            <button onClick={handlePause}>
+                                <img src="../../public/icon/cancel-speech.svg" alt="text-icon"
                                      className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
                             </button>
+                            {isPaused && <button onClick={handleResume}>Resume</button>}
                         </div>
                     </div>
                     <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
@@ -632,7 +658,7 @@ export function MapComponent() {
                                checked={doDisplayNodes}/>
                         <label htmlFor="display-nodes-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-nodes-icon.png" alt="edge-bg"
+                            <img src="../../public/icon/map-nodes-icon.png" alt="node-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Nodes</p>
                         </label>
@@ -644,7 +670,7 @@ export function MapComponent() {
                                checked={doDisplayHalls}/>
                         <label htmlFor="display-halls-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/halls.png" alt="edge-bg"
+                            <img src="../../public/icon/map-halls-icon.png" alt="hall-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Halls</p>
                         </label>
@@ -656,7 +682,7 @@ export function MapComponent() {
                                checked={doDisplayNames}/>
                         <label htmlFor="display-names-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-names-icons.png" alt="edge-bg"
+                            <img src="../../public/icon/map-names-icons.png" alt="name-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">Names</p>
                         </label>
@@ -671,7 +697,7 @@ export function MapComponent() {
                                checked={do3D}/>
                         <label htmlFor="display-3d-switch"
                                className="cursor-pointer flex flex-col justify-center">
-                            <img src="../../public/icon/map-3d-icon.png" alt="edge-bg"
+                            <img src="../../public/icon/map-3d-icon.png" alt="3d-bg"
                                  className="w-[50px] m-auto dark:brightness-75"></img>
                             <p className="m-0 text-center text-xs">3D</p>
                         </label>
@@ -794,6 +820,7 @@ export function MapComponent() {
                 </Drawer>
             </div>
 
+
             <div className="h-0">
                 <Drawer modal={false}>
                     <DrawerTrigger>
@@ -839,6 +866,8 @@ export function MapComponent() {
             </div>
         </div>
 
+
+        <MapLegend></MapLegend>
 
         <div className={`fixed w-screen max-w-full m-auto ${!do3D ? '' : "hidden"}`}>
             <TransformWrapper
@@ -994,6 +1023,8 @@ export function MapComponent() {
                             ${(do3D && startNode !== "" && endNode !== "") ? '' : "relative z-[-1] max-h-[10px] overflow-hidden"}`}
              id="3d-wrapper">
         </div>
+
+
     </div>
 
   );
