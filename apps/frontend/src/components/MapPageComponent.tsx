@@ -241,9 +241,6 @@ export function MapComponent() {
         }
     }, [collectLongNamesDirections, pathfindingResult, doTextDirections]);
 
-    const [showAlert, setShowAlert] = useState(false);
-
-
     const [isPaused, setIsPaused] = useState(false);
 
     const handleSpeakButtonClick = () => {
