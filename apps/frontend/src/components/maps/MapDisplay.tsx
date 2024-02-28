@@ -58,6 +58,7 @@ function MapDisplay({
   const [path, setPath] = useState<string[]>([]);
   const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
   const [nodeCount, setNodeCount] = useState<string>("Error");
+  const [averageHeatIndex, setAverageHeatIndex] = useState<number>(100);
 
     useEffect(() => {
         axios.get('/api/heat-map')
@@ -82,7 +83,7 @@ function MapDisplay({
             average = item.count + average;
         }
         average = average / heatmap.length;
-        populatedGraph.setAverageHeatIndex(average);
+        setAverageHeatIndex(average);
       setGraph(populatedGraph);
     });
   }, [heatmap]);
@@ -294,7 +295,10 @@ function MapDisplay({
                             <NodeStyling key={node.id} node={node} iconSize={iconSize} href={iconPath}
                                          onClick={() => handleNodeClick(node)}
                                          onMouseEnter={() => handleNodeHover(node)}
-                                         onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)} heatmap={heatmap} useHeatMap={doDisplayHeatMap}/>
+                                         onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}
+                                         heatmap={heatmap} useHeatMap={doDisplayHeatMap}
+                                         averageHeatIndex={averageHeatIndex}
+                            />
                         );
                     }
                 }

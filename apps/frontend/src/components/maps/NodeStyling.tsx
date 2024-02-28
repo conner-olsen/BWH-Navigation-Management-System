@@ -14,6 +14,7 @@ export function NodeStyling(props: {
     element: ReactNode,
     heatmap: NodeVisit[]
     useHeatMap: boolean;
+    averageHeatIndex: number;
 }) {
     const [nodeVisit, setNodeVisit] = useState<number>();
 
@@ -28,9 +29,9 @@ export function NodeStyling(props: {
 
     // Function to calculate box shadow color based on count
     const getBoxShadowColor = (count: number): string => {
-        const average = 100;
+        const average = props.averageHeatIndex;
         const distance = Math.abs(count - average);
-        const maxDistance = 100; // Maximum distance from the average
+        const maxDistance = 4*average; // Maximum distance from the average
         const normalizedDistance = Math.min(distance / maxDistance, 1);
 
         // Interpolate between green (120 degrees) and red (0 degrees) in the HSL color space
