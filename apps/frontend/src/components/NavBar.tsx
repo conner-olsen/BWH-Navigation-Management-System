@@ -14,8 +14,6 @@ import {
 import {Link, NavLink, useLocation} from "react-router-dom";
 import {Button} from "./ui/button.tsx";
 import ChatComponent from "./ChatBot.tsx";
-import {Col, Row} from "react-bootstrap";
-
 
 export default function NavBar() {
 // Responsive Navbar toggle
@@ -40,92 +38,65 @@ export default function NavBar() {
             logoutParams: { returnTo: window.location.origin },
         });
 
-    const handleMouseEnter = () => {
-        const customElement = document.getElementById('bg-blur');
-        if (customElement) {
-            customElement.classList.remove('h-0');
-            customElement.classList.add('h-screen');
-        }
-    };
-
-    const handleMouseLeave = () => {
-        const customElement = document.getElementById('bg-blur');
-        if (customElement) {
-            customElement.classList.remove('h-screen');
-            customElement.classList.add('h-0');
-        }
-    };
+    // const handleMouseEnter = () => {
+    //     const customElement = document.getElementById('bg-blur');
+    //     if (customElement) {
+    //         customElement.classList.remove('h-0');
+    //         customElement.classList.add('h-screen');
+    //     }
+    // };
+    //
+    // const handleMouseLeave = () => {
+    //     const customElement = document.getElementById('bg-blur');
+    //     if (customElement) {
+    //         customElement.classList.remove('h-screen');
+    //         customElement.classList.add('h-0');
+    //     }
+    // };
 
 return (
 
     <nav className="sticky top-0 z-50">
-        <div className="navbarStyling relative filter-none z-50 shadow-md bg-white space-x-12 items-center flex
+        <div className="navbarStyling relative filter-none z-50 shadow-md bg-blue-600 space-x-12 items-center flex
         justify-between px-4 xl:px-0">
+
             <Link to="/"><img src="public/BWH_Logo_Sheild.png" className="max-w-[50px] py-1" alt="Logo"></img></Link>
 
-            <Link to="/Home" className="no-underline p-2 text-black hidden xl:block text-[17px]">
-                <img src={"public/navbar-icons/map.svg"} className={"h-7 filter:invert"}/>
-                <div className={"hover:text-blue-500 mb-3"}>Map</div>
+
+            <Link to="/Home" className="no-underline p-2 text-white hidden xl:block text-[17px]">
+
+                <img src={"public/navbar-icons/navbar_map_icon.png"} className={"h-7"}/>
+                <div className={"hover:text-blue-500"}>Map</div>
+
             </Link>
 
             {isAuthenticated && (
-                <Link to="/DataManager" className="no-underline p-2 text-black hidden xl:block text-[17px]">
-                    <Col>
-                        <Row>
-                    <img src={"public/navbar-icons/data.svg"} className={"h-7 filter:invert"}/>
-                        </Row>
-                        <Row>
+                <Link to="/DataManager" className="no-underline p-2 text-white hidden xl:block text-[17px] flex items-center">
+                    <img src={"public/navbar-icons/navbar_data_manager_icon.png"} className={"h-7 ml-8"} />
                     <div className={"hover:text-blue-500"}>Data Manager</div>
-                        </Row>
-                    </Col>
                 </Link>
             )}
             {/*{isAuthenticated && (*/}
-            {/*    <Link to="/DataUpload" className="no-underline p-2 text-black hidden xl:block text-[17px]">*/}
+            {/*    <Link to="/DataUpload" className="no-underline p-2 text-white hidden xl:block text-[17px]">*/}
             {/*        <div className={"hover:text-blue-500"}>Data Upload</div>*/}
             {/*    </Link>*/}
             {/*)}*/}
 
 
-            <div className="group text-center no-underline p-2 text-black hidden xl:block text-[17px]"
-                 onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <Link to="/ServiceList" className="no-underline p-2 text-white hidden xl:block text-[17px] flex items-center">
+                <img src={"public/navbar-icons/navbar_service_request_icon.png"} className={"h-7 ml-11"}/>
                 <div className={"hover:text-blue-500 cursor-pointer"}>Service Requests</div>
-                <div className="mt-3 pt-2 h-0 w-screen max-w-full group-hover:h-[250px] absolute
-                                bg-white left-0 overflow-hidden flex justify-center
-                                transition-all duration-500">
-                    <div>
-                        <Link to="/ServiceList" className="dropdown-item">
-                            <div className={"hover:text-blue-500 text-[17px]"}>All Services</div>
-                        </Link>
-                        <Link to="/FlowerService" className="dropdown-item">
-                            <div className={"hover:text-blue-500 text-[17px]"}>Flower Request</div>
-                        </Link>
-                        <Link to="/ReligiousService" className="dropdown-item">
-                            <div className={"hover:text-blue-500 text-[17px]"}>Religious Request</div>
-                        </Link>
-                        <Link to="/CleaningService" className="dropdown-item">
-                            <div className={"hover:text-blue-500 text-[17px]"}>Cleaning Request</div>
-                        </Link>
-                        <Link to="/InternalTransportation" className="dropdown-item">
-                            <div className={"hover:text-blue-500 text-[17px]"}>Internal Transportation</div>
-                        </Link>
-                        <Link to="/ExternalTransportation" className="dropdown-item">
-                            <div className={"hover:text-blue-500 text-[17px]"}>External Transportation</div>
-                        </Link>
-                        <Link to="/LanguageService" className="dropdown-item">
-                            <div className={"hover:text-blue-500 text-[17px]"}>Language Service</div>
-                        </Link>
-                    </div>
-                </div>
-            </div>
+            </Link>
 
             {isAuthenticated && (
-                <Link to="/ServiceLog" className="no-underline p-2 text-black hidden xl:block text-[17px]">
-                    <div className={"hover:text-blue-500"}>Service Log</div>
+                <Link to="/ServiceLog" className="no-underline p-2 text-white hidden xl:block text-[17px]">
+                            <img src={"public/navbar-icons/navbar_servicelog_icon.png"} className={"h-7 ml-7"}/>
+                            <div className={"hover:text-blue-500"}>Service Log</div>
                 </Link>
             )}
 
-            <Link to="/AboutPage" className="no-underline p-2 text-black hidden xl:block ml-2 text-[17px]">
+            <Link to="/AboutPage" className="no-underline p-2 text-white hidden xl:block ml-2 text-[17px]">
+                <img src={"public/navbar-icons/navbar_about_us_icon.png"} className={"h-7 ml-5"}/>
                 <div className={"hover:text-blue-500"}>About Us</div>
             </Link>
 
@@ -178,7 +149,7 @@ return (
                 <div className="-mr-2 flex xl:hidden">
                     <button
                         onClick={toggleMobileMenu}
-                        className="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-blue-500"
+                        className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-blue-500"
                     >
                         <span className="sr-only">Open main menu</span>
                         {!mobileMenuOpen ? (
@@ -203,28 +174,28 @@ return (
             <div className={`xl:hidden absolute bg-blue-950 max-w-full w-screen z-50`}>
                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col items-center">
                     <Link to="/Home"
-                          className="text-black hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline"
+                          className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline"
                             onClick={toggleMobileMenu}>
                         <div className={"hover:text-blue-500"}>Map</div></Link>
                     {isAuthenticated && (
                         <>
                             <Link to="/DataManager" onClick={toggleMobileMenu}
-                                  className="text-black hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
+                                  className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
                                 <div className={"hover:text-blue-500"}>Data Manager</div></Link>
                         </>
                     )}
                             <Link to="/ServiceList" onClick={toggleMobileMenu}
-                                  className="text-black hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
+                                  className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
                                 <div className={"hover:text-blue-500"}>Service Requests</div></Link>
                     {isAuthenticated && (
                         <>
                             <Link to="/ServiceLog" onClick={toggleMobileMenu}
-                                  className="text-black hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
+                                  className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
                                 <div className={"hover:text-blue-500"}>Service Log</div></Link>
                         </>
                     )}
                             <Link to="/AboutPage" onClick={toggleMobileMenu}
-                                  className="text-black hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
+                                  className="text-white hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium no-underline">
                                 <div className={"hover:text-blue-500"}>About Us</div></Link>
 
                     {!isAuthenticated && (
