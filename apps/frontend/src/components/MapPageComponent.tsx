@@ -572,10 +572,12 @@ export function MapComponent() {
                             <p className="font-bold mb-0">Follow Me</p>
                             <button onClick={handleSpeakButtonClick}>
                                 <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
+                                     className="h-6 w-6 ml-2 pd-0 dark:invert"></img>
+                            </button>
+                            <button onClick={handlePause}>
+                                <img src="../../public/icon/cancel-speech.svg" alt="text-icon"
                                      className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
                             </button>
-                            <button onClick={handleSpeakButtonClick}>Speak</button>
-                            <button onClick={handlePause}>Pause</button>
                             {isPaused && <button onClick={handleResume}>Resume</button>}
                         </div>
                     </div>
