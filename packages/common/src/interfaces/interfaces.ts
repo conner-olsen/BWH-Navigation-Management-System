@@ -84,3 +84,8 @@ export interface employee {
   lastName: string;
   email: string;
 }
+
+export interface NodeVisit {
+  nodeId: string;
+  count: number;
+}

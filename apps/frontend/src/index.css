@@ -58,6 +58,9 @@
     }
 }
 
+body {
+    min-height: 100vh;
+}
 
 :root {
   scroll-behavior: auto!important;
@@ -285,6 +288,17 @@ body.threeD-on > div[id^="d"] > .guideline {
     border: 3px solid #003a96;
     padding: 10px;
     scale: 0.75;
+}
+.ClearPathButton {
+    font-family: sans-serif;
+    cursor: pointer;
+    font-size: 15px;
+    width: 120px; /* Increase width, adjust the value as needed */
+    padding: 1px; /* Reduce padding for height */
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 20px; /* Make the button oval */
+    height: fit-content;
 }
 
 /*!* ============= DRAG AND DROP ========= *!*/
