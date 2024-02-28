@@ -42,7 +42,7 @@ const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
                 "[&>span]:line-clamp-1",
                 "pl-[500px]",
                 "w-full",
-                "h-10 text-sm",
+                "h-10 text-sm text-left",
                 className
             )}
             {...props}

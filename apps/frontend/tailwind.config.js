@@ -19,6 +19,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        'wheat': '#F5DFBB',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
