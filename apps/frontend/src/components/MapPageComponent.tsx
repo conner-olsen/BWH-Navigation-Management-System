@@ -38,8 +38,7 @@ export function MapComponent() {
   const [animationOn, setAnimationOn] = useState(true);
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
 
-  const [showAlert, setShowAlert] = useState(false);
-
+  //function for the text directions
   const collectLongNamesDirections = useCallback((): string[] => {
       //y increases downwards, x increases to the right
         const longNamesDirections: string[] = [];
@@ -97,9 +96,9 @@ export function MapComponent() {
                     else if(pastX < currentX) {
                         //going right if facing up
                         if(facingUp) {
-                            if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                           // if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
                                 longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
-                            }
+                        //    }
                             facingLeft = false;
                             facingRight = true;
                             facingDown = false;
@@ -108,9 +107,9 @@ export function MapComponent() {
 
                         //going left if facing down
                         else {
-                            if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                           // if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
                                 longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
-                            }
+                           // }
                             facingLeft = false;
                             facingRight = true;
                             facingDown = false;
@@ -122,9 +121,9 @@ export function MapComponent() {
                     else if(pastX > currentX) {
                         //going left if facing up
                         if(facingUp) {
-                            if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                         //   if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
                                 longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
-                            }
+                           // }
                             facingLeft = true;
                             facingRight = false;
                             facingDown = false;
@@ -133,9 +132,9 @@ export function MapComponent() {
 
                         //going right if facing down
                         else {
-                            if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
                                 longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
-                            }
+                          //  }
                             facingLeft = true;
                             facingRight = false;
                             facingDown = false;
@@ -168,9 +167,9 @@ export function MapComponent() {
                     else if(pastY < currentY) {
                         //going left if facing left
                         if(facingLeft) {
-                            if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
                                 longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
-                            }
+                          //  }
                             facingLeft = false;
                             facingRight = false;
                             facingDown = true;
@@ -179,9 +178,9 @@ export function MapComponent() {
 
                         //going right if facing right
                         else {
-                            if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
                                 longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
-                            }
+                          //  }
                             facingLeft = false;
                             facingRight = false;
                             facingDown = true;
@@ -193,9 +192,9 @@ export function MapComponent() {
                     else if(pastY > currentY) {
                         //going right if facing left
                         if(facingLeft) {
-                            if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
                                 longNamesDirections[i] = "Turn right to " + pathfindingResult[i].longName;
-                            }
+                          //  }
                             facingLeft = false;
                             facingRight = false;
                             facingDown = false;
@@ -204,9 +203,9 @@ export function MapComponent() {
 
                         //going left if facing right
                         else {
-                            if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
+                          //  if(pathfindingResult[i].nodeType != "HALL" && i != pathfindingResult.length) {
                                 longNamesDirections[i] = "Turn left to " + pathfindingResult[i].longName;
-                            }
+                           // }
                             facingLeft = false;
                             facingRight = false;
                             facingDown = false;
