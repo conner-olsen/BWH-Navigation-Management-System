@@ -44,12 +44,34 @@ export function MapComponent() {
     return pathfindingResult.map(node => node.longName);
   }, [pathfindingResult]);
 
-  const handleSpeakButtonClick = () => {
-    const longNames = collectLongNames();
-    const speech = new SpeechSynthesisUtterance();
-    speech.text = longNames.join(', ');
-    window.speechSynthesis.speak(speech);
-  };
+    const [isPaused, setIsPaused] = useState(false);
+
+    const handleSpeakButtonClick = () => {
+        const longNames = collectLongNames();
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = longNames.join(', ');
+        window.speechSynthesis.speak(speech);
+    };
+
+    const handlePause = () => {
+        const synth = window.speechSynthesis;
+
+        // Check if speech synthesis is speaking
+        if (synth.speaking) {
+            synth.pause();
+            setIsPaused(true);
+        }
+    };
+
+    const handleResume = () => {
+        const synth = window.speechSynthesis;
+
+        // Check if speech synthesis is paused
+        if (synth.paused) {
+            synth.resume();
+            setIsPaused(false);
+        }
+    };
 
   const handleAccessibilityToggle = () => {
     setAccessibilityRoute(doAccessible => !doAccessible);
@@ -552,6 +574,9 @@ export function MapComponent() {
                                 <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
                                      className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
                             </button>
+                            <button onClick={handleSpeakButtonClick}>Speak</button>
+                            <button onClick={handlePause}>Pause</button>
+                            {isPaused && <button onClick={handleResume}>Resume</button>}
                         </div>
                     </div>
                     <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
