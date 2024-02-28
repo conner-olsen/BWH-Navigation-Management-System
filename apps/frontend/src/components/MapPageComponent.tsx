@@ -20,6 +20,7 @@ import NavMapPage from "../routes/NavMapPage.tsx";
 import ReactDOM from "react-dom";
 import MapDisplay3D from "./maps/3DMapDisplay.tsx";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert.tsx";
+import Legend from "./maps/3DLegend.tsx";
 
 
 export function MapComponent() {
@@ -30,9 +31,11 @@ export function MapComponent() {
   const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
   const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
   const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
+  const [doDisplayHalls, setDoDisplayHalls] = useState<boolean>(true);
   const [doDisplayNames, setDoDisplayNames] = useState<boolean>(false);
   const [do3D, set3D] = useState<boolean>(false);
   const [currentNode, setCurrentNode] = useState<Node | null>(null);
+  const [animationOn, setAnimationOn] = useState(true);
   const [accessibilityRoute, setAccessibilityRoute] = useState<boolean>(false);
 
   const [showAlert, setShowAlert] = useState(false);
@@ -50,6 +53,7 @@ export function MapComponent() {
 
   const handleAccessibilityToggle = () => {
     setAccessibilityRoute(doAccessible => !doAccessible);
+    clearGuidelines();
     console.log("do accessible to " + accessibilityRoute);
   };
 
@@ -354,7 +358,7 @@ export function MapComponent() {
                         <MapDisplay3D key={mapKey} floorMap={nodeFloorToURL(floor)} floor={floor}
                                       startNode={startNode} endNode={endNode}
                                       pathFindingType={pathFindingType} sendHoverMapPath={sendHoverMapPath}
-                                      pathSent={pathfindingResult}
+                                      pathSent={pathfindingResult} animationOn={animationOn}
                                       mapChange={(mapID) => {setMap(nodeFloorToMapFloor(mapID)); set3D(false); setIsExpanded(true);}}/>
                     </div>
                 </div>
@@ -363,11 +367,15 @@ export function MapComponent() {
 
         function renderFloors(floorArray: string[]): void {
             const floorOrder: string[] = ["3", "2", "1", "L1", "L2"];
+            // const numberOfFloors = floorArray.length;
+            const offset = 400;
+
             const wrapper: HTMLElement | null = document.getElementById("3d-wrapper");
             let marginTopOffset = 0;
             let z_index = 9;
 
             if (wrapper) {
+
                 // Remove existing floor elements
                 floorOrder.forEach(floor => {
                     const existingFloorElement = document.getElementById(floor);
@@ -383,7 +391,7 @@ export function MapComponent() {
                 floorOrder.forEach(floor => {
                     if (floorArray.includes(floor)) {
                         floorComponents.push(<FloorComponent key={floor} floor={floor} marginTop={marginTopOffset} z_index={z_index}/>);
-                        marginTopOffset += 400;
+                        marginTopOffset += offset;
                         z_index--;
                     }
                 });
@@ -396,7 +404,7 @@ export function MapComponent() {
         }
 
         renderFloors(filterDuplicates(pathfindingResult));
-    }, [mapKey, startNode, endNode, pathFindingType, pathfindingResult]);
+    }, [mapKey, startNode, endNode, pathFindingType, pathfindingResult, animationOn]);
 
   return (
     <div>
@@ -464,59 +472,68 @@ export function MapComponent() {
           <label htmlFor="f3" className="font-bold hover:text-blue-500 cursor-pointer">3</label>
         </div>
         {activeTab === 1 && (
-          <div className="hidden sm:block">
-            <div className="flex pl-2 py-4 border-b-[1px] border-neutral-300">
-              <div className="flex flex-col items-center">
-                <img src="../../public/icon/start.svg" alt="circle"
-                  className="mb-[5px] mt-[11px] dark:invert" />
-                <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert" />
-                <img src="../../public/icon/location.svg" alt="pin" />
-              </div>
-              <div className="flex flex-col grow justify-between pl-[2px] pr-2">
-                <Select value={startNode}
-                  onValueChange={(location: string) =>
-                  {setStartNode(location);
-                      clearGuidelines();}}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {currentFloorNames}
-                  </SelectContent>
-                </Select>
-                <Select value={endNode}
-                  onValueChange={(location: string) => {
-                      setEndNode(location);
-                      clearGuidelines();}}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {roomNames}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="hidden sm:block">
+                <div className="flex pl-2 pt-4 pb-2 border-neutral-300">
+                    <div className="flex flex-col items-center">
+                        <img src="../../public/icon/start.svg" alt="circle"
+                             className="mb-[5px] mt-[11px] dark:invert"/>
+                        <img src="../../public/icon/dots.svg" alt="dots" className="my-[10px] dark:invert"/>
+                        <img src="../../public/icon/location.svg" alt="pin"/>
+                    </div>
+                    <div className="flex flex-col grow justify-between pl-[2px] pr-2">
+                        <Select value={startNode}
+                                onValueChange={(location: string) => {
+                                    setStartNode(location);
+                                    clearGuidelines();
+                                }}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Location"/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                {currentFloorNames}
+                            </SelectContent>
+                        </Select>
+                        <Select value={endNode}
+                                onValueChange={(location: string) => {
+                                    setEndNode(location);
+                                    clearGuidelines();
+                                }}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Location"/>
+                            </SelectTrigger>
+                            <SelectContent>
+                                {roomNames}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                <div className={"dark: border-b-[1px] pb-2 pt-1"}>
+                    <Button variant="outline"
+                         className={"ClearPathButton"}
+                            onClick={() => sendClear()}>
+                        Clear Path</Button>
+                </div>
 
-            </div>
-            <div className="pt-4 pb-2 px-2">
-              <Select value={pathFindingType} defaultValue={"A*"}
-                onValueChange={(algorithm: string) =>
-                {setPathFindingType(algorithm);
-                    clearGuidelines();}}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={"A*"}>A* Searching</SelectItem>
-                  <SelectItem value={"BFS"}>BFS Searching</SelectItem>
-                  <SelectItem value={"DFS"}>DFS Searching</SelectItem>
-                  <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+                <div className="pt-4 pb-2 px-2">
+                    <Select value={pathFindingType} defaultValue={"A*"}
+                            onValueChange={(algorithm: string) => {
+                                setPathFindingType(algorithm);
+                                clearGuidelines();
+                            }}>
+                        <SelectTrigger>
+                            <SelectValue/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value={"A*"}>A* Searching</SelectItem>
+                            <SelectItem value={"BFS"}>BFS Searching</SelectItem>
+                            <SelectItem value={"DFS"}>DFS Searching</SelectItem>
+                            <SelectItem value={"Dijkstra"}>Dijkstra Searching</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
 
-                    <div className="flex items-center justify-center ml-6 mb-3">
-                        <div style={{marginTop: '1rem'}}>
+                <div className="flex items-center justify-center ml-6 mb-3">
+                    <div style={{marginTop: '1rem'}}>
                   <span className="flex items-center">
                       <img src="../../public/icon/wheelchair-icon.png" alt="wheelchair-icon"
                            className="h-5 w-5 dark:invert mr-2"/>
@@ -524,48 +541,48 @@ export function MapComponent() {
                               defaultChecked={false}>
                       </Switch>
                   </span>
+                    </div>
+                </div>
+
+                <div>
+                    <div>
+                        <div className="flex items-center justify-center ml-6 mb-3">
+                            <p className="font-bold mb-0">Follow Me</p>
+                            <button onClick={handleSpeakButtonClick}>
+                                <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
+                                     className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
+                            </button>
                         </div>
                     </div>
-
-                    <div>
-                        <div>
-                            <div className="flex items-center justify-center ml-6 mb-3">
-                                <p className="font-bold mb-0">Follow Me</p>
-                                <button onClick={handleSpeakButtonClick}>
-                                    <img src="../../public/icon/text-to-speech.svg" alt="text-icon"
-                                         className="h-6 w-6 mr-5 ml-2 pd-0 dark:invert"></img>
-                                </button>
-                            </div>
-                        </div>
-                        <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
-                            {/* Render the list of long names and node names with icons */}
-                            {pathfindingResult.map((node, index) => (
-                                <li key={index}>
-                                    {/* Check the node type and render the appropriate icon */}
-                                    <span className="flex items-center">
+                    <ol type="1" className="overflow-y-auto h-80 text-left pl-2">
+                        {/* Render the list of long names and node names with icons */}
+                        {pathfindingResult.map((node, index) => (
+                            <li key={index}>
+                                {/* Check the node type and render the appropriate icon */}
+                                <span className="flex items-center">
                       {node.nodeType === "STAI" && (
                           <img src="../../public/icon/stairs.png" alt="stair-icon"
                                className="h-3 w-3 mr-1 dark:invert"/>
                       )}
-                                        {node.nodeType === "ELEV" && (
-                                            <img src="../../public/icon/elevator.png" alt="elevator-icon"
-                                                 className="w-4 h-4 mr-1 dark:invert"/>
-                                        )}
-                                        <span
-                                            className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
+                                    {node.nodeType === "ELEV" && (
+                                        <img src="../../public/icon/elevator.png" alt="elevator-icon"
+                                             className="w-4 h-4 mr-1 dark:invert"/>
+                                    )}
+                                    <span
+                                        className={gatherFloorChange()[index] ? "text-blue-500" : ""}>
                         {node.longName}
                       </span>
                     </span>
-                                </li>
-                            ))}
-                        </ol>
-                    </div>
-
+                            </li>
+                        ))}
+                    </ol>
                 </div>
-            )}
+
+            </div>
+        )}
             {activeTab === 2 && !currentNode && (
                 <div className="hidden sm:block mt-4">
-                    <p className="font-bold mb-0">Select a location</p>
+                <p className="font-bold mb-0">Select a location</p>
                     <p className="font-bold">to display its information</p>
                     <img src="../../public/icon/red-pin.png" alt={"pin"} className="max-w-[200px] m-auto"></img>
                 </div>
@@ -621,6 +638,18 @@ export function MapComponent() {
                         </label>
                     </div>
                     <div className="px-1">
+                        <input type="checkbox" id="display-halls-switch" name="display-halls-switch"
+                               className="hidden"
+                               onChange={() => setDoDisplayHalls(!doDisplayHalls)}
+                               checked={doDisplayHalls}/>
+                        <label htmlFor="display-halls-switch"
+                               className="cursor-pointer flex flex-col justify-center">
+                            <img src="../../public/icon/halls.png" alt="edge-bg"
+                                 className="w-[50px] m-auto dark:brightness-75"></img>
+                            <p className="m-0 text-center text-xs">Halls</p>
+                        </label>
+                    </div>
+                    <div className="px-1">
                         <input type="checkbox" id="display-names-switch" name="display-names-switch"
                                className="hidden"
                                onChange={() => setDoDisplayNames(!doDisplayNames)}
@@ -649,24 +678,24 @@ export function MapComponent() {
                     </div>
                 </form>
             </HoverCardContent>
-          </HoverCard>
+                </HoverCard>
 
             </div>
 
-        <div className="h-0">
-            <Drawer modal={false}>
-                <DrawerTrigger>
-                    <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
+            <div className="h-0">
+                <Drawer modal={false}>
+                    <DrawerTrigger>
+                        <div className="absolute w-[36px] h-[36px] left-[10px] top-[80px] bg-background z-40
                         rounded-md shadow-md sm:hidden flex items-center justify-center">
-              <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon"
-                className="dark:invert w-[25px]"></img>
-            </div>
-          </DrawerTrigger>
-          <DrawerContent>
-            <div className="overflow-y-auto">
-              <div className="max-w-[400px] m-auto">
-                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
-                  <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
+                            <img src="../../public/icon/nav-arrow-icon.png" alt="nav-icon"
+                                 className="dark:invert w-[25px]"></img>
+                        </div>
+                    </DrawerTrigger>
+                    <DrawerContent>
+                        <div className="overflow-y-auto">
+                            <div className="max-w-[400px] m-auto">
+                                <div className="px-8 pb-2 flex justify-between border-b-[1px] border-neutral-300">
+                                    <input type="radio" id="l2" name="floor" value="lowerLevel2" className="hidden"
                     onChange={handlePhotoChange} checked={map == "lowerLevel2"} />
                   <label htmlFor="l2" className="font-bold hover:text-blue-500 cursor-pointer">L2</label>
                   <input type="radio" id="l1" name="floor" value="lowerLevel1" className="hidden"
@@ -839,6 +868,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {lowerLevel2ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/00_thelowerlevel2.png"} floor={"L2"}
@@ -847,6 +877,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {floor1ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/01_thefirstfloor.png"} floor={"1"}
@@ -855,6 +886,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {floor2ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/02_thesecondfloor.png"} floor={"2"}
@@ -863,6 +895,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                             {floor3ContentVisible &&
                                 <MapDisplay key={mapKey} floorMap={"public/maps/03_thethirdfloor.png"} floor={"3"}
@@ -871,6 +904,7 @@ export function MapComponent() {
                                             sendClear={sendClear} pathSent={pathfindingResult}
                                             accessibilityRoute={accessibilityRoute}
                                             doDisplayNames={doDisplayNames} doDisplayEdges={doDisplayEdges}
+                                            doDisplayHalls={doDisplayHalls}
                                             doDisplayNodes={doDisplayNodes} setChosenNode={updateCurrentNode}/>}
                         </TransformComponent>
                     </React.Fragment>
@@ -921,7 +955,7 @@ export function MapComponent() {
 
         {/* ================================= 3D PROTOTYPE ================================= */}
         {/* ================= SHOW 3D NAV WHEN NO PATH IS DISPLAYED */}
-        <div className={`absolute top-0 w-full
+        <div className={`absolute top-0 w-full bg-background
                             ${(do3D && (startNode === "" || endNode === "")) ? '' : 'hidden'}`}>
             <NavMapPage onImageClick={(mapID: string) => {
                 setMap(mapID);
@@ -931,7 +965,15 @@ export function MapComponent() {
         </div>
 
         {/* ================= IF A PATH IS BEING DISPLAYED, ENTER 3D MODE */}
-        <div className={`max-w-[1000px] m-auto
+        <div className={`${(do3D && startNode !== "" && endNode !== "") ? '' : "hidden"} relative`}>
+            <Legend></Legend>
+            <div className={"fixed w-[250px] right-[20px] top-[350px] flex py-2 px-4 justify-between z-40 border-2 border-neutral-500 rounded-md bg-background"}>
+                <span>Show Animation</span>
+                <Switch defaultChecked={animationOn}
+                onCheckedChange={() => {setAnimationOn(!animationOn);clearGuidelines();}}></Switch>
+            </div>
+        </div>
+        <div className={`max-w-[1000px] m-auto relative overflow-hidden max-h-[1400px]
                             ${(do3D && startNode !== "" && endNode !== "") ? '' : "relative z-[-1] max-h-[10px] overflow-hidden"}`}
              id="3d-wrapper">
         </div>
