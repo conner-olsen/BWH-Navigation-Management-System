@@ -928,7 +928,7 @@ export function MapComponent() {
 
         {/* ================================= 3D PROTOTYPE ================================= */}
         {/* ================= SHOW 3D NAV WHEN NO PATH IS DISPLAYED */}
-        <div className={`absolute top-0 w-full
+        <div className={`absolute top-0 w-full bg-background
                             ${(do3D && (startNode === "" || endNode === "")) ? '' : 'hidden'}`}>
             <NavMapPage onImageClick={(mapID: string) => {
                 setMap(mapID);
