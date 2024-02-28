@@ -135,28 +135,39 @@ function MapDisplay({
         elementsArray.forEach((element) => element.remove());
     };
 
-  const handleNodeClick = (node: Node) => {
-    setChosenNode(node);
-    clearGuidelines();
+    const handleNodeClick = (node: Node) => {
+        // Clear the path if there is one
+        if (path.length > 0) {
+            setPath([]);
+        }
 
-    if (!startNodeId) {
-      setStartNodeId(node.id);
-      const path: PathfindingRequest = { startId: node.id, endId: "", strategy: pathFindingType, accessibilityRoute: doAccessible };
-      sendHoverMapPath(path);
-    } else if (node.id == startNodeId) {
-      clearSelection();
-    } else if (!endNodeId) {
-      setEndNodeId(node.id);
-      if (graph && startNodeId) {
-        setStartNodeId(startNodeId);
-        setEndNodeId(node.id);
-        const path: PathfindingRequest = { startId: startNodeId, endId: node.id, strategy: pathFindingType, accessibilityRoute: doAccessible };
-        sendHoverMapPath(path);
-      }
-    }
-  };
+        // Clear any existing selection if a different node is clicked
+        if (startNodeId && startNodeId !== node.id) {
+            clearSelection();
+        }
 
-  const handleNodeHover = (node: Node) => {
+        setChosenNode(node);
+        clearGuidelines();
+
+        if (!startNodeId) {
+            setStartNodeId(node.id);
+            const path: PathfindingRequest = { startId: node.id, endId: "", strategy: pathFindingType, accessibilityRoute: doAccessible };
+            sendHoverMapPath(path);
+        } else if (node.id === startNodeId) {
+            clearSelection();
+        } else if (!endNodeId) {
+            setEndNodeId(node.id);
+            if (graph && startNodeId) {
+                setStartNodeId(startNodeId);
+                setEndNodeId(node.id);
+                const path: PathfindingRequest = { startId: startNodeId, endId: node.id, strategy: pathFindingType, accessibilityRoute: doAccessible };
+                sendHoverMapPath(path);
+            }
+        }
+    };
+
+
+    const handleNodeHover = (node: Node) => {
     if (!hoverNodeId) {
       setHoverNodeId(node.id);
     }
@@ -179,7 +190,7 @@ function MapDisplay({
             "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 " +
             "data-[side=top]:slide-in-from-bottom-2 z-50"}>
           <g>
-            <img src={'../../../public/room-types/nodeType-' + node.nodeType + ".png"}></img>
+            <img src={'../../../public/room-types/nodeType-' + node.nodeType + ".png"} className="m-auto w-full"></img>
             <div>
               <p>Type: {node.nodeType}</p>
             </div>
