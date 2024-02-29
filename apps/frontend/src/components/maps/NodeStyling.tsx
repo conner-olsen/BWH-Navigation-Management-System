@@ -15,7 +15,7 @@ export function NodeStyling(props: {
     heatmap: NodeVisit[]
     useHeatMap: boolean;
     averageHeatIndex: number;
-    nodesList: Map<string, number>;
+    nodesList: string[];
 }) {
     const [nodeVisit, setNodeVisit] = useState<number>();
 
@@ -85,26 +85,14 @@ export function NodeStyling(props: {
             onMouseEnter={props.onMouseEnter}
             onMouseLeave={props.onMouseLeave}
         />
-        {props.nodesList.has(props.node.id) && (
-    <>
-        <circle
-            cx={props.node.xCoord + props.iconSize.width / 2}
-            cy={props.node.yCoord - props.iconSize.height / 2}
-            r="6"
-            fill="red"
-        />
-        <text
-            x={props.node.xCoord + props.iconSize.width / 2}
-            y={props.node.yCoord - props.iconSize.height / 2} // Adjusted for vertical alignment
-            fill="white"
-            fontSize="10"
-            textAnchor="middle"
-            dominantBaseline="central"
-        >
-            {props.nodesList.get(props.node.id)}
-        </text>
-    </>
-)}
+        {props.nodesList.includes(props.node.id)&& (
+            <circle
+                cx={props.node.xCoord + props.iconSize.width / 2}
+                cy={props.node.yCoord - props.iconSize.height / 2}
+                r="6"
+                fill="red"
+            />
+        )}
         {props.element}
     </g>);
 }
