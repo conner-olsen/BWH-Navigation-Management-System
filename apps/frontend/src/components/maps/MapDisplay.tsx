@@ -74,7 +74,7 @@ function MapDisplay({
                 console.error('Error fetching node data:', error);
             });
     }, []);
-  const [serviceRequest, setServiceRequest] = useState<string[]>([""]);
+  const [serviceRequest, setServiceRequest] = useState<Map<string, number>>(new Map());
 
     useEffect(() => {
     axios.get("/api/graph").then((res) => {
@@ -110,6 +110,10 @@ function MapDisplay({
         setPath([]);
     }
   }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
+
+  useEffect(() => {
+    setServiceRequestCounts();
+  }, []);
 
   function getCount(node: Node) {
     const fetchData = async () => {
@@ -298,21 +302,26 @@ function MapDisplay({
     }
   };
 
-  const haveServiceRequest = async () => {
-      const nodesList = [""];
+  const setServiceRequestCounts = async () => {
+      const requestsPerNode = new Map<string, number>();
       try {
-          const response = await axios.get("/api/service-request/all"); // Pass the entire node object
-          response.data.forEach((element: { nodeId: string; }) => {
-              nodesList.push(element.nodeId);
-          });
+        const response = await axios.get("/api/service-request/all");
+        
+        response.data.forEach((element: { nodeId: string; }) => {
+          if (requestsPerNode.has(element.nodeId)) {
+            // If the node ID already exists in the map, increment its count
+            requestsPerNode.set(element.nodeId, (requestsPerNode.get(element.nodeId) as number) + 1);
+          } else {
+            // If the node ID doesn't exist in the map, add it with a count of 1
+            requestsPerNode.set(element.nodeId, 1);
+          }
+        });
       } catch (error) {
           console.error("error getting count", error);
-          return [""];
       }
-      setServiceRequest(nodesList);
+      setServiceRequest(requestsPerNode);
   };
   const displayNodes = (graph: Graph) => {
-      haveServiceRequest();
         return (
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes) {
