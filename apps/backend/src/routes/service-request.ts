@@ -84,6 +84,9 @@ router.get("/:serviceType", async (req: Request, res: Response) => {
     case "flower":
       requestType = PrismaClient.flowerServiceRequest.findMany({ include: { ServiceRequest: true } });
       break;
+    case "all":
+      requestType = PrismaClient.serviceRequest.findMany();
+      break;
     default:
       return res.sendStatus(501); // Ensure function exits after sending response in default case
   }
