@@ -74,7 +74,7 @@ function MapDisplay({
                 console.error('Error fetching node data:', error);
             });
     }, []);
-  const [serviceRequest, setServiceRequest] = useState<Map<string, number>>(new Map());
+  const [serviceRequest, setServiceRequest] = useState<string[]>([""]);
 
     useEffect(() => {
     axios.get("/api/graph").then((res) => {
@@ -299,23 +299,17 @@ function MapDisplay({
   };
 
   const haveServiceRequest = async () => {
-      const requestsPerNode = new Map<string, number>();
+      const nodesList = [""];
       try {
-        const response = await axios.get("/api/service-request/all");
-        
-        response.data.forEach((element: { nodeId: string; }) => {
-          if (requestsPerNode.has(element.nodeId)) {
-            // If the node ID already exists in the map, increment its count
-            requestsPerNode.set(element.nodeId, (requestsPerNode.get(element.nodeId) as number) + 1);
-          } else {
-            // If the node ID doesn't exist in the map, add it with a count of 1
-            requestsPerNode.set(element.nodeId, 1);
-          }
-        });
+          const response = await axios.get("/api/service-request/all"); // Pass the entire node object
+          response.data.forEach((element: { nodeId: string; }) => {
+              nodesList.push(element.nodeId);
+          });
       } catch (error) {
           console.error("error getting count", error);
+          return [""];
       }
-      setServiceRequest(requestsPerNode);
+      setServiceRequest(nodesList);
   };
   const displayNodes = (graph: Graph) => {
       haveServiceRequest();

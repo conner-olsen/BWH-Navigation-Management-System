@@ -35,13 +35,13 @@ function ChatComponent() {
 
             <Sheet key={"right"}>
                 <SheetTrigger asChild>
-                    <Button variant="ghost">
+                    <Button variant="secondary">
                         <img src="public/assistant_icon.jpg" alt="Assistant" className={"w-6 h-6 invert"}/>
                     </Button>
                 </SheetTrigger>
                 <SheetContent side={"right"}>
                     <SheetHeader>
-                        <SheetTitle>B&G Hospital Assistant</SheetTitle>
+                        <SheetTitle>B&W Hospital Assistant</SheetTitle>
                         <SheetDescription>
                             Ask any questions and our AI assistant will try to help you.
                         </SheetDescription>
@@ -50,7 +50,7 @@ function ChatComponent() {
 
                     <div
                         className="h-4/6 flex-column align-items-center border-2 border-blue-500 rounded-lg overflow-y-auto">
-                        <p className={"m-3"}> Hello, I am the B&G Hospital Assistant how may I help you today?</p>
+                        <p className={"m-3"}> Hello, I am the B&W Hospital Assistant how may I help you today?</p>
                         <br/>
                         {messages.map((message, index) => (
                             <div key={index}>
