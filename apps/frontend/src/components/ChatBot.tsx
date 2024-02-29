@@ -35,7 +35,7 @@ function ChatComponent() {
 
             <Sheet key={"right"}>
                 <SheetTrigger asChild>
-                    <Button variant="primary">
+                    <Button variant="secondary">
                         <img src="public/assistant_icon.jpg" alt="Assistant" className={"w-6 h-6 invert"}/>
                     </Button>
                 </SheetTrigger>
