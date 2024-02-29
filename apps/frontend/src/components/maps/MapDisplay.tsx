@@ -111,6 +111,10 @@ function MapDisplay({
     }
   }, [startNode, endNode, sendHoverMapPath, pathFindingType, pathSent, graph]);
 
+  useEffect(() => {
+    setServiceRequestCounts();
+  }, []);
+
   function getCount(node: Node) {
     const fetchData = async () => {
       try {
@@ -298,7 +302,7 @@ function MapDisplay({
     }
   };
 
-  const haveServiceRequest = async () => {
+  const setServiceRequestCounts = async () => {
       const requestsPerNode = new Map<string, number>();
       try {
         const response = await axios.get("/api/service-request/all");
@@ -318,7 +322,6 @@ function MapDisplay({
       setServiceRequest(requestsPerNode);
   };
   const displayNodes = (graph: Graph) => {
-      haveServiceRequest();
         return (
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes) {
