@@ -15,6 +15,7 @@ export function NodeStyling(props: {
     heatmap: NodeVisit[]
     useHeatMap: boolean;
     averageHeatIndex: number;
+    nodesList: string[];
 }) {
     const [nodeVisit, setNodeVisit] = useState<number>();
 
@@ -62,7 +63,7 @@ export function NodeStyling(props: {
         return `rgb(${Math.floor((r + m) * 255)},${Math.floor((g + m) * 255)},${Math.floor((b + m) * 255)})`;
     };
 
-    return <g>
+    return(<g>
 
         <rect className={props.useHeatMap ? "" : "fill-blue-100 dark:fill-blue-900"}
               x={props.node.xCoord - props.iconSize.width / 2}
@@ -84,7 +85,15 @@ export function NodeStyling(props: {
             onMouseEnter={props.onMouseEnter}
             onMouseLeave={props.onMouseLeave}
         />
+        {props.nodesList.includes(props.node.id)&& (
+            <circle
+                cx={props.node.xCoord + props.iconSize.width / 2}
+                cy={props.node.yCoord - props.iconSize.height / 2}
+                r="6"
+                fill="red"
+            />
+        )}
         {props.element}
-    </g>;
+    </g>);
 }
 

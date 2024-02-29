@@ -74,8 +74,9 @@ function MapDisplay({
                 console.error('Error fetching node data:', error);
             });
     }, []);
+  const [serviceRequest, setServiceRequest] = useState<string[]>([""]);
 
-  useEffect(() => {
+    useEffect(() => {
     axios.get("/api/graph").then((res) => {
       const populatedGraph = new Graph();
       populatedGraph.populateGraph(res.data.nodes, res.data.edges);
@@ -189,7 +190,7 @@ function MapDisplay({
         }
 
         if(startNodeId && endNodeId) {
-            let floorChanges = gatherFloorChangeNodes();
+            const floorChanges = gatherFloorChangeNodes();
             //if node clicked is involved in a floor change, change map to its
             //associated floor (where it is going / came from)
 
@@ -297,20 +298,33 @@ function MapDisplay({
     }
   };
 
-
+  const haveServiceRequest = async () => {
+      const nodesList = [""];
+      try {
+          const response = await axios.get("/api/service-request/all"); // Pass the entire node object
+          response.data.forEach((element: { nodeId: string; }) => {
+              nodesList.push(element.nodeId);
+          });
+      } catch (error) {
+          console.error("error getting count", error);
+          return [""];
+      }
+      setServiceRequest(nodesList);
+  };
   const displayNodes = (graph: Graph) => {
+      haveServiceRequest();
         return (
             Array.from(graph.nodes.values()).map((node: Node) => {
                 if (node.floor == floor && doDisplayNodes) {
+                    const iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
+                    const iconSize = hoverNodeId === node.id ? { width: 25, height: 25} : { width: 20, height: 20 };  // Example sizes, adjust as needed
                     if(!(node.nodeType == "HALL") || (node.nodeType == "HALL" && doDisplayHalls)) {
-                        const iconPath = iconPaths[node.nodeType] || "../../public/icon/Hall.png";
-                        const iconSize = hoverNodeId === node.id ? {width: 25, height: 25} : {width: 20, height: 20};  // Example sizes, adjust as needed
-
                         return (
                             <NodeStyling key={node.id} node={node} iconSize={iconSize} href={iconPath}
                                          onClick={() => handleNodeClick(node)}
                                          onMouseEnter={() => handleNodeHover(node)}
                                          onMouseLeave={() => handleNodeHoverLeave()} element={displayName(node)}
+                                         nodesList={serviceRequest}
                                          heatmap={heatmap} useHeatMap={doDisplayHeatMap}
                                          averageHeatIndex={averageHeatIndex}
                             />
@@ -373,7 +387,7 @@ function MapDisplay({
     }
   };
     const gatherFloorChangeNodes = (): Map<string, string> => {
-        let returnNodes: Map<string, string> = new Map<string, string>();
+        const returnNodes: Map<string, string> = new Map<string, string>();
         let previousFloor = pathSent[0].floor;
 
         for(let i = 1; i < pathSent.length; i++) {
