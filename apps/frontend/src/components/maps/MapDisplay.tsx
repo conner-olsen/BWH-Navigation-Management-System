@@ -8,6 +8,7 @@ import PathfindingRequest from "common/src/interfaces/pathfinding-request.ts";
 import {iconPaths} from "./IconPath.tsx";
 import {NodeStyling} from "./NodeStyling.tsx";
 import {NodeVisit} from "common/src/interfaces/interfaces.ts";
+import isEqual from 'lodash/isEqual';
 
 interface MapDisplayProps {
   floorMap: string;
@@ -34,6 +35,18 @@ interface AnimatedPathProps {
   x2: number;
   y2: number;
 }
+
+const AnimatedPath = React.memo(({ x1, y1, x2, y2 }: AnimatedPathProps) => (
+  <line
+    className="line-animation"
+    x1={x1}
+    y1={y1}
+    x2={x2}
+    y2={y2}
+    stroke="red"
+    strokeWidth="10"
+  />
+));
 
 function MapDisplay({
   floorMap,
@@ -78,25 +91,32 @@ function MapDisplay({
 
     useEffect(() => {
     axios.get("/api/graph").then((res) => {
-      const populatedGraph = new Graph();
-      populatedGraph.populateGraph(res.data.nodes, res.data.edges);
-        let average = 0;
-        for(const item of heatmap){
-            const node = populatedGraph.getNode(item.nodeId);
-            if (node) {
-                node.heatIndex = item.count;
-            }
-            average = item.count + average;
-        }
-        average = average / heatmap.length;
-        setAverageHeatIndex(average);
-      setGraph(populatedGraph);
+      const fetchGraph = async () => {
+        const populatedGraph = new Graph();
+        populatedGraph.populateGraph(res.data.nodes, res.data.edges);
+        let totalHeat = 0;
+        heatmap.forEach(item => {
+          const node = populatedGraph.getNode(item.nodeId);
+          if (node) {
+            node.heatIndex = item.count;
+            totalHeat += item.count;
+          }
+        });
+        const averageHeat = heatmap.length > 0 ? totalHeat / heatmap.length : 0;
+        setGraph((currentGraph) => {
+          if (!isEqual(currentGraph, populatedGraph)) {
+            setAverageHeatIndex(averageHeat);
+            return populatedGraph;
+          }
+          return currentGraph;
+        });
+      };
+      fetchGraph();
     });
   }, [heatmap]);
 
   useEffect(() => {
     if (startNode && endNode && graph) {
-      //sets pathfinding algorithm to the one that corresponds with the pathFindingType (the api route)
       graph.setPathfindingStrategy(pathFindingType);
 
       const pathString = graph.nodesToString(pathSent);
@@ -130,17 +150,6 @@ function MapDisplay({
     fetchData().then();
   }
 
-  const AnimatedPath: React.FC<AnimatedPathProps> = ({ x1, y1, x2, y2 }) => (
-    <line
-      className="line-animation"
-      x1={x1}
-      y1={y1}
-      x2={x2}
-      y2={y2}
-      stroke="red"
-      strokeWidth="10"
-    />
-  );
   const displayPath = (graph: Graph, path: string[]) => {
     const pathElements: React.JSX.Element[] = [];
     for (let i = 0; i < path.length - 1; i++) {
