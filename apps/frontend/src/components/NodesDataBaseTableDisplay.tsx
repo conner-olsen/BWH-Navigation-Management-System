@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { node } from "common/src/interfaces/interfaces.ts";
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "./ui/table.tsx";
-
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableHead,
+} from "./ui/table.tsx";
 
 function GenerateTableRowsNodes(tableData: node[]): JSX.Element[] {
   return tableData.map((item, index) => (
@@ -34,14 +40,11 @@ const TableNodes: React.FC<{ tableData: node[] }> = ({ tableData }) => {
             <TableHead>Short Name</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {GenerateTableRowsNodes(tableData)}
-        </TableBody>
+        <TableBody>{GenerateTableRowsNodes(tableData)}</TableBody>
       </Table>
     </div>
   );
 };
-
 
 export const GetDataNodes = () => {
   const [data, setData] = useState<node[]>([]);

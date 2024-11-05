@@ -1,37 +1,75 @@
-import React, { useState, useEffect } from 'react';
-import { externalTransportationServiceRequest } from 'common/src/interfaces/interfaces.ts';
-import { employee } from 'common/src/interfaces/interfaces.ts';
+import React, { useState, useEffect } from "react";
+import { externalTransportationServiceRequest } from "common/src/interfaces/interfaces.ts";
+import { employee } from "common/src/interfaces/interfaces.ts";
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table.tsx";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select.tsx";
-function GenerateTableRowsServices({ tableData, employeeData, selectedStatus, selectedEmployeeUser, onUpdate }: { tableData: externalTransportationServiceRequest[], employeeData: employee[], selectedStatus: string, selectedEmployeeUser: string, onUpdate: (data: externalTransportationServiceRequest[]) => void }): JSX.Element[] {
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table.tsx";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select.tsx";
+function GenerateTableRowsServices({
+  tableData,
+  employeeData,
+  selectedStatus,
+  selectedEmployeeUser,
+  onUpdate,
+}: {
+  tableData: externalTransportationServiceRequest[];
+  employeeData: employee[];
+  selectedStatus: string;
+  selectedEmployeeUser: string;
+  onUpdate: (data: externalTransportationServiceRequest[]) => void;
+}): JSX.Element[] {
   const [statusMap, setStatusMap] = useState<{ [key: number]: string }>({});
   const [employeeMap, setEmployeeMap] = useState<{ [key: number]: string }>({});
-  const handleStatusChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
-    axios.patch("/api/service-request", {
-      id: tableData[index].ServiceRequest.id,
-      nodeId: tableData[index].ServiceRequest.nodeId,
-      priority: tableData[index].ServiceRequest.priority,
-      status: value,
-      employeeUser: employeeMap[index] || tableData[index].ServiceRequest.employeeUser
-    }).then(response => console.log(response.data))
-      .catch(error => console.error(error));
+  const handleStatusChange = (
+    index: number,
+    value: string,
+    tableData: externalTransportationServiceRequest[],
+  ) => {
+    axios
+      .patch("/api/service-request", {
+        id: tableData[index].ServiceRequest.id,
+        nodeId: tableData[index].ServiceRequest.nodeId,
+        priority: tableData[index].ServiceRequest.priority,
+        status: value,
+        employeeUser:
+          employeeMap[index] || tableData[index].ServiceRequest.employeeUser,
+      })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.error(error));
     setStatusMap({ ...statusMap, [index]: value });
     const updatedTableData = [...tableData];
     updatedTableData[index].ServiceRequest.status = value;
     onUpdate(updatedTableData);
   };
 
-  const handleAssignmentChange = (index: number, value: string, tableData: externalTransportationServiceRequest[]) => {
-    axios.patch("/api/service-request", {
-      id: tableData[index].ServiceRequest.id,
-      nodeId: tableData[index].ServiceRequest.nodeId,
-      priority: tableData[index].ServiceRequest.priority,
-      status: statusMap[index] || tableData[index].ServiceRequest.status,
-      employeeUser: value
-    }).then(response => console.log(response.data))
-      .catch(error => console.error(error));
+  const handleAssignmentChange = (
+    index: number,
+    value: string,
+    tableData: externalTransportationServiceRequest[],
+  ) => {
+    axios
+      .patch("/api/service-request", {
+        id: tableData[index].ServiceRequest.id,
+        nodeId: tableData[index].ServiceRequest.nodeId,
+        priority: tableData[index].ServiceRequest.priority,
+        status: statusMap[index] || tableData[index].ServiceRequest.status,
+        employeeUser: value,
+      })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.error(error));
     setEmployeeMap({ ...employeeMap, [index]: value });
     const updatedTableData = [...tableData];
     updatedTableData[index].ServiceRequest.employeeUser = value;
@@ -39,8 +77,13 @@ function GenerateTableRowsServices({ tableData, employeeData, selectedStatus, se
   };
 
   return tableData
-    .filter(item => (selectedStatus === "" || item.ServiceRequest.status === selectedStatus) &&
-      (selectedEmployeeUser === "" || item.ServiceRequest.employeeUser === selectedEmployeeUser))
+    .filter(
+      (item) =>
+        (selectedStatus === "" ||
+          item.ServiceRequest.status === selectedStatus) &&
+        (selectedEmployeeUser === "" ||
+          item.ServiceRequest.employeeUser === selectedEmployeeUser),
+    )
     .map((item, index) => (
       <TableRow key={index}>
         <TableCell>{item.ServiceRequest.nodeId}</TableCell>
@@ -51,9 +94,13 @@ function GenerateTableRowsServices({ tableData, employeeData, selectedStatus, se
         <TableCell>{item.description}</TableCell>
         <TableCell>{item.date}</TableCell>
 
-
         <TableCell>
-          <Select value={item.ServiceRequest.status} onValueChange={(status) => handleStatusChange(index, status, tableData)}>
+          <Select
+            value={item.ServiceRequest.status}
+            onValueChange={(status) =>
+              handleStatusChange(index, status, tableData)
+            }
+          >
             <SelectTrigger>
               <SelectValue placeholder="Unassigned" />
             </SelectTrigger>
@@ -64,16 +111,23 @@ function GenerateTableRowsServices({ tableData, employeeData, selectedStatus, se
               <SelectItem value="Completed">Completed</SelectItem>
             </SelectContent>
           </Select>
-
         </TableCell>
         <TableCell>
-          <Select value={item.ServiceRequest.employeeUser} onValueChange={(user) => handleAssignmentChange(index, user, tableData)}>
+          <Select
+            value={item.ServiceRequest.employeeUser}
+            onValueChange={(user) =>
+              handleAssignmentChange(index, user, tableData)
+            }
+          >
             <SelectTrigger>
               <SelectValue placeholder="None" />
             </SelectTrigger>
             <SelectContent>
               {employeeData.map((employee, employeeIndex) => (
-                <SelectItem key={employeeIndex} value={employeeData[employeeIndex].username}>
+                <SelectItem
+                  key={employeeIndex}
+                  value={employeeData[employeeIndex].username}
+                >
                   {employeeData[employeeIndex].username}
                 </SelectItem>
               ))}
@@ -84,7 +138,19 @@ function GenerateTableRowsServices({ tableData, employeeData, selectedStatus, se
     ));
 }
 
-const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[]; employeeData: employee[]; selectedStatus: string; selectedEmployeeUser: string; onUpdate: (data: externalTransportationServiceRequest[]) => void }> = ({ tableData, employeeData, selectedStatus, selectedEmployeeUser, onUpdate }) => {
+const TableServices: React.FC<{
+  tableData: externalTransportationServiceRequest[];
+  employeeData: employee[];
+  selectedStatus: string;
+  selectedEmployeeUser: string;
+  onUpdate: (data: externalTransportationServiceRequest[]) => void;
+}> = ({
+  tableData,
+  employeeData,
+  selectedStatus,
+  selectedEmployeeUser,
+  onUpdate,
+}) => {
   return (
     <div className={"overflow-y-auto h-80"}>
       <Table>
@@ -102,7 +168,13 @@ const TableServices: React.FC<{ tableData: externalTransportationServiceRequest[
           </TableRow>
         </TableHeader>
         <TableBody>
-          <GenerateTableRowsServices tableData={tableData} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={onUpdate}></GenerateTableRowsServices>
+          <GenerateTableRowsServices
+            tableData={tableData}
+            employeeData={employeeData}
+            selectedStatus={selectedStatus}
+            selectedEmployeeUser={selectedEmployeeUser}
+            onUpdate={onUpdate}
+          ></GenerateTableRowsServices>
         </TableBody>
       </Table>
     </div>
@@ -116,34 +188,37 @@ export const ExternalTransportServiceLogComponent = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [selectedEmployeeUser, setSelectedEmployeeUser] = useState<string>("");
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Make a GET request to the API endpoint for flower service requests
-        const response = await fetch('/api/service-request/external-transportation');
+        const response = await fetch(
+          "/api/service-request/external-transportation",
+        );
         if (!response.ok) {
-          throw new Error(`Failed to fetch religion service requests: ${response.status}`);
+          throw new Error(
+            `Failed to fetch religion service requests: ${response.status}`,
+          );
         }
         const result = await response.json();
         console.log(result);
         setData(result);
       } catch (err) {
-        console.error('Error fetching flower service requests:', err);
+        console.error("Error fetching flower service requests:", err);
       }
     };
 
     const fetchEmployeeData = async () => {
       try {
         // Make a GET request to the API endpoint for employees
-        const response = await fetch('/api/populate-employee');
+        const response = await fetch("/api/populate-employee");
         if (!response.ok) {
           throw new Error(`Failed to fetch employees: ${response.status}`);
         }
         const result = await response.json();
         setEmployeeData(result);
       } catch (err) {
-        console.error('Error fetching employees:', err);
+        console.error("Error fetching employees:", err);
       }
     };
 
@@ -153,7 +228,7 @@ export const ExternalTransportServiceLogComponent = () => {
 
   return (
     <div>
-        <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+      <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
         <Row>
           <Col>
             <p>Filter by Status:</p>
@@ -187,11 +262,17 @@ export const ExternalTransportServiceLogComponent = () => {
         </Row>
       </Container>
 
-        <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
-          <TableServices tableData={data} employeeData={employeeData} selectedStatus={selectedStatus} selectedEmployeeUser={selectedEmployeeUser} onUpdate={(cleaningData) => {
+      <Container className="mx-auto bg-background border-2 border-blue-600 dark:border-blue-400 rounded-lg px-8 pt-6 pb-8 mb-4">
+        <TableServices
+          tableData={data}
+          employeeData={employeeData}
+          selectedStatus={selectedStatus}
+          selectedEmployeeUser={selectedEmployeeUser}
+          onUpdate={(cleaningData) => {
             setData(cleaningData);
-          }} />
-        </Container>
+          }}
+        />
+      </Container>
     </div>
   );
 };

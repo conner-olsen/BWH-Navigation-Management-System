@@ -3,67 +3,67 @@
 @tailwind utilities;
 
 @layer base {
-    @layer base {
-        :root {
-            --background: 0 0% 100%;
-            --foreground: 222.2 84% 4.9%;
-            --card: 0 0% 100%;
-            --card-foreground: 222.2 84% 4.9%;
-            --popover: 0 0% 100%;
-            --popover-foreground: 222.2 84% 4.9%;
-            --primary: 0 0% 100%;
-            --primary-foreground: 210 40% 98%;
-            --secondary: 210 40% 96.1%;
-            --secondary-foreground: 222.2 47.4% 11.2%;
-            --muted: 210 40% 96.1%;
-            --muted-foreground: 215.4 16.3% 46.9%;
-            --accent: 210 40% 96.1%;
-            --accent-foreground: 222.2 47.4% 11.2%;
-            --destructive: 0 84.2% 60.2%;
-            --destructive-foreground: 210 40% 98%;
-            --border: 214.3 31.8% 91.4%;
-            --input: 214.3 31.8% 91.4%;
-            --ring: 221.2 83.2% 53.3%;
-            --radius: 0.5rem;
-        }
-
-        .dark {
-            --background: 209, 36%, 13%;
-            --foreground: 210 40% 98%;
-            --card: 222.2 84% 4.9%;
-            --card-foreground: 210 40% 98%;
-            --popover: 222.2 84% 4.9%;
-            --popover-foreground: 210 40% 98%;
-            --primary: 203, 88%, 53%;
-            --primary-foreground: 222.2 47.4% 11.2%;
-            --secondary: 142, 46%, 55%;
-            --secondary-foreground: 210 40% 98%;
-            --muted: 217.2 32.6% 17.5%;
-            --muted-foreground: 215 20.2% 65.1%;
-            --accent: 217.2 32.6% 17.5%;
-            --accent-foreground: 210 40% 98%;
-            --destructive: 0 62.8% 30.6%;
-            --destructive-foreground: 210 40% 98%;
-            --border: 217.2 32.6% 17.5%;
-            --input: 217.2 32.6% 17.5%;
-            --ring: 224.3 76.3% 48%;
-        }
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222.2 84% 4.9%;
+      --card: 0 0% 100%;
+      --card-foreground: 222.2 84% 4.9%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222.2 84% 4.9%;
+      --primary: 0 0% 100%;
+      --primary-foreground: 210 40% 98%;
+      --secondary: 210 40% 96.1%;
+      --secondary-foreground: 222.2 47.4% 11.2%;
+      --muted: 210 40% 96.1%;
+      --muted-foreground: 215.4 16.3% 46.9%;
+      --accent: 210 40% 96.1%;
+      --accent-foreground: 222.2 47.4% 11.2%;
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 210 40% 98%;
+      --border: 214.3 31.8% 91.4%;
+      --input: 214.3 31.8% 91.4%;
+      --ring: 221.2 83.2% 53.3%;
+      --radius: 0.5rem;
     }
 
-    * {
-        @apply border-border;
+    .dark {
+      --background: 209, 36%, 13%;
+      --foreground: 210 40% 98%;
+      --card: 222.2 84% 4.9%;
+      --card-foreground: 210 40% 98%;
+      --popover: 222.2 84% 4.9%;
+      --popover-foreground: 210 40% 98%;
+      --primary: 203, 88%, 53%;
+      --primary-foreground: 222.2 47.4% 11.2%;
+      --secondary: 142, 46%, 55%;
+      --secondary-foreground: 210 40% 98%;
+      --muted: 217.2 32.6% 17.5%;
+      --muted-foreground: 215 20.2% 65.1%;
+      --accent: 217.2 32.6% 17.5%;
+      --accent-foreground: 210 40% 98%;
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 210 40% 98%;
+      --border: 217.2 32.6% 17.5%;
+      --input: 217.2 32.6% 17.5%;
+      --ring: 224.3 76.3% 48%;
     }
-    body {
-        @apply bg-background text-foreground;
-    }
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 body {
-    min-height: 100vh;
+  min-height: 100vh;
 }
 
 :root {
-  scroll-behavior: auto!important;
+  scroll-behavior: auto !important;
   /*font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;*/
   background-color: #ffffff;
   font-size: 18px;
@@ -83,52 +83,53 @@ body {
   --dark-blue: #e8b313;
   --white: #f5f5f5;
   --gray: #d9d9d9;
-
 }
 
 @layer components {
-    .bg-custom-white {
-
-    }
-    .nav-drop-down-link {
-        @apply text-left
-    }
+  .bg-custom-white {
+  }
+  .nav-drop-down-link {
+    @apply text-left;
+  }
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 label {
-    display: block;
+  display: block;
 }
 
-textarea{
-    color:black;
-    border-radius: 5px;
-    height: 45px;
+textarea {
+  color: black;
+  border-radius: 5px;
+  height: 45px;
 }
 
 /* ============== HOMEPAGE =========== */
 @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .typing-animation {
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 2s steps(30, end);
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(30, end);
 }
-
 
 /* =========== LOGIN PAGE ========== */
 .loginForm input {
   padding: 20px;
 }
-.selectionPage{
-    align-items: center;
+.selectionPage {
+  align-items: center;
 }
 
 .PatientLoginHeader {
@@ -142,17 +143,17 @@ textarea{
 
 /* ============= USER SELECTION PAGE ========= */
 .LargeButton {
-    width: 50%;
-    height: 80px;
-    border-radius: 40px;
-    background-color: #00336e;
-    box-shadow: #000000;
+  width: 50%;
+  height: 80px;
+  border-radius: 40px;
+  background-color: #00336e;
+  box-shadow: #000000;
 
-    color: #fff;
-    font-family: sans-serif;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
+  color: #fff;
+  font-family: sans-serif;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 .LargeButton:hover {
@@ -160,28 +161,24 @@ textarea{
 }
 
 #root {
-    position: relative;
+  position: relative;
 }
-
-
-
 
 .LoginButtonAdmin,
 .LoginButtonPatient,
 .LoginButtonGuest {
-    color: #fff;
-    font-family: sans-serif;
-    background-color: rgba(128, 128, 128, 0.85);
-    cursor: pointer;
-    font-size: 20px;
-    width: 200px; /* Increase width, adjust the value as needed */
-    padding: 10px; /* Reduce padding for height */
-    padding-left: 50px;
-    padding-right: 50px;
-    border-radius: 30px; /* Make the button oval */
-    height: fit-content;
+  color: #fff;
+  font-family: sans-serif;
+  background-color: rgba(128, 128, 128, 0.85);
+  cursor: pointer;
+  font-size: 20px;
+  width: 200px; /* Increase width, adjust the value as needed */
+  padding: 10px; /* Reduce padding for height */
+  padding-left: 50px;
+  padding-right: 50px;
+  border-radius: 30px; /* Make the button oval */
+  height: fit-content;
 }
-
 
 .stack {
   font-size: 60px;
@@ -190,54 +187,52 @@ textarea{
 }
 
 .hospitalImage {
-    object-fit: fill;
-    width: 100%;
-    height: 100%;
+  object-fit: fill;
+  width: 100%;
+  height: 100%;
 }
 
 /* ============= 3D MAP ========= */
 .img-rotate {
-    max-width: 300px;
-    transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
-    filter: grayscale(100%);
-    transition: all;
-    transition-duration: 300ms;
+  max-width: 300px;
+  transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
+  filter: grayscale(100%);
+  transition: all;
+  transition-duration: 300ms;
 }
 .map-rotate {
-    transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
+  transform: rotateX(60deg) rotateY(0deg) rotateZ(40deg);
 }
 .map-rotate image {
-    filter: drop-shadow(100px 121px 1px #000000);
+  filter: drop-shadow(100px 121px 1px #000000);
 }
 body.dark .map-rotate image {
-    filter: drop-shadow(100px 121px 1px #FFFFFF);
+  filter: drop-shadow(100px 121px 1px #ffffff);
 }
 .img-rotate:hover {
-    filter: none;
+  filter: none;
 }
 .cancel-rotate {
-    transform: rotateX(0deg) rotateY(0deg) rotateZ(-40deg) scaleY(175%);
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(-40deg) scaleY(175%);
 }
 body.threeD-on > div[id^="d"] > .guideline {
-    display: block;
+  display: block;
 }
 .guideline {
-    display: none;
-    position: absolute;
-    width: 1px;
-    height: 286px;
-    background-color: #0d6efd;
-    z-index: 10;
+  display: none;
+  position: absolute;
+  width: 1px;
+  height: 286px;
+  background-color: #0d6efd;
+  z-index: 10;
 }
 .guideline-up {
-    background-color: orange;
-    transform: rotate(180deg);
-    transform-origin: top;
+  background-color: orange;
+  transform: rotate(180deg);
+  transform-origin: top;
 }
 
 /* ============= 3D MAP END ========= */
-
-
 
 .testClass {
   display: flex;
@@ -265,10 +260,10 @@ body.threeD-on > div[id^="d"] > .guideline {
   background-color: var(--medium-blue) !important;
 }
 .svgOfL1 {
-    border-radius: 1.25rem;
-    flex-shrink: 0;
-    margin: auto;
-    justify-content: center;
+  border-radius: 1.25rem;
+  flex-shrink: 0;
+  margin: auto;
+  justify-content: center;
 }
 .pictureOfL1 {
   border-radius: 1.25rem;
@@ -281,24 +276,24 @@ body.threeD-on > div[id^="d"] > .guideline {
   justify-content: center;
 }
 .BackButton {
-    position: absolute;
-    top: 150px; /* Adjust this value to move the button down */
-    right: 25px; /* Adjust this value as needed */
-    border-radius: 10px; /* Remove background color */
-    border: 3px solid #003a96;
-    padding: 10px;
-    scale: 0.75;
+  position: absolute;
+  top: 150px; /* Adjust this value to move the button down */
+  right: 25px; /* Adjust this value as needed */
+  border-radius: 10px; /* Remove background color */
+  border: 3px solid #003a96;
+  padding: 10px;
+  scale: 0.75;
 }
 .ClearPathButton {
-    font-family: sans-serif;
-    cursor: pointer;
-    font-size: 15px;
-    width: 120px; /* Increase width, adjust the value as needed */
-    padding: 1px; /* Reduce padding for height */
-    padding-left: 15px;
-    padding-right: 15px;
-    border-radius: 20px; /* Make the button oval */
-    height: fit-content;
+  font-family: sans-serif;
+  cursor: pointer;
+  font-size: 15px;
+  width: 120px; /* Increase width, adjust the value as needed */
+  padding: 1px; /* Reduce padding for height */
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 20px; /* Make the button oval */
+  height: fit-content;
 }
 
 /*!* ============= DRAG AND DROP ========= *!*/
@@ -326,7 +321,6 @@ body.threeD-on > div[id^="d"] > .guideline {
 /*    filter: grayscale(0%);*/
 /*    transition: 0.3s ease-in-out;*/
 /*}*/
-
 
 /*.file-drop-box.dragging {*/
 /*    border: 2px dashed #2ecc71;*/
@@ -359,50 +353,50 @@ body.threeD-on > div[id^="d"] > .guideline {
 /* ====== BFS ======= */
 
 .map-container {
-    margin-top: 500px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: flex-start;
+  margin-top: 500px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
 }
 
 .dropdown-box {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-right: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-right: 20px;
 }
 
 .route-container {
-    flex: 1;
+  flex: 1;
 }
 
 .route-header {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .route {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .MapPage {
-    align-items: center;
-    text-align: center;
+  align-items: center;
+  text-align: center;
 }
 
 .mapNames {
-    rotate: -45deg;
+  rotate: -45deg;
 }
 
 .idinput {
-    max-width: 550px;
-    margin: auto;
-    padding: 10px;
-    background-color: white;
-    font-size: 24px;
-    font-family: "Open Sans", sans-serif;
+  max-width: 550px;
+  margin: auto;
+  padding: 10px;
+  background-color: white;
+  font-size: 24px;
+  font-family: "Open Sans", sans-serif;
 }
 
 /*.accessibilityToggle {*/
@@ -410,162 +404,161 @@ body.threeD-on > div[id^="d"] > .guideline {
 /*    margin-left: 10px;*/
 /*}*/
 
-
 /* ====== Flower Service Page ======= */
 
 .flowerService {
-    text-align: center;
-    background-color: var(--dark-blue);
-    border-radius: 15px;
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
+  text-align: center;
+  background-color: var(--dark-blue);
+  border-radius: 15px;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
 }
 .flowerService select {
-    margin-bottom: 10px;
-    padding: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    appearance: none;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .flowerService select:focus {
-    outline: none;
-    border-color: #4ba1ff;
+  outline: none;
+  border-color: #4ba1ff;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 label {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 select,
 input,
 textarea {
-    margin-bottom: 10px;
-    padding: 8px;
-    width: 100%;
-    box-sizing: border-box;
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 textarea {
-    resize: vertical;
+  resize: vertical;
 }
 
 .populateEmployeeButton {
-    background-color: #4CAF50; /* Green background */
-    border: none; /* No border */
-    color: white; /* White text */
-    padding: 15px 32px; /* Padding */
-    text-align: center; /* Centered text */
-    text-decoration: none; /* No underline */
-    display: inline-block; /* Inline block display */
-    font-size: 16px; /* Font size */
-    margin: 4px 2px; /* Margin */
-    transition-duration: 0.4s; /* Transition */
-    cursor: pointer; /* Cursor pointer */
-    border-radius: 8px; /* Rounded corners */
-    border: 2px solid transparent; /* Border */
-    outline: none; /* No outline */
+  background-color: #4caf50; /* Green background */
+  border: none; /* No border */
+  color: white; /* White text */
+  padding: 15px 32px; /* Padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* No underline */
+  display: inline-block; /* Inline block display */
+  font-size: 16px; /* Font size */
+  margin: 4px 2px; /* Margin */
+  transition-duration: 0.4s; /* Transition */
+  cursor: pointer; /* Cursor pointer */
+  border-radius: 8px; /* Rounded corners */
+  border: 2px solid transparent; /* Border */
+  outline: none; /* No outline */
 }
 
 input[type="submit"] {
-    background-color: #001c3d;
-    color: white;
-    cursor: pointer;
-    padding: 10px;
-    border: none;
-    max-width: 150px;
-    border-radius: 40px;
-    align-self: center;
-    transition: background-color;
-    transition-duration: 200ms;
+  background-color: #001c3d;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  max-width: 150px;
+  border-radius: 40px;
+  align-self: center;
+  transition: background-color;
+  transition-duration: 200ms;
 }
 
 input[type="submit"]:hover {
-    background-color: #4ba1ff;
+  background-color: #4ba1ff;
 }
 
 h1 {
-    margin-top: 10px!important;
-    font-size: 40px!important;
-    font-weight: 500!important;
-    font-family: "Segoe UI", Roboto;
-    text-transform: uppercase;
-    /*font-style: italic;*/
+  margin-top: 10px !important;
+  font-size: 40px !important;
+  font-weight: 500 !important;
+  font-family: "Segoe UI", Roboto;
+  text-transform: uppercase;
+  /*font-style: italic;*/
 }
-label{
-
+label {
 }
 
 /* ========== CSV Table ========== */
 
 body.dark .react-transform-wrapper image {
-    filter: invert(1) saturate(2);
+  filter: invert(1) saturate(2);
 }
-
 
 /* ====== Side Bar ======= */
 .transform-component-module_wrapper__SPB86 {
-    height: 100vh!important;
+  height: 100vh !important;
 }
 body.dark .tools {
-    background-color: rgba(161, 161, 161, 0.3);
+  background-color: rgba(161, 161, 161, 0.3);
 }
 .sidebar {
-    transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 .sidebar-expanded {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 .sidebar-collapsed {
-    transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 input[type="radio"]:checked + label {
-    color: rgb(59 130 246);
+  color: rgb(59 130 246);
 }
-input[type="checkbox"]:checked + label > img, input[type="checkbox"]:hover + label > img {
-    border: 2px solid rgb(59 130 246);
-    border-radius: 10px;
-    transform: scale(0.9);
+input[type="checkbox"]:checked + label > img,
+input[type="checkbox"]:hover + label > img {
+  border: 2px solid rgb(59 130 246);
+  border-radius: 10px;
+  transform: scale(0.9);
 }
-input[type="checkbox"]:checked + label, input[type="checkbox"]:hover + label {
-    color: rgb(59 130 246);
+input[type="checkbox"]:checked + label,
+input[type="checkbox"]:hover + label {
+  color: rgb(59 130 246);
 }
 
 body.dark g circle {
-    fill: white;
+  fill: white;
 }
 
 .scaly-boi {
-    animation: scaly-boi 0.3s 1;
+  animation: scaly-boi 0.3s 1;
 }
 
 @keyframes scaly-boi {
-    0%{
-        transform: scale(0);
-        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-    }
-    100% {
-        transform: scale(1);
-    }
+  0% {
+    transform: scale(0);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* ====== Scroll bar ======= */
 .progress {
-    position: fixed;
-    z-index: 1000;
-    top: 75px;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background:  linear-gradient(to right, #ff0000, #0000ff)!important;
-    transform-origin: 0%;
+  position: fixed;
+  z-index: 1000;
+  top: 75px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(to right, #ff0000, #0000ff) !important;
+  transform-origin: 0%;
 }

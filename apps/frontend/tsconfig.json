@@ -6,8 +6,8 @@
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "resolveJsonModule": true,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
   "include": ["src", "tests"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -2,7 +2,12 @@ import express, { Router, Request, Response } from "express";
 import { Graph } from "common/src/graph.ts";
 import PathFindingRequest from "common/src/interfaces/pathfinding-request.ts";
 import client from "../bin/database-connection.ts";
-import { AStarPathfindingStrategy, BFSPathfindingStrategy, DFSPathfindingStrategy, DijkstraPathfindingStrategy } from "common/src/pathfinding-strategy.ts";
+import {
+  AStarPathfindingStrategy,
+  BFSPathfindingStrategy,
+  DFSPathfindingStrategy,
+  DijkstraPathfindingStrategy,
+} from "common/src/pathfinding-strategy.ts";
 
 const router: Router = express.Router();
 
@@ -12,8 +17,8 @@ router.post("/", async (req: Request, res: Response) => {
     const graph = new Graph();
     const startNode = requestData.startId;
     const endNode = requestData.endId;
-    const strategy = requestData.strategy; 
-    const accessibilityRoute = requestData.accessibilityRoute; 
+    const strategy = requestData.strategy;
+    const accessibilityRoute = requestData.accessibilityRoute;
 
     // Set the pathfinding strategy based on the request
     switch (strategy) {
@@ -30,7 +35,9 @@ router.post("/", async (req: Request, res: Response) => {
         graph.setPathfindingStrategy(new DijkstraPathfindingStrategy());
         break;
       default:
-        return res.status(400).json({ error: "Invalid pathfinding strategy specified." });
+        return res
+          .status(400)
+          .json({ error: "Invalid pathfinding strategy specified." });
     }
 
     try {
@@ -39,12 +46,10 @@ router.post("/", async (req: Request, res: Response) => {
       const edges = await client.edge.findMany();
       const heatmap = await client.nodeVisit.findMany();
 
-
-
       // Populate the graph with nodes and edges
       graph.populateGraph(nodes, edges);
       let average = 0;
-      for(const item of heatmap){
+      for (const item of heatmap) {
         const node = graph.getNode(item.nodeId);
         if (node) {
           node.heatIndex = item.count;
@@ -54,17 +59,18 @@ router.post("/", async (req: Request, res: Response) => {
       average = average / heatmap.length;
       graph.setAverageHeatIndex(average);
     } catch (error) {
-      console.error('Error fetching data from the database:', error);
-      return res.status(500).json({ error: 'Error fetching data from the database' });
+      console.error("Error fetching data from the database:", error);
+      return res
+        .status(500)
+        .json({ error: "Error fetching data from the database" });
     }
 
     // Run pathfinding and convert to an array of nodes
     const path = graph.findPath(startNode, endNode, accessibilityRoute);
     res.status(200).json(graph.stringsToNodes(path));
-
   } catch (error) {
     console.error(`Error in pathfinding route: ${error}`);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

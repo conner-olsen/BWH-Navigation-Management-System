@@ -3,9 +3,6 @@ import { parseCSV } from "common/src/parser.ts";
 import PrismaClient from "../bin/database-connection.ts";
 import { edge } from "common/src/interfaces/interfaces.ts";
 
-
-
-
 const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
@@ -17,7 +14,7 @@ router.post("/", async (req: Request, res: Response) => {
       return {
         edgeID: rowval[0],
         startNodeID: rowval[1],
-        endNodeID: rowval[2]
+        endNodeID: rowval[2],
       };
     });
 
@@ -26,14 +23,10 @@ router.post("/", async (req: Request, res: Response) => {
         return {
           startNodeID: self.startNodeID,
           edgeID: self.edgeID,
-          endNodeID: self.endNodeID
+          endNodeID: self.endNodeID,
         };
-      }
-      )
+      }),
     });
-
-
-
   } catch (error) {
     console.error(`Error while converting CSV to JSON: ${error}`);
     res.sendStatus(500);
@@ -41,7 +34,7 @@ router.post("/", async (req: Request, res: Response) => {
   res.sendStatus(200);
 });
 
-router.get("/", async function(req: Request, res: Response) {
+router.get("/", async function (req: Request, res: Response) {
   try {
     const edgeCSV = await PrismaClient.edge.findMany();
     res.send(edgeCSV);
@@ -51,6 +44,5 @@ router.get("/", async function(req: Request, res: Response) {
   }
   res.sendStatus(200);
 });
-
 
 export default router;

@@ -9,9 +9,7 @@ import client from "../bin/database-connection.ts";
 
 const router: Router = express.Router();
 
-
 router.post("/", async (req: Request, res: Response) => {
-
   const employeeRequestAttempt: Prisma.EmployeeUncheckedCreateInput = req.body;
 
   try {
@@ -26,7 +24,7 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/", async function(req: Request, res: Response) {
+router.get("/", async function (req: Request, res: Response) {
   try {
     const employeeCSV = await PrismaClient.employee.findMany();
     res.status(200).send(employeeCSV);
@@ -36,7 +34,7 @@ router.get("/", async function(req: Request, res: Response) {
   }
 });
 
-router.patch("/", async function(req: Request, res: Response) {
+router.patch("/", async function (req: Request, res: Response) {
   try {
     const relativeNodePath = "../../testData/users.csv";
     const absoluteNodePath = path.join(__dirname, relativeNodePath);
@@ -48,19 +46,17 @@ router.patch("/", async function(req: Request, res: Response) {
     const transformedNode: user[] = rowsNode.map((row) => {
       const rowval = Object.values(row);
       return {
-        Username: rowval[0]
+        Username: rowval[0],
       };
     });
 
     await client.user.createMany({
       data: transformedNode.map((self) => {
         return {
-          Username: self.Username
+          Username: self.Username,
         };
-      }
-      )
+      }),
     });
-
 
     const absolutePath = path.join(__dirname, "../../testData/employees.csv");
     const csvFile = fs.readFileSync(absolutePath, "utf-8");
@@ -72,10 +68,9 @@ router.patch("/", async function(req: Request, res: Response) {
         username: rowval[0],
         firstName: rowval[1],
         lastName: rowval[2],
-        email: rowval[3]
+        email: rowval[3],
       };
     });
-
 
     await client.employee.createMany({
       data: transformed.map((self) => {
@@ -83,10 +78,9 @@ router.patch("/", async function(req: Request, res: Response) {
           username: self.username,
           firstName: self.firstName,
           lastName: self.lastName,
-          email: self.email
+          email: self.email,
         };
-      }
-      )
+      }),
     });
   } catch (error) {
     console.error(`Error exporting employee data: ${error}`);

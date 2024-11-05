@@ -1,7 +1,12 @@
-import { AStarPathfindingStrategy, BFSPathfindingStrategy, DFSPathfindingStrategy, DijkstraPathfindingStrategy, PathfindingStrategy } from '../src/pathfinding-strategy';
-import { Graph } from '../src/graph';
-import { Node } from '../src/node';
-
+import {
+  AStarPathfindingStrategy,
+  BFSPathfindingStrategy,
+  DFSPathfindingStrategy,
+  DijkstraPathfindingStrategy,
+  PathfindingStrategy,
+} from "../src/pathfinding-strategy";
+import { Graph } from "../src/graph";
+import { Node } from "../src/node";
 
 class PathfindingStrategyTest extends PathfindingStrategy {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -11,7 +16,7 @@ class PathfindingStrategyTest extends PathfindingStrategy {
   }
 }
 
-describe('PathfindingStrategy', () => {
+describe("PathfindingStrategy", () => {
   let testGraph: Graph;
 
   beforeAll(() => {
@@ -28,7 +33,7 @@ describe('PathfindingStrategy', () => {
     ];
 
     // Add nodes to the graph
-    nodes.forEach(node => testGraph.addNode(node));
+    nodes.forEach((node) => testGraph.addNode(node));
 
     // Add edges to the graph
     testGraph.addEdge("A", "B");
@@ -39,92 +44,137 @@ describe('PathfindingStrategy', () => {
   });
 
   // Can find a path between two nodes in a graph using A* algorithm
-  test('should find a path between two nodes in a graph using A* algorithm', () => {
+  test("should find a path between two nodes in a graph using A* algorithm", () => {
     const pathfindingStrategy = new AStarPathfindingStrategy();
-    const result = pathfindingStrategy.findPath('A', 'C', testGraph);
+    const result = pathfindingStrategy.findPath("A", "C", testGraph);
 
-    expect(result).toEqual(['A', 'B', 'C']);
+    expect(result).toEqual(["A", "B", "C"]);
   });
 
   // Can find a path between two nodes in a graph using BFS algorithm
-  test('should find a path between two nodes in a graph using BFS algorithm', () => {
+  test("should find a path between two nodes in a graph using BFS algorithm", () => {
     const graph = new Graph();
     // Mock the getNode method
     graph.getNode = jest.fn().mockImplementation((nodeId: string) => {
       return {
         id: nodeId,
-        edges: ['B', 'C']
+        edges: ["B", "C"],
       };
     });
 
     const pathfindingStrategy = new BFSPathfindingStrategy();
-    const result = pathfindingStrategy.findPath('A', 'C', graph);
+    const result = pathfindingStrategy.findPath("A", "C", graph);
 
-    expect(result).toEqual(['A', 'C']);
+    expect(result).toEqual(["A", "C"]);
   });
 
   // Can find a path between two nodes in a graph using DFS algorithm
-  test('should find a path between two nodes in a graph using DFS algorithm', () => {
+  test("should find a path between two nodes in a graph using DFS algorithm", () => {
     const graph = new Graph();
     // Mock the getNode method
     graph.getNode = jest.fn().mockImplementation((nodeId: string) => {
       return {
         id: nodeId,
-        edges: ['B', 'C']
+        edges: ["B", "C"],
       };
     });
 
     const pathfindingStrategy = new DFSPathfindingStrategy();
-    const result = pathfindingStrategy.findPath('A', 'C', graph);
+    const result = pathfindingStrategy.findPath("A", "C", graph);
 
-    expect(result).toEqual(['A', 'C']);
+    expect(result).toEqual(["A", "C"]);
   });
 
   // Returns an empty array when startNode or endNode is not in the graph
-  test('should return an empty array when startNode is not in the graph', () => {
+  test("should return an empty array when startNode is not in the graph", () => {
     const graph = new Graph();
     const pathfindingStrategy = new AStarPathfindingStrategy();
-    const result = pathfindingStrategy.findPath('A', 'C', graph);
+    const result = pathfindingStrategy.findPath("A", "C", graph);
 
     expect(result).toEqual([]);
   });
 
   // Returns Infinity when either nodeA or nodeB is not in the graph
-  test('should return Infinity when nodeA is not in the graph', () => {
+  test("should return Infinity when nodeA is not in the graph", () => {
     const graph = new Graph();
     const pathfindingStrategy = new AStarPathfindingStrategy();
-    const result = pathfindingStrategy.calculateDistance('A', 'B', graph);
+    const result = pathfindingStrategy.calculateDistance("A", "B", graph);
 
     expect(result).toBe(Infinity);
   });
 
   // Returns an empty array when no path is found between startNode and endNode
-  test('should return an empty array when no path is found between startNode and endNode', () => {
+  test("should return an empty array when no path is found between startNode and endNode", () => {
     const graph = new Graph();
     // Mock the getNode method
     graph.getNode = jest.fn().mockImplementation((nodeId: string) => {
       return {
         id: nodeId,
         edges: [],
-        getFloorNumber: jest.fn()
+        getFloorNumber: jest.fn(),
       };
     });
 
     const pathfindingStrategy = new AStarPathfindingStrategy();
-    const result = pathfindingStrategy.findPath('A', 'C', graph);
+    const result = pathfindingStrategy.findPath("A", "C", graph);
 
     expect(result).toEqual([]);
   });
 
   // Can find a path between two nodes in a graph using Dijkstra algorithm
-  test('should find a path between two nodes using Dijkstra algorithm', () => {
+  test("should find a path between two nodes using Dijkstra algorithm", () => {
     // Create a mock graph
     const graph = new Graph();
-    const node1 = new Node("1", 0, 0, "L1", "Building A", "NODE", "Node 1", "N1");
-    const node2 = new Node("2", 1, 0, "L1", "Building A", "NODE", "Node 2", "N2");
-    const node3 = new Node("3", 2, 0, "L1", "Building A", "NODE", "Node 3", "N3");
-    const node4 = new Node("4", 3, 0, "L1", "Building A", "NODE", "Node 4", "N4");
-    const node5 = new Node("5", 4, 0, "L1", "Building A", "NODE", "Node 5", "N5");
+    const node1 = new Node(
+      "1",
+      0,
+      0,
+      "L1",
+      "Building A",
+      "NODE",
+      "Node 1",
+      "N1",
+    );
+    const node2 = new Node(
+      "2",
+      1,
+      0,
+      "L1",
+      "Building A",
+      "NODE",
+      "Node 2",
+      "N2",
+    );
+    const node3 = new Node(
+      "3",
+      2,
+      0,
+      "L1",
+      "Building A",
+      "NODE",
+      "Node 3",
+      "N3",
+    );
+    const node4 = new Node(
+      "4",
+      3,
+      0,
+      "L1",
+      "Building A",
+      "NODE",
+      "Node 4",
+      "N4",
+    );
+    const node5 = new Node(
+      "5",
+      4,
+      0,
+      "L1",
+      "Building A",
+      "NODE",
+      "Node 5",
+      "N5",
+    );
     graph.addNode(node1);
     graph.addNode(node2);
     graph.addNode(node3);
@@ -146,11 +196,29 @@ describe('PathfindingStrategy', () => {
   });
 
   // Can calculate the distance between two nodes in a graph
-  test('should calculate the distance between two nodes in a graph', () => {
+  test("should calculate the distance between two nodes in a graph", () => {
     // Create a mock graph
     const graph = new Graph();
-    const nodeA = new Node("A", 0, 0, "L1", "Building A", "NODE_TYPE_A", "Long Name A", "Short Name A");
-    const nodeB = new Node("B", 3, 4, "L1", "Building B", "NODE_TYPE_B", "Long Name B", "Short Name B");
+    const nodeA = new Node(
+      "A",
+      0,
+      0,
+      "L1",
+      "Building A",
+      "NODE_TYPE_A",
+      "Long Name A",
+      "Short Name A",
+    );
+    const nodeB = new Node(
+      "B",
+      3,
+      4,
+      "L1",
+      "Building B",
+      "NODE_TYPE_B",
+      "Long Name B",
+      "Short Name B",
+    );
     graph.addNode(nodeA);
     graph.addNode(nodeB);
     graph.addEdge("A", "B");
@@ -166,7 +234,7 @@ describe('PathfindingStrategy', () => {
   });
 
   // Can reconstruct a path given a map of nodes and a current node
-  test('should reconstruct the path correctly when given a map of nodes and a current node', () => {
+  test("should reconstruct the path correctly when given a map of nodes and a current node", () => {
     // Create a mock graph with nodes and edges
     const graph = new Graph();
     const nodeA = new Node("A", 0, 0);
@@ -200,12 +268,12 @@ describe('PathfindingStrategy', () => {
   });
 
   // Handles graphs with no nodes or edges
-  test('should return an empty array when finding a path in a graph with no nodes or edges', () => {
+  test("should return an empty array when finding a path in a graph with no nodes or edges", () => {
     const graph = new Graph();
     const strategy = new AStarPathfindingStrategy();
 
-    const startNode = 'A';
-    const endNode = 'B';
+    const startNode = "A";
+    const endNode = "B";
 
     const result = strategy.findPath(startNode, endNode, graph);
 
@@ -213,11 +281,29 @@ describe('PathfindingStrategy', () => {
   });
 
   // Calculates the distance between two nodes on different floors using the cached average distance
-  test('should calculate the distance between two nodes on different floors using the cached average distance', () => {
+  test("should calculate the distance between two nodes on different floors using the cached average distance", () => {
     // Mock graph
     const graph = new Graph();
-    const nodeA = new Node("A", 0, 0, "L1", "Building A", "NODE_TYPE", "Long Name A", "Short Name A");
-    const nodeB = new Node("B", 5, 5, "L2", "Building B", "NODE_TYPE", "Long Name B", "Short Name B");
+    const nodeA = new Node(
+      "A",
+      0,
+      0,
+      "L1",
+      "Building A",
+      "NODE_TYPE",
+      "Long Name A",
+      "Short Name A",
+    );
+    const nodeB = new Node(
+      "B",
+      5,
+      5,
+      "L2",
+      "Building B",
+      "NODE_TYPE",
+      "Long Name B",
+      "Short Name B",
+    );
     graph.addNode(nodeA);
     graph.addNode(nodeB);
     graph.addEdge("A", "B");
@@ -233,16 +319,37 @@ describe('PathfindingStrategy', () => {
     const distance = pathfindingStrategy.calculateDistance("A", "B", graph);
 
     // Verify the result with a tolerance of +/- 1
-    const expectedDistance = Math.abs(nodeA.xCoord - nodeB.xCoord) + Math.abs(nodeA.yCoord - nodeB.yCoord) + (averageDistance * 1.5);
+    const expectedDistance =
+      Math.abs(nodeA.xCoord - nodeB.xCoord) +
+      Math.abs(nodeA.yCoord - nodeB.yCoord) +
+      averageDistance * 1.5;
     expect(distance).toBeCloseTo(expectedDistance, 0);
   });
 
   // Applies the appropriate multiplier based on the node type when calculating the cost of changing floors
-  test('should apply the appropriate multiplier based on the node type when calculating the cost of changing floors', () => {
+  test("should apply the appropriate multiplier based on the node type when calculating the cost of changing floors", () => {
     // Create a mock graph with nodes and edges
     const graph = new Graph();
-    const nodeA = new Node("A", 0, 0, "L1", "Building A", "STAI", "Long Name A", "Short Name A");
-    const nodeB = new Node("B", 1, 0, "L2", "Building B", "STAI", "Long Name B", "Short Name B");
+    const nodeA = new Node(
+      "A",
+      0,
+      0,
+      "L1",
+      "Building A",
+      "STAI",
+      "Long Name A",
+      "Short Name A",
+    );
+    const nodeB = new Node(
+      "B",
+      1,
+      0,
+      "L2",
+      "Building B",
+      "STAI",
+      "Long Name B",
+      "Short Name B",
+    );
     graph.addNode(nodeA);
     graph.addNode(nodeB);
     graph.addEdge("A", "B");
@@ -254,10 +361,12 @@ describe('PathfindingStrategy', () => {
     const distance = pathfindingStrategy.calculateDistance("A", "B", graph);
 
     const averageDistance = graph.getAverageDistance();
-    const expectedDistance = Math.abs(nodeA.xCoord - nodeB.xCoord) + Math.abs(nodeA.yCoord - nodeB.yCoord) + (averageDistance * 3);
+    const expectedDistance =
+      Math.abs(nodeA.xCoord - nodeB.xCoord) +
+      Math.abs(nodeA.yCoord - nodeB.yCoord) +
+      averageDistance * 3;
 
     // Assert that the distance is calculated correctly based on the node types with a tolerance of +/- 1
     expect(distance).toBeCloseTo(expectedDistance, 0);
   });
-
 });

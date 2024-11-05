@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { employee } from "common/src/interfaces/interfaces.ts";
-import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "./ui/table.tsx";
-
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableHead,
+} from "./ui/table.tsx";
 
 function GenerateTableRowsEmployee(tableData: employee[]): JSX.Element[] {
   return tableData.map((item, index) => (
@@ -26,14 +32,11 @@ const TableEmployee: React.FC<{ tableData: employee[] }> = ({ tableData }) => {
             <TableHead>Email</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {GenerateTableRowsEmployee(tableData)}
-        </TableBody>
+        <TableBody>{GenerateTableRowsEmployee(tableData)}</TableBody>
       </Table>
     </div>
   );
 };
-
 
 export const GetDataEmployees = () => {
   const [data, setData] = useState<employee[]>([]);

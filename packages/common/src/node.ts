@@ -12,7 +12,6 @@ export class Node {
   readonly shortName: string; // Short name of the node
   private _edges: Set<string>; // Set of node IDs that this node is connected to
   heatIndex: number = 1;
-  
 
   /**
    * Create a new Node.
@@ -38,11 +37,11 @@ export class Node {
     this.id = id;
     this.xCoord = xCoord || 0;
     this.yCoord = yCoord || 0;
-    this.floor = floor || '';
-    this.building = building || '';
-    this.nodeType = nodeType || '';
-    this.longName = longName || '';
-    this.shortName = shortName || '';
+    this.floor = floor || "";
+    this.building = building || "";
+    this.nodeType = nodeType || "";
+    this.longName = longName || "";
+    this.shortName = shortName || "";
     this._edges = new Set();
   }
   /**
@@ -85,12 +84,18 @@ export class Node {
    */
   getFloorNumber(): number {
     switch (this.floor) {
-      case "L2": return 1;
-      case "L1": return 2;
-      case "1": return 3;
-      case "2": return 4;
-      case "3": return 5;
-      default: return 0;
+      case "L2":
+        return 1;
+      case "L1":
+        return 2;
+      case "1":
+        return 3;
+      case "2":
+        return 4;
+      case "3":
+        return 5;
+      default:
+        return 0;
     }
   }
 }

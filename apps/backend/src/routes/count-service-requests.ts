@@ -1,14 +1,12 @@
-import express, {Router, Request, Response} from "express";
+import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/database-connection.ts";
-
 
 const router: Router = express.Router();
 
 router.get("/type/:serviceType", async function (req: Request, res: Response) {
-
   let requestType;
 
-  switch(req.params.serviceType){
+  switch (req.params.serviceType) {
     case "all":
       requestType = PrismaClient.serviceRequest.count();
       break;
@@ -34,50 +32,48 @@ router.get("/type/:serviceType", async function (req: Request, res: Response) {
       res.sendStatus(501);
   }
 
-  try{
-    if(requestType){
+  try {
+    if (requestType) {
       const internalCSV = await requestType;
 
       res.status(200).send(internalCSV);
     }
-  }
-  catch (error){
+  } catch (error) {
     console.error(`Error exporting Service Request data: ${error}`);
     res.sendStatus(500);
   }
 });
 
 router.get("/status/:status", async function (req: Request, res: Response) {
-
   let requestType;
 
-  switch(req.params.status){
+  switch (req.params.status) {
     case "completed":
       requestType = PrismaClient.serviceRequest.count({
         where: {
-          status: 'Completed'
-        }
+          status: "Completed",
+        },
       });
       break;
     case "in-progress":
       requestType = PrismaClient.serviceRequest.count({
         where: {
-          status: 'In Progress'
-        }
+          status: "In Progress",
+        },
       });
       break;
     case "unassigned":
       requestType = PrismaClient.serviceRequest.count({
         where: {
-          status: 'Unassigned'
-        }
+          status: "Unassigned",
+        },
       });
       break;
     case "assigned":
       requestType = PrismaClient.serviceRequest.count({
         where: {
-          status: 'Assigned'
-        }
+          status: "Assigned",
+        },
       });
       break;
 
@@ -85,14 +81,13 @@ router.get("/status/:status", async function (req: Request, res: Response) {
       res.sendStatus(501);
   }
 
-  try{
-    if(requestType){
+  try {
+    if (requestType) {
       const statusStats = await requestType;
 
       res.status(200).send(statusStats);
     }
-  }
-  catch (error){
+  } catch (error) {
     console.error(`Error exporting Service Request data: ${error}`);
     res.sendStatus(500);
   }
@@ -104,8 +99,8 @@ router.post("/", async function (req: Request, res: Response) {
   try {
     const countPromise = PrismaClient.serviceRequest.count({
       where: {
-        nodeId: nodeID
-      }
+        nodeId: nodeID,
+      },
     });
 
     const count = await countPromise; // Await the count promise
@@ -116,6 +111,5 @@ router.post("/", async function (req: Request, res: Response) {
     res.sendStatus(500);
   }
 });
-
 
 export default router;

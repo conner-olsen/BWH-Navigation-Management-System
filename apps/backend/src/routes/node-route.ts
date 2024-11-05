@@ -6,7 +6,6 @@ import { node } from "common/src/interfaces/interfaces.ts";
 
 const router: Router = express.Router();
 
-
 router.post("/", async (req: Request, res: Response) => {
   try {
     // Parse the CSV string to an array of CSVRow objects
@@ -21,7 +20,7 @@ router.post("/", async (req: Request, res: Response) => {
         building: rowval[4],
         nodeType: rowval[5],
         longName: rowval[6],
-        shortName: rowval[7]
+        shortName: rowval[7],
       };
     });
 
@@ -35,22 +34,19 @@ router.post("/", async (req: Request, res: Response) => {
           building: self.building,
           nodeType: self.nodeType,
           longName: self.longName,
-          shortName: self.shortName
+          shortName: self.shortName,
         };
-      }
-      )
+      }),
     });
 
     res.sendStatus(200);
-
   } catch (error) {
     console.error(`Error populating node data: ${error}`);
     res.sendStatus(500);
   }
-
 });
 
-router.get("/", async function(req: Request, res: Response) {
+router.get("/", async function (req: Request, res: Response) {
   try {
     const nodeCSV = await PrismaClient.node.findMany();
     res.send(nodeCSV);
@@ -61,12 +57,12 @@ router.get("/", async function(req: Request, res: Response) {
   res.sendStatus(200);
 });
 
-router.patch("/", async function(req: Request, res: Response) {
+router.patch("/", async function (req: Request, res: Response) {
   const nodeID = req.body.id;
   try {
     const data = await PrismaClient.serviceRequest.findMany({
       where: {
-        nodeId: nodeID
+        nodeId: nodeID,
       },
       include: {
         flowerServiceRequests: true,
@@ -74,8 +70,8 @@ router.patch("/", async function(req: Request, res: Response) {
         externalTransportationServiceRequest: true,
         internalTransportServiceRequest: true,
         languageInterpreterServiceRequest: true,
-        religiousServiceRequest: true
-      }
+        religiousServiceRequest: true,
+      },
     });
     res.status(200).send(data);
   } catch (error) {

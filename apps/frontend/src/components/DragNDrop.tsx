@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Container} from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 interface FileDropBoxProps {
@@ -7,7 +7,6 @@ interface FileDropBoxProps {
 }
 
 const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
-
   const [dragging, setDragging] = useState(false);
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
@@ -31,13 +30,13 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
   };
 
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>): void => {
-      e.preventDefault();
+    e.preventDefault();
 
-      const files = e.target.files;
-      if (files) {
-          const file = files[0];
-          onFileDrop(file);
-      }
+    const files = e.target.files;
+    if (files) {
+      const file = files[0];
+      onFileDrop(file);
+    }
   };
 
   useEffect(() => {
@@ -52,34 +51,44 @@ const FileDropBox: React.FC<FileDropBoxProps> = ({ onFileDrop }) => {
     };
 
     // Add event listeners for drag and drop events
-    document.addEventListener('dragover', handleDragOver);
-    document.addEventListener('drop', preventDefault);
+    document.addEventListener("dragover", handleDragOver);
+    document.addEventListener("drop", preventDefault);
 
     // Clean up event listeners on component unmount
     return () => {
-      document.removeEventListener('dragover', handleDragOver);
-      document.removeEventListener('drop', preventDefault);
+      document.removeEventListener("dragover", handleDragOver);
+      document.removeEventListener("drop", preventDefault);
     };
   }, []);
 
   return (
-      <div>
+    <div>
       <Container
-          className={`border-border ${dragging ? 'DragDropBoxOn' : 'DragDropBox'} ${dragging ? 'dragging' : ''} 
+        className={`border-border ${dragging ? "DragDropBoxOn" : "DragDropBox"} ${dragging ? "dragging" : ""} 
            border-2 border-gray-600 border-dashed rounded-lg p-3 text-center relative cursor-pointer
           hover:border-blue-600 hover:bg-primary hover:text-blue-500 transition-all duration-300 ease-in-out w-fit h-1/8`}
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
       >
-          <label htmlFor="csv-upload"
-                 className="absolute top-0 left-0 w-full h-full cursor-pointer"></label>
-          <input id="csv-upload" type="file" onChange={handleUpload}
-                className="hidden"/>
-          {dragging ? <div>Click or Drop CSV File Here</div> : <div>Drag and Drop a File Here</div>}
+        <label
+          htmlFor="csv-upload"
+          className="absolute top-0 left-0 w-full h-full cursor-pointer"
+        ></label>
+        <input
+          id="csv-upload"
+          type="file"
+          onChange={handleUpload}
+          className="hidden"
+        />
+        {dragging ? (
+          <div>Click or Drop CSV File Here</div>
+        ) : (
+          <div>Drag and Drop a File Here</div>
+        )}
       </Container>
-          <br/>
-      </div>
+      <br />
+    </div>
   );
 };
 
