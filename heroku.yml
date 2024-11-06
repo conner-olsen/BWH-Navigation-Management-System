@@ -8,4 +8,4 @@ build:
   config:
     YARN_PRODUCTION: false
 run:
-  web: yarn workspace frontend run deploy
+  web: yarn workspace database run migrate:deploy && yarn workspace backend run deploy & yarn workspace frontend run deploy
