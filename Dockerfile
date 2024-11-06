@@ -20,12 +20,13 @@ WORKDIR /$WORKDIR
 COPY [".pnp.cjs", ".pnp.loader.mjs", ".yarnrc.yml", "./"]
 COPY .yarn .yarn
 
+# Install yarn global dependencies
+RUN yarn set version 4.0.2
 
 # Base level installer for packages and files
 FROM base AS installer
 WORKDIR /$WORKDIR
 COPY . /$WORKDIR
-
 
 # Production basics (ports, env, etc)
 FROM base AS prod-base
@@ -43,18 +44,16 @@ EXPOSE $PORT
 # Add DATABASE_URL handling for Heroku
 ENV DATABASE_URL=$DATABASE_URL
 
-
-
 # Production front builder. Creates a maximally trimmed out image
 FROM installer AS prod-frontend-builder
 WORKDIR /$WORKDIR
 
 # Build the unplugged files and cache stuff for this specific OS
-RUN yarn install --immutable --immutable-cache --check-cache
+RUN yarn config set nodeLinker node-modules && \
+    yarn install --network-timeout 100000
 
 # This creates a trimmed image that is frontend and its dependencies only
 RUN yarn turbo prune --scope=frontend --docker
-
 
 # Production front builder. Creates a maximally trimmed out image
 FROM installer AS prod-backend-builder
@@ -64,12 +63,11 @@ WORKDIR /$WORKDIR
 RUN rm -r apps/backend/tests
 
 # Build the unplugged files and cache stuff for this specific OS
-RUN yarn install --immutable --immutable-cache --check-cache
+RUN yarn config set nodeLinker node-modules && \
+    yarn install --network-timeout 100000
 
 # This creates a trimmed image that is frontend and its dependencies only
 RUN yarn turbo prune --scope=backend --docker
-
-
 
 # Stage to run production frontend
 FROM prod-base AS prod-frontend
@@ -94,8 +92,6 @@ CMD yarn workspace frontend run deploy
 # If that fails, try exiting gracefully (SIGTERM), and if that fails force the container to die with SIGKILL.
 # This will invoke the restart policy, allowing compose to automatically rebuild the container
 HEALTHCHECK CMD wget --spider localhost:$PORT || bash -c 'kill -s 15 -1 && (sleep 10; kill -s 9 -1)'
-
-
 
 # Stage to run prod backend
 FROM prod-base AS prod-backend
@@ -130,8 +126,6 @@ ENTRYPOINT yarn workspace database run migrate:deploy && yarn workspace backend 
 # If that fails, try exiting gracefully (SIGTERM), and if that fails force the container to die with SIGKILL.
 # This will invoke the restart policy, allowing compose to automatically rebuild the container
 HEALTHCHECK CMD wget --spider localhost:$PORT/healthcheck || bash -c 'kill -s 15 -1 && (sleep 10; kill -s 9 -1)'
-
-
 
 # Development of the backend portion
 FROM installer as dev-backend
