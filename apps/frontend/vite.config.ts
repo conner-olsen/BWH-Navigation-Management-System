@@ -9,9 +9,11 @@ export default defineConfig({
   },
   server: {
     host: "0.0.0.0",
-    port: parseInt(<string>process.env.PORT),
+    port: parseInt(process.env.PORT || "3000"),
     proxy: {
-      "/api": process.env.BACKEND_SOURCE + ":" + process.env.BACKEND_PORT,
+      "/api": process.env.BACKEND_SOURCE 
+        ? process.env.BACKEND_SOURCE + ":" + process.env.BACKEND_PORT
+        : "http://localhost:3001",
     },
     watch: {
       usePolling: true,

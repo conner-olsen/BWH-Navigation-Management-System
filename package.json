@@ -31,7 +31,9 @@
     "build": "turbo run build",
     "docker:upload": "turbo run docker:upload --concurrency=1",
     "depcheck": "depcheck",
-    "setup": "yarn install && yarn build:dev"
+    "setup": "yarn install && yarn build:dev",
+    "heroku-postbuild": "yarn workspaces focus --all --production && yarn build",
+    "start": "yarn workspace frontend run deploy"
   },
   "packageManager": "yarn@4.0.2",
   "devDependencies": {

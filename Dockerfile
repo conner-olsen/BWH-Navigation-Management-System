@@ -32,16 +32,16 @@ FROM base AS prod-base
 WORKDIR /$WORKDIR
 
 # We need the production port
-ARG PRODUCTION_PORT
-
-# Set the environment variable port
-ENV PORT=$PRODUCTION_PORT
+ENV PORT=$PORT
 
 # Set us to production environment
 ENV NODE_ENV=production
 
-# Expose the port
+# Expose the port (Heroku will set this)
 EXPOSE $PORT
+
+# Add DATABASE_URL handling for Heroku
+ENV DATABASE_URL=$DATABASE_URL
 
 
 
@@ -87,9 +87,8 @@ RUN yarn turbo run build
 # This trims out all non-production items
 RUN yarn workspaces focus --all --production
 
-# Use entrypoint (since this contianer should be run as-is)
-# Simply serve the frontend single (so that everything goes to index.html) and the prod port
-ENTRYPOINT yarn workspace frontend run deploy
+# Modified entrypoint for Heroku
+CMD yarn workspace frontend run deploy
 
 # Healthceck to determine if we're actually still serving stuff, just attempt to get the URL
 # If that fails, try exiting gracefully (SIGTERM), and if that fails force the container to die with SIGKILL.
