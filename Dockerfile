@@ -17,28 +17,44 @@ ARG POSTGRES_PORT
 WORKDIR /$WORKDIR
 
 # Copy the basic stuff everything should have
-COPY package.json yarn.lock .yarnrc.yml ./
+COPY [".pnp.cjs", ".pnp.loader.mjs", ".yarnrc.yml", "./"]
 COPY .yarn .yarn
 
-# Install dependencies globally
-RUN yarn set version 4.0.2
-RUN yarn config set nodeLinker node-modules
-RUN yarn config set enableGlobalCache true
 
 # Base level installer for packages and files
 FROM base AS installer
 WORKDIR /$WORKDIR
 COPY . /$WORKDIR
 
+
+# Production basics (ports, env, etc)
+FROM base AS prod-base
+WORKDIR /$WORKDIR
+
+# We need the production port
+ENV PORT=$PORT
+
+# Set us to production environment
+ENV NODE_ENV=production
+
+# Expose the port (Heroku will set this)
+EXPOSE $PORT
+
+# Add DATABASE_URL handling for Heroku
+ENV DATABASE_URL=$DATABASE_URL
+
+
+
 # Production front builder. Creates a maximally trimmed out image
 FROM installer AS prod-frontend-builder
 WORKDIR /$WORKDIR
 
-# Install dependencies without checking cache
-RUN yarn install --no-immutable
+# Build the unplugged files and cache stuff for this specific OS
+RUN yarn install --immutable --immutable-cache --check-cache
 
 # This creates a trimmed image that is frontend and its dependencies only
 RUN yarn turbo prune --scope=frontend --docker
+
 
 # Production front builder. Creates a maximally trimmed out image
 FROM installer AS prod-backend-builder
@@ -53,8 +69,10 @@ RUN yarn install --immutable --immutable-cache --check-cache
 # This creates a trimmed image that is frontend and its dependencies only
 RUN yarn turbo prune --scope=backend --docker
 
+
+
 # Stage to run production frontend
-FROM base AS prod-frontend
+FROM prod-base AS prod-frontend
 WORKDIR /$WORKDIR
 
 # Copy the packages from production to our working directory
@@ -77,8 +95,10 @@ CMD yarn workspace frontend run deploy
 # This will invoke the restart policy, allowing compose to automatically rebuild the container
 HEALTHCHECK CMD wget --spider localhost:$PORT || bash -c 'kill -s 15 -1 && (sleep 10; kill -s 9 -1)'
 
+
+
 # Stage to run prod backend
-FROM base AS prod-backend
+FROM prod-base AS prod-backend
 WORKDIR /$WORKDIR
 
 # PG User Info
@@ -110,6 +130,8 @@ ENTRYPOINT yarn workspace database run migrate:deploy && yarn workspace backend 
 # If that fails, try exiting gracefully (SIGTERM), and if that fails force the container to die with SIGKILL.
 # This will invoke the restart policy, allowing compose to automatically rebuild the container
 HEALTHCHECK CMD wget --spider localhost:$PORT/healthcheck || bash -c 'kill -s 15 -1 && (sleep 10; kill -s 9 -1)'
+
+
 
 # Development of the backend portion
 FROM installer as dev-backend
