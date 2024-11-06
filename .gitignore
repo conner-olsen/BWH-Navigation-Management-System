@@ -40,8 +40,6 @@ out
 /qodana.yaml
 
 
-.pnp.cjs
-
 .vscode
 !./.vscode/tasks.json
 !./.vscode/settings.json
