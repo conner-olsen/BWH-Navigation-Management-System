@@ -37,6 +37,7 @@ A comprehensive web application for hospital navigation and service management, 
   - [AI Chatbot](#ai-chatbot)
   - [Mobile Responsiveness](#mobile-responsiveness)
 - [Team](#team)
+- [Acknowledgments](#acknowledgments)
 
 ## Getting Started
 
@@ -303,3 +304,9 @@ Accessible only to Admins and Employees.
 *About page with photos of the team*
 
 [GitHub Repository](https://github.com/conner-olsen/BWH-Navigation-Management-System)
+
+## Acknowledgments
+
+Special thanks to Brigham & Women's Hospital and our hospital representative, Andrew Shinn, for their collaboration and support throughout this project. The hospital maps and data used in this application are copyrighted and provided for the sole use of educational purposes.
+
+© 2024 Brigham and Women's Hospital
