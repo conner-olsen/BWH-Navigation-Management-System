@@ -1,6 +1,6 @@
 # Brigham & Women's Hospital Navigation System
 
-A comprehensive web application for hospital navigation and service management, developed for CS3733 C24 Software Engineering under Prof. Wilson Wong by the Dark Maroon Dragons team in collaboration with Brigham & Women's Hospital.
+A comprehensive web application for hospital navigation and service management, developed for CS3733 C24 Software Engineering under Prof. Wilson Wong, by the Dark Maroon Dragons team in collaboration with Brigham & Women's Hospital.
 
 ## Table of Contents
 
