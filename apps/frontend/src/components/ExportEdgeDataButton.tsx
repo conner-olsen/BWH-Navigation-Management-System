@@ -1,58 +1,58 @@
-import {useEffect, useState} from "react";
-import {Button} from "./ui/button.tsx";
+import { useEffect, useState } from "react";
+import { Button } from "./ui/button.tsx";
 
 const ExportEdgeDataToCSVButton = () => {
-    const [file, setFile] = useState("");
-    const [loading, setLoading] = useState(true);
+  const [file, setFile] = useState("");
+  const [loading, setLoading] = useState(true);
 
-    const handleExportButton = () =>{
-        // Convert data to CSV format
+  const handleExportButton = () => {
+    // Convert data to CSV format
 
-        // Create a Blob and download the CSV file
-        const blob = new Blob([file], { type: 'text/csv' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'exported_data.csv';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    // Create a Blob and download the CSV file
+    const blob = new Blob([file], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "exported_data.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make a GET request to the API endpoint
+        const response = await fetch("/api/download-edge-csv");
+
+        // Check if the request was successful (status code 2xx)
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.text();
+        // Set the data in the state
+        setFile(result);
+      } catch (err) {
+        // Handle errors
+        console.log("Failed");
+      } finally {
+        // Set loading to false, indicating that the request has completed
+        setLoading(false);
+      }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Make a GET request to the API endpoint
-                const response = await fetch("/api/download-edge-csv");
+    fetchData().then();
+  }, []); //
 
-                // Check if the request was successful (status code 2xx)
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-
-                const result = await response.text();
-                // Set the data in the state
-                setFile(result);
-            } catch (err) {
-                // Handle errors
-                console.log("Failed");
-            } finally {
-                // Set loading to false, indicating that the request has completed
-                setLoading(false);
-            }
-        };
-
-        fetchData().then();
-    }, []); //
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    return (
-        <Button variant={"default"} onClick={handleExportButton}>Export Edge Data</Button>
-    );
+  return (
+    <Button variant={"default"} onClick={handleExportButton}>
+      Export Edge Data
+    </Button>
+  );
 };
-
 
 export default ExportEdgeDataToCSVButton;

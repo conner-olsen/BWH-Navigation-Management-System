@@ -21,8 +21,6 @@ import pathfindingRoute from "./routes/pathfinding-route";
 import totalDataImport from "./routes/single-button-import.ts";
 import heatMap from "./routes/heat-map.ts";
 
-
-
 const app: Express = express(); // Set up the backend
 
 // Setup generic middleware
@@ -47,7 +45,7 @@ app.use("/api/user", userRouter);
 app.use("/api/download-node-csv", downloadNodeDataRouter);
 app.use("/api/download-edge-csv", downloadEdgeDataRouter);
 app.use("/api/populate-employee", employeeRouter);
-app.use("/api/graph",graphRoute);
+app.use("/api/graph", graphRoute);
 app.use("/api/populate-autho", authoRouter);
 app.use("/api/employee-mod", employeeMod);
 app.use("/api/all-service-data", allServiceData);
@@ -58,6 +56,7 @@ app.use("/api/get-employee-stats", getEmployeeStats);
 app.use("/api/pathfinding", pathfindingRoute);
 app.use("/api/single-button-import", totalDataImport);
 app.use("/api/heat-map", heatMap);
+app.use("/api/health", (req, res) => res.sendStatus(200));
 
 /**
  * Catch all 404 errors, and forward them to the error handler
@@ -78,7 +77,5 @@ app.use((err: HttpError, req: Request, res: Response): void => {
   // Reply with the error
   res.status(err.status || 500);
 });
-
-
 
 export default app; // Export the backend, so that www.ts can start it

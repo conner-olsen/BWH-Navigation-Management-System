@@ -96,11 +96,12 @@ services:
       - /app/packages/database/.prisma
     # The backend depends on the database being functional
     depends_on:
-      - database
+      database:
+        condition: service_healthy
 
   # Backend PSQL database
   database:
-    image: postgres
+    image: postgres:15
     # Expose the database for development purposes
     ports:
       - *db-exposed
@@ -109,4 +110,9 @@ services:
       - *pg-port
     # Use the DB args defined above
     environment:
-      *db-args
+      <<: *db-args
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

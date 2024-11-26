@@ -1,12 +1,10 @@
-import express, {Router, Request, Response} from "express";
+import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/database-connection.ts";
-
-
 
 const router: Router = express.Router();
 
 router.get("/", async function (req: Request, res: Response) {
-  try{
+  try {
     const serviceRequests = await PrismaClient.serviceRequest.findMany({
       include: {
         flowerServiceRequests: true,
@@ -18,7 +16,7 @@ router.get("/", async function (req: Request, res: Response) {
       },
     });
     res.send(serviceRequests);
-  } catch (error){
+  } catch (error) {
     console.error(`Error exporting Service Request data: ${error}`);
     res.sendStatus(500);
   }

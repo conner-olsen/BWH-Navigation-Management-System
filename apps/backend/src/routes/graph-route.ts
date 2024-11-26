@@ -1,10 +1,10 @@
 import express from "express";
 import client from "../bin/database-connection.ts";
-import {Graph} from "common/src/graph.ts";
+import { Graph } from "common/src/graph.ts";
 
 const router = express.Router();
 
-router.get("/",async (req,res) => {
+router.get("/", async (req, res) => {
   const graph = new Graph();
 
   try {
@@ -16,9 +16,9 @@ router.get("/",async (req,res) => {
 
     // Populate the graph with nodes and edges
     graph.populateGraph(nodes, edges);
-    res.status(200).json({nodes:nodes,edges:edges});
+    res.status(200).json({ nodes: nodes, edges: edges });
   } catch (error) {
-    console.error('Error fetching data from the database:', error);
+    console.error("Error fetching data from the database:", error);
   }
 });
 

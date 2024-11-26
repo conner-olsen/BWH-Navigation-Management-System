@@ -2,6 +2,6 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-  },
+    "lib": ["ES2020", "DOM", "DOM.Iterable"]
+  }
 }

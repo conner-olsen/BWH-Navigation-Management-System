@@ -1,4 +1,10 @@
-import { PathfindingStrategy, AStarPathfindingStrategy, BFSPathfindingStrategy, DFSPathfindingStrategy, DijkstraPathfindingStrategy } from "./pathfinding-strategy.ts";
+import {
+  PathfindingStrategy,
+  AStarPathfindingStrategy,
+  BFSPathfindingStrategy,
+  DFSPathfindingStrategy,
+  DijkstraPathfindingStrategy,
+} from "./pathfinding-strategy.ts";
 import { Node } from "./node.ts";
 import { node, edge } from "./interfaces/interfaces.ts";
 
@@ -17,7 +23,8 @@ export class Graph {
    */
   constructor(pathfindingStrategy?: PathfindingStrategy) {
     this.nodes = new Map();
-    this.pathfindingStrategy = pathfindingStrategy ?? new AStarPathfindingStrategy();
+    this.pathfindingStrategy =
+      pathfindingStrategy ?? new AStarPathfindingStrategy();
     // Initialize averageDistance to null to indicate it needs to be calculated
   }
 
@@ -41,13 +48,14 @@ export class Graph {
           this.pathfindingStrategy = new DijkstraPathfindingStrategy();
           break;
         default:
-          throw new Error(`Unknown pathfinding strategy: ${pathfindingStrategy}`);
+          throw new Error(
+            `Unknown pathfinding strategy: ${pathfindingStrategy}`,
+          );
       }
     } else {
       this.pathfindingStrategy = pathfindingStrategy;
     }
   }
-
 
   /**
    * Run the pathfinding algorithm specified by the current strategy.
@@ -55,8 +63,17 @@ export class Graph {
    * @param endNode The ID of the end node.
    * @returns An array of node IDs representing the path from start to end.
    */
-  findPath(startNode: string, endNode: string, accessibilityRoute: boolean = false): string[] {
-    return this.pathfindingStrategy.findPath(startNode, endNode, this, accessibilityRoute);
+  findPath(
+    startNode: string,
+    endNode: string,
+    accessibilityRoute: boolean = false,
+  ): string[] {
+    return this.pathfindingStrategy.findPath(
+      startNode,
+      endNode,
+      this,
+      accessibilityRoute,
+    );
   }
 
   /**
@@ -101,7 +118,7 @@ export class Graph {
   populateGraph(nodes: node[], edges: edge[]) {
     this.nodes.clear();
 
-    nodes.forEach(nodeData => {
+    nodes.forEach((nodeData) => {
       const newNode = new Node(
         nodeData.nodeId,
         nodeData.xcoord,
@@ -115,7 +132,7 @@ export class Graph {
       this.addNode(newNode);
     });
 
-    edges.forEach(edgeData => {
+    edges.forEach((edgeData) => {
       this.addEdge(edgeData.startNodeID, edgeData.endNodeID);
     });
   }
@@ -135,7 +152,9 @@ export class Graph {
    * @return Array of Node objects.
    */
   stringsToNodes(arrayOfStrings: string[]): Node[] {
-    return arrayOfStrings.map(id => this.getNode(id)).filter(node => node !== undefined) as Node[];
+    return arrayOfStrings
+      .map((id) => this.getNode(id))
+      .filter((node) => node !== undefined) as Node[];
   }
 
   /**
@@ -144,7 +163,7 @@ export class Graph {
    * @return Array of node IDs.
    */
   nodesToString(arrayOfNodes: Node[]): string[] {
-    return arrayOfNodes.map(node => node.id);
+    return arrayOfNodes.map((node) => node.id);
   }
 
   /**
@@ -166,9 +185,9 @@ export class Graph {
   calculateAverageDistance(): number {
     let totalDistance = 0;
     let edgeCount = 0;
-  
+
     this.nodes.forEach((node) => {
-      node.edges.forEach(neighborId => {
+      node.edges.forEach((neighborId) => {
         const neighbor = this.getNode(neighborId);
         if (neighbor) {
           const dx = Math.abs(node.xCoord - neighbor.xCoord);
@@ -178,7 +197,7 @@ export class Graph {
         }
       });
     });
-  
+
     return edgeCount > 0 ? Math.round(totalDistance / edgeCount) : 0;
   }
 

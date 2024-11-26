@@ -1,11 +1,13 @@
 import express, { Router, Request, Response } from "express";
 import { parseCSV } from "common/src/parser.ts";
 import PrismaClient from "../bin/database-connection.ts";
-import { edge, employee, node, user } from "common/src/interfaces/interfaces.ts";
+import {
+  edge,
+  employee,
+  node,
+  user,
+} from "common/src/interfaces/interfaces.ts";
 import client from "../bin/database-connection.ts";
-
-
-
 
 const router: Router = express.Router();
 
@@ -15,7 +17,7 @@ router.post("/", async (req: Request, res: Response) => {
     // This is created with the idea that the front end
     // stores each individual csv with
 
-    Object.keys(req.body).forEach(key => {
+    Object.keys(req.body).forEach((key) => {
       const csv = req.body[key];
       if (csv.includes("nodeId")) {
         dataType["node"] = csv;
@@ -25,8 +27,6 @@ router.post("/", async (req: Request, res: Response) => {
         dataType["employee"] = csv;
       }
     });
-
-
 
     const rowsNode = parseCSV(dataType["node"]);
     const transformedNode: node[] = rowsNode.map((row) => {
@@ -39,7 +39,7 @@ router.post("/", async (req: Request, res: Response) => {
         building: rowval[4],
         nodeType: rowval[5],
         longName: rowval[6],
-        shortName: rowval[7]
+        shortName: rowval[7],
       };
     });
 
@@ -53,10 +53,9 @@ router.post("/", async (req: Request, res: Response) => {
           building: self.building,
           nodeType: self.nodeType,
           longName: self.longName,
-          shortName: self.shortName
+          shortName: self.shortName,
         };
-      }
-      )
+      }),
     });
 
     const rowsEdge = parseCSV(dataType["edge"]);
@@ -65,7 +64,7 @@ router.post("/", async (req: Request, res: Response) => {
       return {
         edgeID: rowval[0],
         startNodeID: rowval[1],
-        endNodeID: rowval[2]
+        endNodeID: rowval[2],
       };
     });
 
@@ -74,23 +73,19 @@ router.post("/", async (req: Request, res: Response) => {
         return {
           startNodeID: self.startNodeID,
           edgeID: self.edgeID,
-          endNodeID: self.endNodeID
+          endNodeID: self.endNodeID,
         };
-      }
-      )
+      }),
     });
 
-
     const rowsEmp = parseCSV(dataType["employee"]);
-
 
     const transformedUser: user[] = rowsEmp.map((rowsEmp) => {
       const rowval = Object.values(rowsEmp);
       return {
-        Username: rowval[0]
+        Username: rowval[0],
       };
     });
-
 
     const transformedEmp: employee[] = rowsEmp.map((rowsEmp) => {
       const rowval = Object.values(rowsEmp);
@@ -98,19 +93,17 @@ router.post("/", async (req: Request, res: Response) => {
         username: rowval[0],
         firstName: rowval[1],
         lastName: rowval[2],
-        email: rowval[3]
+        email: rowval[3],
       };
     });
 
     await client.user.createMany({
       data: transformedUser.map((self) => {
         return {
-          Username: self.Username
+          Username: self.Username,
         };
-      }
-      )
+      }),
     });
-
 
     await client.employee.createMany({
       data: transformedEmp.map((self) => {
@@ -118,22 +111,15 @@ router.post("/", async (req: Request, res: Response) => {
           username: self.username,
           firstName: self.firstName,
           lastName: self.lastName,
-          email: self.email
+          email: self.email,
         };
-      }
-      )
+      }),
     });
-
-
-
-
-
   } catch (error) {
     console.error(`Error while converting CSV to JSON: ${error}`);
     res.sendStatus(500);
   }
   res.sendStatus(200);
 });
-
 
 export default router;

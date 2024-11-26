@@ -1,12 +1,12 @@
 export interface node {
-  nodeId:string,
-  xcoord:number,
-  ycoord:number,
-  floor:string,
-  building:string,
-  nodeType:string,
-  longName:string,
-  shortName:string
+  nodeId: string;
+  xcoord: number;
+  ycoord: number;
+  floor: string;
+  building: string;
+  nodeType: string;
+  longName: string;
+  shortName: string;
 }
 
 export interface edge {
@@ -29,7 +29,7 @@ export interface ServiceRequest {
   religiousServiceRequest?: religiousServiceRequest;
 }
 
-export interface flowerServiceRequest{
+export interface flowerServiceRequest {
   senderName: string;
   senderEmail: string;
   patientName: string;
@@ -39,13 +39,13 @@ export interface flowerServiceRequest{
   ServiceRequest: ServiceRequest;
 }
 
-export interface cleaningServiceRequest{
+export interface cleaningServiceRequest {
   type: string;
   patientName: string;
   ServiceRequest: ServiceRequest;
 }
 
-export interface externalTransportationServiceRequest{
+export interface externalTransportationServiceRequest {
   name: string;
   destination: string;
   transportation: string;
@@ -54,27 +54,27 @@ export interface externalTransportationServiceRequest{
   ServiceRequest: ServiceRequest;
 }
 
-export interface internalTransportServiceRequest{
+export interface internalTransportServiceRequest {
   name: string;
   mode: string;
   destination: string;
   ServiceRequest: ServiceRequest;
 }
 
-export interface languageInterpreterServiceRequest{
+export interface languageInterpreterServiceRequest {
   name: string;
   languagePref: string;
   ServiceRequest: ServiceRequest;
 }
 
-export interface religiousServiceRequest{
+export interface religiousServiceRequest {
   patientName: string;
   religion: string;
   note: string;
   ServiceRequest: ServiceRequest;
 }
 
-export interface user{
+export interface user {
   Username: string;
 }
 

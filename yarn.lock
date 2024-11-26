@@ -5271,7 +5271,7 @@ __metadata:
     "@types/jest": "npm:^29.5.12"
     "@types/node": "npm:^20.11.10"
     eslint-config-custom: "workspace:*"
-    fastpriorityqueue: "npm:^0.7.4"
+    fastpriorityqueue: "npm:^0.7.5"
     jest: "npm:^29.7.0"
     prettier: "npm:latest"
     prettier-config-custom: "workspace:*"
@@ -6739,10 +6739,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastpriorityqueue@npm:^0.7.4":
-  version: 0.7.4
-  resolution: "fastpriorityqueue@npm:0.7.4"
-  checksum: 066bcfbc7d0043430e53a24fe5d0007286796cf00054eff06c2b79ad798b78e0f49d243ae67a4ad6e9ad22264a6a06578627d5f6930b1b5b7ab9608ec197df0c
+"fastpriorityqueue@npm:^0.7.5":
+  version: 0.7.5
+  resolution: "fastpriorityqueue@npm:0.7.5"
+  checksum: 11d476f5ad31d980a811aabcd89979364d37b90ab0e27fdf5c51d047644f3d0d43119c23adcb0a9bae9ddb1268a31fdfe4c36c69dbb22a45c9f0169ff03e5781
   languageName: node
   linkType: hard
 

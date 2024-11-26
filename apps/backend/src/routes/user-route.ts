@@ -1,7 +1,6 @@
-import express, {Router, Request, Response} from "express";
+import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/database-connection.ts";
 import { Prisma } from "database";
-
 
 const router: Router = express.Router();
 
@@ -10,7 +9,7 @@ router.post("/", async (req: Request, res: Response) => {
 
   try {
     // Create the FlowerServiceRequest with the connected room
-    await PrismaClient.employee.create({data: employeeRequestAttempt});
+    await PrismaClient.employee.create({ data: employeeRequestAttempt });
 
     res.sendStatus(200);
   } catch (error) {
@@ -20,10 +19,10 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 router.get("/", async function (req: Request, res: Response) {
-  try{
+  try {
     const employeeRequest = await PrismaClient.employee.findMany();
     res.send(employeeRequest);
-  } catch (error){
+  } catch (error) {
     console.error(`Error exporting Service Request data: ${error}`);
     res.sendStatus(500);
   }

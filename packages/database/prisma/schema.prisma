@@ -2,124 +2,124 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider   = "prisma-client-js"
-    output     = "../.prisma/client"
-    engineType = "binary"
+  provider   = "prisma-client-js"
+  output     = "../.prisma/client"
+  engineType = "binary"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = "postgresql://teamd:teamd50@database.cs.wpi.edu:5432/teamddb?schema=teamdschema"
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
 }
 
 //Node Table
 model Node {
-    nodeId         String           @id
-    xcoord         Int
-    ycoord         Int
-    floor          String
-    building       String
-    nodeType       String
-    longName       String
-    shortName      String
-    Edge           Edge[]
-    ServiceRequest ServiceRequest[]
+  nodeId         String           @id
+  xcoord         Int
+  ycoord         Int
+  floor          String
+  building       String
+  nodeType       String
+  longName       String
+  shortName      String
+  Edge           Edge[]
+  ServiceRequest ServiceRequest[]
 }
 
 //Edge Table
 model Edge {
-    edgeID      String @id
-    node        Node   @relation(fields: [startNodeID], references: [nodeId])
-    startNodeID String
-    endNodeID   String
+  edgeID      String @id
+  node        Node   @relation(fields: [startNodeID], references: [nodeId])
+  startNodeID String
+  endNodeID   String
 }
 
 //User Table
 model User {
-    Username String    @id
-    employee Employee?
+  Username String    @id
+  employee Employee?
 }
 
 //Employee Table
 model Employee {
-    user            User             @relation(fields: [username], references: [Username])
-    username        String           @id
-    firstName       String
-    lastName        String
-    email           String
-    serviceRequests ServiceRequest[]
+  user            User             @relation(fields: [username], references: [Username])
+  username        String           @id
+  firstName       String
+  lastName        String
+  email           String
+  serviceRequests ServiceRequest[]
 }
 
 // Service Request Table
 model ServiceRequest {
-    id                                   String                                 @id @default(uuid())
-    node                                 Node                                   @relation(fields: [nodeId], references: [nodeId])
-    employee                             Employee                               @relation(fields: [employeeUser], references: [username])
-    nodeId                               String
-    priority                             String
-    status                               String                                 @default("Unassigned")
-    employeeUser                         String
-    flowerServiceRequests                FlowerServiceRequest?
-    cleaningServiceRequest               cleaningServiceRequest?
-    externalTransportationServiceRequest externalTransportationServiceRequest?
-    internalTransportServiceRequest      internalTransportServiceRequest?
-    languageInterpreterServiceRequest    languageInterpreterServiceRequest?
-    religiousServiceRequest              religiousServiceRequest?
+  id                                   String                                @id @default(uuid())
+  node                                 Node                                  @relation(fields: [nodeId], references: [nodeId])
+  employee                             Employee                              @relation(fields: [employeeUser], references: [username])
+  nodeId                               String
+  priority                             String
+  status                               String                                @default("Unassigned")
+  employeeUser                         String
+  flowerServiceRequests                FlowerServiceRequest?
+  cleaningServiceRequest               cleaningServiceRequest?
+  externalTransportationServiceRequest externalTransportationServiceRequest?
+  internalTransportServiceRequest      internalTransportServiceRequest?
+  languageInterpreterServiceRequest    languageInterpreterServiceRequest?
+  religiousServiceRequest              religiousServiceRequest?
 }
 
 //Service Request Table
 model FlowerServiceRequest {
-    ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-    id             String         @id
-    senderName     String
-    senderEmail    String
-    patientName    String
-    flowerType     String
-    deliveryDate   String
-    note           String
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id             String         @id
+  senderName     String
+  senderEmail    String
+  patientName    String
+  flowerType     String
+  deliveryDate   String
+  note           String
 }
 
 model cleaningServiceRequest {
-    ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-    id             String         @id
-    type           String
-    patientName    String
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id             String         @id
+  type           String
+  patientName    String
 }
 
 model externalTransportationServiceRequest {
-    ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-    id             String         @id
-    name           String
-    destination    String
-    transportation String
-    date           String
-    description    String
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id             String         @id
+  name           String
+  destination    String
+  transportation String
+  date           String
+  description    String
 }
 
 model internalTransportServiceRequest {
-    ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-    id             String         @id
-    name           String
-    mode           String
-    destination    String
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id             String         @id
+  name           String
+  mode           String
+  destination    String
 }
 
 model languageInterpreterServiceRequest {
-    ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-    id             String         @id
-    name           String
-    languagePref   String
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id             String         @id
+  name           String
+  languagePref   String
 }
 
 model religiousServiceRequest {
-    ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
-    id             String         @id
-    patientName    String
-    religion       String
-    note           String
+  ServiceRequest ServiceRequest @relation(fields: [id], references: [id])
+  id             String         @id
+  patientName    String
+  religion       String
+  note           String
 }
 
 model nodeVisit {
-  nodeId  String @id
-  count   Int
+  nodeId String @id
+  count  Int
 }

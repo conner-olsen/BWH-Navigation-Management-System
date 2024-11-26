@@ -1,5 +1,3 @@
-
-
 /**
  * Represents a single row in a CSV (Comma Separated Values) file.
  * The CSVRow class provides methods to access, manipulate, and retrieve data from a CSV row.
@@ -34,14 +32,17 @@ export function parseCSV(csvString: string): CSVRow[] {
   const headers = lines[0].split(",");
 
   // Process each line
-  return lines.slice(1).filter(line => line.trim() !== '').map((line) => {
-    // Split the line by comma and create an object
-    const data = line.split(",");
-    return headers.reduce((obj, nextKey, index) => {
-      obj[nextKey] = data[index];
-      return obj;
-    }, {} as CSVRow);
-  });
+  return lines
+    .slice(1)
+    .filter((line) => line.trim() !== "")
+    .map((line) => {
+      // Split the line by comma and create an object
+      const data = line.split(",");
+      return headers.reduce((obj, nextKey, index) => {
+        obj[nextKey] = data[index];
+        return obj;
+      }, {} as CSVRow);
+    });
 }
 
 /**

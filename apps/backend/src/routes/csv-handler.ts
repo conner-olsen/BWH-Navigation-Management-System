@@ -5,9 +5,6 @@ import * as path from "path";
 import PrismaClient from "../bin/database-connection.ts";
 import { node, edge } from "common/src/interfaces/interfaces.ts";
 
-
-
-
 const router: Router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
@@ -29,7 +26,7 @@ router.post("/", async (req: Request, res: Response) => {
         building: rowval[4],
         nodeType: rowval[5],
         longName: rowval[6],
-        shortName: rowval[7]
+        shortName: rowval[7],
       };
     });
 
@@ -44,10 +41,9 @@ router.post("/", async (req: Request, res: Response) => {
           building: self.building,
           nodeType: self.nodeType,
           longName: self.longName,
-          shortName: self.shortName
+          shortName: self.shortName,
         };
-      }
-      )
+      }),
     });
 
     // language=file-reference Read the CSV string from the request body
@@ -61,30 +57,24 @@ router.post("/", async (req: Request, res: Response) => {
       return {
         edgeID: rowval[0],
         startNodeID: rowval[1],
-        endNodeID: rowval[2]
+        endNodeID: rowval[2],
       };
     });
-
 
     await PrismaClient.edge.createMany({
       data: transformed.map((self) => {
         return {
           startNodeID: self.startNodeID,
           edgeID: self.edgeID,
-          endNodeID: self.endNodeID
+          endNodeID: self.endNodeID,
         };
-      }
-      )
+      }),
     });
-
-
-
   } catch (error) {
     console.error(`Error while converting CSV to JSON: ${error}`);
     res.sendStatus(500);
   }
   res.sendStatus(200);
 });
-
 
 export default router;

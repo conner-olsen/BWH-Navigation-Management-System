@@ -1,29 +1,25 @@
-import express, {Router, Request, Response} from "express";
+import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/database-connection.ts";
-
 
 const router: Router = express.Router();
 
-
 router.post("/", async (req: Request, res: Response) => {
-
   const { username, ...employeeUpdateData } = req.body;
 
   try {
     // Create the employee
     await PrismaClient.user.create({
       data: {
-        Username: username
+        Username: username,
       },
     });
 
     const employeeData = {
       username: username,
-      ...employeeUpdateData
+      ...employeeUpdateData,
     };
 
-    await PrismaClient.employee.create({data: employeeData
-    });
+    await PrismaClient.employee.create({ data: employeeData });
 
     res.sendStatus(200);
   } catch (error) {
@@ -33,10 +29,10 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 router.get("/", async function (req: Request, res: Response) {
-  try{
+  try {
     const employee = await PrismaClient.employee.findMany();
     res.send(employee);
-  } catch (error){
+  } catch (error) {
     console.error(`Error exporting employee data: ${error}`);
     res.sendStatus(500);
   }
@@ -57,7 +53,7 @@ router.patch("/", async function (req: Request, res: Response) {
     await PrismaClient.user.update({
       where: { Username: username },
       data: {
-        Username: username
+        Username: username,
       },
     });
 
@@ -65,8 +61,6 @@ router.patch("/", async function (req: Request, res: Response) {
       where: { username },
       data: employeeUpdateData,
     });
-
-
 
     res.sendStatus(200);
   } catch (error) {
@@ -89,14 +83,9 @@ router.delete("/", async function (req: Request, res: Response) {
       where: { username },
     });
 
-    
     await PrismaClient.user.delete({
       where: { Username: username },
     });
-
-
-
-
 
     res.sendStatus(200);
   } catch (error) {

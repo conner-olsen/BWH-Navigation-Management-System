@@ -29,8 +29,14 @@ function App() {
         <Route path="/CleaningService" element={<CleaningServiceRequest />} />
         <Route path="/ReligiousService" element={<ReligiousServiceRequest />} />
         <Route path="/LanguageService" element={<LanguageService />} />
-        <Route path="/ExternalTransportation" element={<ExternalTransportation />} />
-        <Route path="/InternalTransportation" element={<InternalTransportation />} />
+        <Route
+          path="/ExternalTransportation"
+          element={<ExternalTransportation />}
+        />
+        <Route
+          path="/InternalTransportation"
+          element={<InternalTransportation />}
+        />
         <Route path="/ServiceList" element={<ServiceList />} />
         <Route path="/ServiceLog" element={<ServiceLog />} />
         <Route path="/UserPage" element={<UserPage />} />

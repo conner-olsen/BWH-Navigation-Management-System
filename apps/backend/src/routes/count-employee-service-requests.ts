@@ -1,8 +1,7 @@
-import express, {Router, Request, Response} from "express";
+import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/database-connection.ts";
 
 const router: Router = express.Router();
-
 
 router.get("/", async function (req: Request, res: Response) {
   try {
@@ -12,18 +11,16 @@ router.get("/", async function (req: Request, res: Response) {
       },
     });
 
-    const employeeServiceRequestCounts = employees.map(employee => ({
+    const employeeServiceRequestCounts = employees.map((employee) => ({
       username: employee.username,
       serviceRequestCount: employee.serviceRequests.length,
     }));
 
     res.status(200).send(employeeServiceRequestCounts);
-
   } catch (error) {
     console.error(`Error exporting employee data: ${error}`);
     res.sendStatus(500);
   }
 });
-
 
 export default router;

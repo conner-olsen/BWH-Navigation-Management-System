@@ -2,11 +2,10 @@
 import { useEffect, useState } from "react";
 // import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../ui/select.tsx";
 import { Bar } from "react-chartjs-2";
-import 'chart.js/auto';
+import "chart.js/auto";
 import axios from "axios";
-import { useCallback } from 'react';
-import { useRef } from 'react';
-
+import { useCallback } from "react";
+import { useRef } from "react";
 
 interface Dataset {
   label: string;
@@ -22,25 +21,24 @@ interface BarGraphData {
 }
 
 const CreateEmployeeChart = () => {
-
-
   const initialBarGraphData: BarGraphData = {
     labels: [],
     datasets: [
       {
-        label: '',
+        label: "",
         data: [],
         backgroundColor: [],
         borderColor: [],
-        borderWidth: 0
-      }
-    ]
+        borderWidth: 0,
+      },
+    ],
   };
 
   // const [selectedEmployee, setSelectedEmployee] = useState<string>("");
   // const [data, setData] = useState<employee[]>([]);
   // const [loading, setLoading] = useState(true);
-  const [barGraphData, setBarGraphData] = useState<BarGraphData>(initialBarGraphData);
+  const [barGraphData, setBarGraphData] =
+    useState<BarGraphData>(initialBarGraphData);
 
   // const handleChange = (event: string) => {
   //     setSelectedEmployee(event);
@@ -75,7 +73,6 @@ const CreateEmployeeChart = () => {
   //     fetchData().then();
   // }, []); //
 
-
   interface employeeSR {
     username: string;
     serviceRequestCount: number;
@@ -86,8 +83,8 @@ const CreateEmployeeChart = () => {
     try {
       const response = await axios.get("/api/get-employee-stats", {
         headers: {
-          "Content-Type": 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
       totalEmployeeSR.current = response.data;
 
@@ -95,32 +92,29 @@ const CreateEmployeeChart = () => {
         labels: totalEmployeeSR.current.map((employee) => employee.username),
         datasets: [
           {
-            label: 'Service Requests per Employee',
-            data: totalEmployeeSR.current.map((user) => user.serviceRequestCount),
+            label: "Service Requests per Employee",
+            data: totalEmployeeSR.current.map(
+              (user) => user.serviceRequestCount,
+            ),
             backgroundColor: [
-              'rgba(200, 0, 0, 0.2)',
-              'rgba(0, 200, 100, 0.2)',
-              'rgba(0, 0, 200, 0.2)',
-              'rgba(300, 99, 132, 0.2)'
-
+              "rgba(200, 0, 0, 0.2)",
+              "rgba(0, 200, 100, 0.2)",
+              "rgba(0, 0, 200, 0.2)",
+              "rgba(300, 99, 132, 0.2)",
             ],
-            borderColor: [
-              'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-          }]
+            borderColor: ["rgb(201, 203, 207)"],
+            borderWidth: 1,
+          },
+        ],
       });
-
     } catch (error) {
-      console.error('Error getting data:', error);
+      console.error("Error getting data:", error);
     }
   }, []);
-
 
   useEffect(() => {
     getEmployeeServiceCounts();
   }, [getEmployeeServiceCounts]);
-
 
   // if (loading) {
   //     return <div>Loading...</div>;
@@ -141,10 +135,8 @@ const CreateEmployeeChart = () => {
       {/*    </SelectContent>*/}
       {/*</Select>*/}
 
-
       <Bar data={barGraphData} />
     </div>
-
   );
 };
 
