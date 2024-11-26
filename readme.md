@@ -276,6 +276,7 @@ Accessible only to Admins and Employees.
 - Features a responsive design for an optimal user experience on all devices.
 
 ![Mobile View](/docs/images/mobile-view.png)
+
 *Application interface on mobile device*
 
 ## Team
