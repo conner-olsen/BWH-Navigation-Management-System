@@ -37,7 +37,7 @@ export function MapComponent() {
   const [pathfindingResult, setBFSResult] = useState<Node[]>([]);
   const [startNode, setStartNode] = useState<string>("");
   const [endNode, setEndNode] = useState<string>("");
-  const [pathFindingType, setPathFindingType] = useState<string>("A*");
+  const [pathFindingType, setPathFindingType] = useState<string>("BFS");
   const [mapKey, setMapKey] = useState<number>(0); // Key for forcing MapDisplay to remount
   const [doDisplayEdges, setDoDisplayEdges] = useState<boolean>(false);
   const [doDisplayNodes, setDoDisplayNodes] = useState<boolean>(true);
@@ -944,7 +944,6 @@ export function MapComponent() {
             <div className="pt-4 pb-2 px-2">
               <Select
                 value={pathFindingType}
-                defaultValue={"A*"}
                 onValueChange={(algorithm: string) => {
                   setPathFindingType(algorithm);
                   clearGuidelines();
@@ -1401,7 +1400,6 @@ export function MapComponent() {
                   <div className="py-4 px-2">
                     <Select
                       value={pathFindingType}
-                      defaultValue={"/api/bfsAstar-searching"}
                       onValueChange={(algorithm: string) => {
                         setPathFindingType(algorithm);
                         clearGuidelines();
