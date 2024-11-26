@@ -1,7 +1,7 @@
 /* eslint-env node */
 import { spawnSync } from 'child_process';
 import { platform } from 'os';
-import { executeCommands } from './commandRunner.js';
+import { executeCommands } from '../commandRunner.js';
 
 export function isDockerRunning() {
   const result = spawnSync('docker', ['info'], { stdio: 'ignore' });

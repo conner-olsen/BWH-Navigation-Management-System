@@ -1,5 +1,5 @@
 /* eslint-env node */
-import { executeCommands } from './commandRunner.js';
+import { executeCommands } from '../commandRunner.js';
 
 export function executeGeneralFixes(callback) {
   // General cleanup commands
