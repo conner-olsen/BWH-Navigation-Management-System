@@ -64,7 +64,7 @@ A comprehensive web application for hospital navigation and service management, 
 To run the demo application, ensure that Docker is running on your machine, then use the following command:
 
 ```bash
-yarn run demo
+yarn demo
 ```
 
 This command will build and start the application using Docker.
@@ -72,7 +72,7 @@ This command will build and start the application using Docker.
 To stop the demo, use:
 
 ```bash
-yarn dev:stop
+yarn stop
 ```
 
 ### Accessing the Application
