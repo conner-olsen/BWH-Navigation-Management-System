@@ -115,6 +115,15 @@ async function populateDatabase() {
   }
 }
 
+async function openBrowser() {
+  const url = 'http://localhost:3000';
+  const command = process.platform === 'win32' ? 'start' :
+                  process.platform === 'darwin' ? 'open' : 'xdg-open';
+                  
+  spawn(command, [url], { shell: true });
+  console.log(`Opening ${url} in your default browser...`);
+}
+
 async function main() {
   // Setup and start the development environment
   const setupCommands = [
@@ -152,7 +161,7 @@ async function main() {
         process.exit(1);
       } else {
         console.log('Database populated successfully!');
-        process.exit(0);
+        await openBrowser();
       }
     });
   });
