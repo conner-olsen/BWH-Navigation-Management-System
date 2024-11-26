@@ -1,6 +1,6 @@
 # Brigham & Women's Hospital Navigation System
 
-A comprehensive web application for hospital navigation and service management, developed for CS3733 C24 under Prof. Wilson Wong by the Dark Maroon Dragons team.
+A comprehensive web application for hospital navigation and service management, developed for CS3733 C24 Software Engineering under Prof. Wilson Wong by the Dark Maroon Dragons team in collaboration with Brigham & Women's Hospital.
 
 ## Table of Contents
 
@@ -85,13 +85,13 @@ Once the application is running, open [http://localhost:3000](http://localhost:3
 
 Upon accessing the application, users are presented with three sign-in options:
 
-- **Admin**
-- **Employee**
-- **Guest**
-
-*(Note: Admin and Employee functionalities are currently equivalent.)*
+![User Selection Page](/docs/images/user-selection.png)
+*User selection page with Admin, and Guest options*
 
 ### Admin Login
+
+![Admin Login Page](/docs/images/admin-login.png)
+*Admin login interface with email and password fields*
 
 Admins have access to administrative functionalities, including employee management, data upload, and viewing service logs.
 
@@ -114,6 +114,9 @@ Guests can explore the functionalities of the site with some limitations (e.g., 
 ### Map Navigation
 
 This pathfinding page displays a map of the Brigham & Women's Hospital that allows the user to zoom in, zoom out, pinch, and drag the floor map.
+
+![Map Navigation Interface](/docs/images/map-navigation.png)
+*Main map navigation interface with pathfinding controls*
 
 #### Pathfinding Functionality
 
@@ -141,6 +144,9 @@ Accessed via the display button on the bottom left side of the map.
 - Represents the volume of pathfinding requests passing through nodes.
 - The pathfinding algorithm bases the weighting of nodes on the heat map.
 
+![Heat Map View](/docs/images/heat-map.png)
+*Heat map showing traffic patterns across hospital locations*
+
 ##### 3D Map
 
 - **No Path Chosen:**
@@ -152,6 +158,12 @@ Accessed via the display button on the bottom left side of the map.
   - Features a legend explaining the meaning of each icon.
   - A toggle button is available to enable or disable the animation for pathfinding.
   - Clicking on a floor within the 3D view redirects to the corresponding floor in 2D, showcasing the animated path.
+
+![3D Map View](/docs/images/3d-map.png)
+*3D visualization of multiple hospital floors*
+
+![3D Path Animation](/docs/images/3d-path.png)
+*Animated 3D pathfinding between floors*
 
 ### Accessibility Options
 
@@ -178,6 +190,9 @@ Accessible through all login interfaces.
   - **External Transportation**
 - Upon submission, the data is stored within the backend database.
 - For every request, users can provide the patient's name, request location, and assign a priority level (low, high, or emergency).
+
+![Service Request Dashboard](/docs/images/service-requests.png)
+*Service request selection dashboard*
 
 #### Religious Services
 
@@ -222,6 +237,9 @@ Accessible exclusively to Admins and Employees.
 - Users can filter requests by status and employee.
 - Access statistics by clicking on the provided option, which includes data on request types, the quantity of requests, and assignment details.
 
+![Service Log Interface](/docs/images/service-log.png)
+*Service log showing request history and statistics*
+
 ### Data Manager
 
 Accessible only to Admins and Employees.
@@ -231,23 +249,34 @@ Accessible only to Admins and Employees.
 - Export or import node, edge, and employee data.
 - Access both node and edge data from this page.
 
+![Data Manager Interface](/docs/images/data-manager.png)
+*Data management interface for node data*
+
 ## Delighter Features
 
 ### Dark Mode
 
 - Seamlessly switch to a dark theme across all pages for a comfortable viewing experience in low-light environments.
 
+![Dark Mode Comparison](/docs/images/dark-mode.png)
+*Dark mode on the map page*
+
 ### AI Chatbot
 
-- An interactive chatbot implemented using the GPT-3.5 Turbo API.
-- Slides in from the side of the screen.
+- An interactive chatbot that slides in from the side of the screen.
 - Users can ask various questions on topics like minor medical concerns and general information.
+
+![AI Chatbot Interface](/docs/images/chatbot.png)
+*AI Chatbot sliding interface with example conversation*
 
 ### Mobile Responsiveness
 
 - The website adapts to smaller screens like mobile or tablet devices.
 - Components dynamically resize according to the resolution.
 - Features a responsive design for an optimal user experience on all devices.
+
+![Mobile View](/docs/images/mobile-view.png)
+*Application interface on mobile device*
 
 ## Team
 
@@ -263,10 +292,13 @@ Accessible only to Admins and Employees.
 | Shivank Gupta    | Scrum Master                 | [shaunmcbean](https://github.com/shaunmcbean) |
 | Cecei Herriman   | Full-Time Software Engineer  | [ceci-herriman](https://github.com/ceci-herriman) |
 | Tanya Khan       | Product Owner                | [tanyaalikhan](https://github.com/tanyaalikhan) |
-| Conner Olsen     | Lead Software Engineer       | [ARealConner](https://github.com/ARealConner) |
+| Conner Olsen     | Lead Software Engineer       | [conner-olsen](https://github.com/conner-olsen) |
 | William Smith    | Project Manager              | [smithwm210](https://github.com/smithwm210)   |
 | James Walden     | Full-Time Software Engineer  | [jdwalden74](https://github.com/jdwalden74)   |
 
-**Team Coach:** Nick Leslie
+**Team Coach:** Nick Leslie ([GitHub](https://github.com/nick-leslie))
+
+![Team Photo](/docs/images/team-photo.png)
+*About page with photos of the team*
 
 [GitHub Repository](https://github.com/conner-olsen/BWH-Navigation-Management-System)
